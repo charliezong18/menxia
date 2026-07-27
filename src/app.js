@@ -89,6 +89,7 @@ async function openPR(pr) {
   state.current = pr;
   renderList();
   annotate.detach();
+  $('qinci-btn').hidden = false;
   $('crumb').replaceChildren('待批 / ', Object.assign(document.createElement('b'), { textContent: pr.title }));
   const mine = ++generation;
   const doc = $('doc');
@@ -175,11 +176,33 @@ async function boot() {
   }
 }
 
+$('qinci-btn').onclick = async () => {
+  const pr = state.current;
+  if (!pr) return;
+  if (!confirm(`钦此定稿：squash merge #${pr.number}「${pr.title}」？`)) return;
+  const btn = $('qinci-btn');
+  btn.disabled = true;
+  try {
+    if (pr.draft) await gh.markReady(pr.node_id); // 存量 draft 折先转 ready 才能 merge
+    await gh.mergePR(pr.number);
+    setNotice(`已钦此：#${pr.number} 定稿归档。对外交付回 Happy 说一声。`);
+    state.current = null;
+    annotate.detach();
+    $('qinci-btn').hidden = true;
+    await loadPRs();
+  } catch (err) {
+    setNotice(`钦此失败：${err.message}${pr.draft ? `（此折是 draft；若是 GraphQL 被钥匙拒了，回 Happy 说「钦此 #${pr.number}」我来执行）` : ''}`);
+  } finally {
+    btn.disabled = false;
+  }
+};
+
 annotate.init({ onNotice: setNotice });
 $('token-save').onclick = saveToken;
 $('token-input').onkeydown = (e) => { if (e.key === 'Enter') saveToken(); };
 $('refresh-btn').onclick = async () => {
   state.current = null;
+  $('qinci-btn').hidden = true;
   try {
     await loadPRs();
   } catch (err) {

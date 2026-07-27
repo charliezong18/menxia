@@ -76,6 +76,27 @@ export const getFileText = (path, ref) =>
   request(`/repos/${repoSlug()}/contents/${encodePath(path)}?ref=${encodeURIComponent(ref)}`,
     { accept: 'application/vnd.github.raw' }).then((r) => r.text());
 
+// 钦此 = squash merge；draft 折要先转 ready（REST 做不了，走 GraphQL，fine-grained PAT 支持与否现场见分晓）
+export const mergePR = (num) =>
+  request(`/repos/${repoSlug()}/pulls/${num}/merge`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ merge_method: 'squash' }),
+  }).then((r) => r.json());
+
+export async function markReady(nodeId) {
+  const res = await fetch(`${API}/graphql`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${getToken()}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      query: 'mutation($id:ID!){markPullRequestReadyForReview(input:{pullRequestId:$id}){pullRequest{isDraft}}}',
+      variables: { id: nodeId },
+    }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || data.errors) throw new Error(data.errors?.[0]?.message || `GraphQL ${res.status}`);
+}
+
 // 一次性提交整批朱批（原子：任一行号非法整批 422，调用方需先本地校验）
 export const submitReview = (num, { body = '', comments = [] }) =>
   request(`/repos/${repoSlug()}/pulls/${num}/reviews`, {
