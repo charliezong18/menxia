@@ -88,14 +88,11 @@ function ShownThread({ t, blockLine, outdated }) {
         ${outdated ? html`<span class="anno-outdated" title="此行已随新版漂移">旧</span>` : ''}
       </div>
       <div class="anno-shown-body">${body}</div>
-      ${t.replies.map((r) => {
-        const rp = A.parseCommentBody(r.body);
-        return html`
-          <div class="anno-reply" key=${'c' + r.id}>
-            <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
-            <div class="anno-shown-body">${rp.body}</div>
-          </div>`;
-      })}
+      ${t.replies.map((r) => html`
+        <div class="anno-reply" key=${'c' + r.id}>
+          <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
+          <div class="anno-shown-body">${r.body}</div>
+        </div>`)}
     </div>`;
 }
 
@@ -325,7 +322,8 @@ function App() {
     [...col.children].forEach((card) => {
       let top = prevBottom + 12;
       const line = +card.dataset.blockLine;
-      if (line) {
+      // 旧版视图下行号系 head 坐标，对旧版 DOM 会系统性挂错块——改静态堆叠（第四轮评审 D）
+      if (line && R.current.onHead) {
         let block = doc.querySelector(`[data-line="${line}"]`);
         if (!block) { // 退化：最近的 data-line ≤ line 的块
           let cand = null;
@@ -505,6 +503,10 @@ function App() {
     }
   }
 
+  // 已呈批注串的串线——hooks 必须在任何 early-return 之前（Rules of Hooks，第四轮评审 B：
+  // 原先在 return 之后，靠 Preact「新 hook 恒在末位」侥幸不炸）
+  const threads = useMemo(() => A.threadComments(comments), [comments]);
+
   // ── 视图 ──
   if (phase === 'boot') return null;
   if (phase === 'setup') return html`<${Setup} msg=${setupMsg} onSave=${onSaveToken} />`;
@@ -518,8 +520,7 @@ function App() {
     return `${Math.round(mins / 1440)} 天前`;
   };
 
-  // 已呈批注串：串起来后按能否定位到当前文档分两组
-  const threads = useMemo(() => A.threadComments(comments), [comments]);
+  // 已呈批注串：按能否定位到当前文档分两组
   const docThreads = [], otherThreads = [];
   threads.forEach((t) => {
     const r = t.root;
@@ -529,7 +530,21 @@ function App() {
   });
   docThreads.sort((a, b) => a.blockLine - b.blockLine);
 
-  // rev 序列反序展示（新→旧），标 v 号；vN=head
+  // 草稿卡与已呈串必须合并排序再渲染：layoutCards 是单调下压式堆叠，
+  // 两组各自有序会把串卡整体压到全部草稿之下、离锚点任意远（第四轮评审 A）
+  const marginItems = [
+    ...docDrafts.map((d) => ({
+      blockLine: d.blockLine,
+      el: html`<${DraftCard} key=${d.id} d=${d} doc=${docRef.current} editing=${editing === d.id}
+        onEdit=${(id) => setEditing(id)} onSave=${saveDraft} onDrop=${dropDraft} />`,
+    })),
+    ...docThreads.map(({ t, blockLine, outdated }) => ({
+      blockLine,
+      el: html`<${ShownThread} key=${'c' + t.root.id} t=${t} blockLine=${blockLine} outdated=${outdated} />`,
+    })),
+  ].sort((a, b) => a.blockLine - b.blockLine);
+
+  // rev 序列升序（旧→新）标 v 号；vN=head——demo smoke 依赖升序取首个当 v1
   const revs = commits.map((c, i) => ({
     sha: c.sha,
     v: i + 1,
@@ -598,11 +613,7 @@ function App() {
               : html`<article id="doc" key="doc-island" ref=${docRef}></article>`}
             <div id="margin-col" class="margin-col">
               ${zongpi && html`<${ZongpiCard} busy=${busy} onSend=${sendZongpi} onClose=${() => setZongpi(false)} />`}
-              ${docDrafts.sort((a, b) => a.line - b.line).map((d) => html`
-                <${DraftCard} key=${d.id} d=${d} doc=${docRef.current} editing=${editing === d.id}
-                  onEdit=${(id) => setEditing(id)} onSave=${saveDraft} onDrop=${dropDraft} />`)}
-              ${docThreads.map(({ t, blockLine, outdated }) => html`
-                <${ShownThread} key=${'c' + t.root.id} t=${t} blockLine=${blockLine} outdated=${outdated} />`)}
+              ${marginItems.map((m) => m.el)}
               ${others > 0 && html`<p class="margin-note">另有 ${others} 条朱批在此折其他文档</p>`}
             </div>
           </div>
@@ -624,7 +635,7 @@ function App() {
                         ${t.replies.map((r) => html`
                           <div class="anno-reply" key=${'o' + r.id}>
                             <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
-                            <div class="anno-shown-body">${A.parseCommentBody(r.body).body}</div>
+                            <div class="anno-shown-body">${r.body}</div>
                           </div>`)}
                       </div>`;
                   })}

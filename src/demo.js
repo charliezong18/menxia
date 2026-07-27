@@ -56,17 +56,17 @@ const COMMITS = [
 // 2 串已呈批注：一串带 agent 回话（in_reply_to_id 串到根），一串 outdated（line=null）
 const COMMENTS = [
   {
-    id: 101, path: 'docs/demo.md', line: 23, original_line: 23, in_reply_to_id: null,
+    id: 101, path: 'docs/demo.md', line: 20, original_line: 20, in_reply_to_id: null,
     user: { login: 'charlie' }, created_at: new Date(Date.now() - 30e5).toISOString(),
     body: '> 镜片随时可以摘掉，数据与循环全部留在 GitHub。\n\n这句放结尾太谦虚了，提到开头当卖点。',
   },
   {
-    id: 102, path: 'docs/demo.md', line: 23, original_line: 23, in_reply_to_id: 101,
+    id: 102, path: 'docs/demo.md', line: 20, original_line: 20, in_reply_to_id: 101,
     user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 24e5).toISOString(),
     body: '已接受：把「镜片可摘」挪到 Why 的第一句，结尾只留循环闭环。',
   },
   {
-    id: 103, path: 'docs/demo.md', line: null, original_line: 8, in_reply_to_id: null,
+    id: 103, path: 'docs/demo.md', line: null, original_line: 7, in_reply_to_id: null,
     user: { login: 'charlie' }, created_at: new Date(Date.now() - 20e5).toISOString(),
     body: '> 迁移到 Preact 之后\n\n这行在新版已经改写，锚定失效——保留看处理即可。',
   },
@@ -133,6 +133,7 @@ export async function autoAnnotate(docEl) {
   // 已呈串卡（安静墨色系，class .anno-shown）：demo 造了 1 串带回话（挂当前文档第 23 行）
   const shownCards = document.querySelectorAll('.anno-shown').length;
   console.log('[smoke] shown-thread-cards:', shownCards, '(expect >=1)');
+  console.log('[smoke] reply-cards:', document.querySelectorAll('.anno-reply').length, '(expect >=1)');
 
   // rev 切换器存在（3 个 rev → 至少 3 个选项）
   const revSwitch = document.querySelector('.rev-switch');
