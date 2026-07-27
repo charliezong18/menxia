@@ -356,3 +356,28 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .pr-item.pr-done::before { background: var(--ink-soft); opacity: .5; }
 .pr-item.pr-done h3 { color: var(--ink-soft); }
 .setup-forget { color: var(--cinnabar-deep); }
+
+/* ── 搜索 ── */
+.search-row { display: flex; gap: 6px; padding: 0 4px 10px; }
+.search-input {
+  flex: 1; padding: 8px 12px; font: 13.5px var(--sans); color: var(--ink);
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; outline: none;
+}
+.search-input:focus { border-color: var(--cinnabar); }
+.search-clear { padding: 6px 12px; font-size: 13px; flex: none; }
+.search-group { margin-bottom: 14px; }
+.search-group-title {
+  font-family: var(--songti); font-size: 13px; font-weight: 700;
+  color: var(--ink); padding: 0 6px 6px; line-height: 1.5;
+}
+.search-hit {
+  display: block; width: 100%; text-align: left;
+  padding: 8px 10px; border-radius: 8px; border: 1px solid transparent; margin-bottom: 4px;
+}
+.search-hit:hover { background: var(--hover); border-color: var(--rule); }
+.search-hit-meta { display: block; font-size: 11.5px; color: var(--ink-soft); margin-bottom: 2px; }
+.search-hit-snippet { display: block; font-size: 13px; line-height: 1.6; color: var(--ink); word-break: break-all; }
+
+/* 搜索跳转落点：闪一下定位（中性 chip 色——朱砂仍只属于批注动作） */
+@keyframes searchFlash { 0% { background: var(--chip); } 100% { background: transparent; } }
+.search-flash { animation: searchFlash 1.6s ease-out; }
