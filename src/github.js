@@ -140,6 +140,10 @@ export const submitReview = (num, { body = '', comments = [], commitId }) =>
     body: JSON.stringify({ event: 'COMMENT', body, comments, ...(commitId ? { commit_id: commitId } : {}) }),
   }).then((r) => r.json());
 
+// 已呈总批（会话区）——与 inline 批注串并列展示，否则总批只能发不能看
+export const listIssueComments = (num) =>
+  paged((page) => `/repos/${repoSlug()}/issues/${num}/comments?per_page=100&page=${page}`);
+
 // 总批 = 会话区 conversation comment
 export const createIssueComment = (num, body) =>
   request(`/repos/${repoSlug()}/issues/${num}/comments`, {

@@ -127,6 +127,7 @@ function App() {
   const [float, setFloat] = useState(null);      // pendingAnchor
   const [commits, setCommits] = useState([]);    // rev 序列 v1..vN（vN=head）
   const [comments, setComments] = useState([]);  // 已呈 inline review comments（扁平）
+  const [zongpis, setZongpis] = useState([]);    // 已呈总批（会话区），否则总批只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
 
@@ -203,6 +204,7 @@ function App() {
     setViewed(null);      // 每次开折先回 head：docPath 置 null 期间就位，与岛屿 effect 的 null→值中转契约不冲突
     setCommits([]);
     setComments([]);
+    setZongpis([]);
     setCur({ pr, files: null, docs: null });
     setDrafts(A.loadDrafts(pr.number));
     // 立刻清岛屿并示 loading：否则 listPRFiles 整个往返期间旧折正文挂着，
@@ -240,8 +242,11 @@ function App() {
   // 已呈批注串：开折拉一次、提交朱批成功后重拉一次（让刚呈的立即可见）。不轮询。
   async function loadComments(prNumber) {
     try {
-      const cs = await api.listPRComments(prNumber);
-      if (R.current.cur?.pr.number === prNumber) setComments(cs);
+      const [cs, zs] = await Promise.all([
+        api.listPRComments(prNumber),
+        api.listIssueComments ? api.listIssueComments(prNumber) : Promise.resolve([]),
+      ]);
+      if (R.current.cur?.pr.number === prNumber) { setComments(cs); setZongpis(zs); }
     } catch { /* 批注串拉失败不打断读折 */ }
   }
 
@@ -467,6 +472,7 @@ function App() {
     try {
       await api.createIssueComment(c.pr.number, v);
       setZongpi(false);
+      loadComments(c.pr.number); // 重拉：让刚呈的总批立刻显示在折首
       say('总批已呈——回 Happy 说「读批注」。');
     } catch (err) {
       say(`总批呈递失败：${err.message}`);
@@ -608,6 +614,15 @@ function App() {
             </div>`}
           ${cur && !onHead && html`
             <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
+          ${cur && zongpis.length > 0 && html`
+            <div class="zongpi-shown">
+              <div class="zongpi-shown-label">已呈总批 · ${zongpis.length}</div>
+              ${zongpis.map((z) => html`
+                <div class="zongpi-shown-item" key=${'z' + z.id}>
+                  <span class="anno-who">${z.user?.login || '?'}</span>
+                  <span class="zongpi-shown-body">${z.body}</span>
+                </div>`)}
+            </div>`}
           <div class="read-row">
             ${docErr ? html`<article id="doc"><p class="state err">${docErr}</p></article>`
               : html`<article id="doc" key="doc-island" ref=${docRef}></article>`}

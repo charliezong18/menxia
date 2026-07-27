@@ -324,3 +324,19 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   .anno-card { position: static; width: 100%; margin-bottom: 12px; }
   .anno-card::before { display: none; }
 }
+
+/* 已呈总批：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。 */
+.zongpi-shown {
+  margin: 0 0 20px 26px; padding: 12px 16px;
+  background: var(--paper-raised); border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink-soft); border-radius: 9px;
+}
+.zongpi-shown-label {
+  font-family: var(--songti); font-size: 12.5px; letter-spacing: .08em;
+  color: var(--ink-soft); margin-bottom: 8px;
+}
+.zongpi-shown-item { font-size: 14.5px; line-height: 1.7; margin-bottom: 6px; }
+.zongpi-shown-item:last-child { margin-bottom: 0; }
+.zongpi-shown-body { white-space: pre-wrap; }
+.zongpi-shown-item .anno-who { margin-right: 8px; }
+@media (max-width: 900px) { .zongpi-shown { margin-left: 0; } }

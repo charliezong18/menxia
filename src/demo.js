@@ -86,6 +86,11 @@ export const demoApi = {
   getFileText: async (_path, ref) => (ref && ref !== 'demo0000' ? DOC_OLD : DOC),
   getFileBlobUrl: async () => { throw new Error('demo 无图'); },
   listPRComments: async () => COMMENTS,
+  listIssueComments: async () => [{
+    id: 201, user: { login: 'charlie' },
+    created_at: new Date(Date.now() - 18e5).toISOString(),
+    body: '图好像有问题',
+  }],
   listPRCommits: async () => COMMITS,
   submitReview: async (num, payload) => { window.__lastReview = { num, payload }; console.log('[demo] submitReview', num, payload); return {}; },
   createIssueComment: async (num, body) => { console.log('[demo] 总批', num, body); return {}; },
@@ -182,6 +187,8 @@ export async function autoAnnotate(docEl) {
 
   // M3：已呈批注串 + 回话渲染
   chk('shown-threads>=1', document.querySelectorAll('.anno-shown').length >= 1);
+  // 已呈总批必须看得见（此前只能发不能看——Charlie 真机用出来的缺口）
+  chk('shown-zongpi-visible', document.querySelectorAll('.zongpi-shown-item').length >= 1);
   chk('reply-rendered>=1', document.querySelectorAll('.anno-reply').length >= 1);
 
   // 卡片排序：右缘卡必须按锚点行号递增（草稿与已呈串合并排序，否则串卡被压到天边）
