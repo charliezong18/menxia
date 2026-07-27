@@ -81,6 +81,10 @@ const failErr = () => Object.assign(new Error(`${FAIL} demo failure`), {
 export const demoApi = {
   verifyToken: async () => ({ repo: {}, canWrite: true, prAccess: true }),
   listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR]; },
+  listMergedPRs: async () => [{
+    ...PR, number: 998, title: '朱批 demo 折 · 已钦此（归档样例）',
+    merged_at: new Date(Date.now() - 864e5).toISOString(),
+  }],
   listPRFiles: async () => [{ filename: 'docs/demo.md', status: 'added', patch: PATCH }],
   // ref 落在旧 rev（非 head sha）时返回删节版，模拟版本间正文差异
   getFileText: async (_path, ref) => (ref && ref !== 'demo0000' ? DOC_OLD : DOC),
@@ -228,6 +232,33 @@ export async function autoAnnotate(docEl) {
   chk('cmd-enter-saves-draft', savedNotes >= 2, `notes=${savedNotes}`);
 
   // rev 切换器（3 个 rev）
+  // 归档视图：已钦此的折子有地方看，且点进去是只读
+  const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
+  chk('archive-tab-exists', Boolean(doneTab), doneTab?.textContent?.trim());
+  if (doneTab) {
+    doneTab.click(); await sleep(200);
+    chk('archive-has-items', document.querySelectorAll('#pr-list .pr-item').length >= 1);
+    document.querySelector('#pr-list .pr-item')?.click();
+    await sleep(800);
+    chk('archive-readonly-no-qinci', !document.querySelector('.btn-qinci'));
+    chk('archive-readonly-notice', (document.querySelector('.rev-notice')?.textContent || '').includes('归档'));
+    // 归档折上划句不该出浮批钮
+    const blk = [...document.querySelectorAll('#doc [data-line]')]
+      .find((x) => x.textContent.trim().length > 4);
+    if (blk) {
+      const r = document.createRange(); r.selectNodeContents(blk);
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      document.getElementById('doc').dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+      await sleep(200);
+    }
+    chk('archive-float-suppressed', !document.querySelector('.zhupi-float'));
+    // 切回待批继续后面的断言
+    [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('待批'))?.click();
+    await sleep(200);
+    document.querySelector('#pr-list .pr-item')?.click();
+    await sleep(900);
+  }
+
   chk('rev-switcher-3-opts', document.querySelectorAll('.rev-opt').length === 3,
     `opts=${document.querySelectorAll('.rev-opt').length}`);
 

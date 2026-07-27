@@ -33,7 +33,7 @@ async function detectNewBuild() {
 const isDoc = (f) => f.filename.endsWith('.md') && f.status !== 'removed';
 
 // ── 设置页 ──
-function Setup({ msg, onSave }) {
+function Setup({ msg, onSave, canCancel, onCancel, onForget }) {
   const [preview, setPreview] = useState(gh.parseRepoSlug(gh.getRepoSlug()) || '你上面填的那个仓库');
   const repoRef = useRef();
   const tokenRef = useRef();
@@ -59,6 +59,8 @@ function Setup({ msg, onSave }) {
           onKeyDown=${(e) => { if (e.key === 'Enter') submit(); }} />
         <div class="setup-actions">
           <button class="btn-primary" onClick=${submit}>存 钥</button>
+          ${canCancel && html`<button class="btn-ghost" onClick=${onCancel}>返回</button>`}
+          ${canCancel && html`<button class="btn-ghost setup-forget" onClick=${onForget}>清除钥匙</button>`}
           <span class=${'setup-msg' + (msg && msg !== '验钥中…' ? ' err' : '')}>${msg}</span>
         </div>
       </div>
@@ -146,15 +148,20 @@ function App() {
   const [zongpis, setZongpis] = useState([]);    // 已呈总批（会话区），否则总批只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
-  const [stale, setStale] = useState(false);     // 手上跑的是旧版（见 detectNewBuild）
+  const [stale, setStale] = useState(false);
+  const [tab, setTab] = useState('open');        // open=待批 / done=已钦此（归档，只读）
+  const [donePrs, setDonePrs] = useState([]);     // 手上跑的是旧版（见 detectNewBuild）
 
   const docRef = useRef(null);
+  const autoRan = useRef(false); // 冒烟只跑一次（切折会让 docTick 回到 1）
   // 全局监听器只绑一次，读最新状态走这面镜子
   const R = useRef({});
   // headSha / viewedRef 入镜：全局 mouseup 要据此判定「旧版只读 → 不出浮批」
   const headSha = cur?.pr?.head?.sha || null;
   const onHead = !viewed || viewed === headSha;
-  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead };
+  const archived = Boolean(cur?.pr?.merged_at);
+  const canAnnotate = onHead && !archived;      // 旧版 / 归档折一律只读
+  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate };
 
   const say = useCallback((t) => setNotice(t), []);
 
@@ -182,6 +189,7 @@ function App() {
     setNotice('');
     try {
       const list = await api.listOpenPRs();
+      if (api.listMergedPRs) api.listMergedPRs().then(setDonePrs).catch(() => {});
       setPrs(list);
       if (list.length && !R.current.cur) openPR(list[0]); // 在途中用户已手点开折子就别顶掉他
     } catch (err) {
@@ -305,7 +313,7 @@ function App() {
 
   // demo 自动划批（真实事件路径的冒烟）
   useEffect(() => {
-    if (DEMO && AUTO && docTick === 1) autoAnnotate(docRef.current);
+    if (DEMO && AUTO && docTick === 1 && !autoRan.current) { autoRan.current = true; autoAnnotate(docRef.current); }
   }, [docTick]);
 
   // ── 高亮 ──（旧版只读：不画草稿高亮，行号可能已漂移）
@@ -381,7 +389,7 @@ function App() {
     const onMouseUp = (e) => {
       if (e.target.closest('.zhupi-float, .anno-card, .zongpi-card')) return;
       if (e.target.closest('aside, .mainbar')) { if (R.current.float) setFloat(null); return; } // 点按钮也要收浮钮
-      if (!R.current.onHead) { if (R.current.float) setFloat(null); return; } // 旧版只读：不出浮批钮
+      if (!R.current.canAnnotate) { if (R.current.float) setFloat(null); return; } // 旧版/归档只读：不出浮批钮
       setTimeout(() => {
         const a = A.computeAnchor(docRef.current);
         setFloat(a ? { ...a, rect: { left: a.rect.right, top: a.rect.bottom } } : null);
@@ -449,6 +457,7 @@ function App() {
     const c = R.current.cur;
     const ds = R.current.drafts;
     if (!c || !ds.length || R.current.busy) return;
+    if (R.current.archived) return say('这折已钦此归档，只读——要再批就开新折。');
     if (!R.current.onHead) return say('正在读旧版——批注只能呈给最新版，先切回 head 再提交。');
     if (R.current.editing) return say('有一条朱批还在编辑：先「存批」或「作罢」它，再呈回。');
     const noteless = ds.filter((d) => !d.note.trim());
@@ -534,7 +543,10 @@ function App() {
 
   // ── 视图 ──
   if (phase === 'boot') return null;
-  if (phase === 'setup') return html`<${Setup} msg=${setupMsg} onSave=${onSaveToken} />`;
+  if (phase === 'setup') return html`<${Setup} msg=${setupMsg} onSave=${onSaveToken}
+    canCancel=${Boolean(gh.getToken() && gh.getRepoSlug())}
+    onCancel=${() => { setSetupMsg(''); setPhase('app'); if (!prs.length) loadPRs(); }}
+    onForget=${() => { gh.clearToken(); setSetupMsg('钥匙已清除。粘一把新的再进来。'); }} />`;
 
   const docDrafts = drafts.filter((d) => d.path === docPath);
   const others = drafts.length - docDrafts.length;
@@ -582,29 +594,35 @@ function App() {
     <div id="app">
       <aside>
         <div class="brand-row"><span class="seal">朱</span><span class="brand">御笔朱批</span></div>
-        <div class="sec-label">待批奏折 · ${prs.length}</div>
+        
+        <div class="list-tabs">
+          <button class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => setTab('open')}>待批 ${prs.length}</button>
+          <button class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => setTab('done')}>已钦此 ${donePrs.length}</button>
+        </div>
         <nav id="pr-list">
-          ${prs.length ? prs.map((pr) => html`
-            <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '')}
-              onClick=${() => openPR(pr)}>
-              <h3>${pr.title}</h3>
-              <div class="meta">#${pr.number} · 呈于 ${timeAgo(pr.updated_at)}</div>
-            </button>`) : html`<p class="state">此刻无折可批。</p>`}
+          ${(tab === 'open' ? prs : donePrs).length
+            ? (tab === 'open' ? prs : donePrs).map((pr) => html`
+              <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
+                onClick=${() => openPR(pr)}>
+                <h3>${pr.title}</h3>
+                <div class="meta">#${pr.number} · ${pr.merged_at ? `钦此于 ${timeAgo(pr.merged_at)}` : `呈于 ${timeAgo(pr.updated_at)}`}</div>
+              </button>`)
+            : html`<p class="state">${tab === 'open' ? '此刻无折可批。' : '还没有钦此过的折子。'}</p>`}
         </nav>
-        ${!DEMO && html`<button class="settings" onClick=${() => { gh.clearToken(); setPhase('setup'); setSetupMsg(''); }}>设置 · 钥匙</button>`}
+        ${!DEMO && html`<button class="settings" onClick=${() => { setPhase('setup'); setSetupMsg(''); }}>设置 · 钥匙</button>`}
       </aside>
       <main>
         <div class="mainbar">
           <span class="crumb">待批 ${cur ? html`/ <b>${cur.pr.title}</b>` : ''}</span>
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
-            ${cur && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
+            ${cur && !archived && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
             ${cur && drafts.length > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}
                 title=${onHead ? '' : '正在读旧版——先切回 head 再提交'} onClick=${submitAll}>
                 ${busy ? '呈递中…' : `提交朱批 · ${drafts.length}`}
               </button>`}
-            ${cur && html`<button class="btn-qinci" disabled=${busy || !onHead}
+            ${cur && !archived && html`<button class="btn-qinci" disabled=${busy || !onHead}
               title=${onHead ? '' : '正在读旧版——先切回 head 再钦此'} onClick=${qinci}>钦 此</button>`}
           </span>
         </div>
@@ -636,7 +654,9 @@ function App() {
                   </button>`)}
               </div>
             </div>`}
-          ${cur && !onHead && html`
+          ${cur && archived && html`
+            <p class="rev-notice">此折已钦此归档 · 只读（要再批就开新折）</p>`}
+          ${cur && !archived && !onHead && html`
             <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
           ${cur && zongpis.length > 0 && html`
             <div class="zongpi-shown">

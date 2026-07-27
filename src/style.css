@@ -344,3 +344,15 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 /* 旧版横幅：Pages 缓存 10 分钟，用户无从判断新旧——explicitly 告诉他 */
 .stale-banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .stale-reload { padding: 5px 14px; font-size: 13px; }
+
+/* 清单两栏：待批 / 已钦此（归档只读） */
+.list-tabs { display: flex; gap: 6px; padding: 0 4px 10px; }
+.list-tab {
+  flex: 1; padding: 6px 10px; border-radius: 8px; border: 1px solid transparent;
+  font-family: var(--songti); font-size: 13.5px; color: var(--ink-soft);
+}
+.list-tab:hover { color: var(--ink); }
+.list-tab.active { background: var(--chip); border-color: var(--rule); color: var(--ink); }
+.pr-item.pr-done::before { background: var(--ink-soft); opacity: .5; }
+.pr-item.pr-done h3 { color: var(--ink-soft); }
+.setup-forget { color: var(--cinnabar-deep); }

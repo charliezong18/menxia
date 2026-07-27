@@ -74,6 +74,12 @@ export async function verifyToken() {
 export const listOpenPRs = () =>
   json(`/repos/${repoSlug()}/pulls?state=open&per_page=50&sort=updated&direction=desc`);
 
+// 已钦此的折子（归档）：closed 里挑真正 merge 过的
+export const listMergedPRs = async () => {
+  const closed = await json(`/repos/${repoSlug()}/pulls?state=closed&per_page=50&sort=updated&direction=desc`);
+  return closed.filter((p) => p.merged_at);
+};
+
 // 分页取全，避免 >100 文件的 PR 漏掉正文
 export async function listPRFiles(num) {
   const out = [];
