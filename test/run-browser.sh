@@ -15,6 +15,10 @@ if [ -z "$CHROME" ] || [ ! -x "$CHROME" ]; then
   exit 0
 fi
 
+# CI 的容器里没有 user namespace，不加这两个 flag 的 Chrome 直接 core dump
+CI_FLAGS=()
+[ -n "${CI:-}" ] && CI_FLAGS=(--no-sandbox --disable-dev-shm-usage)
+
 PORT="${PORT:-4188}"
 python3 -m http.server "$PORT" >/dev/null 2>&1 &
 SERVER=$!
@@ -27,6 +31,7 @@ run_page() {
   local dir; dir="$(mktemp -d)"
   rm -f "$log"
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --enable-logging=stderr --v=0 \
+    "${CI_FLAGS[@]+"${CI_FLAGS[@]}"}" \
     --window-size=1440,1000 --virtual-time-budget="$budget" \
     --user-data-dir="$dir" --screenshot="$dir/shot.png" "$url" >/dev/null 2>"$log" &
   local pid=$!
