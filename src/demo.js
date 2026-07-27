@@ -72,20 +72,50 @@ const COMMENTS = [
   },
 ];
 
+// ?fail=401|403：让列表接口抛出 ApiError 形状，测消费层的分流（401 才清 token）
+const FAIL = new URLSearchParams(location.search).get('fail');
+const failErr = () => Object.assign(new Error(`${FAIL} demo failure`), {
+  status: +FAIL, tokenDead: FAIL === '401', rateLimited: FAIL === '403',
+});
+
 export const demoApi = {
   verifyToken: async () => ({ repo: {}, canWrite: true, prAccess: true }),
-  listOpenPRs: async () => [PR],
+  listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR]; },
   listPRFiles: async () => [{ filename: 'docs/demo.md', status: 'added', patch: PATCH }],
   // ref 落在旧 rev（非 head sha）时返回删节版，模拟版本间正文差异
   getFileText: async (_path, ref) => (ref && ref !== 'demo0000' ? DOC_OLD : DOC),
   getFileBlobUrl: async () => { throw new Error('demo 无图'); },
   listPRComments: async () => COMMENTS,
   listPRCommits: async () => COMMITS,
-  submitReview: async (num, payload) => { console.log('[demo] submitReview', num, payload); return {}; },
+  submitReview: async (num, payload) => { window.__lastReview = { num, payload }; console.log('[demo] submitReview', num, payload); return {}; },
   createIssueComment: async (num, body) => { console.log('[demo] 总批', num, body); return {}; },
   mergePR: async (num, sha) => { console.log('[demo] 钦此', num, sha); return {}; },
   markReady: async () => {},
 };
+
+if (FAIL) {
+  localStorage.setItem('zhupi.token', 'github_pat_demo_token');
+  localStorage.setItem('zhupi.repo', 'demo/repo');
+  setTimeout(() => {
+    let pass = 0, fail = 0;
+    const chk = (name, cond, detail = '') => {
+      cond ? pass++ : fail++;
+      console.log(`[smoke] ${cond ? 'PASS' : 'FAIL'} ${name}${detail ? ` — ${detail}` : ''}`);
+    };
+    const onSetup = Boolean(document.getElementById('setup'));
+    const tokenLeft = Boolean(localStorage.getItem('zhupi.token'));
+    if (FAIL === '403') {
+      // 限流：绝不能清钥匙、也不该把人踢回设置页（历史上误删过有效 token）
+      chk('403-keeps-token', tokenLeft);
+      chk('403-stays-in-app', !onSetup);
+      chk('403-shows-notice', Boolean(document.querySelector('.notice, .state.err')));
+    } else {
+      chk('401-clears-token', !tokenLeft);
+      chk('401-back-to-setup', onSetup);
+    }
+    console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
+  }, 1200);
+}
 
 // 自动演示：用真实的 Selection + mouseup + 按钮点击走完「划句 → 存批」两轮
 export async function autoAnnotate(docEl) {
@@ -158,9 +188,37 @@ export async function autoAnnotate(docEl) {
   const tops = [...document.querySelectorAll('#margin-col .anno-card')]
     .map((el) => ({ line: +el.dataset.blockLine || 0, top: parseFloat(el.style.top) || 0 }))
     .filter((x) => x.line);
+  chk('margin-cards-present', tops.length >= 4, `n=${tops.length}`); // 防空集假绿：属性没了 every() 恒真
   const sortedByLine = [...tops].sort((a, b) => a.line - b.line);
   chk('margin-cards-ordered', sortedByLine.every((x, i, arr) => i === 0 || x.top >= arr[i - 1].top),
     JSON.stringify(sortedByLine));
+
+  // ⌘Enter 在批注框里只该「存批」，绝不能把整批呈出去（历史阻断级 bug：事件冒泡到全局监听器）
+  const editingTa = document.querySelector('.anno-input');
+  if (editingTa) {
+    editingTa.focus();
+    editingTa.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', metaKey: true, bubbles: true }));
+    await sleep(200);
+  }
+  chk('cmd-enter-in-draft-card-not-submit', !window.__lastReview);
+
+  // 真暴露面：总批输入框没有自己的 keydown 处理，⌘Enter 从这里直冲全局监听器
+  // （写总批写到一半把攒着的 inline 草稿全发出去——第二轮评审点名的第二触发面）
+  [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('总批'))?.click();
+  await sleep(200);
+  const zongpiTa = document.querySelector('.zongpi-card .anno-input');
+  chk('zongpi-card-open', Boolean(zongpiTa));
+  if (zongpiTa) {
+    zongpiTa.focus();
+    zongpiTa.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', metaKey: true, bubbles: true }));
+    await sleep(250);
+  }
+  chk('cmd-enter-in-zongpi-not-submit', !window.__lastReview);
+  [...document.querySelectorAll('.anno-ghost')].find((b) => b.textContent.includes('作罢'))?.click();
+  await sleep(150);
+  const savedNotes = (JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items || [])
+    .filter((d) => d.note && d.note.trim()).length;
+  chk('cmd-enter-saves-draft', savedNotes >= 2, `notes=${savedNotes}`);
 
   // rev 切换器（3 个 rev）
   chk('rev-switcher-3-opts', document.querySelectorAll('.rev-opt').length === 3,
@@ -190,6 +248,27 @@ export async function autoAnnotate(docEl) {
   chk('old-rev-float-suppressed', !document.querySelector('.zhupi-float'));
   const submitBtn = document.querySelector('.btn-submit');
   chk('old-rev-submit-disabled', !submitBtn || submitBtn.disabled);
+
+  // 旧版下走键盘路径也必须被挡（按钮 disabled 挡不住 ⌘Enter 直呼 submitAll）
+  document.body.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', metaKey: true, bubbles: true }));
+  await sleep(200);
+  chk('old-rev-cmd-enter-blocked', !window.__lastReview);
+
+  // 切回 head 后真点一次「提交朱批」——覆盖提交管线最后一公里：
+  // hunk gate 装配 / commit_id / 行号集合 / 成功后清草稿
+  const opts = [...document.querySelectorAll('.rev-opt')];
+  opts[opts.length - 1]?.click();
+  await sleep(600);
+  document.querySelector('.btn-submit')?.click();
+  await sleep(500);
+  const sent = window.__lastReview;
+  chk('submit-fired', Boolean(sent));
+  const lines = (sent?.payload?.comments || []).map((c) => c.line).sort((a, b) => a - b);
+  chk('submit-line-set', JSON.stringify(lines) === '[16,20]', `lines=${JSON.stringify(lines)}`);
+  chk('submit-commit-id', sent?.payload?.commitId === 'demo0000', `commitId=${sent?.payload?.commitId}`);
+  chk('submit-body-nonempty', Boolean(sent?.payload?.body));
+  const leftover = JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items?.length ?? -1;
+  chk('drafts-cleared-after-submit', leftover === 0, `leftover=${leftover}`);
 
   console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
 }
