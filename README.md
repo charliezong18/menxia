@@ -15,7 +15,7 @@ AI 产出的阅读批注台。agent 把长文档当「奏折」以 draft PR 呈�
 - **M3 闭环** ⏳ 批注串与回话展示、钦此
 - v1：移动端 + PWA｜北极星：diff 奏折（代码 PR 同一入口）
 
-Spec: [`SPEC.md`](SPEC.md)（含 §8.1 架构切换 breakpoint）· 迁移观察：[`MIGRATION-WATCH.md`](MIGRATION-WATCH.md)
+Spec: [`SPEC.md`](SPEC.md)（含 §8.1 架构切换 breakpoint）· 迁移观察：[`MIGRATION-WATCH.md`](MIGRATION-WATCH.md) · 未排期构想：[`BACKLOG.md`](BACKLOG.md)（折首摘要 / 臣拟朱批 / 一键认同）
 
 ## Setup · 用法
 
