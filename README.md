@@ -12,7 +12,7 @@ AI 产出的阅读批注台。agent 把长文档当「奏折」以 draft PR 呈�
 
 - **M1 骨架** ✅ 钥匙设置 / 待批清单 / 渲染阅读
 - **M2 朱批** ✅ 划选 → 右缘批注栏攒批 → 一键呈回（含总批；提交前 hunk 校验防 422 全灭）
-- **M3 闭环** ⏳ 批注串与回话展示、钦此、rev 版本切换
+- **M3 闭环** ⏳ 批注串与回话展示、rev 版本切换（**钦此 ✅ 已上**：墨色按钮，squash merge，draft 折自动先转 ready）
 - v1：移动端 + PWA｜北极星：diff 奏折（代码 PR 同一入口）
 
 Spec: [`SPEC.md`](SPEC.md)（含 §8.1 架构切换 breakpoint）· 迁移观察：[`MIGRATION-WATCH.md`](MIGRATION-WATCH.md) · 未排期构想：[`BACKLOG.md`](BACKLOG.md)（折首摘要 / 臣拟朱批 / 一键认同）
