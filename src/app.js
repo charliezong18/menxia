@@ -1,5 +1,6 @@
 // 御笔朱批 M1 —— 钥匙设置 / 待批清单 / 渲染阅读
 import * as gh from './github.js';
+import * as annotate from './annotate.js';
 import { renderMarkdown, hydrateRelativeImages } from './render.js';
 
 const $ = (id) => document.getElementById(id);
@@ -83,6 +84,7 @@ function timeAgo(iso) {
 async function openPR(pr) {
   state.current = pr;
   renderList();
+  annotate.detach();
   $('crumb').replaceChildren('待批 / ', Object.assign(document.createElement('b'), { textContent: pr.title }));
   const mine = ++generation;
   const doc = $('doc');
@@ -91,6 +93,7 @@ async function openPR(pr) {
   try {
     const files = await gh.listPRFiles(pr.number);
     if (mine !== generation) return;
+    state.filesAll = files;
     state.docs = files.filter((f) => f.filename.endsWith('.md') && f.status !== 'removed');
     if (!state.docs.length) {
       doc.replaceChildren(stateLine('此折无 markdown 正文（代码 PR 的 diff 视图在北极星里）。'));
@@ -132,6 +135,8 @@ async function openDoc(path, mine) {
     doc.dataset.path = path;
     doc.dataset.ref = ref;
     await hydrateRelativeImages(doc, { docPath: path, ref, fetchBlobUrl: gh.getFileBlobUrl });
+    if (mine !== generation) return;
+    annotate.attach({ pr: state.current, files: state.filesAll, path, ref, doc });
   } catch (err) {
     if (mine !== generation) return;
     doc.replaceChildren(stateLine(`展折失败：${err.message}`, true));
@@ -166,6 +171,7 @@ async function boot() {
   }
 }
 
+annotate.init({ onNotice: setNotice });
 $('token-save').onclick = saveToken;
 $('token-input').onkeydown = (e) => { if (e.key === 'Enter') saveToken(); };
 $('refresh-btn').onclick = async () => {
