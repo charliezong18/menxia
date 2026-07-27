@@ -20,7 +20,7 @@ jobs:
       - run: ls test/*.test.js
       - run: node --test test/*.test.js 2>&1 | tee /tmp/unit.log
       - name: 断言真的跑了测试（防 glob 落空静默绿）
-        run: grep -qE '^. tests [1-9]' /tmp/unit.log
+        run: grep -qE '[[:space:]]tests[[:space:]]+[1-9]' /tmp/unit.log
 
   browser:
     name: 浏览器（DOM 单元 + 端到端冒烟）

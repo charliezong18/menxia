@@ -175,10 +175,18 @@ No test framework, no `npm install`, no config file. Unit tests use `node --test
 and end-to-end layers run in headless Chrome and fail the build on a non-zero exit. CI runs
 both on every push ([workflow](.github/workflows/test.yml)).
 
-**CI here is an alarm, not a gate.** This is a single-person repo with no branch protection:
-a push lands on `main` and Pages deploys it in parallel with the test run. A bad commit is
-always deployed first and reported second. The only real gate is running `test/run.sh` before
-you push — or moving to a PR flow with a required check, which this repo deliberately hasn't.
+**The gate is a pre-push hook; CI is the second opinion.** This is a single-person repo with no
+branch protection — a push lands on `main` and Pages deploys it *in parallel* with the test run,
+so CI alone would always report a bad commit after it was already live. So the real gate runs
+before the push:
+
+```bash
+git config core.hooksPath .githooks   # once per clone
+```
+
+`.githooks/pre-push` runs the full suite when the push touches code, unit-only when it's
+docs-only (a typo fix shouldn't cost 90 seconds), and refuses the push on red — printing which
+assertion failed. `git push --no-verify` is the escape hatch when you mean it.
 
 What's actually covered: the hunk validator (a wrong line number 422s the entire batch),
 the anchoring line math (fence `+1`, indented block `+0`, per-table-row), comment threading,

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# 真闸门：push 前跑测试，红了不让推。
+#
+# 为什么在这一层：这个仓 push 即部署（Pages branch-deploy），GitHub Actions 与部署并行，
+# 坏提交永远是"先上线、后报警"。CI 是告警，这个 hook 才是闸门。
+#
+# 启用（fork 走的人做一次）：git config core.hooksPath .githooks
+# 逃生门：git push --no-verify（自己知道在干嘛的时候用，比如推纯文档的紧急修复）
+set -uo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+REMOTE_REF="${1:-origin}"
+# 这次 push 实际带过去的文件：远端有对应分支就比 diff，没有就拿整棵树当新分支处理
+BASE="$(git rev-parse --verify --quiet "refs/remotes/$REMOTE_REF/$(git branch --show-current)" || true)"
+if [ -n "$BASE" ]; then
+  CHANGED="$(git diff --name-only "$BASE"..HEAD)"
+else
+  CHANGED="$(git ls-files)"
+fi
+
+# 只动文档就别跑 90 秒的浏览器层——闸门要挡的是代码，不是错别字
+CODE_TOUCHED="$(echo "$CHANGED" | grep -E '^(src/|index\.html|vendor/|test/|\.githooks/)' || true)"
+
+echo "── pre-push 闸门 ──"
+if [ -z "$CODE_TOUCHED" ]; then
+  echo "本次只动文档，跑单元层即可（代码层跳过）"
+  if ! node --test test/*.test.js >/tmp/zhupi-prepush.log 2>&1; then
+    tail -20 /tmp/zhupi-prepush.log
+    echo "✖ 单元测试红了，push 中止。（确要推：git push --no-verify）"
+    exit 1
+  fi
+  grep -qE '[[:space:]]tests[[:space:]]+[1-9]' /tmp/zhupi-prepush.log || {
+    echo "✖ 一个测试都没跑到（glob 落空？），push 中止。"; exit 1; }
+  echo "✔ 单元层通过，放行"
+  exit 0
+fi
+
+echo "本次动了代码，全量跑（约 90 秒；纯文档 push 会自动跳过这段）"
+if ! ./test/run.sh >/tmp/zhupi-prepush.log 2>&1; then
+  echo "── 失败详情 ──"
+  grep -E '✖|FAIL|not ok|✖ ' /tmp/zhupi-prepush.log | head -20
+  echo "（完整日志 /tmp/zhupi-prepush.log）"
+  echo "✖ 测试红了，push 中止——这个仓 push 即部署，不让坏代码先上线。"
+  echo "  确要推：git push --no-verify"
+  exit 1
+fi
+echo "✔ 全部通过（unit + dom + smoke + 故障注入），放行"
