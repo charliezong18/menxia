@@ -14,6 +14,22 @@ const DEMO = params.get('demo') === '1';
 const AUTO = params.get('auto') === '1';
 const api = DEMO ? demoApi : gh;
 
+// Pages 发 max-age=600 且模块 URL 无版本号 → 手机上可能跑着 10 分钟前的旧代码，
+// 而用户无从判断新旧。启动时强制回源取一遍源码算指纹，与上次记录比：变了就提示刷新。
+// cache:'reload' 同时把新文件写进 HTTP 缓存，所以点刷新立刻生效。
+const BUILD_FILES = ['src/ui.js', 'src/style.css', 'src/github.js', 'src/anchor.js', 'src/render.js'];
+async function detectNewBuild() {
+  try {
+    const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
+    let h = 7;
+    for (const t of texts) for (let i = 0; i < t.length; i++) h = (h * 31 + t.charCodeAt(i)) | 0;
+    const sig = String(h);
+    const prev = localStorage.getItem('zhupi.build');
+    localStorage.setItem('zhupi.build', sig);
+    return Boolean(prev && prev !== sig);
+  } catch { return false; }
+}
+
 const isDoc = (f) => f.filename.endsWith('.md') && f.status !== 'removed';
 
 // ── 设置页 ──
@@ -130,6 +146,7 @@ function App() {
   const [zongpis, setZongpis] = useState([]);    // 已呈总批（会话区），否则总批只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
+  const [stale, setStale] = useState(false);     // 手上跑的是旧版（见 detectNewBuild）
 
   const docRef = useRef(null);
   // 全局监听器只绑一次，读最新状态走这面镜子
@@ -149,6 +166,8 @@ function App() {
       return nd;
     });
   }, []);
+
+  useEffect(() => { if (!DEMO) detectNewBuild().then(setStale); }, []);
 
   // ── 启动 ──
   useEffect(() => {
@@ -589,6 +608,11 @@ function App() {
               title=${onHead ? '' : '正在读旧版——先切回 head 再钦此'} onClick=${qinci}>钦 此</button>`}
           </span>
         </div>
+        ${stale && html`
+          <p class="notice stale-banner">
+            有新版已部署，你手上这份是旧的（Pages 缓存 10 分钟）
+            <button class="btn-ghost stale-reload" onClick=${() => location.reload()}>刷新用新版</button>
+          </p>`}
         ${notice && html`<p class="notice">${notice}</p>`}
         <div class="work">
           ${cur?.docs?.length > 1 && html`
