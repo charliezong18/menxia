@@ -68,6 +68,22 @@ export const getFileText = (path, ref) =>
   request(`/repos/${repoSlug()}/contents/${encodePath(path)}?ref=${encodeURIComponent(ref)}`,
     { accept: 'application/vnd.github.raw' }).then((r) => r.text());
 
+// 一次性提交整批朱批（原子：任一行号非法整批 422，调用方需先本地校验）
+export const submitReview = (num, { body = '', comments = [] }) =>
+  request(`/repos/${repoSlug()}/pulls/${num}/reviews`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ event: 'COMMENT', body, comments }),
+  }).then((r) => r.json());
+
+// 总批 = 会话区 conversation comment
+export const createIssueComment = (num, body) =>
+  request(`/repos/${repoSlug()}/issues/${num}/comments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ body }),
+  }).then((r) => r.json());
+
 // 私有仓的 raw.githubusercontent 不带凭证取不到（实测 404），图片必须走 API 拿 blob
 export const getFileBlobUrl = (path, ref) =>
   request(`/repos/${repoSlug()}/contents/${encodePath(path)}?ref=${encodeURIComponent(ref)}`,

@@ -47,12 +47,17 @@
       <span class="crumb" id="crumb">待批</span>
       <span class="actions">
         <button id="refresh-btn" class="btn-ghost">刷新</button>
+        <button id="zongpi-btn" class="btn-ghost" hidden>总批</button>
+        <button id="submit-btn" class="btn-primary btn-submit" hidden>提交朱批</button>
       </span>
     </div>
     <p id="notice" class="notice" hidden></p>
     <div class="work">
       <div id="doc-tabs" class="doc-tabs" hidden></div>
-      <article id="doc"></article>
+      <div class="read-row">
+        <article id="doc"></article>
+        <div id="margin-col" class="margin-col"></div>
+      </div>
     </div>
   </main>
 </div>
