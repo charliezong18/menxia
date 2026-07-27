@@ -181,7 +181,7 @@
 
 - **只有出现在 PR diff 里的行才能建 inline comment**，否则 422。现在能成立是因为奏折是 PR 新增的文件（整份文件都在 diff 里）——这是隐含前提；北极星的代码 PR（修改已有文件）第一天就会撞墙。
 - **提交评审是原子的**：`POST /pulls/{n}/reviews` 里任何一条 comment 行号非法，整批朱批全灭。所以提交前必须本地校验——`listPRFiles` 返回的 `patch` 字段解析 hunk 即知哪些行可批，非法的自动降级为总批。
-- **draft PR 不能 merge**，「钦此」前要先 mark ready；REST 改不了 draft 字段，要走 GraphQL，而 fine-grained PAT 对 GraphQL 的支持**需实测**。若不通，最省的解法是协议里放弃 draft（私有单人仓的 draft 本来没换来什么）。
+- **draft PR 不能 merge**，「钦此」前要先 mark ready；REST 改不了 draft 字段，要走 GraphQL，而 fine-grained PAT 对 GraphQL 的支持**需实测**。若不通，最省的解法是协议里放弃 draft（私有单人仓的 draft 本来没换来什么）。**✅ 已处置（2026-07-26）：review-loop 惯例弃用 draft（新折一律普通 PR）；app 对存量 draft 折先试 GraphQL markReady 再 merge，失败给出回 Happy 的兜底话术。**
 
 ## §10 里程碑（每步交付试玩链接）
 
