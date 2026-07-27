@@ -206,7 +206,57 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .anno-save:hover { background: var(--cinnabar-deep); }
 .margin-note { position: absolute; bottom: -8px; font-size: 12px; color: var(--ink-soft); }
 .btn-submit { font-size: 13.5px; padding: 8px 18px; letter-spacing: .05em; }
-.btn-submit:disabled { opacity: .6; }
+.btn-submit:disabled { opacity: .6; cursor: not-allowed; }
+
+/* ── M3：已呈批注串（墨色安静系；朱砂只留给草稿）── */
+.anno-shown {
+  background: rgba(251, 247, 238, .5);
+  border-color: var(--rule);
+  box-shadow: 0 1px 4px rgba(38, 33, 26, .05);
+}
+.anno-shown::before { background: var(--ink-soft); opacity: .35; } /* 连接线用墨不用朱 */
+.anno-quote-shown {
+  border-left: 3px solid var(--ink-soft); padding: 2px 2px 2px 10px;
+  font-family: var(--songti); font-size: 13px; line-height: 1.6; margin-bottom: 6px;
+  color: var(--ink-soft);
+}
+.anno-who { font-weight: 600; color: var(--ink); }
+.anno-outdated {
+  margin-left: 8px; padding: 0 6px; border-radius: 4px; font-size: 11px;
+  border: 1px solid var(--rule); color: var(--ink-soft);
+}
+.anno-path { margin-left: 8px; font: 11px var(--mono); color: var(--ink-soft); }
+.anno-shown-body { font-size: 13px; line-height: 1.65; color: var(--ink); white-space: pre-wrap; }
+.anno-reply {
+  margin-top: 9px; padding-left: 11px; border-left: 2px solid var(--rule);
+}
+.anno-reply-who { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 3px; }
+
+/* ── M3：rev 版本切换 ── */
+.rev-row { display: flex; align-items: center; gap: 10px; margin: 0 0 18px 26px; flex-wrap: wrap; }
+.rev-label { font-family: var(--songti); font-size: 12.5px; color: var(--ink-soft); letter-spacing: .08em; }
+.rev-switch { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.rev-opt {
+  padding: 5px 12px; border-radius: 999px; border: 1px solid var(--rule);
+  background: var(--paper-raised); font: 12px var(--mono); color: var(--ink-soft);
+}
+.rev-opt:hover { color: var(--ink); }
+.rev-opt.active { border-color: var(--ink); color: var(--ink); background: rgba(228, 218, 198, .3); }
+.rev-notice {
+  margin: 0 0 16px 26px; padding: 7px 13px; font-size: 12.5px;
+  background: rgba(122, 112, 98, .08); border: 1px solid var(--rule); border-radius: 8px;
+  color: var(--ink-soft);
+}
+
+/* ── M3：其他文档 / 无法定位的串（折叠组，静态流式不参与对齐）── */
+.other-threads { margin: 30px 0 0 26px; max-width: 680px; }
+.other-threads-toggle {
+  font-family: var(--songti); font-size: 13px; color: var(--ink-soft); letter-spacing: .05em; padding: 4px 0;
+}
+.other-threads-toggle:hover { color: var(--ink); }
+.other-threads-list { margin-top: 12px; display: flex; flex-direction: column; gap: 12px; }
+.anno-static { position: static; width: 100%; }
+.anno-static::before { display: none; }
 
 /* 钦此用墨不用朱：朱砂只属于批注动作（评审定的规矩） */
 .btn-qinci {

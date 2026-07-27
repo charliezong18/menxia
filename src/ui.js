@@ -2,7 +2,7 @@
 // 免构建形态：htm/preact standalone vendored，push 即部署的性质不变。
 // 纯逻辑（锚定/hunk/草稿）在 anchor.js，API 在 github.js，渲染在 render.js——迁移零改动。
 import {
-  html, render, useState, useEffect, useLayoutEffect, useRef, useCallback,
+  html, render, useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo,
 } from '../vendor/preact-standalone.mjs';
 import * as gh from './github.js';
 import { renderMarkdown, hydrateRelativeImages } from './render.js';
@@ -76,6 +76,29 @@ function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
     </div>`;
 }
 
+// 已呈批注串（墨色安静系，视觉降一档；朱砂只留给草稿的活跃态）
+// blockLine 用串的源文件行号（line ?? original_line）直接当锚，参与 layoutCards 对齐
+function ShownThread({ t, blockLine, outdated }) {
+  const { quote, body } = A.parseCommentBody(t.root.body);
+  return html`
+    <div class="anno-card anno-shown" data-block-line=${blockLine} key=${'c' + t.root.id}>
+      ${quote && html`<div class="anno-quote-shown">「${quote}」</div>`}
+      <div class="anno-src">
+        <span class="anno-who">${t.root.user?.login || '?'}</span>
+        ${outdated ? html`<span class="anno-outdated" title="此行已随新版漂移">旧</span>` : ''}
+      </div>
+      <div class="anno-shown-body">${body}</div>
+      ${t.replies.map((r) => {
+        const rp = A.parseCommentBody(r.body);
+        return html`
+          <div class="anno-reply" key=${'c' + r.id}>
+            <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
+            <div class="anno-shown-body">${rp.body}</div>
+          </div>`;
+      })}
+    </div>`;
+}
+
 function ZongpiCard({ busy, onSend, onClose }) {
   const taRef = useRef();
   useEffect(() => { setTimeout(() => taRef.current?.focus(), 0); }, []);
@@ -105,11 +128,18 @@ function App() {
   const [zongpi, setZongpi] = useState(false);
   const [busy, setBusy] = useState(false);
   const [float, setFloat] = useState(null);      // pendingAnchor
+  const [commits, setCommits] = useState([]);    // rev 序列 v1..vN（vN=head）
+  const [comments, setComments] = useState([]);  // 已呈 inline review comments（扁平）
+  const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
+  const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
 
   const docRef = useRef(null);
   // 全局监听器只绑一次，读最新状态走这面镜子
   const R = useRef({});
-  R.current = { cur, drafts, editing, busy, float, docPath };
+  // headSha / viewedRef 入镜：全局 mouseup 要据此判定「旧版只读 → 不出浮批」
+  const headSha = cur?.pr?.head?.sha || null;
+  const onHead = !viewed || viewed === headSha;
+  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead };
 
   const say = useCallback((t) => setNotice(t), []);
 
@@ -173,6 +203,9 @@ function App() {
     setDocErr(null);
     setDocPath(null);
     setDocTick(0);
+    setViewed(null);      // 每次开折先回 head：docPath 置 null 期间就位，与岛屿 effect 的 null→值中转契约不冲突
+    setCommits([]);
+    setComments([]);
     setCur({ pr, files: null, docs: null });
     setDrafts(A.loadDrafts(pr.number));
     // 立刻清岛屿并示 loading：否则 listPRFiles 整个往返期间旧折正文挂着，
@@ -197,12 +230,32 @@ function App() {
         setDocErr(`展折失败：${err.message}`);
       }
     })();
+    // rev 序列 + 已呈批注串：与正文并行拉，各自带世界守卫，失败不影响读折主线
+    (async () => {
+      try {
+        const cs = await api.listPRCommits(pr.number);
+        if (R.current.cur?.pr.number === pr.number) setCommits(cs);
+      } catch { /* rev 拉不到就只读 head，不报错打断 */ }
+    })();
+    loadComments(pr.number);
+  }
+
+  // 已呈批注串：开折拉一次、提交朱批成功后重拉一次（让刚呈的立即可见）。不轮询。
+  async function loadComments(prNumber) {
+    try {
+      const cs = await api.listPRComments(prNumber);
+      if (R.current.cur?.pr.number === prNumber) setComments(cs);
+    } catch { /* 批注串拉失败不打断读折 */ }
   }
 
   // ── 文档岛屿：内容不归 vdom 管，effect 负责取文与注入；cleanup 即世代守卫 ──
+  // viewed 纳入依赖 → 切 rev 触发重取。openPR 里 viewed 在 setDocPath(null) 之前先归 null，
+  // 故新折展开时 docPath null→值 的中转期间 viewed 已是 head，effect（docPath 为空即 return）
+  // 只在 docPath 就位那一拍以正确的 ref 跑一次，不会拿旧 rev 去打新折。
   useEffect(() => {
     const el = docRef.current;
     if (!el || !cur?.pr || !docPath) return;
+    const ref = viewed || cur.pr.head.sha; // null=head
     let dead = false;
     el.replaceChildren();
     const p = document.createElement('p');
@@ -211,10 +264,10 @@ function App() {
     el.appendChild(p);
     (async () => {
       try {
-        const text = await api.getFileText(docPath, cur.pr.head.sha);
+        const text = await api.getFileText(docPath, ref);
         if (dead) return;
         el.innerHTML = renderMarkdown(text);
-        await hydrateRelativeImages(el, { docPath, ref: cur.pr.head.sha, fetchBlobUrl: api.getFileBlobUrl });
+        await hydrateRelativeImages(el, { docPath, ref, fetchBlobUrl: api.getFileBlobUrl });
         if (dead) return;
         setDocTick((t) => t + 1);
       } catch (err) {
@@ -227,19 +280,19 @@ function App() {
       }
     })();
     return () => { dead = true; };
-  }, [cur?.pr?.number, docPath]);
+  }, [cur?.pr?.number, docPath, viewed]);
 
   // demo 自动划批（真实事件路径的冒烟）
   useEffect(() => {
     if (DEMO && AUTO && docTick === 1) autoAnnotate(docRef.current);
   }, [docTick]);
 
-  // ── 高亮 ──
+  // ── 高亮 ──（旧版只读：不画草稿高亮，行号可能已漂移）
   useEffect(() => {
     if (!('highlights' in CSS)) return;
     const doc = docRef.current;
     const hl = new Highlight();
-    if (doc && docTick > 0) {
+    if (doc && docTick > 0 && onHead) {
       drafts.filter((d) => d.path === docPath).forEach((d) => {
         const r = A.rangeForDraft(doc, d);
         if (r) hl.add(r);
@@ -247,9 +300,22 @@ function App() {
     }
     CSS.highlights.set('zhupi-draft', hl);
     return () => CSS.highlights.delete('zhupi-draft');
-  }, [drafts, docTick, docPath]);
+  }, [drafts, docTick, docPath, onHead]);
 
   // ── 批注卡对齐（图片/字体异步加载改块高 → ResizeObserver 重排）──
+  // 退化对齐（评审取舍）：草稿卡的 blockLine 精确命中某个 [data-line]；已呈批注串的
+  // blockLine 是「源文件行号」，块级 data-line 不一定精确命中 → 找 data-line ≤ 目标行的最近块
+  // 挂靠（列表/表格内的行落在其容器块上，语义足够近）。二选一里取「就近向上」而非「最接近」，
+  // 理由：向上挂靠保证卡片不会跑到被批句子的上方，读起来锚点永远在卡片视线的同高或稍上。
+  const blockTops = useMemo(() => {
+    const doc = docRef.current;
+    if (!doc) return [];
+    return [...doc.querySelectorAll('[data-line]')]
+      .map((el) => ({ line: +el.dataset.line, el }))
+      .filter((x) => x.line)
+      .sort((a, b) => a.line - b.line);
+  }, [docTick]);
+
   const layoutCards = useCallback(() => {
     const col = document.getElementById('margin-col');
     const doc = docRef.current;
@@ -258,18 +324,23 @@ function App() {
     let prevBottom = 0;
     [...col.children].forEach((card) => {
       let top = prevBottom + 12;
-      const line = card.dataset.blockLine;
+      const line = +card.dataset.blockLine;
       if (line) {
-        const block = doc.querySelector(`[data-line="${line}"]`);
+        let block = doc.querySelector(`[data-line="${line}"]`);
+        if (!block) { // 退化：最近的 data-line ≤ line 的块
+          let cand = null;
+          for (const b of blockTops) { if (b.line <= line) cand = b.el; else break; }
+          block = cand;
+        }
         if (block) top = Math.max(block.getBoundingClientRect().top - colRect.top, prevBottom + 12);
       }
       card.style.top = `${Math.max(top, 0)}px`;
       prevBottom = Math.max(top, 0) + card.offsetHeight;
     });
     col.style.minHeight = `${prevBottom + 20}px`;
-  }, []);
+  }, [blockTops]);
 
-  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick]);
+  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick, comments, viewed, layoutCards]);
   useEffect(() => {
     if (typeof ResizeObserver === 'undefined' || !docRef.current) return;
     const ro = new ResizeObserver(() => layoutCards());
@@ -288,6 +359,7 @@ function App() {
     const onMouseUp = (e) => {
       if (e.target.closest('.zhupi-float, .anno-card, .zongpi-card')) return;
       if (e.target.closest('aside, .mainbar')) { if (R.current.float) setFloat(null); return; } // 点按钮也要收浮钮
+      if (!R.current.onHead) { if (R.current.float) setFloat(null); return; } // 旧版只读：不出浮批钮
       setTimeout(() => {
         const a = A.computeAnchor(docRef.current);
         setFloat(a ? { ...a, rect: { left: a.rect.right, top: a.rect.bottom } } : null);
@@ -355,6 +427,7 @@ function App() {
     const c = R.current.cur;
     const ds = R.current.drafts;
     if (!c || !ds.length || R.current.busy) return;
+    if (!R.current.onHead) return say('正在读旧版——批注只能呈给最新版，先切回 head 再提交。');
     if (R.current.editing) return say('有一条朱批还在编辑：先「存批」或「作罢」它，再呈回。');
     const noteless = ds.filter((d) => !d.note.trim());
     if (noteless.length) return say(`还有 ${noteless.length} 条朱批没写内容（空批注不呈）——写完或作罢它们再提交。`);
@@ -378,6 +451,7 @@ function App() {
       await api.submitReview(prNumber, { body, comments: inline, commitId: ref });
       A.saveDrafts(prNumber, []); // 直接清对应 key；内存只在世界没变时动
       if (R.current.cur?.pr.number === prNumber) setDrafts([]);
+      loadComments(prNumber); // 重拉已呈串：让刚呈的立即出现在右缘（世界守卫在 loadComments 内）
       say(`已呈回 ${inline.length} 条朱批${fallback.length ? `（${fallback.length} 条并入总批）` : ''}——回 Happy 说「读批注」。`);
     } catch (err) {
       say(`呈递失败（草稿都还在）：${err.message}`);
@@ -407,6 +481,7 @@ function App() {
   async function qinci() {
     const c = R.current.cur;
     if (!c) return;
+    if (!R.current.onHead) return say('正在读旧版——钦此定的是最新版，先切回 head 再钦此。');
     const pr = c.pr;
     const pending = R.current.drafts.length;
     const warn = pending ? `\n注意：还有 ${pending} 条朱批草稿没呈回，merge 之后就没处提交了。` : '';
@@ -443,6 +518,26 @@ function App() {
     return `${Math.round(mins / 1440)} 天前`;
   };
 
+  // 已呈批注串：串起来后按能否定位到当前文档分两组
+  const threads = useMemo(() => A.threadComments(comments), [comments]);
+  const docThreads = [], otherThreads = [];
+  threads.forEach((t) => {
+    const r = t.root;
+    const anchorLine = r.line ?? r.original_line; // outdated（line=null）退回 original_line
+    if (r.path === docPath && anchorLine != null) docThreads.push({ t, blockLine: anchorLine, outdated: r.line == null });
+    else otherThreads.push(t);
+  });
+  docThreads.sort((a, b) => a.blockLine - b.blockLine);
+
+  // rev 序列反序展示（新→旧），标 v 号；vN=head
+  const revs = commits.map((c, i) => ({
+    sha: c.sha,
+    v: i + 1,
+    isHead: c.sha === headSha,
+    when: c.commit?.committer?.date || c.commit?.author?.date,
+  }));
+  const curRevSha = viewed || headSha;
+
   return html`
     <div id="app">
       <aside>
@@ -465,10 +560,12 @@ function App() {
             <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
             ${cur && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
             ${cur && drafts.length > 0 && html`
-              <button class="btn-primary btn-submit" disabled=${busy} onClick=${submitAll}>
+              <button class="btn-primary btn-submit" disabled=${busy || !onHead}
+                title=${onHead ? '' : '正在读旧版——先切回 head 再提交'} onClick=${submitAll}>
                 ${busy ? '呈递中…' : `提交朱批 · ${drafts.length}`}
               </button>`}
-            ${cur && html`<button class="btn-qinci" disabled=${busy} onClick=${qinci}>钦 此</button>`}
+            ${cur && html`<button class="btn-qinci" disabled=${busy || !onHead}
+              title=${onHead ? '' : '正在读旧版——先切回 head 再钦此'} onClick=${qinci}>钦 此</button>`}
           </span>
         </div>
         ${notice && html`<p class="notice">${notice}</p>`}
@@ -477,10 +574,25 @@ function App() {
             <div class="doc-tabs">
               ${cur.docs.map((f) => html`
                 <button key=${f.filename} class=${'doc-tab' + (f.filename === docPath ? ' active' : '')}
-                  title=${f.filename} onClick=${() => setDocPath(f.filename)}>
+                  title=${f.filename} onClick=${() => { setViewed(null); setDocPath(f.filename); }}>
                   ${f.filename.split('/').pop()}
                 </button>`)}
             </div>`}
+          ${cur && revs.length > 1 && html`
+            <div class="rev-row">
+              <span class="rev-label">版本</span>
+              <div class="rev-switch">
+                ${revs.map((r) => html`
+                  <button key=${r.sha}
+                    class=${'rev-opt' + (r.sha === curRevSha ? ' active' : '')}
+                    title=${`v${r.v} · ${r.sha.slice(0, 7)}${r.when ? ' · ' + timeAgo(r.when) : ''}${r.isHead ? '（最新）' : ''}`}
+                    onClick=${() => setViewed(r.isHead ? null : r.sha)}>
+                    v${r.v}${r.isHead ? '' : ' · ' + r.sha.slice(0, 7)}
+                  </button>`)}
+              </div>
+            </div>`}
+          ${cur && !onHead && html`
+            <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
           <div class="read-row">
             ${docErr ? html`<article id="doc"><p class="state err">${docErr}</p></article>`
               : html`<article id="doc" key="doc-island" ref=${docRef}></article>`}
@@ -489,9 +601,35 @@ function App() {
               ${docDrafts.sort((a, b) => a.line - b.line).map((d) => html`
                 <${DraftCard} key=${d.id} d=${d} doc=${docRef.current} editing=${editing === d.id}
                   onEdit=${(id) => setEditing(id)} onSave=${saveDraft} onDrop=${dropDraft} />`)}
+              ${docThreads.map(({ t, blockLine, outdated }) => html`
+                <${ShownThread} key=${'c' + t.root.id} t=${t} blockLine=${blockLine} outdated=${outdated} />`)}
               ${others > 0 && html`<p class="margin-note">另有 ${others} 条朱批在此折其他文档</p>`}
             </div>
           </div>
+          ${otherThreads.length > 0 && html`
+            <div class="other-threads">
+              <button class="other-threads-toggle" onClick=${() => setOtherOpen((o) => !o)}>
+                ${otherOpen ? '▾' : '▸'} 其他 ${otherThreads.length} 串（其他文档 / 无法定位）
+              </button>
+              ${otherOpen && html`
+                <div class="other-threads-list">
+                  ${otherThreads.map((t) => {
+                    const { quote, body } = A.parseCommentBody(t.root.body);
+                    return html`
+                      <div class="anno-card anno-shown anno-static" key=${'o' + t.root.id}>
+                        <div class="anno-src"><span class="anno-who">${t.root.user?.login || '?'}</span>
+                          <span class="anno-path">${(t.root.path || '整折').split('/').pop()}</span></div>
+                        ${quote && html`<div class="anno-quote-shown">「${quote}」</div>`}
+                        <div class="anno-shown-body">${body}</div>
+                        ${t.replies.map((r) => html`
+                          <div class="anno-reply" key=${'o' + r.id}>
+                            <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
+                            <div class="anno-shown-body">${A.parseCommentBody(r.body).body}</div>
+                          </div>`)}
+                      </div>`;
+                  })}
+                </div>`}
+            </div>`}
         </div>
       </main>
       ${float && html`
