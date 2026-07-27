@@ -7,6 +7,10 @@
   --cinnabar: #C3402B;
   --cinnabar-deep: #9C2F1F;
   --rule: #E4DAC6;
+  --veil: rgba(251, 247, 238, .55);   /* 浮在纸上的面板蒙层（侧栏/卡） */
+  --hover: rgba(251, 247, 238, .75);  /* 悬停底 */
+  --chip: rgba(228, 218, 198, .40);   /* 行内码、表头、分段控件的底 */
+  --shadow: rgba(38, 33, 26, .10);
   --songti: "Songti SC", "STSongti-SC", serif;
   --sans: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: "SF Mono", Menlo, monospace;
@@ -42,7 +46,7 @@ body {
 .setup-card {
   width: 100%; max-width: 560px; padding: 34px 36px 30px;
   background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 14px;
-  box-shadow: 0 2px 14px rgba(38,33,26,.08);
+  box-shadow: 0 2px 14px var(--shadow);
 }
 .setup-lead { margin: 20px 0 22px; font-size: 15.5px; line-height: 1.8; color: var(--ink-soft); }
 .setup-steps { margin: 0 0 22px 20px; font-size: 14.5px; line-height: 2; }
@@ -77,7 +81,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 aside {
   width: 300px; height: 100%; flex: none; padding: 26px 18px;
-  border-right: 1px solid var(--rule); background: rgba(251,247,238,.55);
+  border-right: 1px solid var(--rule); background: var(--veil);
   display: flex; flex-direction: column;
 }
 aside .brand-row { padding: 0 6px 22px; }
@@ -91,8 +95,8 @@ aside .brand-row { padding: 0 6px 22px; }
   padding: 14px 14px 12px 18px; border-radius: 9px; margin-bottom: 10px;
   border: 1px solid transparent;
 }
-.pr-item:hover { background: rgba(251,247,238,.7); }
-.pr-item.active { background: var(--paper-raised); border-color: var(--rule); box-shadow: 0 1px 3px rgba(38,33,26,.07); }
+.pr-item:hover { background: var(--hover); }
+.pr-item.active { background: var(--paper-raised); border-color: var(--rule); box-shadow: 0 1px 3px var(--shadow); }
 .pr-item.active::before {
   content: ""; position: absolute; left: -1px; top: 10px; bottom: 10px;
   width: 3.5px; background: var(--cinnabar); border-radius: 2px;
@@ -141,7 +145,7 @@ article blockquote {
   border-left: 3px solid var(--rule); padding-left: 14px; margin: 0 0 15px;
   color: var(--ink-soft);
 }
-article code { font: 14px var(--mono); background: rgba(228,218,198,.4); padding: 2px 6px; border-radius: 4px; }
+article code { font: 14px var(--mono); background: var(--chip); padding: 2px 6px; border-radius: 4px; }
 article pre {
   background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 9px;
   padding: 14px 16px; overflow-x: auto; margin-bottom: 16px;
@@ -149,7 +153,7 @@ article pre {
 article pre code { background: none; padding: 0; font-size: 13px; line-height: 1.7; }
 article table { border-collapse: collapse; width: 100%; margin: 6px 0 18px; font-size: 14.5px; }
 article th, article td { border: 1px solid var(--rule); padding: 9px 12px; text-align: left; line-height: 1.6; }
-article th { font-family: var(--songti); background: rgba(228,218,198,.35); font-weight: 700; }
+article th { font-family: var(--songti); background: var(--chip); font-weight: 700; }
 article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px; }
 
 .state { color: var(--ink-soft); font-size: 15px; padding: 8px 0; }
@@ -172,7 +176,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .anno-card {
   position: absolute; left: 0; width: 100%;
   background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 10px;
-  padding: 13px 14px; box-shadow: 0 2px 8px rgba(38, 33, 26, .08);
+  padding: 13px 14px; box-shadow: 0 2px 8px var(--shadow);
 }
 .anno-card::before {
   content: ""; position: absolute; left: -34px; top: 24px; width: 34px; height: 2px;
@@ -210,7 +214,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 
 /* ── M3：已呈批注串（墨色安静系；朱砂只留给草稿）── */
 .anno-shown {
-  background: rgba(251, 247, 238, .5);
+  background: var(--veil);
   border-color: var(--rule);
   box-shadow: 0 1px 4px rgba(38, 33, 26, .05);
 }
@@ -241,10 +245,10 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   background: var(--paper-raised); font: 12px var(--mono); color: var(--ink-soft);
 }
 .rev-opt:hover { color: var(--ink); }
-.rev-opt.active { border-color: var(--ink); color: var(--ink); background: rgba(228, 218, 198, .3); }
+.rev-opt.active { border-color: var(--ink); color: var(--ink); background: var(--chip); }
 .rev-notice {
   margin: 0 0 16px 26px; padding: 7px 13px; font-size: 12.5px;
-  background: rgba(122, 112, 98, .08); border: 1px solid var(--rule); border-radius: 8px;
+  background: var(--chip); border: 1px solid var(--rule); border-radius: 8px;
   color: var(--ink-soft);
 }
 
@@ -273,5 +277,50 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   :root {
     --paper: #1C1916; --paper-raised: #232019; --ink: #E8E0D2;
     --ink-soft: #9A9081; --rule: #3A342B; --cinnabar: #D2543C; --cinnabar-deep: #E06B50;
+    /* 蒙层必须跟着翻：浅色 rgba 蒙在深底上会变土绿（真机截图实证） */
+    --veil: rgba(46, 41, 33, .55);
+    --hover: rgba(58, 52, 43, .60);
+    --chip: rgba(58, 52, 43, .55);
+    --shadow: rgba(0, 0, 0, .35);
   }
+  /* 深色下宣纸的朱丝栏要压得更淡，否则整屏泛红 */
+  body { background:
+    repeating-linear-gradient(90deg, transparent 0 38px, rgba(210, 84, 60, .045) 38px 39px),
+    var(--paper); }
+  .seal { box-shadow: inset 0 0 0 1.5px rgba(251, 247, 238, .35), inset 0 0 6px rgba(0, 0, 0, .45); }
+  ::highlight(zhupi-draft) { background-color: rgba(210, 84, 60, .28); }
+}
+
+/* ── 窄屏应急（不是 v1 完整移动端，只求「能读能批」）──
+   桌面两栏在手机上会把正文挤出屏幕：侧栏占死 300px、article 固定 680px。
+   这里只做单列堆叠；右缘批注栏落到正文下方（position:static 让 JS 写的 top 失效，
+   卡片回到正常流），v1 再上底部批注单那套设计。 */
+@media (max-width: 900px) {
+  #app { flex-direction: column; }
+
+  aside {
+    width: 100%; height: auto; max-height: 38vh; flex: none;
+    border-right: 0; border-bottom: 1px solid var(--rule);
+    padding: 16px 14px 10px;
+  }
+  aside .brand-row { padding-bottom: 12px; }
+
+  .mainbar { flex-wrap: wrap; gap: 10px; padding: 12px 16px 10px; }
+  .crumb { flex: 1 1 100%; }
+  .actions { flex-wrap: wrap; }
+
+  .notice { margin: 10px 16px 0; }
+  .work { padding: 18px 16px 48px; }
+  .doc-tabs { margin-left: 0; }
+
+  .read-row { flex-direction: column; gap: 20px; }
+  article { width: 100%; margin-left: 0; }
+  article h1 { font-size: 23px; }
+  article p, article ul, article ol { font-size: 16px; }
+  article table { font-size: 13.5px; display: block; overflow-x: auto; }
+
+  /* 批注卡：回到正常流，别再按锚点绝对定位（窄屏没有右缘可对齐） */
+  .margin-col { width: 100%; min-height: 0 !important; }
+  .anno-card { position: static; width: 100%; margin-bottom: 12px; }
+  .anno-card::before { display: none; }
 }
