@@ -178,7 +178,15 @@ test/run.sh browser    # DOM 单元 + 免 token 端到端冒烟，跑在真 Chro
 ```
 
 没有测试框架、没有 `npm install`、没有配置文件。单元层用 `node --test`；DOM 与端到端层跑在
-headless Chrome 里，失败非零退出。CI 每次 push 两层都跑（[workflow](.github/workflows/test.yml)）。
+headless Chrome 里，失败非零退出。**闸门是 pre-push hook，CI 只是第二意见。** 这个仓没有 branch protection，push 直进 main 且
+Pages 与测试**并行**跑——光靠 CI，坏提交永远是先上线后报警。所以真闸门在 push 之前：
+
+```bash
+git config core.hooksPath .githooks   # 每个 clone 做一次
+```
+
+`.githooks/pre-push` 在这次 push 动了代码时跑全量、只动文档时只跑单元层（改个错别字不该花 90 秒），
+红了直接拒推并打出是哪条断言挂的。`git push --no-verify` 是逃生门。
 
 真正覆盖的是：hunk 校验器（错一个行号整批 review 422 全灭）、锚定行号数学（fence +1 /
 缩进块 +0 / 表格逐行）、批注串线、API 请求装配（commit_id、merge sha、401 与 403 分流），
