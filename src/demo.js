@@ -21,6 +21,14 @@ export const pushUsage = debounce(update, DEBOUNCE_MS);
 \`\`\`
 
 结尾一段：镜片随时可以摘掉，数据与循环全部留在 GitHub。
+
+## 加长段（冒烟用，别删）
+
+这一节的唯一职责是把 demo 文档撑到超过一屏——迁移评审抓过一个只有长文档才暴露的滚动断链（#root 高度），短文档冒烟永远测不出那类雷。
+
+${Array.from({ length: 14 }, (_, i) => `第 ${i + 1} 段填充：读折台的滚动、批注卡对齐、浮批按钮收纳，都要在超过一屏的文档上才真正受测。`).join('\n\n')}
+
+末行锚点：见此行即已滚到底。
 `;
 
 const PR = {
@@ -82,4 +90,10 @@ export async function autoAnnotate(docEl) {
   await sleep(300);
   await pick('镜片随时可以摘掉', '这句放结尾太谦虚了，提到开头', true);
   await pick('const DEBOUNCE_MS = 300;', '300ms 的依据补个注释', false);
+  // 冒烟断言：长文档必须可滚（#root 高度链断裂那类雷靠这行抓）
+  const work = document.querySelector('.work');
+  console.log('[smoke] work-scrollable:', Boolean(work && work.scrollHeight > work.clientHeight),
+    'scrollH:', work?.scrollHeight, 'clientH:', work?.clientHeight);
+  console.log('[smoke] cards:', document.querySelectorAll('.anno-card').length,
+    'submit-btn:', Boolean(document.querySelector('.btn-submit')));
 }
