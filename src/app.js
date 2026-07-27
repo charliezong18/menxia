@@ -11,18 +11,28 @@ let generation = 0; // 丢弃过期的异步响应，避免快速切折时正文
 function showSetup(msg = '') {
   $('app').hidden = true;
   $('setup').hidden = false;
-  $('repo-name').textContent = gh.repoSlug();
+  if (!$('repo-input').value) $('repo-input').value = gh.getRepoSlug(); // 别冲掉用户刚敲一半的
+  syncRepoName();
   const el = $('setup-msg');
   el.textContent = msg;
   el.classList.toggle('err', Boolean(msg));
 }
 
+// 第 3 步的仓库名跟着输入框走，省得对照
+function syncRepoName() {
+  const slug = gh.parseRepoSlug($('repo-input').value);
+  $('repo-name').textContent = slug || '你上面填的那个仓库';
+}
+
 async function saveToken() {
+  const slug = gh.parseRepoSlug($('repo-input').value);
+  if (!slug) return showSetup('奏折仓库要填成 owner/repo（贴 GitHub 链接也行）。');
   const value = $('token-input').value.trim();
   if (!value) return showSetup('先粘一把钥匙。');
   const msg = $('setup-msg');
   msg.classList.remove('err');
   msg.textContent = '验钥中…';
+  gh.setRepoSlug(slug);
   gh.setToken(value);
   try {
     const { canWrite, prAccess } = await gh.verifyToken();
@@ -123,7 +133,7 @@ function renderTabs() {
     btn.className = 'doc-tab' + (f.filename === state.docPath ? ' active' : '');
     btn.textContent = f.filename.split('/').pop();
     btn.title = f.filename;
-    btn.onclick = () => openDoc(f.filename, generation);
+    btn.onclick = () => openDoc(f.filename, ++generation); // 每次切 tab 换代，快速连点不会旧响应盖新文档
     bar.appendChild(btn);
   });
 }
@@ -166,6 +176,7 @@ function handleError(err, where) {
 
 async function boot() {
   if (!gh.getToken()) return showSetup();
+  if (!gh.getRepoSlug()) return showSetup('这版起奏折仓库改成填的了（不再写死在代码里）——补一次 owner/repo，钥匙照旧粘一遍。');
   $('setup').hidden = true;
   $('app').hidden = false;
   setNotice('');
@@ -179,12 +190,17 @@ async function boot() {
 $('qinci-btn').onclick = async () => {
   const pr = state.current;
   if (!pr) return;
-  if (!confirm(`钦此定稿：squash merge #${pr.number}「${pr.title}」？`)) return;
+  const pending = annotate.pendingCountFor(pr.number);
+  const warn = pending ? `\n注意：还有 ${pending} 条朱批草稿没呈回，merge 之后就没处提交了。` : '';
+  if (!confirm(`钦此定稿：squash merge #${pr.number}「${pr.title}」？${warn}`)) return;
   const btn = $('qinci-btn');
   btn.disabled = true;
   try {
-    if (pr.draft) await gh.markReady(pr.node_id); // 存量 draft 折先转 ready 才能 merge
-    await gh.mergePR(pr.number);
+    if (pr.draft) {
+      await gh.markReady(pr.node_id); // 存量 draft 折先转 ready 才能 merge
+      pr.draft = false; // 本地同步：否则 merge 失败后重试会再打一次 markReady 并卡在报错
+    }
+    await gh.mergePR(pr.number, pr.head.sha); // 带 sha：agent 中途推了新版则 409，所批即所合
     setNotice(`已钦此：#${pr.number} 定稿归档。对外交付回 Happy 说一声。`);
     state.current = null;
     annotate.detach();
@@ -200,6 +216,8 @@ $('qinci-btn').onclick = async () => {
 annotate.init({ onNotice: setNotice });
 $('token-save').onclick = saveToken;
 $('token-input').onkeydown = (e) => { if (e.key === 'Enter') saveToken(); };
+$('repo-input').oninput = syncRepoName;
+$('repo-input').onkeydown = (e) => { if (e.key === 'Enter') $('token-input').focus(); };
 $('refresh-btn').onclick = async () => {
   state.current = null;
   $('qinci-btn').hidden = true;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.github.com; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.github.com; img-src 'self' data: blob: https:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
 <title>御笔朱批</title>
 <link rel="stylesheet" href="src/style.css">
 </head>
@@ -15,13 +15,15 @@
       <span class="seal">朱</span>
       <span class="brand">御笔朱批</span>
     </div>
-    <p class="setup-lead">读 AI 呈上来的奏折，划句落朱批。先给一把只开这一个仓库的钥匙。</p>
+    <p class="setup-lead">读 AI 呈上来的奏折，划句落朱批。先说清读哪个仓库，再给一把只开这个仓库的钥匙。</p>
     <ol class="setup-steps">
+      <li>填<b>奏折仓库</b>：agent 往哪个仓库开 PR，就填哪个，格式 <code>owner/repo</code>（建议私有）</li>
       <li>去 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">GitHub 生成 fine-grained token</a>（名字随意，Expiration 建议 90 days）</li>
-      <li>Repository access：默认停在 Public repositories，<b>必须改成 Only select repositories</b> → 选 <code id="repo-name">charliezong18/review</code>（不是 zhupi）</li>
+      <li>Repository access：默认停在 Public repositories，<b>必须改成 Only select repositories</b> → 选 <code id="repo-name">你上面填的那个仓库</code>（不是 zhupi 本身）</li>
       <li>Permissions → Repository permissions 加<b>两</b>项：<b>Contents: Read and write</b> ＋ <b>Pull requests: Read and write</b>。Metadata 自动带上不用管；<b>最容易漏的是 Pull requests</b>，漏了进清单就 403</li>
       <li>Generate 后把 <code>github_pat_…</code> 粘在下面。钥匙只存这台设备的浏览器，不经过任何服务器；权限配错不用重新生成——回 token 页改好点 Update，再回来存一次即可（字符串不变）</li>
     </ol>
+    <input id="repo-input" type="text" placeholder="owner/repo" autocomplete="off" spellcheck="false">
     <input id="token-input" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
     <div class="setup-actions">
       <button id="token-save" class="btn-primary">存 钥</button>

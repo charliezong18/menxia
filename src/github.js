@@ -1,9 +1,24 @@
 // GitHub API 封装 —— 浏览器直连 api.github.com，token 只存 localStorage
 const API = 'https://api.github.com';
 const TOKEN_KEY = 'zhupi.token';
+const REPO_KEY = 'zhupi.repo';
 
-export const REPO = { owner: 'charliezong18', name: 'review' };
-export const repoSlug = () => `${REPO.owner}/${REPO.name}`;
+// 奏折仓库由用户在设置页填，不写死在代码里——fork 走的人不用改一行代码
+export const getRepoSlug = () => localStorage.getItem(REPO_KEY) || '';
+export const setRepoSlug = (s) => localStorage.setItem(REPO_KEY, s);
+export const repoSlug = () => getRepoSlug();
+
+// 容忍粘整条 URL / 结尾 .git / 多余空白，解析不出来返回空串由调用方报错
+export function parseRepoSlug(input) {
+  const cleaned = String(input).trim()
+    .replace(/^https?:\/\/(www\.)?github\.com\//i, '')
+    .replace(/\.git$/i, '')
+    .replace(/^\/+|\/+$/g, '');
+  const parts = cleaned.split('/');
+  if (parts.length !== 2) return '';
+  if (!parts.every((p) => /^[\w.-]+$/.test(p))) return '';
+  return parts.join('/');
+}
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY) || '';
 export const setToken = (t) => localStorage.setItem(TOKEN_KEY, t.trim());
@@ -76,12 +91,12 @@ export const getFileText = (path, ref) =>
   request(`/repos/${repoSlug()}/contents/${encodePath(path)}?ref=${encodeURIComponent(ref)}`,
     { accept: 'application/vnd.github.raw' }).then((r) => r.text());
 
-// 钦此 = squash merge；draft 折要先转 ready（REST 做不了，走 GraphQL，fine-grained PAT 支持与否现场见分晓）
-export const mergePR = (num) =>
+// 钦此 = squash merge；带 sha=「所批即所合」：agent 在阅读期间推了新 commit 则 409 拒合
+export const mergePR = (num, sha) =>
   request(`/repos/${repoSlug()}/pulls/${num}/merge`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ merge_method: 'squash' }),
+    body: JSON.stringify({ merge_method: 'squash', ...(sha ? { sha } : {}) }),
   }).then((r) => r.json());
 
 export async function markReady(nodeId) {
@@ -98,11 +113,12 @@ export async function markReady(nodeId) {
 }
 
 // 一次性提交整批朱批（原子：任一行号非法整批 422，调用方需先本地校验）
-export const submitReview = (num, { body = '', comments = [] }) =>
+// commit_id：按用户实际阅读的版本校验/锚定行号；不传则 GitHub 默认最新 head，行号会静默漂移
+export const submitReview = (num, { body = '', comments = [], commitId }) =>
   request(`/repos/${repoSlug()}/pulls/${num}/reviews`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ event: 'COMMENT', body, comments }),
+    body: JSON.stringify({ event: 'COMMENT', body, comments, ...(commitId ? { commit_id: commitId } : {}) }),
   }).then((r) => r.json());
 
 // 总批 = 会话区 conversation comment
