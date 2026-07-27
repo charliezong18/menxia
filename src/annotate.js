@@ -32,12 +32,19 @@ export function init({ onNotice }) {
     if (!e.target.closest('.zhupi-float')) hideFloat();
   });
   document.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && !A.editing && A.drafts.length && !A.busy) submitAll();
+    if (!(e.metaKey || e.ctrlKey) || e.key !== 'Enter') return;
+    // 阻断修复：卡内 ⌘Enter 的同一事件会冒泡到这里——存批瞬间 A.editing 已清，曾导致整批当场呈出
+    if (e.target.closest('textarea, input')) return;
+    if (!A.editing && A.drafts.length && !A.busy) submitAll();
   });
+  // .work 内滚不产生 mousedown，浮批钮会残留原地——capture 才接得到不冒泡的滚动
+  document.addEventListener('scroll', hideFloat, true);
   $('submit-btn').onclick = submitAll;
   $('zongpi-btn').onclick = () => { A.zongpiOpen = !A.zongpiOpen; render(); };
   window.addEventListener('resize', () => A.ctx && layoutCards());
 }
+
+let ro = null; // 图片/字体异步加载改变块高 → 重排批注卡（评审：图多的折子卡片系统性错位）
 
 export function attach(ctx) {
   A.ctx = ctx;
@@ -45,16 +52,26 @@ export function attach(ctx) {
   A.editing = null;
   A.zongpiOpen = false;
   hideFloat();
+  if (typeof ResizeObserver !== 'undefined') {
+    ro?.disconnect();
+    ro = new ResizeObserver(() => layoutCards());
+    ro.observe(ctx.doc);
+  }
   render();
 }
 
 export function detach() {
   A.ctx = null;
+  ro?.disconnect();
+  ro = null;
   hideFloat();
   $('margin-col').replaceChildren();
   updateTopbar();
   if ('highlights' in CSS) CSS.highlights.delete('zhupi-draft');
 }
+
+// 给外部（钦此确认框）报某折还有几条未呈草稿
+export const pendingCountFor = (num) => loadDrafts(num).length;
 
 // ── 选区 → 锚 ──
 function onMouseUp(e) {
@@ -95,8 +112,16 @@ function computeAnchor() {
       line = blockLine + (el.tagName === 'CODE' ? 1 : 0) + newlines;
     } catch { /* 跨节点异常时退回块首行 */ }
   }
+  // 块内字符偏移：同块撞重复短语时高亮按它定位，而不是永远亮第一处（双路评审均命中）
+  let offset = 0;
+  try {
+    const r3 = document.createRange();
+    r3.selectNodeContents(el);
+    r3.setEnd(range.startContainer, range.startOffset);
+    offset = r3.toString().length;
+  } catch { /* 退化为 0，从头找 */ }
   const rect = range.getBoundingClientRect();
-  return { blockLine, line, quote: quote.slice(0, 300), quoteRaw: quoteRaw.trim().slice(0, 300), rect };
+  return { blockLine, line, offset, quote: quote.slice(0, 300), quoteRaw: quoteRaw.trim().slice(0, 300), rect };
 }
 
 // ── 浮批按钮 ──
@@ -122,8 +147,10 @@ function addDraft(anchor) {
   const d = {
     id: `d${Date.now()}${Math.floor(Math.random() * 1e4)}`,
     path: A.ctx.path,
+    ref: A.ctx.ref, // 写于哪个版本：agent 推新版后旧草稿降级总批，绝不静默钉错行
     blockLine: anchor.blockLine,
     line: anchor.line,
+    offset: anchor.offset || 0,
     quote: anchor.quote,
     quoteRaw: anchor.quoteRaw,
     note: '',
@@ -215,7 +242,7 @@ function buildCard(d) {
     ta.className = 'anno-input';
     ta.placeholder = '朱批……';
     ta.value = d.note;
-    ta.onkeydown = (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') save.click(); };
+    ta.onkeydown = (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.stopPropagation(); save.click(); } };
     const row = document.createElement('div');
     row.className = 'anno-row';
     const drop = document.createElement('button');
@@ -306,7 +333,9 @@ function rebuildHighlights() {
 function rangeForDraft(d) {
   const block = A.ctx.doc.querySelector(`[data-line="${d.blockLine}"]`);
   if (!block) return null;
-  const idx = block.textContent.indexOf(d.quoteRaw);
+  const text = block.textContent;
+  let idx = text.indexOf(d.quoteRaw, Math.max(0, (d.offset || 0) - 2));
+  if (idx < 0) idx = text.indexOf(d.quoteRaw);
   if (idx < 0) return null;
   return rangeFromTextOffset(block, idx, d.quoteRaw.length);
 }
@@ -354,39 +383,49 @@ const fmt = (d) => `> ${d.quote}\n\n${d.note}`;
 
 async function submitAll() {
   if (!A.ctx || !A.drafts.length || A.busy) return;
+  if (A.editing) {
+    A.notice('有一条朱批还在编辑：先「存批」或「作罢」它，再呈回（否则发出去的是旧文案）。');
+    return;
+  }
   const noteless = A.drafts.filter((d) => !d.note.trim());
   if (noteless.length) {
     A.notice(`还有 ${noteless.length} 条朱批没写内容（空批注不呈）——写完或作罢它们再提交。`);
     return;
   }
+  // 提交在途中世界可能变（切折/刷新会重置 A.ctx）——入口处捕获，完成回调只认这份快照
+  const prNumber = A.ctx.pr.number;
+  const ref = A.ctx.ref;
   const hunks = new Map();
   (A.ctx.files || []).forEach((f) => hunks.set(f.filename, validRightLines(f.patch)));
   const inline = [], fallback = [];
   A.drafts.forEach((d) => {
+    const stale = d.ref !== ref; // 旧版本写的草稿：行号可能已漂移，宁降总批不静默钉错行
     const set = hunks.get(d.path);
-    if (set && set.has(d.line)) {
+    if (!stale && set && set.has(d.line)) {
       inline.push({ path: d.path, line: d.line, side: 'RIGHT', body: fmt(d) });
     } else {
       fallback.push(d);
     }
   });
+  // body 恒非空：API 文档把 body 标为 COMMENT 必填，空串是否放行没有承诺——不赌
   const body = fallback.length
-    ? `以下朱批锚定不到可批注行，并入总批：\n\n${fallback.map(fmt).join('\n\n---\n\n')}`
-    : '';
+    ? `以下朱批锚定不到可批注行（或写于旧版本），并入总批：\n\n${fallback.map(fmt).join('\n\n---\n\n')}`
+    : `御笔朱批 · ${inline.length} 条`;
   const btn = $('submit-btn');
   A.busy = true;
   btn.disabled = true;
   btn.textContent = '呈递中…';
   try {
-    await gh.submitReview(A.ctx.pr.number, { body, comments: inline });
-    A.drafts = [];
-    saveDrafts();
+    // commit_id 钉死「按用户读的版本校验与锚定」，不让 GitHub 默认最新 head（评审两路重合项）
+    await gh.submitReview(prNumber, { body, comments: inline, commitId: ref });
+    localStorage.setItem(draftsKey(prNumber), JSON.stringify({ items: [] }));
+    if (A.ctx?.pr.number === prNumber) A.drafts = [];
     A.notice(`已呈回 ${inline.length} 条朱批${fallback.length ? `（${fallback.length} 条并入总批）` : ''}——回 Happy 说「读批注」。`);
   } catch (err) {
     A.notice(`呈递失败（草稿都还在）：${err.message}`);
   } finally {
     A.busy = false;
     btn.disabled = false;
-    render();
+    if (A.ctx) render();
   }
 }

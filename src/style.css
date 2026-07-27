@@ -47,11 +47,12 @@ body {
 .setup-steps { margin: 0 0 22px 20px; font-size: 14.5px; line-height: 2; }
 .setup-steps code { font: 13px var(--mono); background: var(--paper); padding: 2px 6px; border-radius: 4px; }
 .setup-steps a { color: var(--cinnabar-deep); }
-#token-input {
+#repo-input, #token-input {
   width: 100%; padding: 12px 14px; font: 14px var(--mono); color: var(--ink);
   background: var(--paper); border: 1px solid var(--rule); border-radius: 9px; outline: none;
 }
-#token-input:focus { border-color: var(--cinnabar); }
+#repo-input { margin-bottom: 10px; }
+#repo-input:focus, #token-input:focus { border-color: var(--cinnabar); }
 .setup-actions { display: flex; align-items: center; gap: 14px; margin-top: 16px; }
 .setup-msg { font-size: 13.5px; color: var(--ink-soft); }
 .setup-msg.err { color: var(--cinnabar-deep); }
