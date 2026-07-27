@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.github.com; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
 <title>御笔朱批</title>
 <link rel="stylesheet" href="src/style.css">
 </head>
@@ -48,7 +49,9 @@
         <button id="refresh-btn" class="btn-ghost">刷新</button>
       </span>
     </div>
+    <p id="notice" class="notice" hidden></p>
     <div class="work">
+      <div id="doc-tabs" class="doc-tabs" hidden></div>
       <article id="doc"></article>
     </div>
   </main>
