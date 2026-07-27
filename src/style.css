@@ -206,6 +206,17 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .btn-submit { font-size: 13.5px; padding: 8px 18px; letter-spacing: .05em; }
 .btn-submit:disabled { opacity: .6; }
 
+/* 钦此用墨不用朱：朱砂只属于批注动作（评审定的规矩） */
+.btn-qinci {
+  padding: 8px 22px; border-radius: 999px;
+  background: var(--ink); color: var(--paper-raised);
+  font-family: var(--songti); font-weight: 700; font-size: 14px;
+  letter-spacing: .25em; text-indent: .25em;
+  box-shadow: 0 2px 6px rgba(38, 33, 26, .3);
+}
+.btn-qinci:hover { opacity: .88; }
+.btn-qinci:disabled { opacity: .55; }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --paper: #1C1916; --paper-raised: #232019; --ink: #E8E0D2;
