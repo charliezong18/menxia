@@ -8,64 +8,8 @@
 <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
-<!-- 设置页：无 token 时的唯一界面 -->
-<section id="setup" hidden>
-  <div class="setup-card">
-    <div class="brand-row">
-      <span class="seal">朱</span>
-      <span class="brand">御笔朱批</span>
-    </div>
-    <p class="setup-lead">读 AI 呈上来的奏折，划句落朱批。先说清读哪个仓库，再给一把只开这个仓库的钥匙。</p>
-    <ol class="setup-steps">
-      <li>填<b>奏折仓库</b>：agent 往哪个仓库开 PR，就填哪个，格式 <code>owner/repo</code>（建议私有）</li>
-      <li>去 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">GitHub 生成 fine-grained token</a>（名字随意，Expiration 建议 90 days）</li>
-      <li>Repository access：默认停在 Public repositories，<b>必须改成 Only select repositories</b> → 选 <code id="repo-name">你上面填的那个仓库</code>（不是 zhupi 本身）</li>
-      <li>Permissions → Repository permissions 加<b>两</b>项：<b>Contents: Read and write</b> ＋ <b>Pull requests: Read and write</b>。Metadata 自动带上不用管；<b>最容易漏的是 Pull requests</b>，漏了进清单就 403</li>
-      <li>Generate 后把 <code>github_pat_…</code> 粘在下面。钥匙只存这台设备的浏览器，不经过任何服务器；权限配错不用重新生成——回 token 页改好点 Update，再回来存一次即可（字符串不变）</li>
-    </ol>
-    <input id="repo-input" type="text" placeholder="owner/repo" autocomplete="off" spellcheck="false">
-    <input id="token-input" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
-    <div class="setup-actions">
-      <button id="token-save" class="btn-primary">存 钥</button>
-      <span id="setup-msg" class="setup-msg"></span>
-    </div>
-  </div>
-</section>
-
-<!-- 主界面 -->
-<div id="app" hidden>
-  <aside>
-    <div class="brand-row">
-      <span class="seal">朱</span>
-      <span class="brand">御笔朱批</span>
-    </div>
-    <div class="sec-label" id="list-count">待批奏折</div>
-    <nav id="pr-list"></nav>
-    <button id="settings-btn" class="settings">设置 · 钥匙</button>
-  </aside>
-
-  <main>
-    <div class="mainbar">
-      <span class="crumb" id="crumb">待批</span>
-      <span class="actions">
-        <button id="refresh-btn" class="btn-ghost">刷新</button>
-        <button id="zongpi-btn" class="btn-ghost" hidden>总批</button>
-        <button id="submit-btn" class="btn-primary btn-submit" hidden>提交朱批</button>
-        <button id="qinci-btn" class="btn-qinci" hidden>钦 此</button>
-      </span>
-    </div>
-    <p id="notice" class="notice" hidden></p>
-    <div class="work">
-      <div id="doc-tabs" class="doc-tabs" hidden></div>
-      <div class="read-row">
-        <article id="doc"></article>
-        <div id="margin-col" class="margin-col"></div>
-      </div>
-    </div>
-  </main>
-</div>
-
+<div id="root"></div>
 <script src="vendor/markdown-it.min.js"></script>
-<script type="module" src="src/app.js"></script>
+<script type="module" src="src/ui.js"></script>
 </body>
 </html>
