@@ -340,3 +340,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .zongpi-shown-body { white-space: pre-wrap; }
 .zongpi-shown-item .anno-who { margin-right: 8px; }
 @media (max-width: 900px) { .zongpi-shown { margin-left: 0; } }
+
+/* 旧版横幅：Pages 缓存 10 分钟，用户无从判断新旧——explicitly 告诉他 */
+.stale-banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.stale-reload { padding: 5px 14px; font-size: 13px; }
