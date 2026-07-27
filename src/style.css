@@ -158,7 +158,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 ::highlight(zhupi-draft) { background-color: rgba(195, 64, 43, .16); }
 
 .zhupi-float {
-  position: absolute; z-index: 30;
+  position: fixed; z-index: 30;
   padding: 7px 16px; border-radius: 999px;
   background: var(--cinnabar); color: var(--paper-raised);
   font-family: var(--songti); font-weight: 700; font-size: 13.5px; letter-spacing: .1em;
