@@ -1,0 +1,34 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  unit:
+    name: 单元（纯逻辑）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # 无 npm install：项目零依赖，测试用 Node 内置 runner
+      - run: node --test test/*.test.js
+
+  browser:
+    name: 浏览器（DOM 单元 + 端到端冒烟）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+      - run: chmod +x test/*.sh
+      - run: ./test/run-browser.sh
+        env:
+          CHROME: ${{ steps.setup-chrome.outputs.chrome-path }}

@@ -119,37 +119,67 @@ export async function autoAnnotate(docEl) {
     }
     await sleep(120);
   };
+  // ── 断言机制：不再是 console.log 打印真假值（那样断言变 false 也照样"绿"）。
+  // 每条走 chk()，失败打 [smoke] FAIL 并计数，末行输出 RESULT 供 run-browser.sh 判退出码。
+  let pass = 0, fail = 0;
+  const chk = (name, cond, detail = '') => {
+    cond ? pass++ : fail++;
+    console.log(`[smoke] ${cond ? 'PASS' : 'FAIL'} ${name}${detail ? ` — ${detail}` : ''}`);
+  };
+
   await sleep(300);
   await pick('镜片随时可以摘掉', '这句放结尾太谦虚了，提到开头', true);
   await pick('const DEBOUNCE_MS = 300;', '300ms 的依据补个注释', false);
-  // 冒烟断言：长文档必须可滚（#root 高度链断裂那类雷靠这行抓）
+
+  // 长文档必须可滚（#root 高度链断裂那类雷靠这条抓；demo 文档特意长过一屏）
   const work = document.querySelector('.work');
-  console.log('[smoke] work-scrollable:', Boolean(work && work.scrollHeight > work.clientHeight),
-    'scrollH:', work?.scrollHeight, 'clientH:', work?.clientHeight);
-  console.log('[smoke] cards:', document.querySelectorAll('.anno-card').length,
-    'submit-btn:', Boolean(document.querySelector('.btn-submit')));
+  chk('long-doc-scrollable', Boolean(work && work.scrollHeight > work.clientHeight),
+    `scrollH=${work?.scrollHeight} clientH=${work?.clientHeight}`);
 
-  // ── M3 断言：已呈批注串 + rev 切换 ──
-  // 已呈串卡（安静墨色系，class .anno-shown）：demo 造了 1 串带回话（挂当前文档第 23 行）
-  const shownCards = document.querySelectorAll('.anno-shown').length;
-  console.log('[smoke] shown-thread-cards:', shownCards, '(expect >=1)');
-  console.log('[smoke] reply-cards:', document.querySelectorAll('.anno-reply').length, '(expect >=1)');
+  // 两次划批各产出一张卡（含已呈串共 4 张），提交按钮随草稿出现
+  const draftCards = document.querySelectorAll('.anno-card:not(.anno-shown)').length;
+  chk('draft-cards>=2', draftCards >= 2, `draft-cards=${draftCards}`);
+  chk('submit-btn-visible', Boolean(document.querySelector('.btn-submit')));
 
-  // rev 切换器存在（3 个 rev → 至少 3 个选项）
-  const revSwitch = document.querySelector('.rev-switch');
-  console.log('[smoke] rev-switcher:', Boolean(revSwitch),
-    'opts:', document.querySelectorAll('.rev-opt').length);
+  // 草稿落进 localStorage（刷新不丢的保证）
+  const stored = JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items?.length || 0;
+  chk('drafts-persisted', stored >= 2, `stored=${stored}`);
 
-  // &norev=1：停在 head/批注串态供截图，不走 rev 切换（截图两态用）
-  if (new URLSearchParams(location.search).get('norev') === '1') return;
+  // 锚定精度：fence 内那条必须精确到 DEBOUNCE 所在行（DOC 第 16 行），不是代码块首行
+  const fenceDraft = (JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items || [])
+    .find((d) => d.quote.includes('DEBOUNCE_MS'));
+  chk('fence-line-precise', fenceDraft?.line === 16, `line=${fenceDraft?.line} want=16`);
 
-  // 切到 v1（最旧）：正文变短（DOC_OLD 删了一节）+ 浮批禁用
+  // M3：已呈批注串 + 回话渲染
+  chk('shown-threads>=1', document.querySelectorAll('.anno-shown').length >= 1);
+  chk('reply-rendered>=1', document.querySelectorAll('.anno-reply').length >= 1);
+
+  // 卡片排序：右缘卡必须按锚点行号递增（草稿与已呈串合并排序，否则串卡被压到天边）
+  const tops = [...document.querySelectorAll('#margin-col .anno-card')]
+    .map((el) => ({ line: +el.dataset.blockLine || 0, top: parseFloat(el.style.top) || 0 }))
+    .filter((x) => x.line);
+  const sortedByLine = [...tops].sort((a, b) => a.line - b.line);
+  chk('margin-cards-ordered', sortedByLine.every((x, i, arr) => i === 0 || x.top >= arr[i - 1].top),
+    JSON.stringify(sortedByLine));
+
+  // rev 切换器（3 个 rev）
+  chk('rev-switcher-3-opts', document.querySelectorAll('.rev-opt').length === 3,
+    `opts=${document.querySelectorAll('.rev-opt').length}`);
+
+  // &norev=1：停在 head 态供截图
+  if (new URLSearchParams(location.search).get('norev') === '1') {
+    console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
+    return;
+  }
+
+  // 切到 v1（最旧）：正文变短（DOC_OLD 删了一节）+ 旧版只读（划句不出浮批钮）
   const headLen = (docEl?.textContent || '').length;
-  const v1 = document.querySelector('.rev-opt'); // 升序，首个 = v1
-  if (v1) v1.click();
+  document.querySelector('.rev-opt')?.click(); // 升序，首个 = v1
   await sleep(600); // 等岛屿 effect 重新取文并注入
   const oldLen = (docEl?.textContent || '').length;
-  // 旧版划句不应出浮批钮：模拟一次划选 + mouseup
+  chk('old-rev-body-shorter', oldLen < headLen, `${oldLen} < ${headLen}`);
+  chk('old-rev-notice-shown', Boolean(document.querySelector('.rev-notice')));
+
   const b = [...docEl.querySelectorAll('[data-line]')].find((x) => x.textContent.trim().length > 4);
   if (b) {
     const r = document.createRange(); r.selectNodeContents(b);
@@ -157,7 +187,9 @@ export async function autoAnnotate(docEl) {
     docEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
     await sleep(150);
   }
-  const floatOnOld = Boolean(document.querySelector('.zhupi-float'));
-  console.log('[smoke] rev-old: body-shorter:', oldLen < headLen, `(${oldLen} < ${headLen})`,
-    'float-suppressed:', !floatOnOld);
+  chk('old-rev-float-suppressed', !document.querySelector('.zhupi-float'));
+  const submitBtn = document.querySelector('.btn-submit');
+  chk('old-rev-submit-disabled', !submitBtn || submitBtn.disabled);
+
+  console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
 }
