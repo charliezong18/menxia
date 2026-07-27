@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>御笔朱批</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<!-- 设置页：无 token 时的唯一界面 -->
+<section id="setup" hidden>
+  <div class="setup-card">
+    <div class="brand-row">
+      <span class="seal">朱</span>
+      <span class="brand">御笔朱批</span>
+    </div>
+    <p class="setup-lead">读 AI 呈上来的奏折，划句落朱批。先给一把只开这一个仓库的钥匙。</p>
+    <ol class="setup-steps">
+      <li>去 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">GitHub 生成 fine-grained token</a></li>
+      <li>Repository access 选 <b>Only select repositories</b> → <code id="repo-name">charliezong18/review</code></li>
+      <li>Permissions 勾 <b>Contents: Read</b>、<b>Pull requests: Read and write</b></li>
+      <li>生成后粘在下面。钥匙只存在这台设备的浏览器里，不经过任何服务器。</li>
+    </ol>
+    <input id="token-input" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+    <div class="setup-actions">
+      <button id="token-save" class="btn-primary">存 钥</button>
+      <span id="setup-msg" class="setup-msg"></span>
+    </div>
+  </div>
+</section>
+
+<!-- 主界面 -->
+<div id="app" hidden>
+  <aside>
+    <div class="brand-row">
+      <span class="seal">朱</span>
+      <span class="brand">御笔朱批</span>
+    </div>
+    <div class="sec-label" id="list-count">待批奏折</div>
+    <nav id="pr-list"></nav>
+    <button id="settings-btn" class="settings">设置 · 钥匙</button>
+  </aside>
+
+  <main>
+    <div class="mainbar">
+      <span class="crumb" id="crumb">待批</span>
+      <span class="actions">
+        <button id="refresh-btn" class="btn-ghost">刷新</button>
+      </span>
+    </div>
+    <div class="work">
+      <article id="doc"></article>
+    </div>
+  </main>
+</div>
+
+<script src="vendor/markdown-it.min.js"></script>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>
