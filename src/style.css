@@ -104,8 +104,22 @@ main { flex: 1; min-width: 0; }
 .crumb b { font-family: var(--songti); color: var(--ink); }
 .actions { display: flex; align-items: center; gap: 12px; }
 
+.notice {
+  margin: 14px 36px 0; padding: 9px 14px; font-size: 13.5px;
+  background: rgba(195,64,43,.08); border: 1px solid var(--rule); border-radius: 8px;
+  color: var(--cinnabar-deep);
+}
+
 .work { padding: 30px 36px 60px; }
 article { max-width: 680px; margin-left: 26px; }
+
+.doc-tabs { display: flex; gap: 8px; margin: 0 0 22px 26px; flex-wrap: wrap; }
+.doc-tab {
+  padding: 6px 14px; border-radius: 999px; border: 1px solid var(--rule);
+  background: var(--paper-raised); font: 13px var(--mono); color: var(--ink-soft);
+}
+.doc-tab:hover { color: var(--ink); }
+.doc-tab.active { border-color: var(--ink-soft); color: var(--ink); }
 
 /* ── 文档渲染排版 ── */
 article h1 { font-family: var(--songti); font-size: 27px; line-height: 1.4; margin-bottom: 4px; }
