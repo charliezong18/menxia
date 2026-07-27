@@ -28,6 +28,8 @@ export const pushUsage = debounce(update, DEBOUNCE_MS);
 
 ${Array.from({ length: 14 }, (_, i) => `第 ${i + 1} 段填充：读折台的滚动、批注卡对齐、浮批按钮收纳，都要在超过一屏的文档上才真正受测。`).join('\n\n')}
 
+折间链接测试：见 [另一折](https://github.com/demo/repo/pull/998) 与 [本折某行](https://github.com/demo/repo/blob/main/docs/demo.md#L20)；外链 [GitHub](https://github.com/slopus/happy) 不该被拦。
+
 末行锚点：见此行即已滚到底。
 `;
 
@@ -254,6 +256,35 @@ export async function autoAnnotate(docEl) {
   document.querySelector('.search-clear')?.click();
   await sleep(200);
   chk('search-clear-restores', Boolean(document.querySelector('.list-tabs')));
+
+  // 折间链接：本仓链接被拦成 app 内跳转；外链放行不拦
+  const links = [...document.querySelectorAll('#doc a[href]')];
+  const inner = links.find((a) => a.getAttribute('href').includes('/blob/main/docs/demo.md#L20'));
+  const outer = links.find((a) => a.getAttribute('href').includes('slopus/happy'));
+  chk('link-samples-rendered', Boolean(inner && outer));
+  if (inner) {
+    inner.click();
+    await sleep(150); // 虚拟时间下 1600ms 的移除定时器会跑到长 sleep 前面——在闪现窗口内断言
+    const flashed = document.querySelectorAll('.search-flash').length;
+    chk('link-jump-flash', flashed >= 1,
+      `flash=${flashed} href=${inner.getAttribute('href')} tab=${document.querySelector('.doc-tab.active')?.textContent || '-'}`);
+  }
+  if (outer) {
+    // 外链必须放行——但真放行就会导航走、页面死掉。做法：在 document 上挂一次性监听器，
+    // 它跑在 app 的 .read-row 处理器之后：先读 defaultPrevented（即 app 的决定），再拦下导航。
+    let appPrevented = null;
+    document.addEventListener('click', function once(e) {
+      appPrevented = e.defaultPrevented;
+      e.preventDefault();
+      document.removeEventListener('click', once);
+    });
+    outer.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+    await sleep(150);
+    chk('external-link-not-hijacked', appPrevented === false, `appPrevented=${appPrevented}`);
+  }
+  // 引用此处：拷出的 markdown 能被自己解析回来
+  const refBtn = [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('引用此处'));
+  chk('copy-ref-btn-exists', Boolean(refBtn));
 
   // 归档视图：已钦此的折子有地方看，且点进去是只读
   const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));

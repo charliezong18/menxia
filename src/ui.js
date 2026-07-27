@@ -9,6 +9,7 @@ import { renderMarkdown, hydrateRelativeImages } from './render.js';
 import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
+import { parseZhupiLink, buildRef } from './link.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -476,6 +477,27 @@ function App() {
     setEditing((e) => (e === id ? null : e));
   }
 
+  // 文档/批注里的本仓 GitHub 链接 → app 内跳转（外链不拦，照常新窗口打开）
+  const onDocClick = useCallback((e) => {
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const parsed = parseZhupiLink(a.getAttribute('href'), gh.getRepoSlug() || (DEMO ? 'demo/repo' : ''));
+    if (!parsed) return;
+    e.preventDefault();
+    jumpTo(parsed);
+  }, [prs, donePrs, cur, docPath]);
+
+  // 「引用此处」：把当前选中处拷成一条 GitHub permalink + 引文，粘进别的朱批即成链接
+  async function copyRef() {
+    const a = A.computeAnchor(docRef.current);
+    const slug = gh.getRepoSlug() || 'demo/repo';
+    const md = a
+      ? buildRef({ slug, path: docPath, line: a.line, quote: a.quote })
+      : buildRef({ slug, prNumber: cur?.pr?.number });
+    try { await navigator.clipboard.writeText(md); say(`已拷贝引用：${md.slice(0, 60)}${md.length > 60 ? '…' : ''}`); }
+    catch { say(`拷贝失败，手动复制：${md}`); }
+  }
+
   // ── 搜索：标题即输即filter；回车翻全折全文（含归档），命中点击直达段落 ──
   async function runSearch() {
     const query = q.trim();
@@ -489,6 +511,24 @@ function App() {
     setHits(searchIndex(indexRef.current, query));
   }
   function clearSearch() { setQ(''); setHits(null); }
+  // 折间跳转：目标折在哪个栏自动切过去；带 path/line 就落到那一段
+  function jumpTo({ prNumber, path, line }) {
+    const all = [...prs, ...donePrs];
+    const target = prNumber ? all.find((p) => p.number === prNumber) : cur?.pr;
+    if (!target) return say(`跳不过去：本仓没有第 ${prNumber} 折（可能已删或不在清单里）。`);
+    if (path) jumpRef.current = { prNumber: target.number, path, line: line || 1 };
+    setTab(target.merged_at ? 'done' : 'open');
+    if (target.number === cur?.pr?.number && path === docPath && line) {
+      // 同折同文档：不用重开，直接滚
+      const el = docRef.current;
+      let hit = null;
+      el?.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
+      if (hit) { hit.scrollIntoView({ block: 'center' }); hit.classList.add('search-flash'); setTimeout(() => hit.classList.remove('search-flash'), 1600); }
+      return;
+    }
+    openPR(target);
+  }
+
   function jumpToHit(pr, hit) {
     jumpRef.current = hit.path ? { prNumber: pr.number, path: hit.path, line: hit.line || 1 } : null;
     // 归档折点进去自动切到已钦此栏，视觉上不跳戏
@@ -681,6 +721,7 @@ function App() {
           <span class="crumb">待批 ${cur ? html`/ <b>${cur.pr.title}</b>` : ''}</span>
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
+            ${cur && html`<button class="btn-ghost" title="把选中处（或整折）拷成链接，粘进别的朱批" onClick=${copyRef}>引用此处</button>`}
             ${cur && !archived && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
             ${cur && drafts.length > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}
@@ -732,7 +773,7 @@ function App() {
                   <span class="zongpi-shown-body">${z.body}</span>
                 </div>`)}
             </div>`}
-          <div class="read-row">
+          <div class="read-row" onClick=${onDocClick}>
             ${docErr ? html`<article id="doc"><p class="state err">${docErr}</p></article>`
               : html`<article id="doc" key="doc-island" ref=${docRef}></article>`}
             <div id="margin-col" class="margin-col">
