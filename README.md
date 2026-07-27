@@ -159,8 +159,26 @@ src/anchor.js     pure logic: selection → line anchor, hunk parsing, draft per
 src/github.js     GitHub API wrapper
 src/render.js     markdown → HTML (blocks carry data-line for anchoring)
 src/style.css     rice paper / ink / cinnabar
+test/             unit + DOM + end-to-end, zero dependencies
 vendor/           markdown-it + htm/preact standalone (13KB), vendored — no npm, no lockfile
 ```
+
+## Tests
+
+```bash
+test/run.sh            # everything: 34 unit + 22 DOM + 13 end-to-end
+test/run.sh unit       # pure logic only — Node's built-in runner, no npm install
+test/run.sh browser    # DOM units + the tokenless end-to-end smoke, in real Chrome
+```
+
+No test framework, no `npm install`, no config file. Unit tests use `node --test`; the DOM
+and end-to-end layers run in headless Chrome and fail the build on a non-zero exit. CI runs
+both on every push ([workflow](.github/workflows/test.yml)).
+
+What's actually covered: the hunk validator (a wrong line number 422s the entire batch),
+the anchoring line math (fence `+1`, indented block `+0`, per-table-row), comment threading,
+API request assembly (`commit_id`, merge `sha`, 401-vs-403 triage), and an end-to-end pass
+that annotates a demo document through real browser events and checks the old-rev read-only state.
 
 Total app code is about 900 lines. Still **zero-build** — push is deploy — but no longer framework-less: the [architecture switch gate](MIGRATION-WATCH.md) tripped on 2026-07-26 (two indicators over threshold, both review-confirmed as event/async-timing bug factories), so the view layer moved to Preact in its no-build form. The gate said so, in numbers; we obeyed.
 

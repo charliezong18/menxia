@@ -159,6 +159,7 @@ src/anchor.js     纯逻辑：选区 → 行锚、hunk 解析、草稿持久化
 src/github.js     GitHub API 封装
 src/render.js     markdown → HTML（块级元素带 data-line 供锚定）
 src/style.css     宣纸 / 墨 / 朱砂
+test/             单元 + DOM + 端到端，零依赖
 vendor/           markdown-it + htm/preact standalone（13KB），vendored —— 无 npm、无 lockfile
 ```
 
@@ -167,3 +168,18 @@ vendor/           markdown-it + htm/preact standalone（13KB），vendored —�
 ## License
 
 [MIT](LICENSE) © Charlie Zong
+
+## 测试
+
+```bash
+test/run.sh            # 全跑：34 单元 + 22 DOM + 13 端到端
+test/run.sh unit       # 只跑纯逻辑（Node 内置 runner，不用 npm install）
+test/run.sh browser    # DOM 单元 + 免 token 端到端冒烟，跑在真 Chrome 里
+```
+
+没有测试框架、没有 `npm install`、没有配置文件。单元层用 `node --test`；DOM 与端到端层跑在
+headless Chrome 里，失败非零退出。CI 每次 push 两层都跑（[workflow](.github/workflows/test.yml)）。
+
+真正覆盖的是：hunk 校验器（错一个行号整批 review 422 全灭）、锚定行号数学（fence +1 /
+缩进块 +0 / 表格逐行）、批注串线、API 请求装配（commit_id、merge sha、401 与 403 分流），
+以及一条用真实浏览器事件在演示文档上划批、并检查旧版只读态的端到端。
