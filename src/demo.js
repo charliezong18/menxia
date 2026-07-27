@@ -232,6 +232,29 @@ export async function autoAnnotate(docEl) {
   chk('cmd-enter-saves-draft', savedNotes >= 2, `notes=${savedNotes}`);
 
   // rev 切换器（3 个 rev）
+  // 搜索：标题filter + 全文命中 + 点击直达段落（跳转闪一下）
+  const si = document.querySelector('.search-input');
+  chk('search-input-exists', Boolean(si));
+  if (si) {
+    const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+    setVal.call(si, '镜片');
+    si.dispatchEvent(new Event('input', { bubbles: true }));
+    await sleep(150);
+    si.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await sleep(500);
+  }
+  const groups = document.querySelectorAll('.search-group');
+  chk('search-hits-found', groups.length >= 1, `groups=${groups.length}`);
+  // 点当前折（#999）的正文命中 → 应跳到那一段并闪一下
+  const g999 = [...groups].find((g) => g.textContent.includes('#999'));
+  const hitBtn = g999 && [...g999.querySelectorAll('.search-hit')].find((b) => b.textContent.includes('第'));
+  if (hitBtn) { hitBtn.click(); await sleep(1000); }
+  chk('search-jump-flash', Boolean(document.querySelector('#doc .search-flash')));
+  // 清掉搜索回到清单
+  document.querySelector('.search-clear')?.click();
+  await sleep(200);
+  chk('search-clear-restores', Boolean(document.querySelector('.list-tabs')));
+
   // 归档视图：已钦此的折子有地方看，且点进去是只读
   const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
   chk('archive-tab-exists', Boolean(doneTab), doneTab?.textContent?.trim());

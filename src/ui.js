@@ -8,6 +8,7 @@ import * as gh from './github.js';
 import { renderMarkdown, hydrateRelativeImages } from './render.js';
 import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
+import { buildIndex, searchIndex } from './search.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -150,10 +151,15 @@ function App() {
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待批 / done=已钦此（归档，只读）
-  const [donePrs, setDonePrs] = useState([]);     // 手上跑的是旧版（见 detectNewBuild）
+  const [donePrs, setDonePrs] = useState([]);
+  const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
+  const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中
+  const [searching, setSearching] = useState('');     // 手上跑的是旧版（见 detectNewBuild）
 
   const docRef = useRef(null);
   const autoRan = useRef(false); // 冒烟只跑一次（切折会让 docTick 回到 1）
+  const jumpRef = useRef(null);  // 搜索命中 → 开折后跳到那一段 {prNumber, path, line}
+  const indexRef = useRef(null); // 全文索引缓存（本次会话内）
   // 全局监听器只绑一次，读最新状态走这面镜子
   const R = useRef({});
   // headSha / viewedRef 入镜：全局 mouseup 要据此判定「旧版只读 → 不出浮批」
@@ -250,7 +256,11 @@ function App() {
         const docs = files.filter(isDoc);
         setCur({ pr, files, docs });
         if (!docs.length) setDocErr('此折无 markdown 正文（代码 PR 的 diff 视图在北极星里）。');
-        else setDocPath(docs[0].filename);
+        else {
+          const jp = jumpRef.current;
+          const want = jp?.prNumber === pr.number && docs.find((f) => f.filename === jp.path);
+          setDocPath(want ? jp.path : docs[0].filename);
+        }
       } catch (err) {
         if (R.current.cur?.pr.number !== pr.number) return;
         setDocErr(`展折失败：${err.message}`);
@@ -299,6 +309,20 @@ function App() {
         await hydrateRelativeImages(el, { docPath, ref, fetchBlobUrl: api.getFileBlobUrl });
         if (dead) return;
         setDocTick((t) => t + 1);
+        const jp = jumpRef.current;
+        if (jp && jp.prNumber === cur.pr.number && (!jp.path || jp.path === docPath)) {
+          jumpRef.current = null;
+          setTimeout(() => {
+            // 找覆盖该行的块：优先 data-line ≤ 目标行的最近块
+            let target = null;
+            el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= jp.line) target = b; });
+            if (target) {
+              target.scrollIntoView({ block: 'center' });
+              target.classList.add('search-flash');
+              setTimeout(() => target.classList.remove('search-flash'), 1600);
+            }
+          }, 60);
+        }
       } catch (err) {
         if (dead) return;
         el.replaceChildren();
@@ -452,6 +476,26 @@ function App() {
     setEditing((e) => (e === id ? null : e));
   }
 
+  // ── 搜索：标题即输即filter；回车翻全折全文（含归档），命中点击直达段落 ──
+  async function runSearch() {
+    const query = q.trim();
+    if (query.length < 2) return say('搜索词至少两个字。');
+    const all = [...prs, ...donePrs];
+    if (!indexRef.current) {
+      setSearching('翻折中…');
+      indexRef.current = await buildIndex(api, all, (d, t) => setSearching(`翻折中 ${d}/${t}…`));
+      setSearching('');
+    }
+    setHits(searchIndex(indexRef.current, query));
+  }
+  function clearSearch() { setQ(''); setHits(null); }
+  function jumpToHit(pr, hit) {
+    jumpRef.current = hit.path ? { prNumber: pr.number, path: hit.path, line: hit.line || 1 } : null;
+    // 归档折点进去自动切到已钦此栏，视觉上不跳戏
+    setTab(pr.merged_at ? 'done' : 'open');
+    openPR(pr);
+  }
+
   // ── 呈回 ──
   async function submitAll() {
     const c = R.current.cur;
@@ -595,20 +639,41 @@ function App() {
       <aside>
         <div class="brand-row"><span class="seal">朱</span><span class="brand">御笔朱批</span></div>
         
+        <div class="search-row">
+          <input class="search-input" placeholder="搜标题 / 回车搜全文" value=${q}
+            onInput=${(e) => { setQ(e.target.value); if (hits) setHits(null); }}
+            onKeyDown=${(e) => { if (e.key === 'Enter') runSearch(); if (e.key === 'Escape') clearSearch(); }} />
+          ${(q || hits) && html`<button class="btn-ghost search-clear" onClick=${clearSearch}>清</button>`}
+        </div>
+        ${searching && html`<p class="state">${searching}</p>`}
+        ${hits && html`
+          <nav id="pr-list" class="search-results">
+            ${hits.length ? hits.map(({ pr, hits: hs }) => html`
+              <div class="search-group" key=${'s' + pr.number}>
+                <div class="search-group-title">#${pr.number} ${pr.title}${pr.merged_at ? ' · 已钦此' : ''}</div>
+                ${hs.map((h, i) => html`
+                  <button class="search-hit" key=${'h' + pr.number + '-' + i} onClick=${() => jumpToHit(pr, h)}>
+                    ${h.kind === 'title' ? html`<span class="search-hit-meta">标题命中</span>`
+                      : html`<span class="search-hit-meta">${h.path.split('/').pop()} · 第 ${h.line} 行</span>`}
+                    <span class="search-hit-snippet">${h.snippet}</span>
+                  </button>`)}
+              </div>`) : html`<p class="state">没搜到「${q}」。</p>`}
+          </nav>`}
+        ${!hits && html`
         <div class="list-tabs">
           <button class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => setTab('open')}>待批 ${prs.length}</button>
           <button class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => setTab('done')}>已钦此 ${donePrs.length}</button>
         </div>
         <nav id="pr-list">
-          ${(tab === 'open' ? prs : donePrs).length
-            ? (tab === 'open' ? prs : donePrs).map((pr) => html`
+          ${(tab === 'open' ? prs : donePrs).filter((p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase())).length
+            ? (tab === 'open' ? prs : donePrs).filter((p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase())).map((pr) => html`
               <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
                 onClick=${() => openPR(pr)}>
                 <h3>${pr.title}</h3>
                 <div class="meta">#${pr.number} · ${pr.merged_at ? `钦此于 ${timeAgo(pr.merged_at)}` : `呈于 ${timeAgo(pr.updated_at)}`}</div>
               </button>`)
-            : html`<p class="state">${tab === 'open' ? '此刻无折可批。' : '还没有钦此过的折子。'}</p>`}
-        </nav>
+            : html`<p class="state">${q.trim() ? `标题没有「${q.trim()}」——回车搜全文。` : (tab === 'open' ? '此刻无折可批。' : '还没有钦此过的折子。')}</p>`}
+        </nav>`}
         ${!DEMO && html`<button class="settings" onClick=${() => { setPhase('setup'); setSetupMsg(''); }}>设置 · 钥匙</button>`}
       </aside>
       <main>
