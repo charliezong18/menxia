@@ -11,6 +11,10 @@ cd "$(dirname "$0")/.."
 CHROME="${CHROME:-/Applications/Google Chrome.app/Contents/MacOS/Google Chrome}"
 [ -x "$CHROME" ] || CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
 if [ -z "$CHROME" ] || [ ! -x "$CHROME" ]; then
+  if [ -n "${CI:-}" ]; then
+    echo "✖ CI 里找不到 Chrome —— 浏览器层不能静默跳过（那是绿色空转）"
+    exit 1
+  fi
   echo "跳过浏览器层：未找到 Chrome（设 CHROME=/path/to/chrome 可指定）"
   exit 0
 fi
@@ -44,6 +48,10 @@ run_page() {
   rm -rf "$dir" 2>/dev/null || true
 }
 
+# 期望断言条数：钉死总数，断言被删/被跳过也要红
+DOM_EXPECT=22
+SMOKE_EXPECT=24
+
 WHAT="${1:-all}"
 STATUS=0
 
@@ -55,10 +63,10 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "dom" ]; then
   if [ -z "$RESULT" ]; then
     echo "  ✖ DOM 层没跑出结果（页面可能报错，详见 /tmp/zhupi-dom.log）"
     STATUS=1
-  elif echo "$RESULT" | grep -q 'fail=0'; then
+  elif [ "$RESULT" = "[dom] RESULT pass=$DOM_EXPECT fail=0" ]; then
     echo "  ✔ $RESULT"
   else
-    echo "  ✖ $RESULT"
+    echo "  ✖ $RESULT（期望 pass=$DOM_EXPECT fail=0——条数对不上也算红，防断言被悄悄删掉）"
     STATUS=1
   fi
 fi
@@ -71,12 +79,21 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   if [ -z "$RESULT" ]; then
     echo "  ✖ 冒烟没跑出结果（详见 /tmp/zhupi-smoke.log）"
     STATUS=1
-  elif echo "$RESULT" | grep -q 'fail=0'; then
+  elif [ "$RESULT" = "[smoke] RESULT pass=$SMOKE_EXPECT fail=0" ]; then
     echo "  ✔ $RESULT"
   else
-    echo "  ✖ $RESULT"
+    echo "  ✖ $RESULT（期望 pass=$SMOKE_EXPECT fail=0）"
     STATUS=1
   fi
+
+  # 故障注入两场：403 限流不得清 token（历史上误删过），401 才回设置页
+  for mode in 403 401; do
+    run_page "http://127.0.0.1:$PORT/index.html?demo=1&fail=$mode" "/tmp/zhupi-fail$mode.log" 4000
+    grep -o "\[smoke\] [^\"]*" "/tmp/zhupi-fail$mode.log" | sed 's/^/  /' || true
+    R=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "/tmp/zhupi-fail$mode.log" | tail -1)
+    EXP=$([ "$mode" = "403" ] && echo 3 || echo 2)
+    if [ "$R" = "[smoke] RESULT pass=$EXP fail=0" ]; then echo "  ✔ fail=$mode $R"; else echo "  ✖ fail=$mode $R（期望 pass=$EXP fail=0）"; STATUS=1; fi
+  done
 fi
 
 exit $STATUS

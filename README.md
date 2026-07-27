@@ -175,6 +175,11 @@ No test framework, no `npm install`, no config file. Unit tests use `node --test
 and end-to-end layers run in headless Chrome and fail the build on a non-zero exit. CI runs
 both on every push ([workflow](.github/workflows/test.yml)).
 
+**CI here is an alarm, not a gate.** This is a single-person repo with no branch protection:
+a push lands on `main` and Pages deploys it in parallel with the test run. A bad commit is
+always deployed first and reported second. The only real gate is running `test/run.sh` before
+you push — or moving to a PR flow with a required check, which this repo deliberately hasn't.
+
 What's actually covered: the hunk validator (a wrong line number 422s the entire batch),
 the anchoring line math (fence `+1`, indented block `+0`, per-table-row), comment threading,
 API request assembly (`commit_id`, merge `sha`, 401-vs-403 triage), and an end-to-end pass
