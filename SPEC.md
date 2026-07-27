@@ -28,21 +28,21 @@
 
 **① 桌面主界面（v0 主战场）** —— 左奏折列表、中渲染正文、右缘朱批栏：批注与原文并排常驻（Docs 式 margin comments），批注卡里能看到「御批 → 臣回」的循环；右上「钦此」：
 
-![桌面主界面](../assets/mockups/4-desktop.png)
+![桌面主界面](assets/mockups/4-desktop.png)
 
 以下三张为移动端设计（v1 再做，先留底稿）：
 
 **② 清单页「待批奏折」** —— 每折一张卡，左侧朱砂书脊 = 等你批；方印章标状态：
 
-![清单页](../assets/mockups/1-list.png)
+![清单页](assets/mockups/1-list.png)
 
 **③ 阅读页** —— 渲染态正文，划过的句子带朱砂笔道，底部常驻「提交朱批·n」：
 
-![阅读页](../assets/mockups/2-read.png)
+![阅读页](assets/mockups/2-read.png)
 
 **④ 批注输入（移动端）** —— 划选后底部弹批注单：引文（带出处行号）+ 输入框 + 存批/作罢：
 
-![批注输入](../assets/mockups/3-annotate.png)
+![批注输入](assets/mockups/3-annotate.png)
 
 （mockup 源码在 `assets/mockups/src/`，正式开发以此为准微调。）
 
@@ -174,11 +174,11 @@
 
 **北极星（v1 之后再排）：diff 奏折**——真代码 PR 也进同一个清单，同一套朱批/总批/钦此语义。这是「design 跟 diff 统一入口、统一格式」的完全体（2026-07-26 口头总批补充的主诉求）；先把 markdown 文档这半做扎实。概念图（同一个右缘朱批栏落在代码行上；配色规矩：**朱砂只属于御批**，增行用茶青、删行用墨划，不与批注抢红）：
 
-![diff 奏折 · 并排视图（北极星概念图）](../assets/mockups/5-diff.png)
+![diff 奏折 · 并排视图（北极星概念图）](assets/mockups/5-diff.png)
 
 **左右分栏（split view）为桌面默认**，顶栏「并排 / 左右」一键切（2026-07-26 输入：Charlie 读 diff 偏好左右对照）。左旧右新，删行墨划、增行茶青，占位段用斜纹表示"这边没有对应行"；朱批仍落在**新版那一侧**的行上（GitHub 的 inline comment 只认新文件行号），右缘朱批栏不变：
 
-![diff 奏折 · 左右分栏](../assets/mockups/6-diff-split.png)
+![diff 奏折 · 左右分栏](assets/mockups/6-diff-split.png)
 
 窄屏（<1280px）自动退回并排视图——左右分栏挤两栏代码 + 批注栏会把代码压到没法读；这是 v1 移动端天然只有并排视图的原因。
 
