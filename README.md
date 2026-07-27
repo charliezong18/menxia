@@ -168,18 +168,19 @@ Honest list, so you know what you're forking:
 ## Layout · 结构
 
 ```
-index.html        entry (setup page + app shell)
-src/app.js        main flow: key / list / reading
+index.html        entry (one root div; everything renders from ui.js)
+src/ui.js         Preact view layer — one-way data flow; the markdown article is an
+                  uncontrolled DOM island so Range-based highlights survive re-renders
+src/anchor.js     pure logic: selection → line anchor, hunk parsing, draft persistence
 src/github.js     GitHub API wrapper
-src/annotate.js   selection → anchor → margin cards → submit
 src/render.js     markdown → HTML (blocks carry data-line for anchoring)
 src/style.css     宣纸 / 墨 / 朱砂
-vendor/           markdown-it, vendored — no npm, no lockfile
+vendor/           markdown-it + htm/preact standalone (13KB), vendored — no npm, no lockfile
 ```
 
-Total app code is about 1,000 lines. The [architecture switch gate](MIGRATION-WATCH.md) says when zero-build stops being the right call, in numbers rather than vibes.
+Total app code is about 900 lines. Still **zero-build** — push is deploy — but no longer framework-less: the [architecture switch gate](MIGRATION-WATCH.md) tripped on 2026-07-26 (two indicators over threshold, both review-confirmed as event/async-timing bug factories), so the view layer moved to Preact in its no-build form. The gate said so, in numbers; we obeyed. `?demo=1&auto=1` gives you a tokenless smoke run that annotates the demo document through real browser events.
 
-全部应用代码约 1000 行。什么时候零构建撑不住了，[量化闸门](MIGRATION-WATCH.md)说了算，不靠感觉。
+全部应用代码约 900 行。依旧**零构建**（push 即部署），但不再是无框架：[量化闸门](MIGRATION-WATCH.md)于 2026-07-26 双指标触发（两条均被评审证实是事件/异步时序类 bug 的高发层），视图层按规矩迁到了免构建形态的 Preact。闸门用数字说话，我们照办。`?demo=1&auto=1` 提供免 token 冒烟：用真实浏览器事件在演示文档上自动划批。
 
 ## License
 
