@@ -111,3 +111,37 @@ export function saveDrafts(num, items) {
 export const pendingCountFor = (num) => loadDrafts(num).length;
 
 export const fmtDraft = (d) => `> ${d.quote}\n\n${d.note}`;
+
+// ── 已呈批注串（M3）──
+// 根批注体恒为 `> 引文\n\n正文`（fmtDraft 写出的形状）；回话是纯文本无引文前缀。
+// 解析成 { quote, body }：只认「开头连续的 > 行」为引文，其余为正文，认不出则 quote 空。
+export function parseCommentBody(raw) {
+  const text = String(raw || '');
+  const lines = text.split('\n');
+  const quoteLines = [];
+  let i = 0;
+  while (i < lines.length && lines[i].startsWith('>')) {
+    quoteLines.push(lines[i].replace(/^>\s?/, ''));
+    i++;
+  }
+  if (!quoteLines.length) return { quote: '', body: text.trim() };
+  while (i < lines.length && lines[i].trim() === '') i++; // 吃掉引文与正文之间的空行
+  return { quote: quoteLines.join('\n').trim(), body: lines.slice(i).join('\n').trim() };
+}
+
+// 把扁平 comments 串成「根批注 + 回话[]」：in_reply_to_id 指回根 id。
+// 保序：根按数组出现序，回话按 created_at 升序挂在各自根下。
+export function threadComments(comments) {
+  const roots = [];
+  const byId = new Map();
+  comments.forEach((c) => { if (!c.in_reply_to_id) { const t = { root: c, replies: [] }; byId.set(c.id, t); roots.push(t); } });
+  comments.forEach((c) => {
+    if (c.in_reply_to_id) {
+      const t = byId.get(c.in_reply_to_id);
+      if (t) t.replies.push(c);
+      else { const orphan = { root: c, replies: [] }; byId.set(c.id, orphan); roots.push(orphan); } // 根缺失（分页边界/被删）→ 当独立串，不丢
+    }
+  });
+  roots.forEach((t) => t.replies.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)));
+  return roots;
+}

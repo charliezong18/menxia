@@ -85,6 +85,25 @@ export async function listPRFiles(num) {
   return out;
 }
 
+// 分页取全（模式同 listPRFiles）——已呈批注串与 rev 序列都可能超 100 条
+async function paged(pathFor) {
+  const out = [];
+  for (let page = 1; page <= 10; page++) {
+    const batch = await json(pathFor(page));
+    out.push(...batch);
+    if (batch.length < 100) break;
+  }
+  return out;
+}
+
+// 已呈的 inline review comments：id / path / line / original_line / body / in_reply_to_id / user / created_at
+export const listPRComments = (num) =>
+  paged((page) => `/repos/${repoSlug()}/pulls/${num}/comments?per_page=100&page=${page}`);
+
+// rev 序列：v1..vN，vN = head（GitHub 按时间升序返回，直接用作 v 号）
+export const listPRCommits = (num) =>
+  paged((page) => `/repos/${repoSlug()}/pulls/${num}/commits?per_page=100&page=${page}`);
+
 const encodePath = (p) => p.split('/').map(encodeURIComponent).join('/');
 
 export const getFileText = (path, ref) =>
