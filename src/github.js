@@ -42,10 +42,18 @@ async function request(path, { accept = 'application/vnd.github+json', ...opts }
 
 const json = (path, opts) => request(path, opts).then((r) => r.json());
 
-// 验钥：既确认能读到仓库，也确认有写 PR 的权限（否则 M2 提交朱批时才炸）
+// 验钥分三层：仓库可达（Metadata 就够）≠ 能列 PR（要 Pull requests: Read）≠ 能 merge（要 Contents: Write）。
+// 只查第一层会让「漏配 Pull requests」的钥匙存钥成功、进清单才 403（2026-07-26 实翻过车）。
 export async function verifyToken() {
   const repo = await json(`/repos/${repoSlug()}`);
-  return { repo, canWrite: Boolean(repo.permissions?.push) };
+  let prAccess = true;
+  try {
+    await json(`/repos/${repoSlug()}/pulls?state=open&per_page=1`);
+  } catch (err) {
+    if (err.status === 403 || err.status === 404) prAccess = false;
+    else throw err;
+  }
+  return { repo, canWrite: Boolean(repo.permissions?.push), prAccess };
 }
 
 export const listOpenPRs = () =>

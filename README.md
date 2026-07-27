@@ -20,7 +20,7 @@ Spec: [`SPEC.md`](SPEC.md)（含 §8.1 架构切换 breakpoint）· 迁移观察
 ## Setup · 用法
 
 1. 打开 https://charliezong18.github.io/zhupi
-2. 按页面指引生成 fine-grained PAT（只授权 `charliezong18/review` 一个仓库，权限 Contents: Read + Pull requests: Read and write），粘进去
+2. 按页面指引生成 fine-grained PAT（只授权 `charliezong18/review` 一个仓库，权限 **Contents: Read and write** + **Pull requests: Read and write**——两项都要，最容易漏的是 Pull requests），粘进去
 3. 钥匙只存在这台设备的浏览器 localStorage，不经过任何服务器；手机丢了去 GitHub 一键 revoke 即可
 
 ## Layout · 结构
