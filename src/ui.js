@@ -62,10 +62,15 @@ function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
         <textarea class="anno-input" ref=${taRef} placeholder="朱批……" defaultValue=${d.note}
           onKeyDown=${(e) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.stopPropagation(); onSave(d.id, taRef.current.value); }
+          }}
+          onBlur=${() => {
+            // 打了一半没存批就点了别处（换卡/新划句）→ 自动存，别生吞长批注（评审阻断项）
+            const v = taRef.current?.value.trim();
+            if (v && v !== d.note) onSave(d.id, taRef.current.value);
           }}></textarea>
         <div class="anno-row">
-          <button class="anno-ghost" onClick=${() => onDrop(d.id)}>作罢</button>
-          <button class="anno-save" onClick=${() => onSave(d.id, taRef.current.value)}>存批</button>
+          <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onDrop(d.id)}>作罢</button>
+          <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSave(d.id, taRef.current.value)}>存批</button>
         </div>` : html`
         <div class="anno-note" title="点击修改" onClick=${() => onEdit(d.id)}>${d.note}</div>`}
     </div>`;
@@ -79,8 +84,8 @@ function ZongpiCard({ busy, onSend, onClose }) {
       <div class="anno-src">总批 · 整折总评（呈出即达，不攒批）</div>
       <textarea class="anno-input" ref=${taRef} rows="4" placeholder="总批……可以按序号列意见"></textarea>
       <div class="anno-row">
-        <button class="anno-ghost" onClick=${onClose}>作罢</button>
-        <button class="anno-save" onClick=${() => onSend(taRef.current.value)}>${busy ? '呈递中…' : '呈总批'}</button>
+        <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${onClose}>作罢</button>
+        <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSend(taRef.current.value)}>${busy ? '呈递中…' : '呈总批'}</button>
       </div>
     </div>`;
 }
@@ -131,7 +136,7 @@ function App() {
     try {
       const list = await api.listOpenPRs();
       setPrs(list);
-      if (list.length) openPR(list[0]);
+      if (list.length && !R.current.cur) openPR(list[0]); // 在途中用户已手点开折子就别顶掉他
     } catch (err) {
       if (err.tokenDead) { gh.clearToken(); setPhase('setup'); setSetupMsg('钥匙失效了，换一把。'); return; }
       say(err.rateLimited ? '碰到 GitHub 限流，缓一会儿再刷新。' : `拉取失败：${err.message}`);
@@ -170,6 +175,15 @@ function App() {
     setDocTick(0);
     setCur({ pr, files: null, docs: null });
     setDrafts(A.loadDrafts(pr.number));
+    // 立刻清岛屿并示 loading：否则 listPRFiles 整个往返期间旧折正文挂着，
+    // 这时划选会产出 path:null 的脏草稿（评审 N2）
+    const el = docRef.current;
+    if (el) {
+      const p = document.createElement('p');
+      p.className = 'state';
+      p.textContent = '展折中…';
+      el.replaceChildren(p);
+    }
     (async () => {
       try {
         const files = await api.listPRFiles(pr.number);
@@ -261,7 +275,7 @@ function App() {
     const ro = new ResizeObserver(() => layoutCards());
     ro.observe(docRef.current);
     return () => ro.disconnect();
-  }, [docTick === 0]);
+  }, [docPath, docErr]); // 每次换文档/错误恢复都扎实重挂，不赌 vdom 节点复用（评审：布尔依赖太脆）
   useEffect(() => {
     const onResize = () => layoutCards();
     window.addEventListener('resize', onResize);
@@ -272,7 +286,8 @@ function App() {
   const submitRef = useRef();
   useEffect(() => {
     const onMouseUp = (e) => {
-      if (e.target.closest('.zhupi-float, .anno-card, .zongpi-card, aside, .mainbar')) return;
+      if (e.target.closest('.zhupi-float, .anno-card, .zongpi-card')) return;
+      if (e.target.closest('aside, .mainbar')) { if (R.current.float) setFloat(null); return; } // 点按钮也要收浮钮
       setTimeout(() => {
         const a = A.computeAnchor(docRef.current);
         setFloat(a ? { ...a, rect: { left: a.rect.right, top: a.rect.bottom } } : null);
@@ -406,9 +421,10 @@ function App() {
       say(`已钦此：#${pr.number} 定稿归档。对外交付回 Happy 说一声。`);
       setCur(null);
       setDocPath(null);
+      setDocErr(null);
       await loadPRs();
     } catch (err) {
-      say(`钦此失败：${err.message}`);
+      say(`钦此失败：${err.message}${pr.draft ? `（此折是 draft；若是 GraphQL 被钥匙拒了，回 Happy 说「钦此 #${pr.number}」我来执行）` : ''}`);
     } finally {
       setBusy(false);
     }
@@ -440,7 +456,7 @@ function App() {
               <div class="meta">#${pr.number} · 呈于 ${timeAgo(pr.updated_at)}</div>
             </button>`) : html`<p class="state">此刻无折可批。</p>`}
         </nav>
-        <button class="settings" onClick=${() => { gh.clearToken(); setPhase('setup'); setSetupMsg(''); }}>设置 · 钥匙</button>
+        ${!DEMO && html`<button class="settings" onClick=${() => { gh.clearToken(); setPhase('setup'); setSetupMsg(''); }}>设置 · 钥匙</button>`}
       </aside>
       <main>
         <div class="mainbar">
@@ -448,7 +464,7 @@ function App() {
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
             ${cur && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
-            ${drafts.length > 0 && html`
+            ${cur && drafts.length > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy} onClick=${submitAll}>
                 ${busy ? '呈递中…' : `提交朱批 · ${drafts.length}`}
               </button>`}
