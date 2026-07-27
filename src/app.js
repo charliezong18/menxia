@@ -25,11 +25,15 @@ async function saveToken() {
   msg.textContent = '验钥中…';
   gh.setToken(value);
   try {
-    const { canWrite } = await gh.verifyToken();
+    const { canWrite, prAccess } = await gh.verifyToken();
+    if (!prAccess) {
+      gh.clearToken();
+      return showSetup('钥匙差一项：Pull requests: Read and write。回 GitHub 的 token 页补上（不用重新生成，改完点 Update），再回来点存钥——输入框里这串还能用。');
+    }
     $('token-input').value = '';
     await boot();
     if (!canWrite) {
-      setNotice('这把钥匙只能读：将来提交朱批需要 Pull requests 的写权限。');
+      setNotice('提醒：这把钥匙没有 Contents 写权限，读批都行，但「钦此」（merge）会失败。');
     }
   } catch (err) {
     gh.clearToken();
