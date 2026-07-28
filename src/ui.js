@@ -755,7 +755,7 @@ function App() {
             <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
             ${cur && html`<button class="btn-ghost" title="拷朱批直达链（按住 Alt 拷 GitHub 链接）" onClick=${copyRef}>引用此处</button>`}
             ${happyUrl && html`<button class="btn-ghost" title="回到呈这折的 Happy 奏对，说一句「读批注」（会话可能已散，那就只剩存档可看）"
-              onClick=${() => window.open(happyUrl, '_blank', 'noopener')}>回奏对</button>`}
+              onClick=${() => { const w = window.open(happyUrl, '_blank'); if (w) w.opener = null; }}>回奏对</button>`}
             ${cur && !archived && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
             ${cur && drafts.length > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}
