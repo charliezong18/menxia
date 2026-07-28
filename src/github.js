@@ -76,7 +76,9 @@ export const listOpenPRs = () =>
 
 // 已钦此的折子（归档）：closed 里挑真正 merge 过的
 export const listMergedPRs = async () => {
-  const closed = await json(`/repos/${repoSlug()}/pulls?state=closed&per_page=50&sort=updated&direction=desc`);
+  // 分页取全：closed 里还混着「关而未合」的，只取前 50 条归档多了必漏
+  const closed = await paged((page) =>
+    `/repos/${repoSlug()}/pulls?state=closed&per_page=100&page=${page}&sort=updated&direction=desc`);
   return closed.filter((p) => p.merged_at);
 };
 

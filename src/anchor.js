@@ -105,8 +105,15 @@ const draftsKey = (num) => `zhupi.drafts.${num}`;
 export function loadDrafts(num) {
   try { return JSON.parse(localStorage.getItem(draftsKey(num)))?.items || []; } catch { return []; }
 }
+// 草稿是这个 app 的皇冠数据：配额爆掉时必须让调用方知道（此前裸写，异常从
+// Preact state updater 里炸出来 = 用户刚打的批注静默消失，且无任何提示）
 export function saveDrafts(num, items) {
-  localStorage.setItem(draftsKey(num), JSON.stringify({ items }));
+  try {
+    localStorage.setItem(draftsKey(num), JSON.stringify({ items }));
+    return null;
+  } catch (err) {
+    return err;
+  }
 }
 export const pendingCountFor = (num) => loadDrafts(num).length;
 

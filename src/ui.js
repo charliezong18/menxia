@@ -10,7 +10,7 @@ import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
-import { siblingFor, visibleDocs, getLang, setLang } from './lang.js';
+import { siblingFor, visibleDocs, getLang, setLang, variantOf } from './lang.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -20,7 +20,10 @@ const api = DEMO ? demoApi : gh;
 // Pages 发 max-age=600 且模块 URL 无版本号 → 手机上可能跑着 10 分钟前的旧代码，
 // 而用户无从判断新旧。启动时强制回源取一遍源码算指纹，与上次记录比：变了就提示刷新。
 // cache:'reload' 同时把新文件写进 HTTP 缓存，所以点刷新立刻生效。
-const BUILD_FILES = ['src/ui.js', 'src/style.css', 'src/github.js', 'src/anchor.js', 'src/render.js'];
+// 覆盖全部源文件——早先只列 5 个，之后新增的 link/search/lang/demo 改了都不会提示新版
+// （清单式配置随代码增长而腐烂，第六轮评审实证）
+const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js', 'src/anchor.js',
+  'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -162,6 +165,7 @@ function App() {
   const docRef = useRef(null);
   const autoRan = useRef(false); // 冒烟只跑一次（切折会让 docTick 回到 1）
   const deepLink = useRef(parseDeepLink(location.search, gh.getRepoSlug() || (DEMO ? 'demo/repo' : '')));
+  const pendingNotice = useRef(null); // 深链失败提示：要熬过随后的 setNotice('')
   const jumpRef = useRef(null);  // 搜索命中 → 开折后跳到那一段 {prNumber, path, line}
   const indexRef = useRef(null); // 全文索引缓存（本次会话内）
   // 全局监听器只绑一次，读最新状态走这面镜子
@@ -180,7 +184,9 @@ function App() {
   const mutateDrafts = useCallback((prNumber, fn) => {
     setDrafts((ds) => {
       const nd = fn(ds);
-      A.saveDrafts(prNumber, nd);
+      const err = A.saveDrafts(prNumber, nd);
+      // 存不下必须明说：草稿是这里唯一不可再生的数据（配额爆时曾静默吞掉）
+      if (err) setTimeout(() => setNotice('草稿存不进本地存储（配额可能满了）——先提交已写的批注，别再往下攒。'), 0);
       return nd;
     });
   }, []);
@@ -199,6 +205,7 @@ function App() {
     setPhase('app');
     setNotice('');
     try {
+      indexRef.current = null; // 拉了新清单就让搜索索引重建（缓存命中时几乎零成本）
       const list = await api.listOpenPRs();
       if (api.listMergedPRs) api.listMergedPRs().then(setDonePrs).catch(() => {});
       setPrs(list);
@@ -213,7 +220,10 @@ function App() {
           openPR(target);
           return;
         }
-        say(`直达链接指向第 ${dl.prNumber} 折，但清单里没有（可能已删或不在本仓）。`);
+        // 用 ref 暂存：紧接着的 boot/loadPRs 会 setNotice('') 把它冲掉
+        pendingNotice.current = dl.prNumber
+          ? `直达链接指向第 ${dl.prNumber} 折，但清单里没有（可能已删或不在本仓）。`
+          : '这条直达链接没带折号（blob 形态只指到文件），已打开清单首折。';
       }
       if (list.length && !R.current.cur) openPR(list[0]); // 在途中用户已手点开折子就别顶掉他
     } catch (err) {
@@ -539,7 +549,7 @@ function App() {
     // 默认给「朱批直达链」（点了直接进 app 读到那一段）；按住 Alt 给 GitHub permalink
     const wantGithub = Boolean(e?.altKey);
     const md = wantGithub
-      ? (a ? buildRef({ slug, path: docPath, line: a.line, quote: a.quote })
+      ? (a ? buildRef({ slug, path: docPath, line: a.line, quote: a.quote, ref: curRevSha })
            : buildRef({ slug, prNumber: cur?.pr?.number }))
       : (() => {
           const url = buildDeepLink(location.origin + location.pathname,
@@ -552,11 +562,13 @@ function App() {
   }
 
   // F8 切语言：留在当前折当前篇，只换语言变体（找不到对应版就什么都不做）
+  // 目标语言由参数决定，不是「翻到对面」——此前点已激活的语言键会把人翻到另一语言，
+  // 且 chip 继续显示旧状态（第六轮评审）。当前语言一律从 docPath 派生，偏好只管默认选篇。
   function switchLang(next) {
     setLang(next);
     setLangState(next);
-    const paths = (cur?.docs || []).map((f) => f.filename);
-    const sib = siblingFor(docPath, paths);
+    if (curLangOf === next) return;                  // 已经在这个语言：只记偏好
+    const sib = siblingFor(docPath, (cur?.docs || []).map((f) => f.filename));
     if (sib) setDocPath(sib);
   }
 
@@ -592,6 +604,7 @@ function App() {
   }
 
   function jumpToHit(pr, hit) {
+    if (pr.number === cur?.pr?.number) return jumpTo({ prNumber: pr.number, path: hit.path, line: hit.line });
     jumpRef.current = hit.path ? { prNumber: pr.number, path: hit.path, line: hit.line || 1 } : null;
     // 归档折点进去自动切到已钦此栏，视觉上不跳戏
     setTab(pr.merged_at ? 'done' : 'open');
@@ -737,6 +750,9 @@ function App() {
   const curRevSha = viewed || headSha;
   // F8：当前篇有语言变体才出切换 chip（单语折一切照旧，不添噪音）
   const langSibling = cur?.docs ? siblingFor(docPath, cur.docs.map((f) => f.filename)) : null;
+  // 只有当前篇真属于双语对时才从 docPath 派生语言；单语文档（无 .zh-CN 变体）一律按偏好，
+  // 否则 `demo.md` 会被 variantOf 判成「英文」把整排 tab 翻成英文版（本轮自查踩到）
+  const curLangOf = langSibling ? (variantOf(docPath)?.lang || lang) : lang;
 
   return html`
     <div id="app">
@@ -788,7 +804,7 @@ function App() {
             ${cur && html`<button class="btn-ghost" title="拷朱批直达链（按住 Alt 拷 GitHub 链接）" onClick=${copyRef}>引用此处</button>`}
             ${happyUrl && html`<button class="btn-ghost" title="回到呈这折的 Happy 奏对，说一句「读批注」（会话可能已散，那就只剩存档可看）"
               onClick=${() => { const w = window.open(happyUrl, '_blank'); if (w) w.opener = null; }}>回奏对</button>`}
-            ${cur && !archived && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
+            ${cur && html`<button class="btn-ghost" title=${archived ? '归档折仍可留总批（划句批注才需要活折）' : ''} onClick=${() => setZongpi((z) => !z)}>总批</button>`}
             ${cur && drafts.length > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}
                 title=${onHead ? '' : '正在读旧版——先切回 head 再提交'} onClick=${submitAll}>
@@ -807,7 +823,7 @@ function App() {
         <div class="work">
           ${cur?.docs?.length > 1 && html`
             <div class="doc-tabs">
-              ${cur.docs.filter((f) => visibleDocs(cur.docs.map((x) => x.filename), lang).includes(f.filename)).map((f) => html`
+              ${cur.docs.filter((f) => visibleDocs(cur.docs.map((x) => x.filename), curLangOf).includes(f.filename)).map((f) => html`
                 <button key=${f.filename} class=${'doc-tab' + (f.filename === docPath ? ' active' : '')}
                   title=${f.filename} onClick=${() => { setViewed(null); setDocPath(f.filename); }}>
                   ${f.filename.split('/').pop().replace(/\.zh-CN\.md$/i, '.md')}
@@ -841,8 +857,8 @@ function App() {
             </div>`}
           ${langSibling && html`
             <div class="lang-switch" title="同一折的中英两版，切页不离开当前折">
-              <button class=${'lang-opt' + (lang === 'zh' ? ' active' : '')} onClick=${() => switchLang('zh')}>中</button>
-              <button class=${'lang-opt' + (lang === 'en' ? ' active' : '')} onClick=${() => switchLang('en')}>EN</button>
+              <button class=${'lang-opt' + (curLangOf === 'zh' ? ' active' : '')} onClick=${() => switchLang('zh')}>中</button>
+              <button class=${'lang-opt' + (curLangOf === 'en' ? ' active' : '')} onClick=${() => switchLang('en')}>EN</button>
             </div>`}
           <div class="read-row" onClick=${onDocClick}>
             ${docErr ? html`<article id="doc"><p class="state err">${docErr}</p></article>`

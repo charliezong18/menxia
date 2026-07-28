@@ -153,3 +153,11 @@ test('saveDrafts/loadDrafts/pendingCountFor 往返', () => {
   assert.deepEqual(loadDrafts(44), [], '坏数据要吞掉，不能让整个 app 起不来');
   delete globalThis.localStorage;
 });
+
+test('saveDrafts 配额爆时返回错误而不是抛出（此前裸写＝草稿静默丢失）', () => {
+  const real = globalThis.localStorage;
+  globalThis.localStorage = { getItem: () => null, setItem() { throw new Error('QuotaExceededError'); } };
+  const err = saveDrafts(7, [{ id: 'a' }]);
+  assert.ok(err instanceof Error, '应把错误交回调用方，让 UI 能提示');
+  globalThis.localStorage = real;
+});

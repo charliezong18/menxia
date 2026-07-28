@@ -57,6 +57,12 @@ export function visibleDocs(paths, lang = 'zh') {
   return out;
 }
 
+// 隐私/无痕模式下 localStorage 会直接抛 DOMException；getLang 被 useState 初值同步调用，
+// 不兜住就是整站白屏（其余存储读写都包了 try/catch，唯独这里漏过）
 const LANG_KEY = 'zhupi.lang';
-export const getLang = () => (localStorage.getItem(LANG_KEY) === 'en' ? 'en' : 'zh'); // 默认中文
-export const setLang = (l) => localStorage.setItem(LANG_KEY, l === 'en' ? 'en' : 'zh');
+export const getLang = () => {
+  try { return localStorage.getItem(LANG_KEY) === 'en' ? 'en' : 'zh'; } catch { return 'zh'; }
+};
+export const setLang = (l) => {
+  try { localStorage.setItem(LANG_KEY, l === 'en' ? 'en' : 'zh'); } catch { /* 存不下就只在本次会话生效 */ }
+};

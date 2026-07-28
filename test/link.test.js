@@ -174,3 +174,10 @@ test('绝对链接 / 锚点 / mailto / 协议相对 一律不拦（返回 null�
    '//cdn.example.com/x.md', '', '   '].forEach((h) =>
     assert.equal(resolveRelativeDocLink(h, 'docs/a.md'), null, `不该拦：${h}`));
 });
+
+test('buildRef 必须带当前 ref：指向 main 对未 merge 的折是生下来就 404 的链', () => {
+  const md = buildRef({ slug: SLUG, path: 'docs/a.md', line: 3, quote: 'x', ref: 'abc1234' });
+  assert.ok(md.includes('/blob/abc1234/docs/a.md#L3'), md);
+  // 不给 ref 才退回 main（兼容旧调用）
+  assert.ok(buildRef({ slug: SLUG, path: 'docs/a.md', line: 3 }).includes('/blob/main/'));
+});
