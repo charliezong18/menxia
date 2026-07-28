@@ -230,7 +230,24 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   border: 1px solid var(--rule); color: var(--ink-soft);
 }
 .anno-path { margin-left: 8px; font: 11px var(--mono); color: var(--ink-soft); }
-.anno-shown-body { font-size: 13px; line-height: 1.65; color: var(--ink); white-space: pre-wrap; }
+/* 批注/回话正文走 markdown 渲染（agent 的回话天然是 markdown），所以撤掉 pre-wrap：
+   渲染后换行由块级元素负责，留着 pre-wrap 会让每个 <p> 之间再多出一段空白。 */
+.anno-shown-body { font-size: 13px; line-height: 1.65; color: var(--ink); }
+.anno-shown-body > :first-child { margin-top: 0; }
+.anno-shown-body > :last-child { margin-bottom: 0; }
+.anno-shown-body p { margin: 0 0 6px; }
+.anno-shown-body ul, .anno-shown-body ol { margin: 0 0 6px; padding-left: 18px; }
+.anno-shown-body li { margin: 2px 0; }
+.anno-shown-body code {
+  font: 12px var(--mono); padding: 1px 4px; border-radius: 3px; background: var(--rule);
+}
+.anno-shown-body pre { margin: 0 0 6px; padding: 7px 9px; border-radius: 4px; background: var(--rule); overflow-x: auto; }
+.anno-shown-body pre code { padding: 0; background: none; }
+.anno-shown-body blockquote {
+  margin: 0 0 6px; padding-left: 9px; border-left: 2px solid var(--rule); color: var(--ink-soft);
+}
+.anno-shown-body table { border-collapse: collapse; margin: 0 0 6px; font-size: 12px; }
+.anno-shown-body th, .anno-shown-body td { border: 1px solid var(--rule); padding: 3px 6px; }
 .anno-reply {
   margin-top: 9px; padding-left: 11px; border-left: 2px solid var(--rule);
 }

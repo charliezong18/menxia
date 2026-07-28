@@ -27,8 +27,12 @@ const api = DEMO ? demoApi : gh;
 // cache:'reload' 同时把新文件写进 HTTP 缓存，所以点刷新立刻生效。
 // 覆盖全部源文件——早先只列 5 个，之后新增的 link/search/lang/demo 改了都不会提示新版
 // （清单式配置随代码增长而腐烂，第六轮评审实证）
+// 新增源文件必须登记在这里，否则改了它不算「新版本」、用户手上会一直跑旧代码。
+// 子组件拆出去后曾漏登记，改 cards.js 不触发提示（2026-07-28 补）。
 const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js', 'src/anchor.js',
-  'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js'];
+  'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js',
+  'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
+  'src/components/topbar.js', 'src/components/other-threads.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -631,8 +635,14 @@ function App() {
   const docThreads = [], otherThreads = [];
   threads.forEach((t) => {
     const r = t.root;
-    const anchorLine = r.line ?? r.original_line; // outdated（line=null）退回 original_line
-    if (r.path === docPath && anchorLine != null) docThreads.push({ t, blockLine: anchorLine, outdated: r.line == null });
+    const outdated = r.line == null;
+    // outdated（line=null）先拿引文在当前版正文里反查行号；original_line 是旧版行号，
+    // 直接拿它对齐会把卡片贴到错误的段落上（PAIN 2026-07-28 #14），只当反查失败的兜底。
+    const reanchored = outdated
+      ? A.reanchorByQuote(docRef.current, A.parseCommentBody(r.body).quote)
+      : null;
+    const anchorLine = r.line ?? reanchored ?? r.original_line;
+    if (r.path === docPath && anchorLine != null) docThreads.push({ t, blockLine: anchorLine, outdated });
     else otherThreads.push(t);
   });
   docThreads.sort((a, b) => a.blockLine - b.blockLine);
