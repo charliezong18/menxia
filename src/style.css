@@ -381,3 +381,16 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 /* 搜索跳转落点：闪一下定位（中性 chip 色——朱砂仍只属于批注动作） */
 @keyframes searchFlash { 0% { background: var(--chip); } 100% { background: transparent; } }
 .search-flash { animation: searchFlash 1.6s ease-out; }
+
+/* F8 语言切页：同一折的中英两版。墨色分段控件，朱砂仍只属于批注动作 */
+.lang-switch {
+  display: inline-flex; gap: 4px; margin: 0 0 16px 26px;
+  border: 1px solid var(--rule); border-radius: 999px; padding: 3px; background: var(--paper-raised);
+}
+.lang-opt {
+  padding: 4px 14px; border-radius: 999px; font-size: 13px; color: var(--ink-soft);
+  font-family: var(--songti); letter-spacing: .08em;
+}
+.lang-opt:hover { color: var(--ink); }
+.lang-opt.active { background: var(--chip); color: var(--ink); }
+@media (max-width: 900px) { .lang-switch { margin-left: 0; } }

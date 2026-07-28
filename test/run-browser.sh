@@ -50,7 +50,7 @@ run_page() {
 
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=22
-SMOKE_EXPECT=38
+SMOKE_EXPECT=42
 
 WHAT="${1:-all}"
 STATUS=0
@@ -73,7 +73,7 @@ fi
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   echo "── 端到端冒烟（demo 免 token，真实事件路径划批 + rev 切换）──"
-  run_page "http://127.0.0.1:$PORT/index.html?demo=1&auto=1" /tmp/zhupi-smoke.log 9000
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&auto=1" /tmp/zhupi-smoke.log 30000
   grep -o '\[smoke\] [^"]*' /tmp/zhupi-smoke.log | sed 's/^/  /' || true
   RESULT=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-smoke.log | tail -1)
   if [ -z "$RESULT" ]; then

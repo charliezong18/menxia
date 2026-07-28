@@ -10,6 +10,7 @@ import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
+import { siblingFor, visibleDocs, getLang, setLang } from './lang.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -150,6 +151,7 @@ function App() {
   const [zongpis, setZongpis] = useState([]);    // 已呈总批（会话区），否则总批只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
+  const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待批 / done=已钦此（归档，只读）
   const [donePrs, setDonePrs] = useState([]);
@@ -275,7 +277,9 @@ function App() {
         else {
           const jp = jumpRef.current;
           const want = jp?.prNumber === pr.number && docs.find((f) => f.filename === jp.path);
-          setDocPath(want ? jp.path : docs[0].filename);
+          // 无指定目标时按语言偏好挑首篇（双语折默认开中文版）
+          const visible = visibleDocs(docs.map((f) => f.filename), getLang());
+          setDocPath(want ? jp.path : (visible[0] || docs[0].filename));
         }
       } catch (err) {
         if (R.current.cur?.pr.number !== pr.number) return;
@@ -547,6 +551,15 @@ function App() {
     catch { say(`拷贝失败，手动复制：${md}`); }
   }
 
+  // F8 切语言：留在当前折当前篇，只换语言变体（找不到对应版就什么都不做）
+  function switchLang(next) {
+    setLang(next);
+    setLangState(next);
+    const paths = (cur?.docs || []).map((f) => f.filename);
+    const sib = siblingFor(docPath, paths);
+    if (sib) setDocPath(sib);
+  }
+
   // ── 搜索：标题即输即filter；回车翻全折全文（含归档），命中点击直达段落 ──
   async function runSearch() {
     const query = q.trim();
@@ -722,6 +735,8 @@ function App() {
     when: c.commit?.committer?.date || c.commit?.author?.date,
   }));
   const curRevSha = viewed || headSha;
+  // F8：当前篇有语言变体才出切换 chip（单语折一切照旧，不添噪音）
+  const langSibling = cur?.docs ? siblingFor(docPath, cur.docs.map((f) => f.filename)) : null;
 
   return html`
     <div id="app">
@@ -792,10 +807,10 @@ function App() {
         <div class="work">
           ${cur?.docs?.length > 1 && html`
             <div class="doc-tabs">
-              ${cur.docs.map((f) => html`
+              ${cur.docs.filter((f) => visibleDocs(cur.docs.map((x) => x.filename), lang).includes(f.filename)).map((f) => html`
                 <button key=${f.filename} class=${'doc-tab' + (f.filename === docPath ? ' active' : '')}
                   title=${f.filename} onClick=${() => { setViewed(null); setDocPath(f.filename); }}>
-                  ${f.filename.split('/').pop()}
+                  ${f.filename.split('/').pop().replace(/\.zh-CN\.md$/i, '.md')}
                 </button>`)}
             </div>`}
           ${cur && revs.length > 1 && html`
@@ -823,6 +838,11 @@ function App() {
                   <span class="anno-who">${z.user?.login || '?'}</span>
                   <span class="zongpi-shown-body">${z.body}</span>
                 </div>`)}
+            </div>`}
+          ${langSibling && html`
+            <div class="lang-switch" title="同一折的中英两版，切页不离开当前折">
+              <button class=${'lang-opt' + (lang === 'zh' ? ' active' : '')} onClick=${() => switchLang('zh')}>中</button>
+              <button class=${'lang-opt' + (lang === 'en' ? ' active' : '')} onClick=${() => switchLang('en')}>EN</button>
             </div>`}
           <div class="read-row" onClick=${onDocClick}>
             ${docErr ? html`<article id="doc"><p class="state err">${docErr}</p></article>`
