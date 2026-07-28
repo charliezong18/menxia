@@ -9,7 +9,7 @@ import { renderMarkdown, hydrateRelativeImages } from './render.js';
 import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
-import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession } from './link.js';
+import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -505,7 +505,24 @@ function App() {
   const onDocClick = useCallback((e) => {
     const a = e.target.closest('a[href]');
     if (!a) return;
-    const parsed = parseZhupiLink(a.getAttribute('href'), gh.getRepoSlug() || (DEMO ? 'demo/repo' : ''));
+    const href = a.getAttribute('href');
+
+    // ① 文档内相对链接：同折里有这个文件就换文档（双语互链就靠它），
+    //    没有就开 GitHub 上的对应文件——绝不能放它去 Pages 源站撞 404
+    const rel = resolveRelativeDocLink(href, docPath);
+    if (rel) {
+      e.preventDefault();
+      const inFolder = cur?.docs?.some((f) => f.filename === rel);
+      if (inFolder) { setDocPath(rel); return; }
+      const slug = gh.getRepoSlug();
+      const ref = cur?.pr?.head?.sha;
+      if (slug && ref) window.open(`https://github.com/${slug}/blob/${ref}/${rel}`, '_blank', 'noopener');
+      else say(`这折里没有 ${rel}`);
+      return;
+    }
+
+    // ② 本仓 GitHub permalink：拦成 app 内跳转（F6）
+    const parsed = parseZhupiLink(href, gh.getRepoSlug() || (DEMO ? 'demo/repo' : ''));
     if (!parsed) return;
     e.preventDefault();
     jumpTo(parsed);
