@@ -68,6 +68,34 @@ export function parseDeepLink(search, slug) {
   };
 }
 
+// ── F9 回奏对（回呈折的 Happy 会话）──
+// 批完要回去说「读批注」，得找回是哪个会话呈的折。agent 开折时在 PR body 埋一行：
+//   <!-- happy-session: cms3yv065k1oqyc0teh4a5why -->
+// 用 HTML 注释：GitHub 上不显示、不碍眼，agent 只需 append 一行。
+// 也认 body 里可见的会话链接（agent 手写时更自然），以及标记里直接写整条 URL（fork 自架 Happy）。
+// 会话可能早已散场——朱批无从判断，只保证链接指对地方。
+const HAPPY_BASE = 'https://charliezong18.github.io/happy';
+const SESSION_ID = /^[a-z0-9]{16,40}$/i;   // 锚定：`http://evil/...` 之类不得当成裸 id
+
+export function parseHappySession(body) {
+  const text = String(body || '');
+  const marked = /<!--\s*happy-session:\s*([^\s>]+)\s*-->/i.exec(text);
+  const raw = marked?.[1] || urlInBody(text);
+  if (!raw) return null;
+  if (/^https:\/\//i.test(raw)) return sessionUrl(raw);       // 标记里写了整条 URL
+  return SESSION_ID.test(raw) ? `${HAPPY_BASE}/session/${raw}` : null;
+}
+
+// 可见链接只认 https 的 /session/<id>，挡掉 javascript: 之类的注入
+const urlInBody = (text) => /https:\/\/[^\s)>\]]*\/session\/[a-z0-9]{16,40}/i.exec(text)?.[0] || null;
+
+function sessionUrl(href) {
+  try {
+    const u = new URL(href);
+    return u.protocol === 'https:' && /\/session\/[a-z0-9]{16,40}$/i.test(u.pathname) ? u.href : null;
+  } catch { return null; }
+}
+
 // 当前位置 → 可分享地址（写地址栏 + 「拷直达链」都用它）
 export function buildDeepLink(origin, { prNumber, path, line }) {
   if (!prNumber) return origin;

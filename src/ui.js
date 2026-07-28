@@ -9,7 +9,7 @@ import { renderMarkdown, hydrateRelativeImages } from './render.js';
 import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
-import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink } from './link.js';
+import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession } from './link.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -169,6 +169,7 @@ function App() {
   const onHead = !viewed || viewed === headSha;
   const archived = Boolean(cur?.pr?.merged_at);
   const canAnnotate = onHead && !archived;      // 旧版 / 归档折一律只读
+  const happyUrl = parseHappySession(cur?.pr?.body);   // 呈折的那次奏对（agent 埋在 PR body 里）
   R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate };
 
   const say = useCallback((t) => setNotice(t), []);
@@ -753,6 +754,8 @@ function App() {
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
             ${cur && html`<button class="btn-ghost" title="拷朱批直达链（按住 Alt 拷 GitHub 链接）" onClick=${copyRef}>引用此处</button>`}
+            ${happyUrl && html`<button class="btn-ghost" title="回到呈这折的 Happy 奏对，说一句「读批注」（会话可能已散，那就只剩存档可看）"
+              onClick=${() => window.open(happyUrl, '_blank', 'noopener')}>回奏对</button>`}
             ${cur && !archived && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
             ${cur && drafts.length > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}
