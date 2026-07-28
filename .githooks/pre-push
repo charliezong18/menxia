@@ -33,13 +33,10 @@ BIG=${BIG_FILE%% *}
 TOTAL=$(git ls-tree -r HEAD --name-only \
   | grep -E '^(src/.*\.(js|css)|index\.html)$' \
   | while read -r f; do git show "HEAD:$f"; done | wc -l | tr -d ' ')
-echo "量测（HEAD）：最大单文件 ${BIG_FILE} （#1 线 800）· 全量 ${TOTAL} 行（#2 线 2500）"
-if [ "${BIG:-0}" -gt 800 ]; then
-  echo "  ⚠ #1 已触发（最大单文件 > 800）——按 MIGRATION-WATCH 规矩：先拆再上新功能"
-fi
-if [ "${TOTAL:-0}" -gt 2500 ]; then
-  echo "  ⚠ #2 已触发（全量 > 2500）——记进 MIGRATION-WATCH，并考虑做减法而不是继续加"
-fi
+echo "量测（HEAD·仅趋势）：最大单文件 ${BIG_FILE} · 全量 ${TOTAL} 行"
+# #1/#2 于 2026-07-28 降级为描述性统计（SPEC §8.1）：拆组件让复杂度降、行数升，
+# 指标与目标反向，且行数类从未预测过任何 bug。这里只打印看趋势，不再报「触发」。
+# 真正的闸门是 #3/#5/#8/#9（视图层复杂度）与 §8.2 的 S1–S4（要不要活体依赖）。
 
 if [ -z "$CODE_TOUCHED" ]; then
   echo "本次只动文档，跑单元层即可（代码层跳过）"

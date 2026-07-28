@@ -38,3 +38,5 @@ Measure at the end of every development session and write anything over threshol
 - Indicators 8 and 9 were added after the dual-track review: all seven original indicators measure **static complexity** (line counts, update sites, state counts), while what actually forces you onto a framework is **concurrent writes**. openPR's race already consumed site #1 as of that day.
 - The hedge worth doing whether or not you migrate: a single state object + an explicit `render()` + generation-counter guards (about 50 lines). The genuinely expensive part of a migration is prying state out of event closures, and that bill comes due either way.
 - The gate was expected to trip at **M3** (comment threads + post-submit refresh + optimistic marking) on indicators 3/5/9 — that wouldn't be a failure, it's precisely how §8.1 is designed to be used.
+
+| 2026-07-28 | **Gate re-axed (#1/#2 demoted)** | — | — | — | — | — | **不再按行数判触发** | 复盘定案：拆子组件让复杂度下降、行数上升——#1/#2 与目标反向，且**行数类指标全程从未预测过任何一个 bug**（真兑现过的是迁移轮的 #3+#8）。故降级为描述性统计：pre-push 继续打印看趋势，不再当触发条件；7/28 那次「#2 触发」随之作废。新增 SPEC §8.2「后端触发条件 S1–S4」补上真正悬着的那条轴（零后端何时不再成立）。首次评估结论=不建后端，三条更便宜的路记为 BACKLOG F10/F11 与 F5 |
