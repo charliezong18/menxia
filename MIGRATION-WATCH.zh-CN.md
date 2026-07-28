@@ -1,3 +1,5 @@
+[English](MIGRATION-WATCH.md) · **中文**
+
 # 架构切换观察表
 
 零构建（vanilla JS）是拍板的架构（SPEC §8）。它什么时候到顶，由 SPEC §8.1 的指标判定：**触发任意两条 = 暂停功能开发，先做 A→B（Preact + Vite）迁移**；只触发一条 = 记录观察，不动架构。
