@@ -79,6 +79,24 @@ export function sectionOf(doc, blockLine) {
   return best;
 }
 
+// 文档出新版后 GitHub 把漂移批注的 line 置 null，退回 original_line 等于拿旧版行号在新版
+// 文档里找块 → 卡片贴到毫不相干的段落旁边，读者无从对应（PAIN 2026-07-28 #14）。
+// 引文才是稳定的锚：在当前渲染结果里按引文反查它所属块的行号。
+// 取「包含引文且自身文本最短」的块——表格 table/tr 嵌套会同时命中，最短的那个最贴切。
+export function reanchorByQuote(doc, quote) {
+  if (!doc || !quote) return null;
+  const needle = quote.trim().replace(/\s+/g, ' ');
+  if (needle.length < 4) return null; // 太短易误命中，不如不认
+  let best = null, bestLen = Infinity;
+  doc.querySelectorAll('[data-line]').forEach((b) => {
+    const line = +b.dataset.line;
+    if (!line) return;
+    const hay = (b.textContent || '').replace(/\s+/g, ' ');
+    if (hay.includes(needle) && hay.length < bestLen) { best = line; bestLen = hay.length; }
+  });
+  return best;
+}
+
 // ── hunk 校验：不在 diff 里的行提交必 422 且整批原子失败，提交前本地校验（SPEC §9.1）──
 export function validRightLines(patch) {
   if (!patch) return null;

@@ -2,6 +2,7 @@
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html, useEffect, useRef } from '../../vendor/preact-standalone.mjs';
 import * as A from '../anchor.js';
+import { renderMarkdown } from '../render.js';
 
 export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
   const taRef = useRef();
@@ -40,11 +41,11 @@ export function ShownThread({ t, blockLine, outdated }) {
         <span class="anno-who">${t.root.user?.login || '?'}</span>
         ${outdated ? html`<span class="anno-outdated" title="此行已随新版漂移">旧</span>` : ''}
       </div>
-      <div class="anno-shown-body">${body}</div>
+      <div class="anno-shown-body" dangerouslySetInnerHTML=${{ __html: renderMarkdown(body) }}></div>
       ${t.replies.map((r) => html`
         <div class="anno-reply" key=${'c' + r.id}>
           <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
-          <div class="anno-shown-body">${r.body}</div>
+          <div class="anno-shown-body" dangerouslySetInnerHTML=${{ __html: renderMarkdown(r.body) }}></div>
         </div>`)}
     </div>`;
 }

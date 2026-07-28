@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   validRightLines, parseCommentBody, threadComments, fmtDraft, loadDrafts, saveDrafts, pendingCountFor,
+  reanchorByQuote,
 } from '../src/anchor.js';
 
 // ── validRightLines：提交前的 hunk 校验。错一行 → 整批 review 422 全灭 ──
@@ -160,4 +161,39 @@ test('saveDrafts 配额爆时返回错误而不是抛出（此前裸写＝草稿
   const err = saveDrafts(7, [{ id: 'a' }]);
   assert.ok(err instanceof Error, '应把错误交回调用方，让 UI 能提示');
   globalThis.localStorage = real;
+});
+
+// ── 漂移批注按引文反查行号（PAIN 2026-07-28 #14：出新版后卡片贴到错误段落）──
+// 用最小的 DOM 替身：只需要 querySelectorAll('[data-line]') + dataset.line + textContent
+const fakeDoc = (blocks) => ({
+  querySelectorAll: () => blocks.map((b) => ({ dataset: { line: String(b.line) }, textContent: b.text })),
+});
+
+test('reanchorByQuote：按引文找回当前版的行号', () => {
+  const doc = fakeDoc([
+    { line: 3, text: '第一段无关内容' },
+    { line: 9, text: '这里提到 agy 线的 1600 行代码，要不要留' },
+  ]);
+  assert.equal(reanchorByQuote(doc, 'agy 线的 1600 行代码'), 9);
+});
+
+test('reanchorByQuote：空白差异不影响命中（引文存的是压缩过的空白）', () => {
+  const doc = fakeDoc([{ line: 5, text: '换行\n和   多空格   的段落' }]);
+  assert.equal(reanchorByQuote(doc, '换行 和 多空格 的段落'), 5);
+});
+
+test('reanchorByQuote：嵌套命中取最短的块（表格 table/tr 会同时命中）', () => {
+  const doc = fakeDoc([
+    { line: 10, text: '表头 A 表头 B 目标单元格 其他行内容' }, // table
+    { line: 12, text: '目标单元格' },                          // tr
+  ]);
+  assert.equal(reanchorByQuote(doc, '目标单元格'), 12, '应锚到具体那一行而不是整张表');
+});
+
+test('reanchorByQuote：找不到/引文过短/无 doc 一律返回 null，交给调用方兜底', () => {
+  const doc = fakeDoc([{ line: 4, text: '某段内容' }]);
+  assert.equal(reanchorByQuote(doc, '文档里根本没有这句话'), null);
+  assert.equal(reanchorByQuote(doc, 'ab'), null, '太短易误命中，不如不认');
+  assert.equal(reanchorByQuote(null, '某段内容'), null);
+  assert.equal(reanchorByQuote(doc, ''), null);
 });
