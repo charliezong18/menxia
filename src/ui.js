@@ -11,6 +11,11 @@ import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
 import { siblingFor, visibleDocs, getLang, setLang, variantOf } from './lang.js';
+import { Setup } from './components/setup.js';
+import { DraftCard, ShownThread, ZongpiCard } from './components/cards.js';
+import { Sidebar } from './components/sidebar.js';
+import { Topbar } from './components/topbar.js';
+import { OtherThreads } from './components/other-threads.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -38,101 +43,7 @@ async function detectNewBuild() {
 
 const isDoc = (f) => f.filename.endsWith('.md') && f.status !== 'removed';
 
-// ── 设置页 ──
-function Setup({ msg, onSave, canCancel, onCancel, onForget }) {
-  const [preview, setPreview] = useState(gh.parseRepoSlug(gh.getRepoSlug()) || '你上面填的那个仓库');
-  const repoRef = useRef();
-  const tokenRef = useRef();
-  const submit = () => onSave(repoRef.current.value, tokenRef.current.value);
-  return html`
-    <section id="setup">
-      <div class="setup-card">
-        <div class="brand-row"><span class="seal">朱</span><span class="brand">御笔朱批</span></div>
-        <p class="setup-lead">读 AI 呈上来的奏折，划句落朱批。先说清读哪个仓库，再给一把只开这个仓库的钥匙。</p>
-        <ol class="setup-steps">
-          <li>填<b>奏折仓库</b>：agent 往哪个仓库开 PR，就填哪个，格式 <code>owner/repo</code>（建议私有）</li>
-          <li>去 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">GitHub 生成 fine-grained token</a>（名字随意，Expiration 建议 90 days）</li>
-          <li>Repository access：默认停在 Public repositories，<b>必须改成 Only select repositories</b> → 选 <code>${preview}</code>（不是 zhupi 本身）</li>
-          <li>Permissions → Repository permissions 加<b>两</b>项：<b>Contents: Read and write</b> ＋ <b>Pull requests: Read and write</b>。Metadata 自动带上不用管；<b>最容易漏的是 Pull requests</b>，漏了进清单就 403</li>
-          <li>Generate 后把 <code>github_pat_…</code> 粘在下面。钥匙只存这台设备的浏览器，不经过任何服务器；权限配错不用重新生成——回 token 页改好点 Update，再回来存一次即可（字符串不变）</li>
-        </ol>
-        <input id="repo-input" ref=${repoRef} type="text" placeholder="owner/repo"
-          autocomplete="off" spellcheck="false" defaultValue=${gh.getRepoSlug()}
-          onInput=${(e) => setPreview(gh.parseRepoSlug(e.target.value) || '你上面填的那个仓库')}
-          onKeyDown=${(e) => { if (e.key === 'Enter') tokenRef.current.focus(); }} />
-        <input id="token-input" ref=${tokenRef} type="password" placeholder="github_pat_…"
-          autocomplete="off" spellcheck="false"
-          onKeyDown=${(e) => { if (e.key === 'Enter') submit(); }} />
-        <div class="setup-actions">
-          <button class="btn-primary" onClick=${submit}>存 钥</button>
-          ${canCancel && html`<button class="btn-ghost" onClick=${onCancel}>返回</button>`}
-          ${canCancel && html`<button class="btn-ghost setup-forget" onClick=${onForget}>清除钥匙</button>`}
-          <span class=${'setup-msg' + (msg && msg !== '验钥中…' ? ' err' : '')}>${msg}</span>
-        </div>
-      </div>
-    </section>`;
-}
 
-// ── 批注卡 ──
-function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
-  const taRef = useRef();
-  useEffect(() => { if (editing) setTimeout(() => taRef.current?.focus(), 0); }, [editing]);
-  const sec = doc ? A.sectionOf(doc, d.blockLine) : '';
-  return html`
-    <div class="anno-card" data-block-line=${d.blockLine} key=${d.id}>
-      <div class="anno-quote">「${d.quote.length > 80 ? d.quote.slice(0, 80) + '…' : d.quote}」</div>
-      <div class="anno-src">${sec ? sec + ' · ' : ''}第 ${d.line} 行</div>
-      ${editing ? html`
-        <textarea class="anno-input" ref=${taRef} placeholder="朱批……" defaultValue=${d.note}
-          onKeyDown=${(e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.stopPropagation(); onSave(d.id, taRef.current.value); }
-          }}
-          onBlur=${() => {
-            // 打了一半没存批就点了别处（换卡/新划句）→ 自动存，别生吞长批注（评审阻断项）
-            const v = taRef.current?.value.trim();
-            if (v && v !== d.note) onSave(d.id, taRef.current.value);
-          }}></textarea>
-        <div class="anno-row">
-          <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onDrop(d.id)}>作罢</button>
-          <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSave(d.id, taRef.current.value)}>存批</button>
-        </div>` : html`
-        <div class="anno-note" title="点击修改" onClick=${() => onEdit(d.id)}>${d.note}</div>`}
-    </div>`;
-}
-
-// 已呈批注串（墨色安静系，视觉降一档；朱砂只留给草稿的活跃态）
-// blockLine 用串的源文件行号（line ?? original_line）直接当锚，参与 layoutCards 对齐
-function ShownThread({ t, blockLine, outdated }) {
-  const { quote, body } = A.parseCommentBody(t.root.body);
-  return html`
-    <div class="anno-card anno-shown" data-block-line=${blockLine} key=${'c' + t.root.id}>
-      ${quote && html`<div class="anno-quote-shown">「${quote}」</div>`}
-      <div class="anno-src">
-        <span class="anno-who">${t.root.user?.login || '?'}</span>
-        ${outdated ? html`<span class="anno-outdated" title="此行已随新版漂移">旧</span>` : ''}
-      </div>
-      <div class="anno-shown-body">${body}</div>
-      ${t.replies.map((r) => html`
-        <div class="anno-reply" key=${'c' + r.id}>
-          <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
-          <div class="anno-shown-body">${r.body}</div>
-        </div>`)}
-    </div>`;
-}
-
-function ZongpiCard({ busy, onSend, onClose }) {
-  const taRef = useRef();
-  useEffect(() => { setTimeout(() => taRef.current?.focus(), 0); }, []);
-  return html`
-    <div class="anno-card zongpi-card">
-      <div class="anno-src">总批 · 整折总评（呈出即达，不攒批）</div>
-      <textarea class="anno-input" ref=${taRef} rows="4" placeholder="总批……可以按序号列意见"></textarea>
-      <div class="anno-row">
-        <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${onClose}>作罢</button>
-        <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSend(taRef.current.value)}>${busy ? '呈递中…' : '呈总批'}</button>
-      </div>
-    </div>`;
-}
 
 // ── 主应用 ──
 function App() {
@@ -756,70 +667,18 @@ function App() {
 
   return html`
     <div id="app">
-      <aside>
-        <div class="brand-row"><span class="seal">朱</span><span class="brand">御笔朱批</span></div>
-        
-        <div class="search-row">
-          <input class="search-input" placeholder="搜标题 / 回车搜全文" value=${q}
-            onInput=${(e) => { setQ(e.target.value); if (hits) setHits(null); }}
-            onKeyDown=${(e) => { if (e.key === 'Enter') runSearch(); if (e.key === 'Escape') clearSearch(); }} />
-          ${(q || hits) && html`<button class="btn-ghost search-clear" onClick=${clearSearch}>清</button>`}
-        </div>
-        ${searching && html`<p class="state">${searching}</p>`}
-        ${hits && html`
-          <nav id="pr-list" class="search-results">
-            ${hits.length ? hits.map(({ pr, hits: hs }) => html`
-              <div class="search-group" key=${'s' + pr.number}>
-                <div class="search-group-title">#${pr.number} ${pr.title}${pr.merged_at ? ' · 已钦此' : ''}</div>
-                ${hs.map((h, i) => html`
-                  <button class="search-hit" key=${'h' + pr.number + '-' + i} onClick=${() => jumpToHit(pr, h)}>
-                    ${h.kind === 'title' ? html`<span class="search-hit-meta">标题命中</span>`
-                      : html`<span class="search-hit-meta">${h.path.split('/').pop()} · 第 ${h.line} 行</span>`}
-                    <span class="search-hit-snippet">${h.snippet}</span>
-                  </button>`)}
-              </div>`) : html`<p class="state">没搜到「${q}」。</p>`}
-          </nav>`}
-        ${!hits && html`
-        <div class="list-tabs">
-          <button class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => setTab('open')}>待批 ${prs.length}</button>
-          <button class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => setTab('done')}>已钦此 ${donePrs.length}</button>
-        </div>
-        <nav id="pr-list">
-          ${(tab === 'open' ? prs : donePrs).filter((p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase())).length
-            ? (tab === 'open' ? prs : donePrs).filter((p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase())).map((pr) => html`
-              <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
-                onClick=${() => openPR(pr)}>
-                <h3>${pr.title}</h3>
-                <div class="meta">#${pr.number} · ${pr.merged_at ? `钦此于 ${timeAgo(pr.merged_at)}` : `呈于 ${timeAgo(pr.updated_at)}`}</div>
-              </button>`)
-            : html`<p class="state">${q.trim() ? `标题没有「${q.trim()}」——回车搜全文。` : (tab === 'open' ? '此刻无折可批。' : '还没有钦此过的折子。')}</p>`}
-        </nav>`}
-        ${!DEMO && html`<button class="settings" onClick=${() => { setPhase('setup'); setSetupMsg(''); }}>设置 · 钥匙</button>`}
-      </aside>
+      <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
+        tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo}
+        onQuery=${(v) => { setQ(v); if (hits) setHits(null); }}
+        onSearch=${runSearch} onClearSearch=${clearSearch} onJumpToHit=${jumpToHit}
+        onTab=${setTab} onOpenPR=${openPR}
+        onSettings=${() => { setPhase('setup'); setSetupMsg(''); }} />
       <main>
-        <div class="mainbar">
-          <span class="crumb">待批 ${cur ? html`/ <b>${cur.pr.title}</b>` : ''}</span>
-          <span class="actions">
-            <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
-            ${cur && html`<button class="btn-ghost" title="拷朱批直达链（按住 Alt 拷 GitHub 链接）" onClick=${copyRef}>引用此处</button>`}
-            ${happyUrl && html`<button class="btn-ghost" title="回到呈这折的 Happy 奏对，说一句「读批注」（会话可能已散，那就只剩存档可看）"
-              onClick=${() => { const w = window.open(happyUrl, '_blank'); if (w) w.opener = null; }}>回奏对</button>`}
-            ${cur && html`<button class="btn-ghost" title=${archived ? '归档折仍可留总批（划句批注才需要活折）' : ''} onClick=${() => setZongpi((z) => !z)}>总批</button>`}
-            ${cur && drafts.length > 0 && html`
-              <button class="btn-primary btn-submit" disabled=${busy || !onHead}
-                title=${onHead ? '' : '正在读旧版——先切回 head 再提交'} onClick=${submitAll}>
-                ${busy ? '呈递中…' : `提交朱批 · ${drafts.length}`}
-              </button>`}
-            ${cur && !archived && html`<button class="btn-qinci" disabled=${busy || !onHead}
-              title=${onHead ? '' : '正在读旧版——先切回 head 再钦此'} onClick=${qinci}>钦 此</button>`}
-          </span>
-        </div>
-        ${stale && html`
-          <p class="notice stale-banner">
-            有新版已部署，你手上这份是旧的（Pages 缓存 10 分钟）
-            <button class="btn-ghost stale-reload" onClick=${() => location.reload()}>刷新用新版</button>
-          </p>`}
-        ${notice && html`<p class="notice">${notice}</p>`}
+        <${Topbar} cur=${cur} archived=${archived} onHead=${onHead} busy=${busy}
+          draftCount=${drafts.length} happyUrl=${happyUrl} stale=${stale} notice=${notice}
+          onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
+          onCopyRef=${copyRef} onZongpi=${() => setZongpi((z) => !z)}
+          onSubmit=${submitAll} onQinci=${qinci} />
         <div class="work">
           ${cur?.docs?.length > 1 && html`
             <div class="doc-tabs">
@@ -869,30 +728,8 @@ function App() {
               ${others > 0 && html`<p class="margin-note">另有 ${others} 条朱批在此折其他文档</p>`}
             </div>
           </div>
-          ${otherThreads.length > 0 && html`
-            <div class="other-threads">
-              <button class="other-threads-toggle" onClick=${() => setOtherOpen((o) => !o)}>
-                ${otherOpen ? '▾' : '▸'} 其他 ${otherThreads.length} 串（其他文档 / 无法定位）
-              </button>
-              ${otherOpen && html`
-                <div class="other-threads-list">
-                  ${otherThreads.map((t) => {
-                    const { quote, body } = A.parseCommentBody(t.root.body);
-                    return html`
-                      <div class="anno-card anno-shown anno-static" key=${'o' + t.root.id}>
-                        <div class="anno-src"><span class="anno-who">${t.root.user?.login || '?'}</span>
-                          <span class="anno-path">${(t.root.path || '整折').split('/').pop()}</span></div>
-                        ${quote && html`<div class="anno-quote-shown">「${quote}」</div>`}
-                        <div class="anno-shown-body">${body}</div>
-                        ${t.replies.map((r) => html`
-                          <div class="anno-reply" key=${'o' + r.id}>
-                            <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
-                            <div class="anno-shown-body">${r.body}</div>
-                          </div>`)}
-                      </div>`;
-                  })}
-                </div>`}
-            </div>`}
+          <${OtherThreads} threads=${otherThreads} open=${otherOpen}
+            onToggle=${() => setOtherOpen((o) => !o)} />
         </div>
       </main>
       ${float && html`
