@@ -1,3 +1,5 @@
+[English](BACKLOG.md) · **中文**
+
 # BACKLOG
 
 已想清楚但还没排期的东西。

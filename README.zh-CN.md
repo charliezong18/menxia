@@ -7,7 +7,7 @@
 **AI 产出的阅读批注台。**<br>
 agent 把长文档当「奏折」以 PR 呈上来，你在**渲染态**正文上划句落「朱批」，批完一键呈回，agent 逐条回话改出下一版；**钦此** = merge = 定稿。
 
-[**在线试用**](https://charliezong18.github.io/zhupi) · [Spec](SPEC.md) · [Backlog](BACKLOG.md)
+[**在线试用**](https://charliezong18.github.io/zhupi) · [Spec](SPEC.zh-CN.md) · [Backlog](BACKLOG.zh-CN.md)
 
 </div>
 
@@ -143,11 +143,11 @@ gh api -X POST repos/<owner>/<repo>/pulls/<n>/comments/<id>/replies -f body="...
 
 老实列一遍，让你知道自己 fork 的是什么：
 
-- **只支持 markdown 文档。** 代码 PR 会显示「此折无 markdown 正文」。并排／左右分栏的 diff 评审是北极星，尚未交付——见 [SPEC §10](SPEC.md)。
-- **锚定是宽松的，这是设计选择。** 批注钉在渲染块对应的源码行上；批注正文里永远带着你划的原句，所以哪怕行号钉歪，语义也不会丢。理由见 [SPEC §9](SPEC.md)。
+- **只支持 markdown 文档。** 代码 PR 会显示「此折无 markdown 正文」。并排／左右分栏的 diff 评审是北极星，尚未交付——见 [SPEC §10](SPEC.zh-CN.md)。
+- **锚定是宽松的，这是设计选择。** 批注钉在渲染块对应的源码行上；批注正文里永远带着你划的原句，所以哪怕行号钉歪，语义也不会丢。理由见 [SPEC §9](SPEC.zh-CN.md)。
 - **GitHub 只允许在 PR diff 里出现过的行上批注。** 新增文件整份都在 diff 里，所以奏折永远能批；改动已有文件则只有部分行可钉。提交前 app 会本地校验——因为 GitHub 的 review 提交是原子的，一个非法行号会让整批朱批全灭。
-- **桌面优先。** 移动端 + PWA 排在 v1（[设计稿已画好](SPEC.md)）。
-- **没有通知、没有未读、没有 feed。** 故意的（[SPEC §3](SPEC.md) 非目标）。
+- **桌面优先。** 移动端 + PWA 排在 v1（[设计稿已画好](SPEC.zh-CN.md)）。
+- **没有通知、没有未读、没有 feed。** 故意的（[SPEC §3](SPEC.zh-CN.md) 非目标）。
 
 ## 结构
 
@@ -163,7 +163,7 @@ test/             单元 + DOM + 端到端，零依赖
 vendor/           markdown-it + htm/preact standalone（13KB），vendored —— 无 npm、无 lockfile
 ```
 
-全部应用代码约 900 行。依旧**零构建**（push 即部署），但不再是无框架：[量化闸门](MIGRATION-WATCH.md)于 2026-07-26 双指标触发（两条均被评审证实是事件／异步时序类 bug 的高发层），视图层按规矩迁到了免构建形态的 Preact。闸门用数字说话，我们照办。
+全部应用代码约 900 行。依旧**零构建**（push 即部署），但不再是无框架：[量化闸门](MIGRATION-WATCH.zh-CN.md)于 2026-07-26 双指标触发（两条均被评审证实是事件／异步时序类 bug 的高发层），视图层按规矩迁到了免构建形态的 Preact。闸门用数字说话，我们照办。
 
 ## License
 
