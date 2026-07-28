@@ -88,9 +88,17 @@ export const demoApi = {
     ...PR, number: 998, title: '朱批 demo 折 · 已钦此（归档样例）',
     merged_at: new Date(Date.now() - 864e5).toISOString(),
   }],
-  listPRFiles: async () => [{ filename: 'docs/demo.md', status: 'added', patch: PATCH }],
+  listPRFiles: async () => [
+    { filename: 'docs/demo.md', status: 'added', patch: PATCH },
+    { filename: 'docs/guide.md', status: 'added', patch: '@@ -0,0 +1,3 @@\n+# Guide\n+\n+English variant for the language switch.' },
+    { filename: 'docs/guide.zh-CN.md', status: 'added', patch: '@@ -0,0 +1,3 @@\n+# 指南\n+\n+中文版，用来验语言切页。' },
+  ],
   // ref 落在旧 rev（非 head sha）时返回删节版，模拟版本间正文差异
-  getFileText: async (_path, ref) => (ref && ref !== 'demo0000' ? DOC_OLD : DOC),
+  getFileText: async (path, ref) => {
+    if (path === 'docs/guide.md') return '# Guide\n\nEnglish variant for the language switch.';
+    if (path === 'docs/guide.zh-CN.md') return '# 指南\n\n中文版，用来验语言切页。';
+    return ref && ref !== 'demo0000' ? DOC_OLD : DOC;
+  },
   getFileBlobUrl: async () => { throw new Error('demo 无图'); },
   listPRComments: async () => COMMENTS,
   listIssueComments: async () => [{
@@ -145,6 +153,14 @@ if (new URLSearchParams(location.search).get('deep') === '1') {
 
 // 自动演示：用真实的 Selection + mouseup + 按钮点击走完「划句 → 存批」两轮
 export async function autoAnnotate(docEl) {
+  try { await runSmoke(docEl); } catch (err) {
+    // 冒烟里任何一处抛错原本会让 RESULT 整个丢失（脚本静默结束）——兜住并自曝
+    console.log(`[smoke] FAIL harness-exception — ${err && err.message}`);
+    console.log('[smoke] RESULT pass=0 fail=1');
+  }
+}
+
+async function runSmoke(docEl) {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const pick = async (text, note, save) => {
     const block = [...docEl.querySelectorAll('[data-line]')].find((b) => b.textContent.includes(text));
@@ -271,6 +287,27 @@ export async function autoAnnotate(docEl) {
   document.querySelector('.search-clear')?.click();
   await sleep(200);
   chk('search-clear-restores', Boolean(document.querySelector('.list-tabs')));
+
+  // F8 语言切页：双语折出中/EN chip，切换只换语言不离开折；tab 里成对的只列一个
+  const tabsNow = [...document.querySelectorAll('.doc-tab')].map((b) => b.textContent.trim());
+  // 成对的只出一个 tab，且标签不带语言后缀（语言由 chip 表达）
+  chk('lang-tabs-collapsed', tabsNow.length === 2 && !tabsNow.some((t) => t.includes('zh-CN')),
+    `tabs=${tabsNow.join('|')}`);
+  const guideTab = [...document.querySelectorAll('.doc-tab')].find((b) => b.textContent.includes('guide'));
+  if (guideTab) { guideTab.click(); await sleep(600); }
+  const chip = document.querySelector('.lang-switch');
+  chk('lang-chip-on-bilingual', Boolean(chip));
+  chk('lang-default-zh', (document.querySelector('#doc h1')?.textContent || '').includes('指南'),
+    `h1=${document.querySelector('#doc h1')?.textContent}`);
+  const enBtn = [...document.querySelectorAll('.lang-opt')].find((b) => b.textContent.trim() === 'EN');
+  if (enBtn) { enBtn.click(); await sleep(600); }
+  chk('lang-switch-to-en', (document.querySelector('#doc h1')?.textContent || '').includes('Guide'),
+    `h1=${document.querySelector('#doc h1')?.textContent}`);
+  // 切回中文并回到主文档，别影响后面的断言
+  [...document.querySelectorAll('.lang-opt')].find((b) => b.textContent.trim() === '中')?.click();
+  await sleep(400);
+  [...document.querySelectorAll('.doc-tab')].find((b) => b.textContent.includes('demo'))?.click();
+  await sleep(600);
 
   // 折间链接：本仓链接被拦成 app 内跳转；外链放行不拦
   const links = [...document.querySelectorAll('#doc a[href]')];
