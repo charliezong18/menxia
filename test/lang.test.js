@@ -41,3 +41,12 @@ test('visibleDocs: 空输入不炸', () => {
   assert.deepEqual(visibleDocs([], 'zh'), []);
   assert.deepEqual(visibleDocs(undefined, 'zh'), []);
 });
+
+test('getLang 在 localStorage 抛异常时不炸（隐私模式会白屏）', async () => {
+  const real = globalThis.localStorage;
+  globalThis.localStorage = { getItem() { throw new Error('denied'); }, setItem() { throw new Error('denied'); } };
+  const { getLang, setLang } = await import('../src/lang.js?nostore');
+  assert.equal(getLang(), 'zh');
+  assert.doesNotThrow(() => setLang('en'));
+  globalThis.localStorage = real;
+});

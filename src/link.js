@@ -39,10 +39,12 @@ function lineFromHash(hash) {
 
 // 「引用此处」按钮拷给你的东西：一条 GitHub permalink + 一句引文
 // 引文是给人和 agent 看的兜底——链接哪天漂了，至少还知道当初指的是哪句（同锚定哲学）
-export function buildRef({ slug, prNumber, path, line, quote }) {
+// ref 必须是当前读的那个 commit：奏折是 PR 新增的文件，merge 前 main 上根本不存在，
+// 指向 main 的链接生下来就 404（第六轮评审实证）。带 sha 还顺带保证「所引即所读」。
+export function buildRef({ slug, prNumber, path, line, quote, ref }) {
   const base = `https://github.com/${slug}`;
   const url = path
-    ? `${base}/blob/main/${path}#L${line || 1}`
+    ? `${base}/blob/${ref || 'main'}/${path}#L${line || 1}`
     : `${base}/pull/${prNumber}`;
   const q = (quote || '').trim().replace(/\s+/g, ' ').slice(0, 60);
   return q ? `[「${q}」](${url})` : url;

@@ -10,9 +10,18 @@ function readCache(num, sha) {
     return c && c.sha === sha ? c.files : null;
   } catch { return null; }
 }
+// 配额满时不能一走了之：doccache 只增不减，撑满同源 5MB 后连草稿都写不进去。
+// 所以先把全部文档缓存清掉再重试一次——搜索缓存是可再生的，草稿不是。
 function writeCache(num, sha, files) {
-  try { localStorage.setItem(cacheKey(num), JSON.stringify({ sha, files })); }
-  catch { /* 配额满：不缓存，搜索照常（内存里已有） */ }
+  const payload = JSON.stringify({ sha, files });
+  try { localStorage.setItem(cacheKey(num), payload); return; }
+  catch { /* 落到下面清缓存重试 */ }
+  try {
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith('zhupi.doccache.'))
+      .forEach((k) => localStorage.removeItem(k));
+    localStorage.setItem(cacheKey(num), payload);
+  } catch { /* 清完还写不下：放弃缓存，搜索照常（内存里已有） */ }
 }
 
 const isDoc = (f) => f.filename.endsWith('.md') && f.status !== 'removed';
