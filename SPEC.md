@@ -139,8 +139,8 @@ A zero-build approach fails with clear warning signs. Tripping **any two** means
 
 | # | Indicator | Threshold | Why this number |
 |---|---|---|---|
-| 1 | Lines in a single JS file | any file > 800 lines | Past that volume, the branching in hand-written DOM updates can't be held down |
-| 2 | Total app code | > 2500 lines (excluding vendored libraries) | Three pages reaching that size means state complexity has crossed the line |
+| ~~1~~ | ~~Largest single file~~ | **Demoted to a descriptive stat, 2026-07-28** | Splitting into components lowers complexity while raising line count — the metric points the opposite way from the goal. And across the whole record, line-count metrics never once predicted a bug. Still printed by pre-push as a trend; no longer a trigger. |
+| ~~2~~ | ~~Total application lines~~ | **Same demotion, 2026-07-28** | Same as #1. It first "fired" on the very day the component split landed — a gate that punishes the right behaviour isn't a gate. |
 | 3 | Hand-written DOM update sites | > 25 `innerHTML` / `appendChild` / attribute-sync sites on one page | The most direct signal of "time for a reactive framework" |
 | 4 | Number of state sources | > 6 independent states needing cross-page sync | Hand-written subscriptions start costing more thought than a framework |
 | 5 | Repeat render bugs | the same class of "the view didn't keep up with the data" bug fixed ≥ 3 times | A symptom-level signal, harder evidence than code volume |
@@ -154,6 +154,25 @@ The counting rule for indicator 3 has to be honest: `innerHTML` / `appendChild` 
 **Cost estimate for a triggered migration**: the anchoring algorithm, the GitHub API wrapper and all the styling port over unchanged (those three are the bulk of the code); only the view layer is rewritten. The original "half a day to a day" estimate was optimistic — the genuinely expensive part is prying state out of the event closures it's scattered across. Which is why **the hedge worth doing whether or not you migrate** is: a single state object + an explicit `render()` + generation-counter guards (a poor man's one-way data flow, about 50 lines).
 
 **C (React + Next) has its own separate trigger**: only consider it when zhupi needs a **server** (push notifications, multi-person collaboration, a non-GitHub data source) — at which point the product's form has changed, not the architecture's capacity. Not evaluated within v0/v1.
+
+### §8.2 Backend trigger conditions (when zero-backend stops being right)
+
+§8.1 governs "does the view layer need a framework". This one governs "does this thing need something alive". The most valuable property today is that **there is no living dependency** — no server to keep fed, no key to rotate, no "it's down so I can't read my documents". A static site still opens in ten years; a service needs someone alive forever.
+
+There is exactly one test question: **is this structurally impossible in a browser?** "It's annoying to build" doesn't count; "needs a long-running process", "needs a hosted secret", "needs to receive external events" do.
+
+Re-evaluate adding a backend only when **any one** of these fires (full evaluation lives in the review repo at `docs/zhupi-thin-backend-eval.md`):
+
+| # | Trigger | What counts as evidence |
+|---|---|---|
+| S1 | Live Q&A is genuinely needed | ≥5 occurrences over two consecutive weeks of "wanted to ask mid-read but had to go elsewhere", where the answer depends on the current document's context |
+| S2 | GitHub stops working as the store | A class of data that **must persist but cannot fit into a PR / comment / file** appears (drafts, sign-offs, comments and revisions all fit — verified one by one) |
+| S3 | Latency actually hurts | GitHub Actions' minute-scale delay causes ≥3 real misses (not "feels slow") |
+| S4 | A second real user exists | Not "someone might use it later" — someone is using it and has hit something a single static site can't solve |
+
+**While none of these hold, any "should we add a backend" discussion is closed by citing this section.** First evaluation, 2026-07-28: of four candidate capabilities (push notifications / cross-device drafts / multi-person sign-off / in-app live Q&A), three are solvable in the pure-static tier and the fourth is an unvalidated need → **don't build it**.
+
+If that day comes, the shape is decided in advance: a stateless Worker (Cloudflare first choice), **never touching the GitHub token** (the user's PAT stays in the browser, always), no user system (identity is always GitHub), graceful degradation to pure-static when the function is down, and a separate repo and deployment so the static site can always survive alone.
 
 ## §9 Open question ④: comment anchoring (in plain language)
 

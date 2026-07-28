@@ -154,3 +154,37 @@ Three tiers, cheapest to most expensive:
 **Trade-offs**: ① **no auto-jump** — submitting comments doesn't hijack the page, it just leaves the button there (decided 2026-07-27: minimal change, and he often comments on several documents in a row) ② a comment rather than a visible link: takes no space on GitHub, and the agent only has to append one line ③ the marker can also hold a full URL, so anyone forking and self-hosting Happy doesn't need code changes.
 
 **Known gap**: the session may have been reaped or exited long ago, in which case the link is archive-only and the conversation can't be resumed — zhupi has no Happy API and can't tell whether it's alive, so it only says so in the tooltip. A real fix requires Happy to support resume deep links.
+
+---
+
+## F10 · Push one line when a document arrives (GitHub Actions, no backend)
+
+**What**: the agent submits a document → a notification lands on the phone, instead of relying on you remembering to refresh the list.
+
+**Why no backend**: add one workflow to the review repo (`on: pull_request: [opened]`) → `curl` to ntfy (Charlie already runs `charlie-claude-notify-*`). Zero frontend change, because the notification never passes through the app. Cost 0, maintenance surface = a 15-line yml.
+
+**Trade-off**: Actions runs at minute scale — but "a document is waiting" was never a second-scale need. If that delay causes ≥3 real misses, that is trigger S3 in SPEC §8.2.
+
+**Note**: this does not contradict the rejected attention inbox. What was rejected was "pile every AI output into a feed"; this pushes exactly one thing: a document is waiting for you. Only that class gets interrupt rights.
+
+---
+
+## F11 · Cross-device drafts: use GitHub's native pending review
+
+**What**: comments you half-wrote on the desktop should be there when you open the phone.
+
+**Finding** (the biggest surprise of the 2026-07-28 backend evaluation): **GitHub already has this and we weren't using it.** `POST /pulls/{n}/reviews` without an `event` creates a **pending review** — you can append comments later and submit at the end. That is a server-side draft: cross-device by nature, owned by the same PR, and visible to the agent side.
+
+**Also kills**: the localStorage quota bomb (the blocking finding from round six). Drafts stop being the only local data that can't be regenerated.
+
+**Cost**: merge semantics between local drafts and the server-side pending review (what if the same comment exists in both, what happens offline). Moderate complexity — but **no new infrastructure at all**.
+
+**Open**: replace local drafts entirely, or keep local as an offline cache that syncs when online? Leaning towards the latter — being able to annotate offline is a real advantage today; don't lose it.
+
+---
+
+## Backend evaluation, 2026-07-28
+
+**Verdict: don't build one.** Full evaluation lives in the review repo at `docs/zhupi-thin-backend-eval.md` (PR #16). Three of the four candidate capabilities are solvable in the pure-static tier: push → F10; cross-device drafts → F11; multi-person sign-off → already analysed in F5 (zhupi has no user system, so it is multi-user by nature; sign-off uses GitHub's native APPROVE; the barrier is repo permissions, not a backend). The only one genuinely needing a hosted secret — in-app live Q&A — is an unvalidated need.
+
+Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a backend" is closed by citing that section.
