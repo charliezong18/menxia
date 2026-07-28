@@ -126,3 +126,30 @@ test('没标记 / body 为空 / 乱写一律 null（按钮就不出现）', () =
    '<!-- happy-session: http://evil.com/session/aaaaaaaaaaaaaaaa -->'].forEach((b) =>
     assert.equal(parseHappySession(b), null, `应拒绝：${b}`));
 });
+
+test('标记优先于正文里的可见链接（正文可能在引用别的会话）', () => {
+  const body = '参考上一折 https://charliezong18.github.io/happy/session/aaaaaaaaaaaaaaaaaaaaaaaaa\n'
+    + '<!-- happy-session: bbbbbbbbbbbbbbbbbbbbbbbbb -->';
+  assert.ok(parseHappySession(body).endsWith('/bbbbbbbbbbbbbbbbbbbbbbbbb'));
+});
+
+test('正文兜底只认默认站点：别站的 /session/ 路径不当会话（否则按钮指错地方）', () => {
+  assert.equal(parseHappySession('见 https://example.com/session/aaaaaaaaaaaaaaaaa'), null);
+  assert.equal(parseHappySession('见 https://charliezong18.github.io/happy/pull/7'), null);
+});
+
+test('id 长度边界：15 位拒、41 位拒（不截断成「合法但错」的链接）', () => {
+  const id = (n) => 'a'.repeat(n);
+  assert.equal(parseHappySession(`<!-- happy-session: ${id(15)} -->`), null);
+  assert.equal(parseHappySession(`<!-- happy-session: ${id(41)} -->`), null);
+  assert.ok(parseHappySession(`<!-- happy-session: ${id(16)} -->`));
+  assert.ok(parseHappySession(`<!-- happy-session: ${id(40)} -->`));
+  assert.equal(parseHappySession(`见 https://charliezong18.github.io/happy/session/${id(41)}`), null);
+});
+
+test('标记里的整条 URL：路径不是 /session/<id> 结尾则拒', () => {
+  ['<!-- happy-session: https://evil.com/x -->',
+   '<!-- happy-session: https://happy.example.com/session/abc123def456ghij/extra -->',
+   '<!-- happy-session: https://happy.example.com/session/短 -->'].forEach((b) =>
+    assert.equal(parseHappySession(b), null, `应拒绝：${b}`));
+});

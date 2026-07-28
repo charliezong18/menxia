@@ -86,9 +86,15 @@ export function parseHappySession(body) {
   return SESSION_ID.test(raw) ? `${HAPPY_BASE}/session/${raw}` : null;
 }
 
-// 可见链接只认 https 的 /session/<id>，挡掉 javascript: 之类的注入
-const urlInBody = (text) => /https:\/\/[^\s)>\]]*\/session\/[a-z0-9]{16,40}/i.exec(text)?.[0] || null;
+// 可见链接的兜底只认默认站点：body 正文里引用别的会话链接、别的站的 /session/ 路径都很常见，
+// 放任何域进来就会把按钮指到错的地方。自架 Happy 走标记里写整条 URL 那条通道，不从正文猜。
+// 结尾 (?![a-z0-9]) 是右边界：超长 id 应当拒绝，而不是截前 40 位拼出一个「合法但错」的链接。
+const urlInBody = (text) =>
+  new RegExp(`${HAPPY_BASE.replace(/[.]/g, '\\.')}/session/[a-z0-9]{16,40}(?![a-z0-9])`, 'i')
+    .exec(text)?.[0] || null;
 
+// 标记里写整条 URL 时**故意**放行任意 https 域（自架 Happy 的通道）——不是漏校验。
+// 威胁模型：能改 PR body 的只有仓主自己和他的 agent，这时早就输了。别当 bug 修掉。
 function sessionUrl(href) {
   try {
     const u = new URL(href);
