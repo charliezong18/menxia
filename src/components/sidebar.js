@@ -13,7 +13,7 @@ export function Sidebar({
         <div class="search-row">
           <input class="search-input" placeholder="搜标题 / 回车搜全文" value=${q}
             onInput=${(e) => { onQuery(e.target.value); }}
-            onKeyDown=${(e) => { if (e.key === 'Enter') onSearch(); if (e.key === 'Escape') clearSearch(); }} />
+            onKeyDown=${(e) => { if (e.key === 'Enter') onSearch(); if (e.key === 'Escape') onClearSearch(); }} />
           ${(q || hits) && html`<button class="btn-ghost search-clear" onClick=${onClearSearch}>清</button>`}
         </div>
         ${searching && html`<p class="state">${searching}</p>`}
