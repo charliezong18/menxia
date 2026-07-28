@@ -153,3 +153,24 @@ test('标记里的整条 URL：路径不是 /session/<id> 结尾则拒', () => {
    '<!-- happy-session: https://happy.example.com/session/短 -->'].forEach((b) =>
     assert.equal(parseHappySession(b), null, `应拒绝：${b}`));
 });
+
+// ── 文档内相对链接（点「中文」404 那条）──
+import { resolveRelativeDocLink } from '../src/link.js';
+
+test('相对链接按当前文档所在目录解析', () => {
+  assert.equal(resolveRelativeDocLink('README.zh-CN.md', 'README.md'), 'README.zh-CN.md');
+  assert.equal(resolveRelativeDocLink('other.md', 'docs/a.md'), 'docs/other.md');
+  assert.equal(resolveRelativeDocLink('./b.md', 'docs/a.md'), 'docs/b.md');
+  assert.equal(resolveRelativeDocLink('../top.md', 'docs/sub/a.md'), 'docs/top.md');
+  assert.equal(resolveRelativeDocLink('/abs.md', 'docs/a.md'), 'abs.md');
+});
+
+test('带锚点/查询串照样解析出路径', () => {
+  assert.equal(resolveRelativeDocLink('spec.md#L3', 'docs/a.md'), 'docs/spec.md');
+});
+
+test('绝对链接 / 锚点 / mailto / 协议相对 一律不拦（返回 null）', () => {
+  ['https://github.com/x/y', 'http://a.com', '#section', 'mailto:a@b.c',
+   '//cdn.example.com/x.md', '', '   '].forEach((h) =>
+    assert.equal(resolveRelativeDocLink(h, 'docs/a.md'), null, `不该拦：${h}`));
+});

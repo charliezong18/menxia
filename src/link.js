@@ -110,3 +110,22 @@ export function buildDeepLink(origin, { prNumber, path, line }) {
   if (line) q.set('line', String(line));
   return `${origin}?${q}`;
 }
+
+// ── 文档内的相对链接（[中文](README.zh-CN.md) 这种）──
+// 不处理的话点击会跳到 Pages 源站的同名路径 → 404（2026-07-27 Charlie 点「中文」踩到；
+// M1 评审其实点过这条，当时判为「小」被押后，结果真咬人）。
+// 返回相对 docPath 解析后的仓内路径；绝对链接 / 锚点 / mailto / 非文档一律 null（不拦）。
+export function resolveRelativeDocLink(href, docPath) {
+  const h = String(href || '').trim();
+  if (!h || /^[a-z][a-z0-9+.-]*:/i.test(h) || h.startsWith('#') || h.startsWith('//')) return null;
+  const dir = docPath && docPath.includes('/') ? docPath.slice(0, docPath.lastIndexOf('/') + 1) : '';
+  const raw = h.split('#')[0].split('?')[0];
+  if (!raw) return null;
+  const base = raw.startsWith('/') ? raw.slice(1) : dir + raw;
+  const out = [];
+  for (const seg of base.split('/')) {
+    if (seg === '..') out.pop();
+    else if (seg && seg !== '.') out.push(seg);
+  }
+  return out.length ? out.join('/') : null;
+}
