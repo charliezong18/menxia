@@ -98,3 +98,31 @@ test('buildDeepLink ↔ parseDeepLink 往返一致', () => {
 test('buildDeepLink: 无折号退化成首页', () => {
   assert.equal(buildDeepLink('https://x.io/zhupi/', {}), 'https://x.io/zhupi/');
 });
+
+// ── F9 回奏对：从 PR body 里认出呈折的 Happy 会话 ──
+import { parseHappySession } from '../src/link.js';
+
+test('认注释标记 → 默认站点的会话链接', () => {
+  assert.equal(
+    parseHappySession('TLDR\n\n<!-- happy-session: cms3yv065k1oqyc0teh4a5why -->\n'),
+    'https://charliezong18.github.io/happy/session/cms3yv065k1oqyc0teh4a5why');
+});
+
+test('标记里写整条 URL 则原样用（fork 的人自架 Happy 也能用）', () => {
+  assert.equal(
+    parseHappySession('<!-- happy-session: https://happy.example.com/session/abc123def456ghij -->'),
+    'https://happy.example.com/session/abc123def456ghij');
+});
+
+test('body 里的可见 Happy 会话链接也认（agent 手写时更自然）', () => {
+  assert.equal(
+    parseHappySession('呈自 [这次奏对](https://charliezong18.github.io/happy/session/cms3yv065k1oqyc0teh4a5why)'),
+    'https://charliezong18.github.io/happy/session/cms3yv065k1oqyc0teh4a5why');
+});
+
+test('没标记 / body 为空 / 乱写一律 null（按钮就不出现）', () => {
+  ['', null, undefined, '普通 PR body', '<!-- happy-session: -->', '<!-- happy-session: 太短 -->',
+   '<!-- happy-session: javascript:alert(1) -->',
+   '<!-- happy-session: http://evil.com/session/aaaaaaaaaaaaaaaa -->'].forEach((b) =>
+    assert.equal(parseHappySession(b), null, `应拒绝：${b}`));
+});

@@ -43,6 +43,7 @@ const PR = {
   draft: false,
   node_id: 'DEMO',
   head: { sha: 'demo0000' },
+  body: '演示折。\n\n<!-- happy-session: cmsdemo0000demo0000demo -->',
 };
 
 // 整份新增文件的 patch：全行可批
