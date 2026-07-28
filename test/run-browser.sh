@@ -86,6 +86,12 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
     STATUS=1
   fi
 
+  # 直达链接：URL 带 ?pr=998 应直接开到那折（归档折 → 自动切已钦此栏、只读）
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=1&pr=998" /tmp/zhupi-deep.log 5000
+  grep -o '\[smoke\] [^"]*' /tmp/zhupi-deep.log | sed 's/^/  /' || true
+  RD=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-deep.log | tail -1)
+  if [ "$RD" = "[smoke] RESULT pass=3 fail=0" ]; then echo "  ✔ deep $RD"; else echo "  ✖ deep $RD（期望 pass=3 fail=0）"; STATUS=1; fi
+
   # 故障注入两场：403 限流不得清 token（历史上误删过），401 才回设置页
   for mode in 403 401; do
     run_page "http://127.0.0.1:$PORT/index.html?demo=1&fail=$mode" "/tmp/zhupi-fail$mode.log" 4000

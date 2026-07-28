@@ -61,3 +61,40 @@ test('buildRef: 超长引文截断（60 字）', () => {
   const q = md.slice(md.indexOf('「') + 1, md.indexOf('」'));
   assert.ok(q.length <= 60, `引文应截断，实际 ${q.length}`);
 });
+
+// ── F7 外部直达链接 ──
+import { parseDeepLink, buildDeepLink } from '../src/link.js';
+
+test('parseDeepLink: ?pr=13 及带 path/line', () => {
+  assert.deepEqual(parseDeepLink('?pr=13', SLUG), { prNumber: 13, path: null, line: null });
+  assert.deepEqual(parseDeepLink('?pr=13&path=docs/a.md&line=42', SLUG),
+    { prNumber: 13, path: 'docs/a.md', line: 42 });
+});
+
+test('parseDeepLink: ?ref= 走 F6 那套解析（零新语法）', () => {
+  assert.deepEqual(
+    parseDeepLink('?ref=' + encodeURIComponent('https://github.com/charliezong18/review/blob/main/docs/a.md#L7'), SLUG),
+    { prNumber: null, path: 'docs/a.md', line: 7 });
+});
+
+test('parseDeepLink: 垃圾输入一律 null（不能让烂链接把 app 带沟里）', () => {
+  ['', '?', '?pr=', '?pr=abc', '?pr=0', '?pr=-3', '?foo=1',
+   '?ref=' + encodeURIComponent('https://github.com/slopus/happy/pull/1')].forEach((s) =>
+    assert.equal(parseDeepLink(s, SLUG), null, `应拒绝：${s}`));
+});
+
+test('parseDeepLink: 非法 line 退化成 null 而不是崩', () => {
+  assert.equal(parseDeepLink('?pr=5&line=abc', SLUG).line, null);
+  assert.equal(parseDeepLink('?pr=5&line=0', SLUG).line, null);
+});
+
+test('buildDeepLink ↔ parseDeepLink 往返一致', () => {
+  const url = buildDeepLink('https://x.io/zhupi/', { prNumber: 13, path: 'docs/a.md', line: 42 });
+  assert.equal(url, 'https://x.io/zhupi/?pr=13&path=docs%2Fa.md&line=42');
+  assert.deepEqual(parseDeepLink(new URL(url).search, SLUG),
+    { prNumber: 13, path: 'docs/a.md', line: 42 });
+});
+
+test('buildDeepLink: 无折号退化成首页', () => {
+  assert.equal(buildDeepLink('https://x.io/zhupi/', {}), 'https://x.io/zhupi/');
+});

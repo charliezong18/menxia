@@ -128,6 +128,20 @@ if (FAIL) {
   }, 1200);
 }
 
+// ?demo=1&deep=1：验直达进场——URL 带 ?pr=998（归档折）应直接开到它并切到已钦此栏
+if (new URLSearchParams(location.search).get('deep') === '1') {
+  setTimeout(() => {
+    let pass = 0, fail = 0;
+    const chk = (n, c, d = '') => { c ? pass++ : fail++; console.log(`[smoke] ${c ? 'PASS' : 'FAIL'} ${n}${d ? ` — ${d}` : ''}`); };
+    const crumb = document.querySelector('.crumb')?.textContent || '';
+    chk('deep-opened-target', crumb.includes('已钦此') || crumb.includes('归档'), `crumb=${crumb.slice(0, 40)}`);
+    const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
+    chk('deep-switched-tab', doneTab?.classList.contains('active'));
+    chk('deep-readonly', !document.querySelector('.btn-qinci'));
+    console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
+  }, 1500);
+}
+
 // 自动演示：用真实的 Selection + mouseup + 按钮点击走完「划句 → 存批」两轮
 export async function autoAnnotate(docEl) {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

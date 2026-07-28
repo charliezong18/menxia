@@ -9,7 +9,7 @@ import { renderMarkdown, hydrateRelativeImages } from './render.js';
 import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
-import { parseZhupiLink, buildRef } from './link.js';
+import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink } from './link.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -159,6 +159,7 @@ function App() {
 
   const docRef = useRef(null);
   const autoRan = useRef(false); // 冒烟只跑一次（切折会让 docTick 回到 1）
+  const deepLink = useRef(parseDeepLink(location.search, gh.getRepoSlug() || (DEMO ? 'demo/repo' : '')));
   const jumpRef = useRef(null);  // 搜索命中 → 开折后跳到那一段 {prNumber, path, line}
   const indexRef = useRef(null); // 全文索引缓存（本次会话内）
   // 全局监听器只绑一次，读最新状态走这面镜子
@@ -198,6 +199,19 @@ function App() {
       const list = await api.listOpenPRs();
       if (api.listMergedPRs) api.listMergedPRs().then(setDonePrs).catch(() => {});
       setPrs(list);
+      const dl = deepLink.current;
+      if (dl) {
+        deepLink.current = null;   // 只认一次，之后随手切折不再被它拽回来
+        const all = [...list, ...(await api.listMergedPRs?.().catch(() => []) || [])];
+        const target = dl.prNumber ? all.find((p) => p.number === dl.prNumber) : null;
+        if (target) {
+          if (dl.path) jumpRef.current = { prNumber: target.number, path: dl.path, line: dl.line || 1 };
+          setTab(target.merged_at ? 'done' : 'open');
+          openPR(target);
+          return;
+        }
+        say(`直达链接指向第 ${dl.prNumber} 折，但清单里没有（可能已删或不在本仓）。`);
+      }
       if (list.length && !R.current.cur) openPR(list[0]); // 在途中用户已手点开折子就别顶掉他
     } catch (err) {
       if (err.tokenDead) { gh.clearToken(); setPhase('setup'); setSetupMsg('钥匙失效了，换一把。'); return; }
@@ -477,6 +491,15 @@ function App() {
     setEditing((e) => (e === id ? null : e));
   }
 
+  // 地址栏跟着当前折/文档走（replaceState 不进历史，免得返回键变成翻折）
+  useEffect(() => {
+    if (DEMO) return;
+    const url = cur?.pr
+      ? buildDeepLink(location.origin + location.pathname, { prNumber: cur.pr.number, path: docPath })
+      : location.origin + location.pathname;
+    if (location.href !== url) history.replaceState(null, '', url);
+  }, [cur?.pr?.number, docPath]);
+
   // 文档/批注里的本仓 GitHub 链接 → app 内跳转（外链不拦，照常新窗口打开）
   const onDocClick = useCallback((e) => {
     const a = e.target.closest('a[href]');
@@ -488,12 +511,20 @@ function App() {
   }, [prs, donePrs, cur, docPath]);
 
   // 「引用此处」：把当前选中处拷成一条 GitHub permalink + 引文，粘进别的朱批即成链接
-  async function copyRef() {
+  async function copyRef(e) {
     const a = A.computeAnchor(docRef.current);
     const slug = gh.getRepoSlug() || 'demo/repo';
-    const md = a
-      ? buildRef({ slug, path: docPath, line: a.line, quote: a.quote })
-      : buildRef({ slug, prNumber: cur?.pr?.number });
+    // 默认给「朱批直达链」（点了直接进 app 读到那一段）；按住 Alt 给 GitHub permalink
+    const wantGithub = Boolean(e?.altKey);
+    const md = wantGithub
+      ? (a ? buildRef({ slug, path: docPath, line: a.line, quote: a.quote })
+           : buildRef({ slug, prNumber: cur?.pr?.number }))
+      : (() => {
+          const url = buildDeepLink(location.origin + location.pathname,
+            { prNumber: cur?.pr?.number, path: a ? docPath : null, line: a?.line });
+          const q = (a?.quote || '').trim().slice(0, 60);
+          return q ? `[「${q}」](${url})` : url;
+        })();
     try { await navigator.clipboard.writeText(md); say(`已拷贝引用：${md.slice(0, 60)}${md.length > 60 ? '…' : ''}`); }
     catch { say(`拷贝失败，手动复制：${md}`); }
   }
@@ -721,7 +752,7 @@ function App() {
           <span class="crumb">待批 ${cur ? html`/ <b>${cur.pr.title}</b>` : ''}</span>
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { setCur(null); setDocPath(null); loadPRs(); }}>刷新</button>
-            ${cur && html`<button class="btn-ghost" title="把选中处（或整折）拷成链接，粘进别的朱批" onClick=${copyRef}>引用此处</button>`}
+            ${cur && html`<button class="btn-ghost" title="拷朱批直达链（按住 Alt 拷 GitHub 链接）" onClick=${copyRef}>引用此处</button>`}
             ${cur && !archived && html`<button class="btn-ghost" onClick=${() => setZongpi((z) => !z)}>总批</button>`}
             ${cur && drafts.length > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}

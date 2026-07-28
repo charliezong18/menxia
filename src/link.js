@@ -47,3 +47,32 @@ export function buildRef({ slug, prNumber, path, line, quote }) {
   const q = (quote || '').trim().replace(/\s+/g, ' ').slice(0, 60);
   return q ? `[「${q}」](${url})` : url;
 }
+
+// ── F7 外部直达链接（deep link）──
+// 支持两种进场形态，都收敛成 F6 已有的 {prNumber, path, line}：
+//   ?pr=13 / ?pr=13&path=docs/a.md&line=42   —— 短、好念、agent 好拼
+//   ?ref=<GitHub permalink>                  —— F6 已认得的三种链接原样塞进来，零新语法
+export function parseDeepLink(search, slug) {
+  const q = new URLSearchParams(search || '');
+  const ref = q.get('ref');
+  if (ref) return parseZhupiLink(ref, slug);
+  const pr = q.get('pr');
+  if (!pr) return null;
+  const prNumber = parseInt(pr, 10);
+  if (!Number.isFinite(prNumber) || prNumber <= 0) return null;
+  const line = parseInt(q.get('line') || '', 10);
+  return {
+    prNumber,
+    path: q.get('path') || null,
+    line: Number.isFinite(line) && line > 0 ? line : null,
+  };
+}
+
+// 当前位置 → 可分享地址（写地址栏 + 「拷直达链」都用它）
+export function buildDeepLink(origin, { prNumber, path, line }) {
+  if (!prNumber) return origin;
+  const q = new URLSearchParams({ pr: String(prNumber) });
+  if (path) q.set('path', path);
+  if (line) q.set('line', String(line));
+  return `${origin}?${q}`;
+}
