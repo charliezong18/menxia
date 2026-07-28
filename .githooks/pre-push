@@ -22,6 +22,12 @@ fi
 CODE_TOUCHED="$(echo "$CHANGED" | grep -E '^(src/|index\.html|vendor/|test/|\.githooks/)' || true)"
 
 echo "── pre-push 闸门 ──"
+# 量测随每次 push 打脸：账本停摆过 7 个 commit，根因是记账没有触发点
+BIG=$(wc -l < src/ui.js | tr -d ' ')
+TOTAL=$(cat src/*.js src/components/*.js src/style.css index.html 2>/dev/null | wc -l | tr -d ' ')
+echo "量测：ui.js ${BIG} 行（#1 线 800）· 全量 ${TOTAL} 行（#2 线 2500）"
+[ "$BIG" -gt 800 ] && echo "  ⚠ #1 已触发——按 MIGRATION-WATCH 规矩：先拆子组件再上新功能"
+
 if [ -z "$CODE_TOUCHED" ]; then
   echo "本次只动文档，跑单元层即可（代码层跳过）"
   if ! node --test test/*.test.js >/tmp/zhupi-prepush.log 2>&1; then
