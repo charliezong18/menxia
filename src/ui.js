@@ -342,8 +342,10 @@ function App() {
     col.style.minHeight = `${prevBottom + 20}px`;
   }, [blockTops]);
 
-  // zongpiOpen 也在依赖里：总批块在正文之上，展/收会把整篇文档上下推——不重排则右缘卡与锚点全脱节
-  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, zongpiOpen, docTick, comments, viewed, layoutCards]);
+  // 只依赖「改变 margin-col 自身子元素集合/高度」的 state。正文之上的块（总批、rev 行、tab 条）
+  // 高度变了也不用重排：layoutCards 算的是 block.top − colRect.top，而 #doc 与 #margin-col 是
+  // .read-row 里顶对齐的 flex 兄弟，一起上下平移，差值恒定。（评审实测：展/收总批前后 tops 逐像素相同）
+  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick, comments, viewed, layoutCards]);
   useEffect(() => {
     if (typeof ResizeObserver === 'undefined' || !docRef.current) return;
     const ro = new ResizeObserver(() => layoutCards());
@@ -579,6 +581,7 @@ function App() {
       await api.createIssueComment(c.pr.number, v);
       setZongpi(false);
       loadComments(c.pr.number); // 重拉：让刚呈的总批立刻显示在折首
+      setZongpiOpen(true);       // 折叠组默认收起，自己刚发的那条必须展开给他看见——否则回到「只能发不能看」
       say('总批已呈——回 Happy 说「读批注」。');
     } catch (err) {
       say(`总批呈递失败：${err.message}`);
