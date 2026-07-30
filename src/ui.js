@@ -33,7 +33,8 @@ const api = DEMO ? demoApi : gh;
 const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js', 'src/anchor.js',
   'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
-  'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js'];
+  'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
+  'src/components/comment-body.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -308,6 +309,15 @@ function App() {
   // blockLine 是「源文件行号」，块级 data-line 不一定精确命中 → 找 data-line ≤ 目标行的最近块
   // 挂靠（列表/表格内的行落在其容器块上，语义足够近）。二选一里取「就近向上」而非「最接近」，
   // 理由：向上挂靠保证卡片不会跑到被批句子的上方，读起来锚点永远在卡片视线的同高或稍上。
+  // 评论正文里的相对路径图片（#5）：按「当前正文所在目录 + 当前 rev」解析，与正文岛屿同一套 base。
+  // 总批不锚任何文件、朱批锚的又多半就是在读的这篇，所以拿 docPath 当基准最贴读者的心智。
+  // 必须 useCallback：身份不稳的话 CommentBody 的 effect 每次渲染都重跑，白打一轮 Contents API。
+  const hydrateComment = useCallback((el) => {
+    const pr = R.current.cur?.pr;
+    if (!pr || !docPath) return;
+    hydrateRelativeImages(el, { docPath, ref: viewed || pr.head.sha, fetchBlobUrl: api.getFileBlobUrl });
+  }, [docPath, viewed]);
+
   const blockTops = useMemo(() => {
     const doc = docRef.current;
     if (!doc) return [];
@@ -664,7 +674,8 @@ function App() {
     })),
     ...docThreads.map(({ t, blockLine, outdated }) => ({
       blockLine,
-      el: html`<${ShownThread} key=${'c' + t.root.id} t=${t} blockLine=${blockLine} outdated=${outdated} />`,
+      el: html`<${ShownThread} key=${'c' + t.root.id} t=${t} blockLine=${blockLine} outdated=${outdated}
+        hydrate=${hydrateComment} />`,
     })),
   ].sort((a, b) => a.blockLine - b.blockLine);
 
@@ -723,7 +734,7 @@ function App() {
           ${cur && !archived && !onHead && html`
             <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
           ${cur && html`<${ZongpiShown} zongpis=${zongpis} open=${zongpiOpen}
-            onToggle=${() => setZongpiOpen((o) => !o)} />`}
+            onToggle=${() => setZongpiOpen((o) => !o)} hydrate=${hydrateComment} />`}
           ${langSibling && html`
             <div class="lang-switch" title="同一折的中英两版，切页不离开当前折">
               <button class=${'lang-opt' + (curLangOf === 'zh' ? ' active' : '')} onClick=${() => switchLang('zh')}>中</button>
@@ -739,7 +750,7 @@ function App() {
             </div>
           </div>
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
-            onToggle=${() => setOtherOpen((o) => !o)} />
+            onToggle=${() => setOtherOpen((o) => !o)} hydrate=${hydrateComment} />
         </div>
       </main>
       ${float && html`

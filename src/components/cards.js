@@ -2,7 +2,7 @@
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html, useEffect, useRef } from '../../vendor/preact-standalone.mjs';
 import * as A from '../anchor.js';
-import { renderMarkdown } from '../render.js';
+import { CommentBody } from './comment-body.js';
 
 export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
   const taRef = useRef();
@@ -32,7 +32,7 @@ export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
 
 // 已呈批注串（墨色安静系，视觉降一档；朱砂只留给草稿的活跃态）
 // blockLine 用串的源文件行号（line ?? original_line）直接当锚，参与 layoutCards 对齐
-export function ShownThread({ t, blockLine, outdated }) {
+export function ShownThread({ t, blockLine, outdated, hydrate }) {
   const { quote, body } = A.parseCommentBody(t.root.body);
   return html`
     <div class="anno-card anno-shown" data-block-line=${blockLine} key=${'c' + t.root.id}>
@@ -41,11 +41,11 @@ export function ShownThread({ t, blockLine, outdated }) {
         <span class="anno-who">${t.root.user?.login || '?'}</span>
         ${outdated ? html`<span class="anno-outdated" title="此行已随新版漂移">旧</span>` : ''}
       </div>
-      <div class="anno-shown-body" dangerouslySetInnerHTML=${{ __html: renderMarkdown(body) }}></div>
+      <${CommentBody} text=${body} hydrate=${hydrate} />
       ${t.replies.map((r) => html`
         <div class="anno-reply" key=${'c' + r.id}>
           <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
-          <div class="anno-shown-body" dangerouslySetInnerHTML=${{ __html: renderMarkdown(r.body) }}></div>
+          <${CommentBody} text=${r.body} hydrate=${hydrate} />
         </div>`)}
     </div>`;
 }

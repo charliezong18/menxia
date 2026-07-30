@@ -2,9 +2,9 @@
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html } from '../../vendor/preact-standalone.mjs';
 import * as A from '../anchor.js';
-import { renderMarkdown } from '../render.js';
+import { CommentBody } from './comment-body.js';
 
-export function OtherThreads({ threads, open, onToggle }) {
+export function OtherThreads({ threads, open, onToggle, hydrate }) {
   if (!threads.length) return null;
   return html`
             <div class="other-threads">
@@ -20,11 +20,11 @@ export function OtherThreads({ threads, open, onToggle }) {
                         <div class="anno-src"><span class="anno-who">${t.root.user?.login || '?'}</span>
                           <span class="anno-path">${(t.root.path || '整折').split('/').pop()}</span></div>
                         ${quote && html`<div class="anno-quote-shown">「${quote}」</div>`}
-                        <div class="anno-shown-body" dangerouslySetInnerHTML=${{ __html: renderMarkdown(body) }}></div>
+                        <${CommentBody} text=${body} hydrate=${hydrate} />
                         ${t.replies.map((r) => html`
                           <div class="anno-reply" key=${'o' + r.id}>
                             <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
-                            <div class="anno-shown-body" dangerouslySetInnerHTML=${{ __html: renderMarkdown(r.body) }}></div>
+                            <${CommentBody} text=${r.body} hydrate=${hydrate} />
                           </div>`)}
                       </div>`;
                   })}
