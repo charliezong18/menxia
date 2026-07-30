@@ -8,7 +8,7 @@ export function OtherThreads({ threads, open, onToggle }) {
   if (!threads.length) return null;
   return html`
             <div class="other-threads">
-              <button class="other-threads-toggle" onClick=${() => onToggle()}>
+              <button class="other-threads-toggle" aria-expanded=${open} onClick=${() => onToggle()}>
                 ${open ? '▾' : '▸'} 其他 ${threads.length} 串（其他文档 / 无法定位）
               </button>
               ${open && html`
