@@ -2,7 +2,7 @@
 // 由来（issue #1）：长评审历史下这块整个展开挡在正文前，PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏，
 // 读者滚不到文档自己的 TL;DR。交互对齐「其他 N 串」：默认折叠 + 走 renderMarkdown，不新造一套。
 import { html } from '../../vendor/preact-standalone.mjs';
-import { renderMarkdown } from '../render.js';
+import { CommentBody } from './comment-body.js';
 
 // 折叠头的摘要：取最新一条的首行，剥掉 markdown 装饰。不调 LLM（守 BACKLOG 的架构边界）。
 export function summarize(body, max = 30) {
@@ -35,7 +35,7 @@ function pickLine(lines, honorFence, max) {
 // 带时区偏移（+09:00）或毫秒的时间戳会静默排反，且排反了没人报错。
 const at = (z) => { const t = Date.parse(z?.created_at); return Number.isNaN(t) ? 0 : t; };
 
-export function ZongpiShown({ zongpis, open, onToggle }) {
+export function ZongpiShown({ zongpis, open, onToggle, hydrate }) {
   if (!zongpis.length) return null;
   const newestFirst = [...zongpis].sort((a, b) => (at(b) - at(a)) || ((b.id || 0) - (a.id || 0)));
   const gist = summarize(newestFirst[0].body);
@@ -49,8 +49,8 @@ export function ZongpiShown({ zongpis, open, onToggle }) {
                   ${newestFirst.map((z, i) => html`
                     <div class="zongpi-shown-item" key=${'z' + (z.id ?? 'i' + i)}>
                       <div class="zongpi-shown-who"><span class="anno-who">${z.user?.login || '?'}</span></div>
-                      <div class="anno-shown-body zongpi-shown-body"
-                        dangerouslySetInnerHTML=${{ __html: renderMarkdown(z.body || '') }}></div>
+                      <${CommentBody} text=${z.body} hydrate=${hydrate}
+                        cls="anno-shown-body zongpi-shown-body" />
                     </div>`)}
                 </div>`}
             </div>`;

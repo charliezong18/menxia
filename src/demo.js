@@ -73,6 +73,14 @@ const COMMENTS = [
     user: { login: 'charlie' }, created_at: new Date(Date.now() - 20e5).toISOString(),
     body: '> 迁移到 Preact 之后\n\n这行在新版已经改写，锚定失效——保留看处理即可。',
   },
+  // 坏数据哨兵：回话的 body 不过 parseCommentBody（那个函数自带 String(raw||'')），
+  // 是直连 renderMarkdown 的裸调用点。markdown-it 对非字符串直接抛 → 整个 app 白屏。
+  // 放这儿当报警器：防线没了整套冒烟会全灭，而不是悄悄少一条。
+  {
+    id: 104, path: 'docs/demo.md', line: 20, original_line: 20, in_reply_to_id: 101,
+    user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 22e5).toISOString(),
+    body: null,
+  },
 ];
 
 // 已呈总批（会话区）。真实评审历史长这样：agent 一轮一轮追加 changelog，用户偶尔插一句短的。
@@ -97,7 +105,8 @@ ${Array.from({ length: 8 }, (_, i) => `${i + 1}. 第 ${i + 1} 处：结论前置
 const ZONGPIS = [
   { id: 205, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 34e5).toISOString(), body: changelog('v2', '按批注重写 Why 一节') },
   { id: 203, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 18e5).toISOString(), body: changelog('v4 定稿', '只留结论与清单') },
-  { id: 201, user: { login: 'charlie' }, created_at: new Date(Date.now() - 40e5).toISOString(), body: '图好像有问题' },
+  // 相对路径图片：私有仓的 raw 链接取不到，必须换 blob URL。#5 之前评论正文这条路径没接 hydrate，读者看到断图
+  { id: 201, user: { login: 'charlie' }, created_at: new Date(Date.now() - 40e5).toISOString(), body: '图好像有问题\n\n![截图](assets/shot.png)' },
   { id: 202, user: { login: 'charlie' }, created_at: new Date(Date.now() - 22e5).toISOString(), body: null },
   { id: 204, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 28e5).toISOString(), body: changelog('v3', '补齐数据来源') },
 ];
@@ -126,7 +135,12 @@ export const demoApi = {
     if (path === 'docs/guide.zh-CN.md') return '# 指南\n\n中文版，用来验语言切页。';
     return ref && ref !== 'demo0000' ? DOC_OLD : DOC;
   },
-  getFileBlobUrl: async () => { throw new Error('demo 无图'); },
+  // 换 blob URL 的桩：回一张 1×1 gif 的 data URL。原本是 throw（demo 文档里没图，从没被调用过），
+  // 但评论正文接上 hydrate 之后要能断言「相对路径真被换掉了」，throw 只能验到降级占位符
+  getFileBlobUrl: async (path) => {
+    console.log('[demo] getFileBlobUrl', path);
+    return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  },
   listPRComments: async () => COMMENTS,
   listIssueComments: async () => ZONGPIS,
   listPRCommits: async () => COMMITS,
@@ -297,6 +311,11 @@ async function runSmoke(docEl) {
     Boolean(document.querySelector('.zongpi-shown-body h2')) &&
     Boolean(document.querySelector('.zongpi-shown-body table')),
     `h2=${document.querySelectorAll('.zongpi-shown-body h2').length}`);
+  // #5：评论正文里的相对路径图片要换成 blob/data URL；没接 hydrate 的话 src 还是 assets/... 必 404
+  const zpImg = document.querySelector('.zongpi-shown-body img');
+  chk('comment-relative-image-hydrated',
+    Boolean(zpImg) && /^(data:|blob:)/.test(zpImg.getAttribute('src') || ''),
+    `src=${(zpImg?.getAttribute('src') || 'NO-IMG').slice(0, 24)}`);
   zpToggle?.click();
   await sleep(200);
   chk('zongpi-recollapses', document.querySelectorAll('.zongpi-shown-item').length === 0,
