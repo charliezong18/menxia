@@ -342,20 +342,27 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   .anno-card::before { display: none; }
 }
 
-/* 已呈总批：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。 */
+/* 已呈总批：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。
+   默认折叠成一行（issue #1）：这块在正文之上，评审历史一长就把文档推下 2–3 屏，
+   读者滚不到文档自己的 TL;DR。宽度对齐正文列（680px），markdown 复用 .anno-shown-body。 */
 .zongpi-shown {
-  margin: 0 0 20px 26px; padding: 12px 16px;
+  margin: 0 0 20px 26px; padding: 10px 16px; max-width: 680px;
   background: var(--paper-raised); border: 1px solid var(--rule);
   border-left: 3px solid var(--ink-soft); border-radius: 9px;
 }
-.zongpi-shown-label {
-  font-family: var(--songti); font-size: 12.5px; letter-spacing: .08em;
-  color: var(--ink-soft); margin-bottom: 8px;
+.zongpi-shown-toggle {
+  display: block; width: 100%; text-align: left; padding: 2px 0;
+  font-family: var(--songti); font-size: 12.5px; letter-spacing: .08em; color: var(--ink-soft);
 }
-.zongpi-shown-item { font-size: 14.5px; line-height: 1.7; margin-bottom: 6px; }
-.zongpi-shown-item:last-child { margin-bottom: 0; }
-.zongpi-shown-body { white-space: pre-wrap; }
-.zongpi-shown-item .anno-who { margin-right: 8px; }
+.zongpi-shown-toggle:hover { color: var(--ink); }
+.zongpi-shown-list { margin-top: 12px; display: flex; flex-direction: column; gap: 14px; }
+.zongpi-shown-item { padding-top: 14px; border-top: 1px solid var(--rule); }
+.zongpi-shown-item:first-child { padding-top: 0; border-top: none; }
+.zongpi-shown-who { font-size: 12px; margin-bottom: 5px; }
+.zongpi-shown-body { font-size: 14.5px; line-height: 1.7; }
+.zongpi-shown-body h1, .zongpi-shown-body h2, .zongpi-shown-body h3 {
+  font-family: var(--songti); font-size: 15px; margin: 12px 0 6px;
+}
 @media (max-width: 900px) { .zongpi-shown { margin-left: 0; } }
 
 /* 旧版横幅：Pages 缓存 10 分钟，用户无从判断新旧——explicitly 告诉他 */
