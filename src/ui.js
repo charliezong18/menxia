@@ -16,6 +16,7 @@ import { DraftCard, ShownThread, ZongpiCard } from './components/cards.js';
 import { Sidebar } from './components/sidebar.js';
 import { Topbar } from './components/topbar.js';
 import { OtherThreads } from './components/other-threads.js';
+import { ZongpiShown } from './components/zongpi-shown.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -32,7 +33,7 @@ const api = DEMO ? demoApi : gh;
 const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js', 'src/anchor.js',
   'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
-  'src/components/topbar.js', 'src/components/other-threads.js'];
+  'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -69,6 +70,7 @@ function App() {
   const [zongpis, setZongpis] = useState([]);    // 已呈总批（会话区），否则总批只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
+  const [zongpiOpen, setZongpiOpen] = useState(false); // 「已呈总批」折叠组展开态（默认收起，issue #1）
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待批 / done=已钦此（归档，只读）
@@ -181,6 +183,7 @@ function App() {
     setCommits([]);
     setComments([]);
     setZongpis([]);
+    setZongpiOpen(false);   // 每开一折都从收起态起：否则上一折展开过，下一折又被历史挡住正文
     setCur({ pr, files: null, docs: null });
     setDrafts(A.loadDrafts(pr.number));
     // 立刻清岛屿并示 loading：否则 listPRFiles 整个往返期间旧折正文挂着，
@@ -339,7 +342,8 @@ function App() {
     col.style.minHeight = `${prevBottom + 20}px`;
   }, [blockTops]);
 
-  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick, comments, viewed, layoutCards]);
+  // zongpiOpen 也在依赖里：总批块在正文之上，展/收会把整篇文档上下推——不重排则右缘卡与锚点全脱节
+  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, zongpiOpen, docTick, comments, viewed, layoutCards]);
   useEffect(() => {
     if (typeof ResizeObserver === 'undefined' || !docRef.current) return;
     const ro = new ResizeObserver(() => layoutCards());
@@ -715,15 +719,8 @@ function App() {
             <p class="rev-notice">此折已钦此归档 · 只读（要再批就开新折）</p>`}
           ${cur && !archived && !onHead && html`
             <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
-          ${cur && zongpis.length > 0 && html`
-            <div class="zongpi-shown">
-              <div class="zongpi-shown-label">已呈总批 · ${zongpis.length}</div>
-              ${zongpis.map((z) => html`
-                <div class="zongpi-shown-item" key=${'z' + z.id}>
-                  <span class="anno-who">${z.user?.login || '?'}</span>
-                  <span class="zongpi-shown-body">${z.body}</span>
-                </div>`)}
-            </div>`}
+          ${cur && html`<${ZongpiShown} zongpis=${zongpis} open=${zongpiOpen}
+            onToggle=${() => setZongpiOpen((o) => !o)} />`}
           ${langSibling && html`
             <div class="lang-switch" title="同一折的中英两版，切页不离开当前折">
               <button class=${'lang-opt' + (curLangOf === 'zh' ? ' active' : '')} onClick=${() => switchLang('zh')}>中</button>

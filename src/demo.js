@@ -75,6 +75,29 @@ const COMMENTS = [
   },
 ];
 
+// 已呈总批（会话区）。真实评审历史长这样：agent 一轮一轮追加 changelog，用户偶尔插一句短的。
+// issue #1 实测 PR #30 是 9 条 / 8,132 字，全展开把正文推下 2–3 屏。冒烟必须撑到这个量级，
+// 否则「正文在首屏」那条断言在短数据上恒真——折叠被改回去也照样绿。
+const changelog = (v, head) => `## ${v} ${head}
+
+**改了什么**
+
+${Array.from({ length: 8 }, (_, i) => `${i + 1}. 第 ${i + 1} 处：结论前置，删掉重复的背景铺陈，并补一行取舍依据与它的反面。`).join('\n')}
+
+| 项 | 前 | 后 |
+|---|---|---|
+| 篇幅 | 长 | 短 |
+
+剩下的分歧留到下一轮，先按这版读。`;
+
+const ZONGPIS = [
+  { id: 201, user: { login: 'charlie' }, created_at: new Date(Date.now() - 40e5).toISOString(), body: '图好像有问题' },
+  { id: 202, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 34e5).toISOString(), body: changelog('v2', '按批注重写 Why 一节') },
+  { id: 203, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 28e5).toISOString(), body: changelog('v3', '补齐数据来源') },
+  { id: 204, user: { login: 'charlie' }, created_at: new Date(Date.now() - 22e5).toISOString(), body: '**第 3 条**先不做，其余照办。' },
+  { id: 205, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 18e5).toISOString(), body: changelog('v4 定稿', '只留结论与清单') },
+];
+
 // ?fail=401|403：让列表接口抛出 ApiError 形状，测消费层的分流（401 才清 token）
 const FAIL = new URLSearchParams(location.search).get('fail');
 const failErr = () => Object.assign(new Error(`${FAIL} demo failure`), {
@@ -101,11 +124,7 @@ export const demoApi = {
   },
   getFileBlobUrl: async () => { throw new Error('demo 无图'); },
   listPRComments: async () => COMMENTS,
-  listIssueComments: async () => [{
-    id: 201, user: { login: 'charlie' },
-    created_at: new Date(Date.now() - 18e5).toISOString(),
-    body: '图好像有问题',
-  }],
+  listIssueComments: async () => ZONGPIS,
   listPRCommits: async () => COMMITS,
   submitReview: async (num, payload) => { window.__lastReview = { num, payload }; console.log('[demo] submitReview', num, payload); return {}; },
   createIssueComment: async (num, body) => { console.log('[demo] 总批', num, body); return {}; },
@@ -224,9 +243,39 @@ async function runSmoke(docEl) {
 
   // M3：已呈批注串 + 回话渲染
   chk('shown-threads>=1', document.querySelectorAll('.anno-shown').length >= 1);
-  // 已呈总批必须看得见（此前只能发不能看——Charlie 真机用出来的缺口）
-  chk('shown-zongpi-visible', document.querySelectorAll('.zongpi-shown-item').length >= 1);
   chk('reply-rendered>=1', document.querySelectorAll('.anno-reply').length >= 1);
+
+  // issue #1：已呈总批默认折叠。这块坐在正文之上，全展开就把文档推出首屏，
+  // 读者滚不到文档自己的 TL;DR（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）。
+  const zpToggle = document.querySelector('.zongpi-shown-toggle');
+  const zpLabel = (zpToggle?.textContent || '').replace(/\s+/g, ' ').trim();
+  chk('zongpi-collapsed-by-default',
+    Boolean(zpToggle) && document.querySelectorAll('.zongpi-shown-item').length === 0,
+    `items=${document.querySelectorAll('.zongpi-shown-item').length}`);
+  chk('zongpi-toggle-shows-count-and-gist',
+    zpLabel.includes('已呈总批 · 5') && zpLabel.includes('最新：v4 定稿'), `label=${zpLabel}`);
+  // 正文起点必须落在首屏内。量容器内偏移量而非 viewport 坐标——与当前滚动位置无关，不会假绿。
+  const workEl = document.querySelector('.work');
+  const docBox = document.getElementById('doc');
+  const docOffset = workEl && docBox
+    ? docBox.getBoundingClientRect().top - workEl.getBoundingClientRect().top + workEl.scrollTop
+    : -1;
+  chk('doc-starts-in-first-screen', docOffset >= 0 && docOffset < window.innerHeight,
+    `offset=${Math.round(docOffset)} vh=${window.innerHeight}`);
+
+  // 展开：最新的在最上面 + markdown 真渲染（此前 pre-wrap 把 ## / ** / 表格裸露给读者）
+  zpToggle?.click();
+  await sleep(200);
+  const zpItems = [...document.querySelectorAll('.zongpi-shown-item')];
+  chk('zongpi-expands-all', zpItems.length === 5, `items=${zpItems.length}`);
+  chk('zongpi-newest-first', (zpItems[0]?.textContent || '').includes('v4 定稿'),
+    `first=${(zpItems[0]?.textContent || '').replace(/\s+/g, ' ').slice(0, 30)}`);
+  chk('zongpi-markdown-rendered',
+    Boolean(document.querySelector('.zongpi-shown-body h2')) &&
+    Boolean(document.querySelector('.zongpi-shown-body table')),
+    `h2=${document.querySelectorAll('.zongpi-shown-body h2').length}`);
+  zpToggle?.click();   // 收回去：后面的几何断言按折叠态算
+  await sleep(200);
 
   // 卡片排序：右缘卡必须按锚点行号递增（草稿与已呈串合并排序，否则串卡被压到天边）
   const tops = [...document.querySelectorAll('#margin-col .anno-card')]

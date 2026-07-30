@@ -8,6 +8,10 @@ import assert from 'node:assert/strict';
 // 组件模块会 import vendored preact；node 里没有 DOM，但 preact 本身 import 期不碰 document。
 const { Sidebar } = await import('../src/components/sidebar.js');
 const { Topbar } = await import('../src/components/topbar.js');
+// zongpi-shown 走 render.js，那个模块 import 期就要 window.markdownit——node 里补个桩即可，
+// 本组件测试只关心「折不折 / 排序 / 摘要」，不验 markdown 引擎本身（那由冒烟层的真浏览器覆盖）。
+globalThis.window = { markdownit: () => ({ renderer: { rules: {} }, render: (t) => `<p>${t}</p>` }) };
+const { ZongpiShown, summarize } = await import('../src/components/zongpi-shown.js');
 
 // 在 vnode 树里按谓词找第一个节点
 function find(vnode, pred) {
@@ -60,4 +64,43 @@ test('顶栏：旧版下提交按钮禁用；归档折不出钦此但保留总�
   assert.equal(find(archived, byClass('btn-qinci')), null, '归档折不该出钦此');
   const zongpi = find(archived, (v) => v.props?.children === '总批');
   assert.ok(zongpi, '归档折仍要能留总批（GitHub 允许在 merged PR 上评论）');
+});
+
+// issue #1：已呈总批全展开挡在正文前（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）
+const ZS = [
+  { id: 1, created_at: '2026-07-20T00:00:00Z', user: { login: 'a' }, body: '最旧的一条' },
+  { id: 2, created_at: '2026-07-28T00:00:00Z', user: { login: 'b' }, body: '## v8 定稿 —— 锁定租客版\n\n正文。' },
+  { id: 3, created_at: '2026-07-24T00:00:00Z', user: { login: 'c' }, body: '中间那条' },
+];
+
+test('已呈总批：默认折叠，头上带条数 + 最新一条摘要', () => {
+  const collapsed = ZongpiShown({ zongpis: ZS, open: false, onToggle: () => {} });
+  assert.equal(find(collapsed, byClass('zongpi-shown-item')), null, '收起态不得渲染任何条目');
+  const label = find(collapsed, byClass('zongpi-shown-toggle')).props.children.flat(9).join('');
+  assert.match(label, /▸/);
+  assert.match(label, /已呈总批 · 3/);
+  assert.match(label, /最新：v8 定稿 —— 锁定租客版/, '摘要取最新一条并剥掉 markdown 装饰');
+});
+
+test('已呈总批：展开后按时间倒序，最新的在最上面（GitHub 返的是正序）', () => {
+  const open = ZongpiShown({ zongpis: ZS, open: true, onToggle: () => {} });
+  const list = find(open, byClass('zongpi-shown-list'));
+  assert.deepEqual(list.props.children.map((v) => v.key), ['z2', 'z3', 'z1']);
+});
+
+test('已呈总批：零条不占位；点击头走 onToggle', () => {
+  assert.equal(ZongpiShown({ zongpis: [], open: false, onToggle: () => {} }), null);
+  let toggled = 0;
+  const tree = ZongpiShown({ zongpis: ZS, open: false, onToggle: () => { toggled++; } });
+  find(tree, byClass('zongpi-shown-toggle')).props.onClick();
+  assert.equal(toggled, 1);
+});
+
+test('摘要：跳过 fence / 分隔线 / 表格行，超长截断', () => {
+  assert.equal(summarize('```js\nconst a = 1;\n```\n\n真正的首句'), '真正的首句');
+  assert.equal(summarize('---\n\n> 引用起头的一句'), '引用起头的一句');
+  assert.equal(summarize('1. 列表起头'), '列表起头');
+  assert.equal(summarize('**加粗** 的开头'), '加粗 的开头');
+  assert.equal(summarize('啊'.repeat(40)), '啊'.repeat(30) + '…');
+  assert.equal(summarize(''), '');
 });
