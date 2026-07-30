@@ -359,10 +359,19 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .zongpi-shown-item { padding-top: 14px; border-top: 1px solid var(--rule); }
 .zongpi-shown-item:first-child { padding-top: 0; border-top: none; }
 .zongpi-shown-who { font-size: 12px; margin-bottom: 5px; }
-.zongpi-shown-body { font-size: 14.5px; line-height: 1.7; }
-.zongpi-shown-body h1, .zongpi-shown-body h2, .zongpi-shown-body h3 {
+/* 复用 .anno-shown-body 那套 markdown 规则，但它的数值是给 300px / 13px 的右缘卡调的，
+   搬到 680px / 14.5px 的折首块上要整体放大一档。用两段选择器压过它，不靠「碰巧写在后面」
+   —— 谁把 CSS 排个序，字号就无声退回 13px，三层测试照样全绿。 */
+.zongpi-shown .zongpi-shown-body { font-size: 14.5px; line-height: 1.7; }
+.zongpi-shown .zongpi-shown-body h1,
+.zongpi-shown .zongpi-shown-body h2,
+.zongpi-shown .zongpi-shown-body h3 {
   font-family: var(--songti); font-size: 15px; margin: 12px 0 6px;
 }
+.zongpi-shown .zongpi-shown-body table { font-size: 13px; }
+.zongpi-shown .zongpi-shown-body code { font-size: 13px; font-family: var(--mono); }
+.zongpi-shown .zongpi-shown-body ul, .zongpi-shown .zongpi-shown-body ol { padding-left: 22px; }
+.zongpi-shown .zongpi-shown-body p, .zongpi-shown .zongpi-shown-body li { margin-bottom: 8px; }
 @media (max-width: 900px) { .zongpi-shown { margin-left: 0; } }
 
 /* 旧版横幅：Pages 缓存 10 分钟，用户无从判断新旧——explicitly 告诉他 */

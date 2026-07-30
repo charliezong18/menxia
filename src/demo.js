@@ -90,12 +90,16 @@ ${Array.from({ length: 8 }, (_, i) => `${i + 1}. 第 ${i + 1} 处：结论前置
 
 剩下的分歧留到下一轮，先按这版读。`;
 
+// 数组序 / id 序 / created_at 序三者**故意错开**：真实 GitHub 是三序共线的，而共线数据下
+// 「按时间降序」「按 id 降序」「把数组 reverse 一下」三种实现给出同一个答案，断言就白写了。
+// 最新的那条（v4 定稿）故意摆在数组中间且 id 不是最大——只有真按 created_at 排才拿得到它。
+// body: null 是坏数据哨兵：markdown-it 对非字符串直接抛，抛在组件渲染里就是整个 app 白屏。
 const ZONGPIS = [
+  { id: 205, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 34e5).toISOString(), body: changelog('v2', '按批注重写 Why 一节') },
+  { id: 203, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 18e5).toISOString(), body: changelog('v4 定稿', '只留结论与清单') },
   { id: 201, user: { login: 'charlie' }, created_at: new Date(Date.now() - 40e5).toISOString(), body: '图好像有问题' },
-  { id: 202, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 34e5).toISOString(), body: changelog('v2', '按批注重写 Why 一节') },
-  { id: 203, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 28e5).toISOString(), body: changelog('v3', '补齐数据来源') },
-  { id: 204, user: { login: 'charlie' }, created_at: new Date(Date.now() - 22e5).toISOString(), body: '**第 3 条**先不做，其余照办。' },
-  { id: 205, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 18e5).toISOString(), body: changelog('v4 定稿', '只留结论与清单') },
+  { id: 202, user: { login: 'charlie' }, created_at: new Date(Date.now() - 22e5).toISOString(), body: null },
+  { id: 204, user: { login: 'agent-bot' }, created_at: new Date(Date.now() - 28e5).toISOString(), body: changelog('v3', '补齐数据来源') },
 ];
 
 // ?fail=401|403：让列表接口抛出 ApiError 形状，测消费层的分流（401 才清 token）
@@ -127,7 +131,12 @@ export const demoApi = {
   listIssueComments: async () => ZONGPIS,
   listPRCommits: async () => COMMITS,
   submitReview: async (num, payload) => { window.__lastReview = { num, payload }; console.log('[demo] submitReview', num, payload); return {}; },
-  createIssueComment: async (num, body) => { console.log('[demo] 总批', num, body); return {}; },
+  // 真往 ZONGPIS 里追加，否则「发完总批能不能立刻看见」这条路径在测试基建上不可达
+  createIssueComment: async (num, body) => {
+    console.log('[demo] 总批', num, body);
+    ZONGPIS.push({ id: 900 + ZONGPIS.length, user: { login: 'charlie' }, created_at: new Date().toISOString(), body });
+    return {};
+  },
   mergePR: async (num, sha) => { console.log('[demo] 钦此', num, sha); return {}; },
   markReady: async () => {},
 };
@@ -254,28 +263,44 @@ async function runSmoke(docEl) {
     `items=${document.querySelectorAll('.zongpi-shown-item').length}`);
   chk('zongpi-toggle-shows-count-and-gist',
     zpLabel.includes('已呈总批 · 5') && zpLabel.includes('最新：v4 定稿'), `label=${zpLabel}`);
-  // 正文起点必须落在首屏内。量容器内偏移量而非 viewport 坐标——与当前滚动位置无关，不会假绿。
+  // 正文起点必须紧贴折首。量滚动容器内的偏移量而非 viewport 坐标——与当前滚动位置无关。
+  // 阈值不用 window.innerHeight：滚动容器是 .work，它上面还有 mainbar/notice 吃掉 80–130px，
+  // 拿视口高当尺子等于白送这么多松弛。也不用 clientHeight（那是「勉强够一屏」，松 700+px，
+  // 「默认展开最新一条」这种半吊子回归照样能钻过去）——验收标准是「折叠块只占一行」，钉死 320。
   const workEl = document.querySelector('.work');
   const docBox = document.getElementById('doc');
   const docOffset = workEl && docBox
     ? docBox.getBoundingClientRect().top - workEl.getBoundingClientRect().top + workEl.scrollTop
     : -1;
-  chk('doc-starts-in-first-screen', docOffset >= 0 && docOffset < window.innerHeight,
-    `offset=${Math.round(docOffset)} vh=${window.innerHeight}`);
+  chk('doc-starts-right-below-fold', docOffset >= 0 && docOffset < 320,
+    `offset=${Math.round(docOffset)} limit=320 workH=${workEl?.clientHeight} vh=${window.innerHeight}`);
+  // 总批块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
+  const zpBox = document.querySelector('.zongpi-shown');
+  chk('zongpi-in-flow-above-doc',
+    getComputedStyle(zpBox).position === 'static' &&
+    zpBox.getBoundingClientRect().bottom <= docBox.getBoundingClientRect().top + 1,
+    `pos=${getComputedStyle(zpBox).position}`);
+  // 程序化 .click() 不做命中测试：按钮可以被 pointer-events:none / 遮挡 / 零高度弄成真人点不开
+  const tStyle = getComputedStyle(zpToggle);
+  chk('zongpi-toggle-actually-clickable',
+    tStyle.pointerEvents !== 'none' && tStyle.visibility === 'visible' && zpToggle.offsetHeight > 0,
+    `pe=${tStyle.pointerEvents} vis=${tStyle.visibility} h=${zpToggle.offsetHeight}`);
 
   // 展开：最新的在最上面 + markdown 真渲染（此前 pre-wrap 把 ## / ** / 表格裸露给读者）
   zpToggle?.click();
   await sleep(200);
   const zpItems = [...document.querySelectorAll('.zongpi-shown-item')];
-  chk('zongpi-expands-all', zpItems.length === 5, `items=${zpItems.length}`);
+  chk('zongpi-expands-all', zpItems.length === ZONGPIS.length, `items=${zpItems.length}/${ZONGPIS.length}`);
   chk('zongpi-newest-first', (zpItems[0]?.textContent || '').includes('v4 定稿'),
     `first=${(zpItems[0]?.textContent || '').replace(/\s+/g, ' ').slice(0, 30)}`);
   chk('zongpi-markdown-rendered',
     Boolean(document.querySelector('.zongpi-shown-body h2')) &&
     Boolean(document.querySelector('.zongpi-shown-body table')),
     `h2=${document.querySelectorAll('.zongpi-shown-body h2').length}`);
-  zpToggle?.click();   // 收回去：后面的几何断言按折叠态算
+  zpToggle?.click();
   await sleep(200);
+  chk('zongpi-recollapses', document.querySelectorAll('.zongpi-shown-item').length === 0,
+    `items=${document.querySelectorAll('.zongpi-shown-item').length}`);
 
   // 卡片排序：右缘卡必须按锚点行号递增（草稿与已呈串合并排序，否则串卡被压到天边）
   const tops = [...document.querySelectorAll('#margin-col .anno-card')]
@@ -307,7 +332,20 @@ async function runSmoke(docEl) {
     await sleep(250);
   }
   chk('cmd-enter-in-zongpi-not-submit', !window.__lastReview);
-  [...document.querySelectorAll('.anno-ghost')].find((b) => b.textContent.includes('作罢'))?.click();
+  // 真呈一条总批（此前只点「作罢」，createIssueComment 在整套冒烟里一次都没被调用过）：
+  // 折叠组默认收起之后，自己刚呈的那条必须自动冒出来——否则就退回「总批只能发不能看」的老缺口，
+  // 而 ui.js 里那句「重拉：让刚呈的总批立刻显示在折首」原本正是为它写的。
+  const zpBefore = document.querySelectorAll('.zongpi-shown-item').length;
+  if (zongpiTa) {
+    zongpiTa.value = '刚呈的这条总批必须自己冒出来';
+    document.querySelector('.zongpi-card .anno-save')?.click();
+    await sleep(500);
+  }
+  const zpAfter = [...document.querySelectorAll('.zongpi-shown-item')];
+  chk('zongpi-auto-opens-after-send', zpBefore === 0 && zpAfter.length === ZONGPIS.length,
+    `before=${zpBefore} after=${zpAfter.length} total=${ZONGPIS.length}`);
+  chk('zongpi-just-sent-on-top', (zpAfter[0]?.textContent || '').includes('刚呈的这条总批'),
+    `first=${(zpAfter[0]?.textContent || '').replace(/\s+/g, ' ').slice(0, 24)}`);
   await sleep(150);
   const savedNotes = (JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items || [])
     .filter((d) => d.note && d.note.trim()).length;
