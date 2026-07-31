@@ -52,6 +52,8 @@ submit-btn-visible
 submit-commit-id
 submit-fired
 submit-line-set
+verify-count-in-topbar
+verify-marker-rendered
 zongpi-auto-opens-after-send
 zongpi-card-open
 zongpi-collapsed-by-default

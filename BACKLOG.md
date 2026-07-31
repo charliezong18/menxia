@@ -221,6 +221,19 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 **Status**: approved on #60, after F1; build after the 8/8 reckoning.
 
+**What was built** (reader side only; write-side lint stays with menxia-mcp):
+
+- New pure module `src/verify.js`. `countVerifyMarkers(text)` is the single source of truth for what counts; `decorateVerifyMarkers(root)` does the rendering.
+- **Token recognition** (fixed token, no fuzzy matching — two accepted forms):
+  - `【需核实】` — the bracket marker itself
+  - `需核实：` / `需核实:` — the marker followed immediately by a full/half-width colon (the colon-explanation form) also counts as one hit
+  - Nothing else counts. Bare `需核实` with no colon/brackets (e.g. a question "需核实吗") does not, to avoid diluting the signal.
+  - **Fenced code blocks (``` / ~~~, 0–3 space indent) and inline code (`` `...` ``) are excluded** — a token there is an example, not a claim. Nailed down in unit tests.
+- **Rendering stays in the pure-text layer — `render.js`'s `html:false` is untouched.** `decorateVerifyMarkers` walks text nodes with a `TreeWalker` (skipping `<code>`/`<pre>`) and wraps each match in `<span class="verify-marker" title=…>` + a `<sup class="verify-tag">?</sup>` corner tag, via `createTextNode`/`createElement` only — zero raw-HTML injection. Called right after `el.innerHTML = renderMarkdown(text)` in `ui.js`. CSS: dashed cinnabar underline + small superscript tag.
+- **Reading page**: the topbar breadcrumb shows a "需核实 N" count for the open document (0 → hidden).
+- **List page**: each folder card shows a "⚑ N" count badge (0 or not-yet-counted → hidden). The count reuses the **existing search fetch path** (`search.js` `buildIndex`, whose full-text index is already in memory after any search) — no new per-folder request is added. Bilingual pairs (`foo.md` ↔ `foo.zh-CN.md`) are grouped by base and counted once (max), so the same claims are not double-counted. **Tradeoff**: because that index is populated only when the user runs a search, list badges appear after the first search; folders never searched show no badge — the documented fallback (list badge is opportunistic; the reading page always shows the precise per-document count on open).
+- **Tests**: `test/verify.test.js` (11 unit cases: bracket hit, colon variant, fuzzy-negative, no-marker, multi-marker, fenced-block excluded, `~~~`/indent, inline-code excluded, lone backtick). Demo doc carries one marker as a browser smoke target; 2 smoke assertions added (`verify-marker-rendered`, `verify-count-in-topbar`). Full suite green: 126 unit + 22 DOM + 65 smoke.
+
 ---
 
 ## F14 · TOC / tiered reading for long folders (2026-07-31, from eval folder #60)

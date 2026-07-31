@@ -7,7 +7,7 @@ const DOC = `# 涂归 demo 折
 
 ## 为什么要有 demo 模式
 
-迁移到 Preact 之后，需要一个不依赖真仓库的冒烟靶：渲染、划句、攒批、提交管线（到 console 为止）都走真实代码路径。
+迁移到 Preact 之后，需要一个不依赖真仓库的冒烟靶：渲染、划句、攒批、提交管线（到 console 为止）都走真实代码路径。据说迁移后包体积下降了约四成【需核实】，这句就是 F13 标记的冒烟靶。
 
 | 能力 | 状态 |
 |---|---|
@@ -397,6 +397,13 @@ async function runSmoke(docEl) {
     : -1;
   chk('doc-within-one-screen-of-top', stackOffset >= 0 && stackOffset < window.innerHeight,
     `stack=${Math.round(stackOffset)} limit=${window.innerHeight}`);
+  // F13：正文里的【需核实】被渲染成可见标记（虚线 + 角标），且顶栏出「需核实 N」计数。
+  // 纯文本层做的——标记里就是 token 本体，没引入任何原始 HTML。
+  const vMark = document.querySelector('#doc .verify-marker');
+  chk('verify-marker-rendered', Boolean(vMark) && vMark.textContent.includes('需核实'),
+    `text=${vMark?.textContent}`);
+  chk('verify-count-in-topbar', (document.querySelector('.verify-count')?.textContent || '').includes('需核实'),
+    `count=${document.querySelector('.verify-count')?.textContent}`);
   // 封顶必须真的生效：展开态的说明块正文不许超过 42vh（+2px 取整余量）。没有这条，
   // 上面那条累计预算能被一个「刚好这次 fixture 不长」蒙混过去，长 body 上线才炸。
   const fbText = document.querySelector('.folder-body .folder-body-text');

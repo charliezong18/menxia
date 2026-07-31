@@ -34,8 +34,15 @@ function checkBadge(v) {
   return null;   // none / unreadable
 }
 
+// F13「需核实」总数角标。0（或还没数过）不画——空着比一排「0」干净，与体例角标同理。
+// 计数只来自已有取文路径（搜索建过索引的折才有数），没数过的折这里就是没有，不误报。
+function verifyBadge(n) {
+  if (!n) return null;
+  return html`<span class="verify-badge" title=${S.verify.badgeTitle(n)}>${S.verify.badge(n)}</span>`;
+}
+
 export function Sidebar({
-  q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {},
+  q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {}, verifyCounts = {},
   onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings,
 }) {
   return html`
@@ -74,7 +81,7 @@ export function Sidebar({
                 onClick=${() => onOpenPR(pr)}>
                 <h3>${pr.title}</h3>
                 <div class="meta">#${pr.number} · ${pr.merged_at ? S.folder.mergedAt(timeAgo(pr.merged_at)) : S.folder.submittedAt(timeAgo(pr.updated_at))}${
-                  pr.merged_at ? null : checkBadge(checks[pr.number])}</div>
+                  pr.merged_at ? null : checkBadge(checks[pr.number])}${verifyBadge(verifyCounts[pr.number])}</div>
                 ${summaryLine(pr)}
               </button>`)
             : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : (tab === 'open' ? S.nav.emptyOpen : S.nav.emptyDone)}</p>`}
