@@ -18,6 +18,8 @@ Things that are thought through but not scheduled.
 
 **Undecided**: whether the summary should be two parts — "what this says" + "what it needs you to decide" (the latter is really the PR body's *Decisions needed* field, which could just be promoted to a structured field).
 
+**✅ Decided (2026-07-31, eval folder #60)**: approved, first in line once the 8/8 freeze lifts. The eval confirmed the gap with numbers — the write side schema-enforces five body sections (tldr / decisions / howto / destination / directLink) and the reader renders **none** of them (`pr.body` is read exactly once, for the session marker). Scope pinned to the cheap form: **render the PR body's existing TLDR + Decisions-needed as the summary card** (list page and/or document head) — no frontmatter, no new data, no LLM. This also settles the old "Undecided": two parts, and they are exactly the structured fields that already exist.
+
 ---
 
 ## F2 · Draft comments (the agent pre-screens against your background)
@@ -188,3 +190,39 @@ Three tiers, cheapest to most expensive:
 **Verdict: don't build one.** Full evaluation lives in the review repo at `docs/zhupi-thin-backend-eval.md` (PR #16). Three of the four candidate capabilities are solvable in the pure-static tier: push → F10; cross-device drafts → F11; multi-person sign-off → already analysed in F5 (zhupi has no user system, so it is multi-user by nature; sign-off uses GitHub's native APPROVE; the barrier is repo permissions, not a backend). The only one genuinely needing a hosted secret — in-app live Q&A — is an unvalidated need.
 
 Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a backend" is closed by citing that section.
+
+---
+
+## F12 · 携卷 — carry-out context, one tap for any agent (2026-07-31, from eval folder #60)
+
+**What**: a 携卷 button next to 回奏: one tap assembles the current folder into a self-contained markdown bundle — folder number + title + full document text + every annotation thread (quote, comment, replies) + decisions pending — and puts it on the clipboard, ready to paste into **any** agent to continue the work.
+
+**Why**: 回奏 bets on "that session is still alive"; the 2026-07-29 verdict already said the real backstop is self-contained documents, and 携卷 turns that verdict into a product. The clipboard is the one integration every agent supports, so it also cashes the "cross-harness has zero consumers" benefit the MCP side downgraded — at zero integration cost. Proposed by Charlie on #60.
+
+**How**: pure frontend assembly — pr / docs / threads are all in memory already; no new data, no extra API calls.
+
+**Status**: approved on #60; recorded during the freeze per F10/F11 precedent, build after the 8/8 reckoning.
+
+---
+
+## F13 · "Needs verification" marker rendering (2026-07-31, from eval folder #60)
+
+**What**: agents mark unverified claims inline with a fixed token (e.g. 【需核实】); the reader recognizes it and renders a visible state (dashed underline + corner tag) plus a per-folder count on the list page; the write-side lint adds a warn so the count is known at submit time.
+
+**Why**: unverified claims are the single most distinctive property of AI-authored text, and the reader currently does nothing with them (#60: "untrustworthiness and volume — both untouched"). The convention already half-exists — the outsourced-research house rules require the marker; the reader just can't see it.
+
+**How**: same pattern as F2's 臣拟 marker — intelligence stays agent-side, zhupi only recognizes a token and renders it. Fits the architectural boundary above.
+
+**Status**: approved on #60, after F1; build after the 8/8 reckoning.
+
+---
+
+## F14 · TOC / tiered reading for long folders (2026-07-31, from eval folder #60)
+
+**What**: a floating outline generated from headings on the reading page; multi-chapter folders (#31: 22 chapters) get a chapter list view.
+
+**Why**: volume is the other half of the #60 gap — a 22-chapter book is unnavigable without an outline.
+
+**How**: headings already carry `data-line` in the rendered DOM; pure frontend.
+
+**Status**: approved on #60, after F1; build after the 8/8 reckoning.

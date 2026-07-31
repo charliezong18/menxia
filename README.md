@@ -23,6 +23,8 @@ Reviewing a 3,000-word doc your agent wrote is not a chat problem. You want to r
 
 zhupi is a lens over the same PR: same comments, same threads, same merge. It just renders the document like a document.
 
+And what separates it from "any markdown reader with comments" isn't the rendering — it's that **every document arrives with a responsive author attached**. The agent that wrote it reads your annotations structurally (JSON with reply state, not scraped HTML), answers each one in-thread, and every folder links back to the session that produced it. Reading AI output here is a loop, not a view; the app is the human end of that loop.
+
 | PAIN | zhupi |
 |---|---|
 | markdown diff doesn't render | renders the document, only |
