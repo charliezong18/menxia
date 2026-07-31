@@ -60,6 +60,9 @@ export const S = deepFreeze({
     discard: '作罢',
     saveDraft: '存批',
     sendZongpi: '呈判',
+    carry: '携卷',
+    carryTitle: '把整折（正文＋涂归＋判＋待拍板）拼成自包含 markdown 拷进剪贴板，粘给任意 agent 接着干',
+    carrying: '携卷中…',
   },
 
   // 顶栏
@@ -185,6 +188,15 @@ export const S = deepFreeze({
   ref: {
     copied: (preview) => `已拷贝引用：${preview}`,
     copyFailed: (md) => `拷贝失败，手动复制：${md}`,
+  },
+
+  // 「携卷」结果（F12）
+  carry: {
+    done: (chars) => `已携卷 ${chars.toLocaleString('en-US')} 字——粘给任意 agent 接着干`,
+    empty: '这折还没展开，等正文到了再携卷。',
+    failed: (msg) => `携卷失败：${msg}`,
+    fallbackTitle: '拷不进剪贴板——下面全选（⌘A）手动复制',
+    fallbackClose: '关闭',
   },
 
   // 正文岛屿

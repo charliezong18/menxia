@@ -4,8 +4,8 @@ import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
 
 export function Topbar({
-  cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice,
-  onRefresh, onCopyRef, onZongpi, onSubmit, onQinci,
+  cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice, carrying,
+  onRefresh, onCopyRef, onCarry, onZongpi, onSubmit, onQinci,
 }) {
   // 多个顶层节点：htm 会返回数组，Preact 直接当 Fragment 渲染（这个 standalone 包没导出 Fragment）
   return html`
@@ -17,6 +17,8 @@ export function Topbar({
             ${cur && html`<button class="btn-ghost" title=${S.action.copyRefTitle} onClick=${onCopyRef}>${S.action.copyRef}</button>`}
             ${happyUrl && html`<button class="btn-ghost" title=${S.action.happyTitle}
               onClick=${() => { const w = window.open(happyUrl, '_blank'); if (w) w.opener = null; }}>${S.action.happy}</button>`}
+            ${cur && html`<button class="btn-ghost" title=${S.action.carryTitle} disabled=${carrying}
+              onClick=${onCarry}>${carrying ? S.action.carrying : S.action.carry}</button>`}
             ${cur && html`<button class="btn-ghost" title=${archived ? S.action.zongpiArchivedTitle : ''} onClick=${onZongpi}>${S.action.zongpi}</button>`}
             ${cur && draftCount > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}

@@ -512,3 +512,23 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 /* 列表折卡角标：这折共几处「需核实」 */
 .verify-badge { margin-left: .5em; font-size: .85em; color: var(--cinnabar-deep); white-space: nowrap; }
+/* F12 携卷：剪贴板写不进时的兜底。命令式挂在 body 下，一次性 overlay + 可全选文本框。 */
+.carry-fallback {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(38, 33, 26, .38); padding: 24px;
+}
+.carry-fallback-panel {
+  display: flex; flex-direction: column; gap: 12px;
+  width: min(760px, 100%); max-height: 80vh;
+  background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 14px;
+  box-shadow: 0 6px 28px var(--shadow); padding: 18px;
+}
+.carry-fallback-title { font-size: 14px; color: var(--ink-soft); }
+.carry-fallback-text {
+  flex: 1; min-height: 320px; resize: vertical;
+  font: 12.5px var(--mono); color: var(--ink);
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 9px;
+  padding: 12px; outline: none; white-space: pre; overflow: auto;
+}
+.carry-fallback-close { align-self: flex-end; }

@@ -209,6 +209,8 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 **Status**: approved on #60; recorded during the freeze per F10/F11 precedent, build after the 8/8 reckoning.
 
+**What was built**: a `携卷` ghost button in the top bar, right after `回奏` (shown whenever a folder is open, archived folders included). Assembly lives in a standalone pure module `src/carry.js` (`assembleCarry`), unit-tested in `test/carry.test.js`. The bundle carries: a header (folder number / title / PR link / menxia deep link / assembly time / counts), the PR body verbatim (TL;DR, 待你拍板, …), every document's full text (all `.md` files, both variants of a bilingual pair, each labelled 中文/English), every annotation thread (quote + file/line + comment + all replies) sorted by document position then line — outdated (drifted) and orphan threads sink to the end — the 判 total-review comments (newest first), and a decisions-pending summary at the tail. Document bodies and the PR body are delimited by horizontal rules rather than wrapped in an outer fence, so a document's own ` ``` ` fences never break. `ui.js` `carryOut()` back-fills each document's text through the existing `getFileText` path (docs hold only metadata; text is lazy-loaded) at the currently-read revision — no new API surface. Clipboard write goes through `navigator.clipboard.writeText`; on failure (large 100 KB+ bundles, insecure context) it falls back to a selectable, auto-focused `<textarea>` overlay for manual ⌘A/⌘C. The button reports `已携卷 N 字` so the user sees the size for big folders.
+
 ---
 
 ## F13 · "Needs verification" marker rendering (2026-07-31, from eval folder #60)
