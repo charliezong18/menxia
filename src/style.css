@@ -315,6 +315,13 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 @media (max-width: 900px) {
   #app { flex-direction: column; }
 
+  /* 竖排后 main 的 height:100% 成了主轴上的自动最小尺寸（min-height:auto 取
+     指定高度建议＝整视口），flex 压不回剩余空间：main 底部恰好一个 aside 的
+     高度伸出屏外，被 html/body 的 overflow:hidden 剪掉——手机上表现为大半屏
+     划不动、末屏永远读不到（390×844 实测 #app 溢出 241px）。min-height:0 解锁
+     收缩即可；height 别动，改 auto 会让 .work 不再是滚动容器。 */
+  main { min-height: 0; }
+
   aside {
     width: 100%; height: auto; max-height: 38vh; flex: none;
     border-right: 0; border-bottom: 1px solid var(--rule);
