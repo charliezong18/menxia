@@ -1,5 +1,5 @@
 // 折间链接（纯逻辑）——格式就用 GitHub 原生 permalink，不发明私有语法。
-// 理由：这样在 GitHub 上是正常链接、agent 读得懂，朱批只是把它「拦下来」变成 app 内跳转。
+// 理由：这样在 GitHub 上是正常链接、agent 读得懂，涂归只是把它「拦下来」变成 app 内跳转。
 // 镜片仍是镜片：链接图谱不是新数据，只是 markdown 里的普通 URL。
 
 // 认得三种（都限本仓，跨仓一律当外链放行）：
@@ -39,7 +39,7 @@ function lineFromHash(hash) {
 
 // 「引用此处」按钮拷给你的东西：一条 GitHub permalink + 一句引文
 // 引文是给人和 agent 看的兜底——链接哪天漂了，至少还知道当初指的是哪句（同锚定哲学）
-// ref 必须是当前读的那个 commit：奏折是 PR 新增的文件，merge 前 main 上根本不存在，
+// ref 必须是当前读的那个 commit：敕草是 PR 新增的文件，merge 前 main 上根本不存在，
 // 指向 main 的链接生下来就 404（第六轮评审实证）。带 sha 还顺带保证「所引即所读」。
 export function buildRef({ slug, prNumber, path, line, quote, ref }) {
   const base = `https://github.com/${slug}`;
@@ -96,12 +96,12 @@ function repoOf(href) {
   } catch { return null; }
 }
 
-// ── F9 回奏对（回呈折的 Happy 会话）──
+// ── F9 回奏（回呈折的 Happy 会话）──
 // 批完要回去说「读批注」，得找回是哪个会话呈的折。agent 开折时在 PR body 埋一行：
 //   <!-- happy-session: cms3yv065k1oqyc0teh4a5why -->
 // 用 HTML 注释：GitHub 上不显示、不碍眼，agent 只需 append 一行。
 // 也认 body 里可见的会话链接（agent 手写时更自然），以及标记里直接写整条 URL（fork 自架 Happy）。
-// 会话可能早已散场——朱批无从判断，只保证链接指对地方。
+// 会话可能早已散场——涂归无从判断，只保证链接指对地方。
 const HAPPY_BASE = 'https://charliezong18.github.io/happy';
 const SESSION_ID = /^[a-z0-9]{16,40}$/i;   // 锚定：`http://evil/...` 之类不得当成裸 id
 

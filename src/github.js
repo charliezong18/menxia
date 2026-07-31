@@ -3,7 +3,7 @@ const API = 'https://api.github.com';
 const TOKEN_KEY = 'zhupi.token';
 const REPO_KEY = 'zhupi.repo';
 
-// 奏折仓库由用户在设置页填，不写死在代码里——fork 走的人不用改一行代码
+// 敕草仓库由用户在设置页填，不写死在代码里——fork 走的人不用改一行代码
 export const getRepoSlug = () => localStorage.getItem(REPO_KEY) || '';
 export const setRepoSlug = (s) => localStorage.setItem(REPO_KEY, s);
 export const repoSlug = () => getRepoSlug();
@@ -117,7 +117,7 @@ export async function checkVerdict(sha) {
 export const listOpenPRs = () =>
   json(`/repos/${repoSlug()}/pulls?state=open&per_page=50&sort=updated&direction=desc`);
 
-// 已钦此的折子（归档）：closed 里挑真正 merge 过的
+// 已画可的折子（归档）：closed 里挑真正 merge 过的
 export const listMergedPRs = async () => {
   // 分页取全：closed 里还混着「关而未合」的，只取前 50 条归档多了必漏
   const closed = await paged((page) =>
@@ -161,7 +161,7 @@ export const getFileText = (path, ref) =>
   request(`/repos/${repoSlug()}/contents/${encodePath(path)}?ref=${encodeURIComponent(ref)}`,
     { accept: 'application/vnd.github.raw' }).then((r) => r.text());
 
-// 钦此 = squash merge；带 sha=「所批即所合」：agent 在阅读期间推了新 commit 则 409 拒合
+// 画可 = squash merge；带 sha=「所批即所合」：agent 在阅读期间推了新 commit 则 409 拒合
 export const mergePR = (num, sha) =>
   request(`/repos/${repoSlug()}/pulls/${num}/merge`, {
     method: 'PUT',
@@ -182,7 +182,7 @@ export async function markReady(nodeId) {
   if (!res.ok || data.errors) throw new Error(data.errors?.[0]?.message || `GraphQL ${res.status}`);
 }
 
-// 一次性提交整批朱批（原子：任一行号非法整批 422，调用方需先本地校验）
+// 一次性提交整批涂归（原子：任一行号非法整批 422，调用方需先本地校验）
 // commit_id：按用户实际阅读的版本校验/锚定行号；不传则 GitHub 默认最新 head，行号会静默漂移
 export const submitReview = (num, { body = '', comments = [], commitId }) =>
   request(`/repos/${repoSlug()}/pulls/${num}/reviews`, {
@@ -191,11 +191,11 @@ export const submitReview = (num, { body = '', comments = [], commitId }) =>
     body: JSON.stringify({ event: 'COMMENT', body, comments, ...(commitId ? { commit_id: commitId } : {}) }),
   }).then((r) => r.json());
 
-// 已呈总批（会话区）——与 inline 批注串并列展示，否则总批只能发不能看
+// 已呈判（会话区）——与 inline 批注串并列展示，否则判只能发不能看
 export const listIssueComments = (num) =>
   paged((page) => `/repos/${repoSlug()}/issues/${num}/comments?per_page=100&page=${page}`);
 
-// 总批 = 会话区 conversation comment
+// 判 = 会话区 conversation comment
 export const createIssueComment = (num, body) =>
   request(`/repos/${repoSlug()}/issues/${num}/comments`, {
     method: 'POST',

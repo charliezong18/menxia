@@ -1,7 +1,7 @@
-// 评论正文（朱批 / 回话 / 总批）的唯一渲染口。
+// 评论正文（涂归 / 回话 / 判）的唯一渲染口。
 //
 // 由来（#5）：renderMarkdown + dangerouslySetInnerHTML 此前在五处各写一遍，于是每加一条防御
-// 都要抄五遍——#1 只给总批补了 `|| ''`，回话那两处（cards.js / other-threads.js）漏掉，
+// 都要抄五遍——#1 只给判补了 `|| ''`，回话那两处（cards.js / other-threads.js）漏掉，
 // null body 照样把整个 app 渲染炸掉。收成一处之后，防御与图片 hydrate 都只有一个落点。
 //
 // 仍然不认识 api：hydrate 由 ui.js 组好（闭包里带 docPath / rev / fetchBlobUrl）传进来，

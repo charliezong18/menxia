@@ -1,4 +1,4 @@
-// 「已呈总批」折叠组：整折级的会话评论，落在折首（不锚任何行）。
+// 「已呈判」折叠组：整折级的会话评论，落在折首（不锚任何行）。
 // 由来（issue #1）：长评审历史下这块整个展开挡在正文前，PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏，
 // 读者滚不到文档自己的 TL;DR。交互对齐「其他 N 串」：默认折叠 + 走 CommentBody，不新造一套。
 import { html } from '../../vendor/preact-standalone.mjs';
@@ -42,7 +42,7 @@ export function ZongpiShown({ zongpis, open, onToggle, hydrate }) {
   return html`
             <div class="zongpi-shown">
               <button class="zongpi-shown-toggle" aria-expanded=${open} onClick=${() => onToggle()}>
-                ${open ? '▾' : '▸'} 已呈总批 · ${zongpis.length}${gist ? `（最新：${gist}）` : ''}
+                ${open ? '▾' : '▸'} 已呈判 · ${zongpis.length}${gist ? `（最新：${gist}）` : ''}
               </button>
               ${open && html`
                 <div class="zongpi-shown-list">

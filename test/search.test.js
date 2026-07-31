@@ -12,8 +12,8 @@ test('findMatches: 大小写不敏感、多命中、cap 生效', () => {
 });
 
 test('findMatches: 中文无分词也能中', () => {
-  const t = '御笔朱批是阅读批注器。朱批落在行上。';
-  assert.equal(findMatches(t, '朱批').length, 2);
+  const t = '涂归栏是阅读批注器。涂归落在行上。';
+  assert.equal(findMatches(t, '涂归').length, 2);
 });
 
 test('lineOfIndex: 行号 1-based、跨行正确', () => {
@@ -35,10 +35,10 @@ test('snippetAround: 短行整行返回，长行开窗带省略号', () => {
 
 test('searchIndex: 标题命中 + 正文命中分组返回；两字以下不搜', () => {
   const index = [
-    { pr: { number: 1, title: '朱批 SPEC' }, files: { 'docs/a.md': '第一行\n有朱批的正文' } },
+    { pr: { number: 1, title: '涂归 SPEC' }, files: { 'docs/a.md': '第一行\n有涂归的正文' } },
     { pr: { number: 2, title: '无关折子' }, files: { 'docs/b.md': '什么都没有' } },
   ];
-  const g = searchIndex(index, '朱批');
+  const g = searchIndex(index, '涂归');
   assert.equal(g.length, 1);
   assert.equal(g[0].pr.number, 1);
   assert.equal(g[0].hits.filter((h) => h.kind === 'title').length, 1);

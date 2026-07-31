@@ -1,4 +1,4 @@
-// 设置页：填奏折仓库 + 粘钥匙；已有钥匙时可返回，也可显式清除。
+// 设置页：填敕草仓库 + 粘钥匙；已有钥匙时可返回，也可显式清除。
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html, useState, useRef } from '../../vendor/preact-standalone.mjs';
 import * as gh from '../github.js';
@@ -11,10 +11,10 @@ export function Setup({ msg, onSave, canCancel, onCancel, onForget }) {
   return html`
     <section id="setup">
       <div class="setup-card">
-        <div class="brand-row"><span class="seal">朱</span><span class="brand">御笔朱批</span></div>
-        <p class="setup-lead">读 AI 呈上来的奏折，划句落朱批。先说清读哪个仓库，再给一把只开这个仓库的钥匙。</p>
+        <div class="brand-row"><span class="seal">可</span><span class="brand">门下</span></div>
+        <p class="setup-lead">读 AI 呈上来的敕草，划句落涂归。先说清读哪个仓库，再给一把只开这个仓库的钥匙。</p>
         <ol class="setup-steps">
-          <li>填<b>奏折仓库</b>：agent 往哪个仓库开 PR，就填哪个，格式 <code>owner/repo</code>（建议私有）</li>
+          <li>填<b>敕草仓库</b>：agent 往哪个仓库开 PR，就填哪个，格式 <code>owner/repo</code>（建议私有）</li>
           <li>去 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">GitHub 生成 fine-grained token</a>（名字随意，Expiration 建议 90 days）</li>
           <li>Repository access：默认停在 Public repositories，<b>必须改成 Only select repositories</b> → 选 <code>${preview}</code>（不是 zhupi 本身）</li>
           <li>Permissions → Repository permissions 加<b>两</b>项：<b>Contents: Read and write</b> ＋ <b>Pull requests: Read and write</b>。Metadata 自动带上不用管；<b>最容易漏的是 Pull requests</b>，漏了进清单就 403</li>

@@ -1,4 +1,4 @@
-// 御笔朱批 —— Preact 视图层（B 方案，2026-07-26 闸门触发后迁移）
+// 门下 —— Preact 视图层（B 方案，2026-07-26 闸门触发后迁移）
 // 免构建形态：htm/preact standalone vendored，push 即部署的性质不变。
 // 纯逻辑（锚定/hunk/草稿）在 anchor.js，API 在 github.js，渲染在 render.js——迁移零改动。
 import {
@@ -68,15 +68,15 @@ function App() {
   const [float, setFloat] = useState(null);      // pendingAnchor
   const [commits, setCommits] = useState([]);    // rev 序列 v1..vN（vN=head）
   const [comments, setComments] = useState([]);  // 已呈 inline review comments（扁平）
-  const [zongpis, setZongpis] = useState([]);    // 已呈总批（会话区），否则总批只能发不能看
+  const [zongpis, setZongpis] = useState([]);    // 已呈判（会话区），否则判只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
-  const [zongpiOpen, setZongpiOpen] = useState(false); // 「已呈总批」折叠组展开态（默认收起，issue #1）
-  // 折号 → 体例检查判词。CI 只在 open 折上跑，已钦此的不查。
+  const [zongpiOpen, setZongpiOpen] = useState(false); // 「已呈判」折叠组展开态（默认收起，issue #1）
+  // 折号 → 体例检查判词。CI 只在 open 折上跑，已画可的不查。
   const [checks, setChecks] = useState({});
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [stale, setStale] = useState(false);
-  const [tab, setTab] = useState('open');        // open=待批 / done=已钦此（归档，只读）
+  const [tab, setTab] = useState('open');        // open=待批 / done=已画可（归档，只读）
   const [donePrs, setDonePrs] = useState([]);
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
   const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中
@@ -148,10 +148,10 @@ function App() {
     const adopted = adoptDeepLinkRepo();
     if (!gh.getToken()) {
       setPhase('setup');
-      if (adopted) setSetupMsg(`奏折仓库已按你点开的这条链接填好（${gh.getRepoSlug()}）——配一把开得了它的钥匙就能读。`);
+      if (adopted) setSetupMsg(`敕草仓库已按你点开的这条链接填好（${gh.getRepoSlug()}）——配一把开得了它的钥匙就能读。`);
       return;
     }
-    if (!gh.getRepoSlug()) { setPhase('setup'); setSetupMsg('这版起奏折仓库改成填的了——补一次 owner/repo，钥匙照旧粘一遍。'); return; }
+    if (!gh.getRepoSlug()) { setPhase('setup'); setSetupMsg('这版起敕草仓库改成填的了——补一次 owner/repo，钥匙照旧粘一遍。'); return; }
     loadPRs();
   }, []);
 
@@ -213,7 +213,7 @@ function App() {
 
   async function onSaveToken(repoRaw, tokenRaw) {
     const slug = gh.parseRepoSlug(repoRaw);
-    if (!slug) return setSetupMsg('奏折仓库要填成 owner/repo（贴 GitHub 链接也行）。');
+    if (!slug) return setSetupMsg('敕草仓库要填成 owner/repo（贴 GitHub 链接也行）。');
     if (!tokenRaw.trim()) return setSetupMsg('先粘一把钥匙。');
     setSetupMsg('验钥中…');
     gh.setRepoSlug(slug);
@@ -226,7 +226,7 @@ function App() {
       }
       setSetupMsg('');
       await loadPRs();
-      if (!canWrite) say('提醒：这把钥匙没有 Contents 写权限，读批都行，但「钦此」（merge）会失败。');
+      if (!canWrite) say('提醒：这把钥匙没有 Contents 写权限，读批都行，但「画可」（merge）会失败。');
     } catch (err) {
       gh.clearToken();
       setSetupMsg(`这把钥匙开不了 ${gh.repoSlug()}：${err.message}`);
@@ -286,7 +286,7 @@ function App() {
     loadComments(pr.number);
   }
 
-  // 已呈批注串：开折拉一次、提交朱批成功后重拉一次（让刚呈的立即可见）。不轮询。
+  // 已呈批注串：开折拉一次、提交涂归成功后重拉一次（让刚呈的立即可见）。不轮询。
   async function loadComments(prNumber) {
     try {
       const [cs, zs] = await Promise.all([
@@ -371,7 +371,7 @@ function App() {
   // 挂靠（列表/表格内的行落在其容器块上，语义足够近）。二选一里取「就近向上」而非「最接近」，
   // 理由：向上挂靠保证卡片不会跑到被批句子的上方，读起来锚点永远在卡片视线的同高或稍上。
   // 评论正文里的相对路径图片（#5）：按「当前正文所在目录 + 当前 rev」解析，与正文岛屿同一套 base。
-  // 总批不锚任何文件、朱批锚的又多半就是在读的这篇，所以拿 docPath 当基准最贴读者的心智。
+  // 判不锚任何文件、涂归锚的又多半就是在读的这篇，所以拿 docPath 当基准最贴读者的心智。
   // 必须 useCallback：身份不稳的话 CommentBody 的 effect 每次渲染都重跑，白打一轮 Contents API。
   const hydrateComment = useCallback((el) => {
     const pr = R.current.cur?.pr;
@@ -419,9 +419,9 @@ function App() {
     col.style.minHeight = `${prevBottom + 20}px`;
   }, [blockTops]);
 
-  // 只依赖「改变 margin-col 自身子元素集合/高度」的 state。正文之上的块（总批、rev 行、tab 条）
+  // 只依赖「改变 margin-col 自身子元素集合/高度」的 state。正文之上的块（判、rev 行、tab 条）
   // 高度变了也不用重排：layoutCards 算的是 block.top − colRect.top，而 #doc 与 #margin-col 是
-  // .read-row 里顶对齐的 flex 兄弟，一起上下平移，差值恒定。（评审实测：展/收总批前后 tops 逐像素相同）
+  // .read-row 里顶对齐的 flex 兄弟，一起上下平移，差值恒定。（评审实测：展/收判前后 tops 逐像素相同）
   useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick, comments, viewed, layoutCards]);
   useEffect(() => {
     if (typeof ResizeObserver === 'undefined' || !docRef.current) return;
@@ -473,7 +473,7 @@ function App() {
     const d = {
       id: `d${Date.now()}${Math.floor(Math.random() * 1e4)}`,
       path: R.current.docPath,
-      ref: c.pr.head.sha, // 写于哪个版本：推新版后旧草稿降级总批，绝不静默钉错行
+      ref: c.pr.head.sha, // 写于哪个版本：推新版后旧草稿降级判，绝不静默钉错行
       blockLine: a.blockLine,
       line: a.line,
       offset: a.offset || 0,
@@ -541,11 +541,11 @@ function App() {
     jumpTo(parsed);
   }, [prs, donePrs, cur, docPath]);
 
-  // 「引用此处」：把当前选中处拷成一条 GitHub permalink + 引文，粘进别的朱批即成链接
+  // 「引用此处」：把当前选中处拷成一条 GitHub permalink + 引文，粘进别的涂归即成链接
   async function copyRef(e) {
     const a = A.computeAnchor(docRef.current);
     const slug = gh.getRepoSlug() || 'demo/repo';
-    // 默认给「朱批直达链」（点了直接进 app 读到那一段）；按住 Alt 给 GitHub permalink
+    // 默认给「涂归直达链」（点了直接进 app 读到那一段）；按住 Alt 给 GitHub permalink
     const wantGithub = Boolean(e?.altKey);
     const md = wantGithub
       ? (a ? buildRef({ slug, path: docPath, line: a.line, quote: a.quote, ref: curRevSha })
@@ -605,7 +605,7 @@ function App() {
   function jumpToHit(pr, hit) {
     if (pr.number === cur?.pr?.number) return jumpTo({ prNumber: pr.number, path: hit.path, line: hit.line });
     jumpRef.current = hit.path ? { prNumber: pr.number, path: hit.path, line: hit.line || 1 } : null;
-    // 归档折点进去自动切到已钦此栏，视觉上不跳戏
+    // 归档折点进去自动切到已画可栏，视觉上不跳戏
     setTab(pr.merged_at ? 'done' : 'open');
     openPR(pr);
   }
@@ -615,11 +615,11 @@ function App() {
     const c = R.current.cur;
     const ds = R.current.drafts;
     if (!c || !ds.length || R.current.busy) return;
-    if (R.current.archived) return say('这折已钦此归档，只读——要再批就开新折。');
+    if (R.current.archived) return say('这折已画可归档，只读——要再批就开新折。');
     if (!R.current.onHead) return say('正在读旧版——批注只能呈给最新版，先切回 head 再提交。');
-    if (R.current.editing) return say('有一条朱批还在编辑：先「存批」或「作罢」它，再呈回。');
+    if (R.current.editing) return say('有一条涂归还在编辑：先「存批」或「作罢」它，再呈回。');
     const noteless = ds.filter((d) => !d.note.trim());
-    if (noteless.length) return say(`还有 ${noteless.length} 条朱批没写内容（空批注不呈）——写完或作罢它们再提交。`);
+    if (noteless.length) return say(`还有 ${noteless.length} 条涂归没写内容（空批注不呈）——写完或作罢它们再提交。`);
     // 在途中世界可能变（切折/刷新）——入口快照，完成回调只认这份
     const prNumber = c.pr.number;
     const ref = c.pr.head.sha;
@@ -627,21 +627,21 @@ function App() {
     (c.files || []).forEach((f) => hunks.set(f.filename, A.validRightLines(f.patch)));
     const inline = [], fallback = [];
     ds.forEach((d) => {
-      const stale = d.ref !== ref; // 旧版本草稿：行号可能漂移，宁降总批不钉错行
+      const stale = d.ref !== ref; // 旧版本草稿：行号可能漂移，宁降判不钉错行
       const set = hunks.get(d.path);
       if (!stale && set && set.has(d.line)) inline.push({ path: d.path, line: d.line, side: 'RIGHT', body: A.fmtDraft(d) });
       else fallback.push(d);
     });
     const body = fallback.length
-      ? `以下朱批锚定不到可批注行（或写于旧版本），并入总批：\n\n${fallback.map(A.fmtDraft).join('\n\n---\n\n')}`
-      : `御笔朱批 · ${inline.length} 条`; // body 恒非空：COMMENT 的 body 是文档必填项，不赌空串
+      ? `以下涂归锚定不到可批注行（或写于旧版本），并入判：\n\n${fallback.map(A.fmtDraft).join('\n\n---\n\n')}`
+      : `门下 · ${inline.length} 条`; // body 恒非空：COMMENT 的 body 是文档必填项，不赌空串
     setBusy(true);
     try {
       await api.submitReview(prNumber, { body, comments: inline, commitId: ref });
       A.saveDrafts(prNumber, []); // 直接清对应 key；内存只在世界没变时动
       if (R.current.cur?.pr.number === prNumber) setDrafts([]);
       loadComments(prNumber); // 重拉已呈串：让刚呈的立即出现在右缘（世界守卫在 loadComments 内）
-      say(`已呈回 ${inline.length} 条朱批${fallback.length ? `（${fallback.length} 条并入总批）` : ''}——回 Happy 说「读批注」。`);
+      say(`已呈回 ${inline.length} 条涂归${fallback.length ? `（${fallback.length} 条并入判）` : ''}——回 Happy 说「读批注」。`);
     } catch (err) {
       say(`呈递失败（草稿都还在）：${err.message}`);
     } finally {
@@ -658,25 +658,25 @@ function App() {
     try {
       await api.createIssueComment(c.pr.number, v);
       setZongpi(false);
-      loadComments(c.pr.number); // 重拉：让刚呈的总批立刻显示在折首
+      loadComments(c.pr.number); // 重拉：让刚呈的判立刻显示在折首
       setZongpiOpen(true);       // 折叠组默认收起，自己刚发的那条必须展开给他看见——否则回到「只能发不能看」
-      say('总批已呈——回 Happy 说「读批注」。');
+      say('判已呈——回 Happy 说「读批注」。');
     } catch (err) {
-      say(`总批呈递失败：${err.message}`);
+      say(`判呈递失败：${err.message}`);
     } finally {
       setBusy(false);
     }
   }
 
-  // ── 钦此 ──
+  // ── 画可 ──
   async function qinci() {
     const c = R.current.cur;
     if (!c) return;
-    if (!R.current.onHead) return say('正在读旧版——钦此定的是最新版，先切回 head 再钦此。');
+    if (!R.current.onHead) return say('正在读旧版——画可定的是最新版，先切回 head 再画可。');
     const pr = c.pr;
     const pending = R.current.drafts.length;
-    const warn = pending ? `\n注意：还有 ${pending} 条朱批草稿没呈回，merge 之后就没处提交了。` : '';
-    if (!confirm(`钦此定稿：squash merge #${pr.number}「${pr.title}」？${warn}`)) return;
+    const warn = pending ? `\n注意：还有 ${pending} 条涂归草稿没呈回，merge 之后就没处提交了。` : '';
+    if (!confirm(`画可定稿：squash merge #${pr.number}「${pr.title}」？${warn}`)) return;
     setBusy(true);
     try {
       if (pr.draft) {
@@ -684,13 +684,13 @@ function App() {
         pr.draft = false; // 本地同步：merge 失败重试不再重打 markReady
       }
       await api.mergePR(pr.number, pr.head.sha); // 带 sha：agent 中途推新版则 409，所批即所合
-      say(`已钦此：#${pr.number} 定稿归档。对外交付回 Happy 说一声。`);
+      say(`已画可：#${pr.number} 定稿归档。对外交付回 Happy 说一声。`);
       setCur(null);
       setDocPath(null);
       setDocErr(null);
       await loadPRs();
     } catch (err) {
-      say(`钦此失败：${err.message}${pr.draft ? `（此折是 draft；若是 GraphQL 被钥匙拒了，回 Happy 说「钦此 #${pr.number}」我来执行）` : ''}`);
+      say(`画可失败：${err.message}${pr.draft ? `（此折是 draft；若是 GraphQL 被钥匙拒了，回 Happy 说「画可 #${pr.number}」我来执行）` : ''}`);
     } finally {
       setBusy(false);
     }
@@ -786,7 +786,7 @@ function App() {
             </div>`}
           ${cur && revs.length > 1 && html`
             <div class="rev-row">
-              <span class="rev-label">版本</span>
+              <span class="rev-label">本</span>
               <div class="rev-switch">
                 ${revs.map((r) => html`
                   <button key=${r.sha}
@@ -798,7 +798,7 @@ function App() {
               </div>
             </div>`}
           ${cur && archived && html`
-            <p class="rev-notice">此折已钦此归档 · 只读（要再批就开新折）</p>`}
+            <p class="rev-notice">此折已画可归档 · 只读（要再批就开新折）</p>`}
           ${cur && !archived && !onHead && html`
             <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
           ${cur && html`<${ZongpiShown} zongpis=${zongpis} open=${zongpiOpen}
@@ -814,7 +814,7 @@ function App() {
             <div id="margin-col" class="margin-col">
               ${zongpi && html`<${ZongpiCard} busy=${busy} onSend=${sendZongpi} onClose=${() => setZongpi(false)} />`}
               ${marginItems.map((m) => m.el)}
-              ${others > 0 && html`<p class="margin-note">另有 ${others} 条朱批在此折其他文档</p>`}
+              ${others > 0 && html`<p class="margin-note">另有 ${others} 条涂归在此折其他文档</p>`}
             </div>
           </div>
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
@@ -823,7 +823,7 @@ function App() {
       </main>
       ${float && html`
         <button class="zhupi-float" style=${{ left: `${Math.min(float.rect.left + 8, window.innerWidth - 76)}px`, top: `${float.rect.top + 6}px` }}
-          onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>朱批</button>`}
+          onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>涂归</button>`}
     </div>`;
 }
 
