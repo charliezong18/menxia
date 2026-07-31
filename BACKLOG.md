@@ -18,7 +18,7 @@ Things that are thought through but not scheduled.
 
 **Undecided**: whether the summary should be two parts — "what this says" + "what it needs you to decide" (the latter is really the PR body's *Decisions needed* field, which could just be promoted to a structured field).
 
-**✅ Decided (2026-07-31, eval folder #60)**: approved, first in line once the 8/8 freeze lifts. The eval confirmed the gap with numbers — the write side schema-enforces five body sections (tldr / decisions / howto / destination / directLink) and the reader renders **none** of them (`pr.body` is read exactly once, for the session marker). Scope pinned to the cheap form: **render the PR body's existing TLDR + Decisions-needed as the summary card** (list page and/or document head) — no frontmatter, no new data, no LLM. This also settles the old "Undecided": two parts, and they are exactly the structured fields that already exist.
+**✅ Decided (2026-07-31, eval folder #60)**: approved, first in line once the 8/8 freeze lifts. The eval confirmed the gap with numbers — the write side schema-enforces five body sections (tldr / decisions / howto / destination / directLink) and the reader renders **none** of them (`pr.body` is read exactly once, for the session marker). Scope pinned to the cheap form: **render the PR body's existing TLDR + Decisions-needed as the summary card** (list page and/or document head) — no frontmatter, no new data, no LLM. This also settles the old "Undecided": two parts, and they are exactly the structured fields that already exist. → 2026-07-31 built ahead of schedule and merged (Charlie called it — not waiting for 8/8).
 
 **What was built (both surfaces)**: no new parser — the F1 work rides the `parseFolderBody` that issue #13 already built (one source of truth for splitting the body into `## sections`, already hardened against `null` / empty / prose-only / fenced-code bodies). It was extended to also expose the `TLDR` section, plus a tiny pure `folderSummary(body)` that returns `{ tldr, decisionCount }` or `null`. **List page**: each folder now carries a two-line TLDR gist (markdown flattened to plain text — the list has no `CommentBody` render sink and must not grow a second one) plus a `待你拍板 · n` chip; a folder with no TLDR and no decisions draws no summary row at all (graceful degradation, same "zero → occupies nothing" convention as the check badges). **Document head**: the existing `FolderBody` block gained an always-visible TLDR line (readable even while collapsed), so "what this says" no longer hides inside the click-to-expand body. The `待你拍板` string stays the shared cross-system contract constant `DECISIONS_TITLE` (never a UI string). Verified against all 13 live open folders: 0 threw, 12 rendered a card, 1 (the hand-opened prose folder #7) correctly rendered nothing. Additive only — no shared file was refactored, so the parallel F12/F13/F14 branches merge clean.
 
@@ -207,7 +207,7 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 **How**: pure frontend assembly — pr / docs / threads are all in memory already; no new data, no extra API calls.
 
-**Status**: approved on #60; recorded during the freeze per F10/F11 precedent, build after the 8/8 reckoning.
+**Status**: approved on #60; recorded during the freeze per F10/F11 precedent, build after the 8/8 reckoning. → 2026-07-31 built ahead of schedule and merged (Charlie called it — not waiting for 8/8).
 
 **What was built**: a `携卷` ghost button in the top bar, right after `回奏` (shown whenever a folder is open, archived folders included). Assembly lives in a standalone pure module `src/carry.js` (`assembleCarry`), unit-tested in `test/carry.test.js`. The bundle carries: a header (folder number / title / PR link / menxia deep link / assembly time / counts), the PR body verbatim (TL;DR, 待你拍板, …), every document's full text (all `.md` files, both variants of a bilingual pair, each labelled 中文/English), every annotation thread (quote + file/line + comment + all replies) sorted by document position then line — outdated (drifted) and orphan threads sink to the end — the 判 total-review comments (newest first), and a decisions-pending summary at the tail. Document bodies and the PR body are delimited by horizontal rules rather than wrapped in an outer fence, so a document's own ` ``` ` fences never break. `ui.js` `carryOut()` back-fills each document's text through the existing `getFileText` path (docs hold only metadata; text is lazy-loaded) at the currently-read revision — no new API surface. Clipboard write goes through `navigator.clipboard.writeText`; on failure (large 100 KB+ bundles, insecure context) it falls back to a selectable, auto-focused `<textarea>` overlay for manual ⌘A/⌘C. The button reports `已携卷 N 字` so the user sees the size for big folders.
 
@@ -221,7 +221,7 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 **How**: same pattern as F2's 臣拟 marker — intelligence stays agent-side, zhupi only recognizes a token and renders it. Fits the architectural boundary above.
 
-**Status**: approved on #60, after F1; build after the 8/8 reckoning.
+**Status**: approved on #60, after F1; build after the 8/8 reckoning. → 2026-07-31 built ahead of schedule and merged (Charlie called it — not waiting for 8/8).
 
 **What was built** (reader side only; write-side lint stays with menxia-mcp):
 
@@ -238,7 +238,7 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 ---
 
-## F14 · TOC / tiered reading for long folders (2026-07-31, from eval folder #60)
+## F14 · TOC / tiered reading for long folders (2026-07-31 ✅ done)
 
 **What**: a floating outline generated from headings on the reading page; multi-chapter folders (#31: 22 chapters) get a chapter list view.
 
@@ -246,7 +246,15 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 **How**: headings already carry `data-line` in the rendered DOM; pure frontend.
 
-**Status**: approved on #60, after F1; build after the 8/8 reckoning.
+**Status**: approved on #60, after F1; build after the 8/8 reckoning. → 2026-07-31 built ahead of schedule and merged (Charlie called it — not waiting for 8/8).
+
+**What was built** (both halves — volume and length):
+
+*Floating outline (length).* A right-edge fixed rail extracts the document's `h1/h2/h3` (the same levels `anchor.js` already treats as sections) straight from the rendered DOM via `data-line` — no change to the render pipeline. Items are indented by level, clicking one jumps to that block, and a **scroll-spy** highlight follows the current reading position. It only appears when the document has **≥ 3 headings** (short documents stay quiet — no noise), and only on viewports **≥ 1500px** wide, where the rail at `right:0` provably clears the content block (sidebar 300 + content ~1040) and therefore never overlaps the right-margin annotation column; below that width it simply doesn't render (narrow screens aren't broken, just no rail). It's collapsible.
+
+*Chapter list (volume).* When a folder has **more than 7 visible chapters**, the wrapping doc-tab strip is replaced by a compact chapter dropdown (native `details/summary`) that lists every chapter with its number and jumps on click. The count and the list reuse **F8's bilingual pairing** (`lang.js` `visibleDocs`/`langPairs`) verbatim, so `foo.md` ↔ `foo.zh-CN.md` collapse to one chapter and the current chapter stays highlighted across a language switch. The 7-chapter threshold is where the pill strip starts wrapping to a second row and loses its one-glance overview — below it, tabs are unchanged (the demo folder's 2 chapters keep the tabs, so the end-to-end smoke path is untouched).
+
+*Coexistence.* Jumping reuses the existing search/deep-link scroll-to-line path (`data-line ≤ target`, flash), not a second locator. Scroll-spy only **reads** heading geometry (`getBoundingClientRect`), writes no layout, and the outline is `position: fixed` (out of flow), so `layoutCards`' block-top measurements and the annotation-card anchoring are untouched. New logic lives in two new files (`src/toc.js` pure logic + `src/components/outline.js` view); the touch on `ui.js` is additive (imports, two derived values, one memo, one jump helper, a conditional tab/dropdown swap, and one `<Outline>` render). Extraction, scroll-spy math, and bilingual chapter pairing are unit-tested in `test/toc.test.js` (13 cases).
 
 ---
 

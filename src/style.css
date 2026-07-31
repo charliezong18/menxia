@@ -532,3 +532,64 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   padding: 12px; outline: none; white-space: pre; overflow: auto;
 }
 .carry-fallback-close { align-self: flex-end; }
+/* ── F14 篇内浮动大纲 ──
+   固定在视口右缘，z-index 20 —— 压在浮批钮(30)之下，绝不抢批注动作。
+   只在够宽的视口出现：正文块(侧栏300 + 内容~1040)右缘约 1376px，栏宽 200 贴 right:0，
+   ≥1500 时二者之间还留着安全余量，天然不遮右缘批注栏；不够宽就整块隐藏（窄屏不破坏，只是没有它）。 */
+.toc {
+  position: fixed; z-index: 20; top: 96px; right: 18px; width: 208px;
+  max-height: calc(100vh - 132px); display: none; flex-direction: column;
+  background: var(--veil); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 8px 6px; box-shadow: 0 2px 10px var(--shadow);
+}
+@media (min-width: 1500px) { .toc { display: flex; } }
+.toc-head {
+  flex: none; text-align: left; padding: 4px 8px 8px;
+  font-family: var(--songti); font-size: 13.5px; letter-spacing: .1em; color: var(--ink-soft);
+}
+.toc-head:hover { color: var(--ink); }
+.toc-collapsed .toc-head { padding-bottom: 4px; }
+.toc-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; }
+.toc-item { margin: 0; }
+.toc-link {
+  display: block; width: 100%; text-align: left;
+  padding: 4px 8px; border-radius: 6px; border-left: 2px solid transparent;
+  font-size: 12.5px; line-height: 1.5; color: var(--ink-soft);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.toc-link:hover { background: var(--hover); color: var(--ink); }
+.toc-l2 .toc-link { padding-left: 18px; }
+.toc-l3 .toc-link { padding-left: 30px; font-size: 12px; }
+.toc-active .toc-link {
+  color: var(--ink); border-left-color: var(--cinnabar); background: var(--chip);
+}
+
+/* ── F14 章下拉（章多时取代 tab 条）—— 与 doc-tabs 同一左缩进，墨色控件 ── */
+.chapters { margin: 0 0 22px 26px; position: relative; }
+.chapters-summary {
+  display: inline-flex; align-items: baseline; gap: 10px; cursor: pointer; list-style: none;
+  padding: 6px 16px; border-radius: 999px; border: 1px solid var(--rule);
+  background: var(--paper-raised); max-width: 100%;
+}
+.chapters-summary::-webkit-details-marker { display: none; }
+.chapters-summary::after { content: "▾"; color: var(--ink-soft); font-size: 11px; }
+.chapters[open] .chapters-summary::after { content: "▴"; }
+.chapters-label { font: 12px var(--mono); color: var(--ink-soft); flex: none; }
+.chapters-cur {
+  font-family: var(--songti); font-size: 14px; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.chapters-menu {
+  list-style: none; margin: 6px 0 0; padding: 6px; position: absolute; z-index: 20; left: 0;
+  min-width: 260px; max-width: 420px; max-height: 60vh; overflow-y: auto;
+  background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 10px;
+  box-shadow: 0 4px 14px var(--shadow);
+}
+.chapters-opt {
+  display: flex; align-items: baseline; gap: 10px; width: 100%; text-align: left;
+  padding: 7px 10px; border-radius: 7px; font-size: 14px; line-height: 1.45; color: var(--ink-soft);
+}
+.chapters-opt:hover { background: var(--hover); color: var(--ink); }
+.chapters-opt.active { color: var(--ink); background: var(--chip); }
+.chapters-num { font: 11px var(--mono); color: var(--ink-soft); flex: none; min-width: 1.6em; }
+@media (max-width: 900px) { .chapters { margin-left: 0; } }
