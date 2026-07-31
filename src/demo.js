@@ -421,6 +421,14 @@ async function runSmoke(docEl) {
   [...document.querySelectorAll('.lang-opt')].find((b) => b.textContent.trim() === '中')?.click();
   await sleep(400);
   [...document.querySelectorAll('.doc-tab')].find((b) => b.textContent.includes('demo'))?.click();
+  // #2：换文档那一拍——卡片已按新文档重建，正文岛屿还没取回来。此刻卡片必须已经有定位，
+  // 否则就是「全塌到容器顶端叠成一坨、等一个网络往返才归位」。取样点必须在 sleep 之前，
+  // 等下去就看不见了（demo 的 api 零延迟，真 GitHub 上这个窗口是一整个往返）。
+  await Promise.resolve();
+  const midTops = [...document.querySelectorAll('#margin-col .anno-card')].map((el) => el.style.top);
+  chk('cards-positioned-during-doc-switch',
+    midTops.length > 0 && midTops.every((t) => t && t !== 'auto'),
+    `n=${midTops.length} tops=${midTops.map((t) => t || 'UNSET').join('|') || 'NONE'}`);
   await sleep(600);
 
   // 折间链接：本仓链接被拦成 app 内跳转；外链放行不拦

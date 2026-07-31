@@ -361,7 +361,13 @@ function App() {
       .map((el) => ({ line: +el.dataset.line, el }))
       .filter((x) => x.line)
       .sort((a, b) => a.line - b.line);
-  }, [docTick]);
+    // docPath 也在依赖里（#2）：blockTops 描述的是「当前文档的块」，它的失效条件本来就该含
+    // 「换了文档」。只认 docTick 的话，切 doc-tab 时 marginItems 已按新文档重建出一批新 DOM 节点，
+    // 而 blockTops / layoutCards 身份不变 → 布局 effect 整个不触发 → 新卡片一个 style.top 都没有，
+    // 全塌到容器顶端叠在一起，要等正文取回来（一整个网络往返）才归位。
+    // 附带收益：岛屿 replaceChildren 之后旧 blockTops 里存的是已脱离文档的节点，
+    // 这一版顺手让它跟着失效，不留 detached 引用。
+  }, [docTick, docPath]);
 
   const layoutCards = useCallback(() => {
     const col = document.getElementById('margin-col');
