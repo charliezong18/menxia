@@ -2,16 +2,16 @@
 
 [English](README.md) · **中文**
 
-# 御笔朱批 · zhupi
+# 门下 · zhupi
 
 **AI 产出的阅读批注台。**<br>
-agent 把长文档当「奏折」以 PR 呈上来，你在**渲染态**正文上划句落「朱批」，批完一键呈回，agent 逐条回话改出下一版；**钦此** = merge = 定稿。
+agent 把长文档当「敕草」以 PR 呈上来，你在**渲染态**正文上划句落「涂归」，批完一键呈回，agent 逐条回话改出下一版；**画可** = merge = 定稿。
 
 [**在线试用**](https://charliezong18.github.io/zhupi) · [Spec](SPEC.zh-CN.md) · [Backlog](BACKLOG.zh-CN.md)
 
 </div>
 
-![划句落朱批](assets/shots/annotate.png)
+![划句落涂归](assets/shots/annotate.png)
 
 *真实截图，内容为演示数据。*
 
@@ -21,13 +21,13 @@ agent 把长文档当「奏折」以 PR 呈上来，你在**渲染态**正文上
 
 读 agent 写的三千字，不是聊天问题。你要从头读到尾、标出错的八处、一次性交回去、下一版逐条看怎么处理的——GitHub 的 PR review 正是这个形状，只是 markdown PR 给你的是带 `+` / `-` 前缀的源码：表格没法看，批注入口藏在悬停才出现的行号旁。
 
-朱批是同一个 PR 的一片镜片：批注还是那些批注，线程还是那些线程，merge 还是那个 merge，只是把文档当文档渲染。
+涂归是同一个 PR 的一片镜片：批注还是那些批注，线程还是那些线程，merge 还是那个 merge，只是把文档当文档渲染。
 
-| PAIN | 朱批的解法 |
+| PAIN | 涂归的解法 |
 |---|---|
 | markdown diff 不渲染 | 只展示渲染态正文 |
 | 批注入口不自发现 | 划选即批，唯一主交互 |
-| approve 被作者身份堵死 | 自带「钦此」= squash merge |
+| approve 被作者身份堵死 | 自带「画可」= squash merge |
 | 外链掉登录态 404 | 自带渲染，不跳外链 |
 
 ## 原理
@@ -35,21 +35,21 @@ agent 把长文档当「奏折」以 PR 呈上来，你在**渲染态**正文上
 无后端、无构建、无依赖链。浏览器用你自己的 fine-grained token 直连 `api.github.com`，钥匙不离开这台设备。文档、版本、批注循环全留在 GitHub，这个 app 只是一片随时可以摘掉的镜片。
 
 ```
-你的 agent ──开 PR──▶  review 仓库（私有）  ◀──朱批──  你
+你的 agent ──开 PR──▶  review 仓库（私有）  ◀──涂归──  你
                               │
                               └── merge = 定稿 = 交付
 ```
 
 ## 上手
 
-**1. 准备一个奏折仓库**
+**1. 准备一个敕草仓库**
 
 任何一个 agent 能往里开 PR 的仓库。建议私有——这个 app 什么都不往外发，但你的草稿大概也不该公开。
 
 ```
 your-review-repo/
 └── docs/
-    └── <slug>.md      ← 一篇奏折 = 一个分支 + 一个 PR
+    └── <slug>.md      ← 一篇敕草 = 一个分支 + 一个 PR
 ```
 
 **2. 开 app，给一把钥匙**
@@ -63,14 +63,14 @@ your-review-repo/
 
 钥匙只存这个浏览器的 localStorage，不经过任何服务器。设备丢了？去 GitHub 一键 revoke，爆炸半径 = 一个仓库。
 
-**3. 读、批、钦此**
+**3. 读、批、画可**
 
 | 动作 | 底层是什么 |
 |---|---|
-| 划一句 → **朱批** | 锚在那一行的 inline review comment |
-| **总批** | 整折的 conversation comment |
-| **提交朱批 · n** | 把攒的批注一次性 submit 成一次 review |
-| **钦此** | squash merge，定稿 |
+| 划一句 → **涂归** | 锚在那一行的 inline review comment |
+| **判** | 整折的 conversation comment |
+| **提交涂归 · n** | 把攒的批注一次性 submit 成一次 review |
+| **画可** | squash merge，定稿 |
 
 攒着的批注存在本地，刷新丢不了。
 
@@ -95,7 +95,7 @@ your-review-repo/
 
 ## SOP：agent 那一侧的规矩
 
-朱批刻意不知道 AI 的存在——它只读 PR，谁开的不管。下面这套惯例是让循环转起来的另一半，可以整段丢给你的 agent（原样贴进 CLAUDE.md / AGENTS.md / skill 文件即可）。
+涂归刻意不知道 AI 的存在——它只读 PR，谁开的不管。下面这套惯例是让循环转起来的另一半，可以整段丢给你的 agent（原样贴进 CLAUDE.md / AGENTS.md / skill 文件即可）。
 
 **呈递一篇**
 
@@ -110,7 +110,7 @@ gh pr create --title "<类型>：<标题>" --body "<按下面的模板>"
 两条真正要紧的规矩：
 
 - **正文文件只放交付物本身**——不写进度、不写「我干了啥」。最后原样发出去的是什么，文件里就是什么。其余全进 PR body。
-- **别用 `--draft`。** draft PR 不能 merge，而 REST API 转不了正（要走 GraphQL）。私有单人仓里 draft 换不来任何东西，却废掉「钦此」按钮。
+- **别用 `--draft`。** draft PR 不能 merge，而 REST API 转不了正（要走 GraphQL）。私有单人仓里 draft 换不来任何东西，却废掉「画可」按钮。
 
 PR body 五段模板：
 
@@ -119,14 +119,14 @@ PR body 五段模板：
 **TLDR** —— 三行，改了什么、为什么
 **待你拍板** —— 编号列出，批注里好说「答 2」
 **已知弱点** —— 你希望 reviewer 使劲捅的地方
-**怎么用** —— 「批完在朱批里点提交朱批，然后跟我说一声」
+**怎么用** —— 「批完在涂归里点提交涂归，然后跟我说一声」
 ```
 
 **收批注**
 
 ```bash
 gh api repos/<owner>/<repo>/pulls/<n>/comments   # inline：id / path / line / body / in_reply_to_id
-gh pr view <n> --comments                        # 会话区留言（总批）
+gh pr view <n> --comments                        # 会话区留言（判）
 ```
 
 没有你回复的 inline 批注 = 未处理。改完正文推上去，然后**每条批注必回**一句处理方式——采纳／部分采纳＋理由／不改＋理由。下一轮人读的就是这串回话；省掉它，review 循环就死了。
@@ -135,9 +135,9 @@ gh pr view <n> --comments                        # 会话区留言（总批）
 gh api -X POST repos/<owner>/<repo>/pulls/<n>/comments/<id>/replies -f body="..."
 ```
 
-**钦此**
+**画可**
 
-人在 app 里按「钦此」（或你跑 `gh pr merge <n> --squash --delete-branch`）。merge = 定稿 = 按 PR body 声明的目的地交付。
+人在 app 里按「画可」（或你跑 `gh pr merge <n> --squash --delete-branch`）。merge = 定稿 = 按 PR body 声明的目的地交付。
 
 ## 已知边界
 
@@ -145,7 +145,7 @@ gh api -X POST repos/<owner>/<repo>/pulls/<n>/comments/<id>/replies -f body="...
 
 - **只支持 markdown 文档。** 代码 PR 会显示「此折无 markdown 正文」。并排／左右分栏的 diff 评审是北极星，尚未交付——见 [SPEC §10](SPEC.zh-CN.md)。
 - **锚定是宽松的，这是设计选择。** 批注钉在渲染块对应的源码行上；批注正文里永远带着你划的原句，所以哪怕行号钉歪，语义也不会丢。理由见 [SPEC §9](SPEC.zh-CN.md)。
-- **GitHub 只允许在 PR diff 里出现过的行上批注。** 新增文件整份都在 diff 里，所以奏折永远能批；改动已有文件则只有部分行可钉。提交前 app 会本地校验——因为 GitHub 的 review 提交是原子的，一个非法行号会让整批朱批全灭。
+- **GitHub 只允许在 PR diff 里出现过的行上批注。** 新增文件整份都在 diff 里，所以敕草永远能批；改动已有文件则只有部分行可钉。提交前 app 会本地校验——因为 GitHub 的 review 提交是原子的，一个非法行号会让整批涂归全灭。
 - **桌面优先。** 移动端 + PWA 排在 v1（[设计稿已画好](SPEC.zh-CN.md)）。
 - **没有通知、没有未读、没有 feed。** 故意的（[SPEC §3](SPEC.zh-CN.md) 非目标）。
 

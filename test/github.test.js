@@ -149,7 +149,7 @@ test('verifyToken: 两项齐全 → 全 true', async () => {
   assert.equal(r.canWrite, true);
 });
 
-test('verifyToken: 只读钥匙 canWrite=false（钦此会失败，要提前提醒）', async () => {
+test('verifyToken: 只读钥匙 canWrite=false（画可会失败，要提前提醒）', async () => {
   stubFetch((url) => (url.includes('/pulls') ? ok([]) : ok({ permissions: { push: false } })));
   const r = await gh.verifyToken();
   assert.equal(r.canWrite, false);

@@ -1,7 +1,7 @@
 // F8 语言切页（纯逻辑）——沿用 GitHub README 的多语言惯例：
 //   docs/foo.md（英文/默认） ↔ docs/foo.zh-CN.md（中文）
 // 检测只认「同 basename + .zh-CN 后缀」这一条规则，不去猜正文语言（猜必误判）。
-// 拆分留在内容侧（agent 写文档时就写两份互链文件），朱批只做视图切换。
+// 拆分留在内容侧（agent 写文档时就写两份互链文件），涂归只做视图切换。
 
 const ZH_SUFFIX = /\.zh-CN\.md$/i;
 

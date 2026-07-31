@@ -39,7 +39,7 @@ const byClass = (cls) => (v) => typeof v.props?.class === 'string' && v.props.cl
 test('搜索框：Enter 触发搜索、Escape 清空——两个分支都不能悬空引用', () => {
   const calls = [];
   const tree = Sidebar({
-    q: '朱批', hits: null, searching: '', prs: [], donePrs: [], tab: 'open', cur: null,
+    q: '涂归', hits: null, searching: '', prs: [], donePrs: [], tab: 'open', cur: null,
     demo: false, timeAgo: () => '刚刚',
     onQuery: () => calls.push('query'), onSearch: () => calls.push('search'),
     onClearSearch: () => calls.push('clear'), onJumpToHit: () => {}, onTab: () => {},
@@ -62,7 +62,7 @@ test('侧栏：demo 模式隐藏「设置 · 钥匙」（否则会清掉真钥�
   assert.ok(find(Sidebar({ ...base, demo: false }), byClass('settings')));
 });
 
-test('顶栏：旧版下提交按钮禁用；归档折不出钦此但保留总批', () => {
+test('顶栏：旧版下提交按钮禁用；归档折不出画可但保留判', () => {
   const base = {
     cur: { pr: { number: 1, title: 'x' } }, busy: false, draftCount: 2,
     happyUrl: null, stale: false, notice: '',
@@ -72,34 +72,34 @@ test('顶栏：旧版下提交按钮禁用；归档折不出钦此但保留总�
   assert.equal(find(onOld, byClass('btn-submit')).props.disabled, true, '旧版必须禁提交');
 
   const archived = Topbar({ ...base, archived: true, onHead: true });
-  assert.equal(find(archived, byClass('btn-qinci')), null, '归档折不该出钦此');
-  const zongpi = find(archived, (v) => v.props?.children === '总批');
-  assert.ok(zongpi, '归档折仍要能留总批（GitHub 允许在 merged PR 上评论）');
+  assert.equal(find(archived, byClass('btn-qinci')), null, '归档折不该出画可');
+  const zongpi = find(archived, (v) => v.props?.children === '判');
+  assert.ok(zongpi, '归档折仍要能留判（GitHub 允许在 merged PR 上评论）');
 });
 
-// issue #1：已呈总批全展开挡在正文前（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）
+// issue #1：已呈判全展开挡在正文前（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）
 const ZS = [
   { id: 1, created_at: '2026-07-20T00:00:00Z', user: { login: 'a' }, body: '最旧的一条' },
   { id: 2, created_at: '2026-07-28T00:00:00Z', user: { login: 'b' }, body: '## v8 定稿 —— 锁定租客版\n\n正文。' },
   { id: 3, created_at: '2026-07-24T00:00:00Z', user: { login: 'c' }, body: '中间那条' },
 ];
 
-test('已呈总批：默认折叠，头上带条数 + 最新一条摘要', () => {
+test('已呈判：默认折叠，头上带条数 + 最新一条摘要', () => {
   const collapsed = ZongpiShown({ zongpis: ZS, open: false, onToggle: () => {} });
   assert.equal(find(collapsed, byClass('zongpi-shown-item')), null, '收起态不得渲染任何条目');
   const label = find(collapsed, byClass('zongpi-shown-toggle')).props.children.flat(9).join('');
   assert.match(label, /▸/);
-  assert.match(label, /已呈总批 · 3/);
+  assert.match(label, /已呈判 · 3/);
   assert.match(label, /最新：v8 定稿 —— 锁定租客版/, '摘要取最新一条并剥掉 markdown 装饰');
 });
 
-test('已呈总批：展开后按时间倒序，最新的在最上面（GitHub 返的是正序）', () => {
+test('已呈判：展开后按时间倒序，最新的在最上面（GitHub 返的是正序）', () => {
   const open = ZongpiShown({ zongpis: ZS, open: true, onToggle: () => {} });
   const list = find(open, byClass('zongpi-shown-list'));
   assert.deepEqual(list.props.children.map((v) => v.key), ['z2', 'z3', 'z1']);
 });
 
-test('已呈总批：零条不占位；点击头走 onToggle', () => {
+test('已呈判：零条不占位；点击头走 onToggle', () => {
   assert.equal(ZongpiShown({ zongpis: [], open: false, onToggle: () => {} }), null);
   let toggled = 0;
   const tree = ZongpiShown({ zongpis: ZS, open: false, onToggle: () => { toggled++; } });
@@ -135,7 +135,7 @@ test('摘要：剥掉控制符 / bidi 覆写（U+202E 能把整行显示方向�
   assert.equal(summarize('\x00\x07'), '');
 });
 
-test('已呈总批：body 为 null 不能把整个 app 渲染炸掉', () => {
+test('已呈判：body 为 null 不能把整个 app 渲染炸掉', () => {
   // 改动前这里是 Preact 文本节点（null 渲染成空，无害）；改成 dangerouslySetInnerHTML 之后，
   // markdown-it 对非字符串直接抛，抛在组件里没有 error boundary 就是整个 #root 卸空。
   const bad = [{ id: 1, created_at: '2026-07-20T00:00:00Z', user: { login: 'a' }, body: null }];
@@ -146,7 +146,7 @@ test('已呈总批：body 为 null 不能把整个 app 渲染炸掉', () => {
 // 这条把它们钉在一起测：只补一个、或将来又拆出第三个折叠组时，都要在这里现形。
 test('折叠组：两个 toggle 都要有 aria-expanded，且随展开态变化（#5）', () => {
   const cases = [
-    ['已呈总批', (open) => ZongpiShown({ zongpis: ZS, open, onToggle: () => {} }), 'zongpi-shown-toggle'],
+    ['已呈判', (open) => ZongpiShown({ zongpis: ZS, open, onToggle: () => {} }), 'zongpi-shown-toggle'],
     ['其他 N 串', (open) => OtherThreads({
       threads: [{ root: { id: 9, body: '正文', user: { login: 'a' }, path: 'docs/x.md' }, replies: [] }],
       open,
@@ -162,7 +162,7 @@ test('折叠组：两个 toggle 都要有 aria-expanded，且随展开态变化�
   }
 });
 
-test('已呈总批：带时区偏移 / 毫秒的时间戳也要排对（字符串序会静默排反）', () => {
+test('已呈判：带时区偏移 / 毫秒的时间戳也要排对（字符串序会静默排反）', () => {
   const mixed = [
     { id: 1, created_at: '2026-07-28T23:00:00Z', user: {}, body: '早' },
     { id: 2, created_at: '2026-07-29T07:30:00+09:00', user: {}, body: '更早' }, // = 22:30Z
@@ -206,7 +206,7 @@ test('折卡角标：只有 fail / running / pass 画，none 与 unreadable 不�
     'none 与 unreadable 不该画出角标');
 });
 
-test('折卡角标：已钦此的折不画（CI 只在 open 折上跑）', () => {
+test('折卡角标：已画可的折不画（CI 只在 open 折上跑）', () => {
   const tree = Sidebar({
     q: '', hits: null, searching: '', tab: 'done', cur: null, demo: false, prs: [],
     donePrs: [{ number: 9, title: 'merged', merged_at: '2026-07-30T00:00:00Z', updated_at: '2026-07-30T00:00:00Z' }],
@@ -221,7 +221,7 @@ test('折卡角标：已钦此的折不画（CI 只在 open 折上跑）', () =>
     if (typeof v.props?.class === 'string' && v.props.class.startsWith('chk')) found = true;
     walk(v.props?.children);
   })(tree);
-  assert.equal(found, false, '已钦此的折不该有体例角标');
+  assert.equal(found, false, '已画可的折不该有体例角标');
 });
 
 test('折卡角标：没传 checks 也不炸（老调用点 / demo 模式）', () => {

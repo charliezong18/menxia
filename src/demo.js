@@ -1,9 +1,9 @@
 // ?demo=1 —— 免 token 的演示/冒烟数据源：实现 App 用到的 api 子集，写操作只打 console。
-// 顺带是迁移后的永久冒烟靶：?demo=1&auto=1 会用真实事件路径自动划两条朱批。
+// 顺带是迁移后的永久冒烟靶：?demo=1&auto=1 会用真实事件路径自动划两条涂归。
 
-const DOC = `# 朱批 demo 折
+const DOC = `# 涂归 demo 折
 
-这是一份演示奏折：不需要 token，写操作不会真的发出。划选任意文字试试朱批。
+这是一份演示敕草：不需要 token，写操作不会真的发出。划选任意文字试试涂归。
 
 ## 为什么要有 demo 模式
 
@@ -12,8 +12,8 @@ const DOC = `# 朱批 demo 折
 | 能力 | 状态 |
 |---|---|
 | 渲染阅读 | 可用 |
-| 划句朱批 | 可用（写到 console） |
-| 钦此 | 可用（写到 console） |
+| 划句涂归 | 可用（写到 console） |
+| 画可 | 可用（写到 console） |
 
 \`\`\`js
 const DEBOUNCE_MS = 300;
@@ -38,7 +38,7 @@ const DOC_OLD = DOC.replace(/## 为什么要有 demo 模式[\s\S]*?结尾一段�
 
 const PR = {
   number: 999,
-  title: '朱批 demo 折（不落库）',
+  title: '涂归 demo 折（不落库）',
   updated_at: new Date(Date.now() - 36e5).toISOString(),
   draft: false,
   node_id: 'DEMO',
@@ -83,7 +83,7 @@ const COMMENTS = [
   },
 ];
 
-// 已呈总批（会话区）。真实评审历史长这样：agent 一轮一轮追加 changelog，用户偶尔插一句短的。
+// 已呈判（会话区）。真实评审历史长这样：agent 一轮一轮追加 changelog，用户偶尔插一句短的。
 // issue #1 实测 PR #30 是 9 条 / 8,132 字，全展开把正文推下 2–3 屏。冒烟必须撑到这个量级，
 // 否则「正文在首屏」那条断言在短数据上恒真——折叠被改回去也照样绿。
 const changelog = (v, head) => `## ${v} ${head}
@@ -121,7 +121,7 @@ export const demoApi = {
   verifyToken: async () => ({ repo: {}, canWrite: true, prAccess: true }),
   listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR]; },
   listMergedPRs: async () => [{
-    ...PR, number: 998, title: '朱批 demo 折 · 已钦此（归档样例）',
+    ...PR, number: 998, title: '涂归 demo 折 · 已画可（归档样例）',
     merged_at: new Date(Date.now() - 864e5).toISOString(),
   }],
   listPRFiles: async () => [
@@ -144,13 +144,13 @@ export const demoApi = {
   listIssueComments: async () => ZONGPIS,
   listPRCommits: async () => COMMITS,
   submitReview: async (num, payload) => { window.__lastReview = { num, payload }; console.log('[demo] submitReview', num, payload); return {}; },
-  // 真往 ZONGPIS 里追加，否则「发完总批能不能立刻看见」这条路径在测试基建上不可达
+  // 真往 ZONGPIS 里追加，否则「发完判能不能立刻看见」这条路径在测试基建上不可达
   createIssueComment: async (num, body) => {
-    console.log('[demo] 总批', num, body);
+    console.log('[demo] 判', num, body);
     ZONGPIS.push({ id: 900 + ZONGPIS.length, user: { login: 'charlie' }, created_at: new Date().toISOString(), body });
     return {};
   },
-  mergePR: async (num, sha) => { console.log('[demo] 钦此', num, sha); return {}; },
+  mergePR: async (num, sha) => { console.log('[demo] 画可', num, sha); return {}; },
   markReady: async () => {},
 };
 
@@ -178,7 +178,7 @@ if (FAIL) {
   }, 1200);
 }
 
-// ?demo=1&deep=1：验直达进场——URL 带 ?pr=998（归档折）应直接开到它并切到已钦此栏
+// ?demo=1&deep=1：验直达进场——URL 带 ?pr=998（归档折）应直接开到它并切到已画可栏
 // ?demo=1&deep=miss&pr=9999：验折号找不到时**真的出提示**——pendingNotice 曾经只写不读
 // （声明了、赋值了、全文件没有第三处），深链失败一路静默。UI 胶水没测试就是会这样烂掉。
 const DEEP = new URLSearchParams(location.search).get('deep');
@@ -191,8 +191,8 @@ if (DEEP === '1' || DEEP === 'miss') {
       chk('deep-miss-notice-shown', notice.includes('9999'), `notice=${notice.slice(0, 60) || '(空)'}`);
     } else {
       const crumb = document.querySelector('.crumb')?.textContent || '';
-      chk('deep-opened-target', crumb.includes('已钦此') || crumb.includes('归档'), `crumb=${crumb.slice(0, 40)}`);
-      const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
+      chk('deep-opened-target', crumb.includes('已画可') || crumb.includes('归档'), `crumb=${crumb.slice(0, 40)}`);
+      const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已画可'));
       chk('deep-switched-tab', doneTab?.classList.contains('active'));
       chk('deep-readonly', !document.querySelector('.btn-qinci'));
     }
@@ -280,7 +280,7 @@ async function runSmoke(docEl) {
   chk('shown-threads>=1', document.querySelectorAll('.anno-shown').length >= 1);
   chk('reply-rendered>=1', document.querySelectorAll('.anno-reply').length >= 1);
 
-  // issue #1：已呈总批默认折叠。这块坐在正文之上，全展开就把文档推出首屏，
+  // issue #1：已呈判默认折叠。这块坐在正文之上，全展开就把文档推出首屏，
   // 读者滚不到文档自己的 TL;DR（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）。
   const zpToggle = document.querySelector('.zongpi-shown-toggle');
   const zpLabel = (zpToggle?.textContent || '').replace(/\s+/g, ' ').trim();
@@ -288,7 +288,7 @@ async function runSmoke(docEl) {
     Boolean(zpToggle) && document.querySelectorAll('.zongpi-shown-item').length === 0,
     `items=${document.querySelectorAll('.zongpi-shown-item').length}`);
   chk('zongpi-toggle-shows-count-and-gist',
-    zpLabel.includes('已呈总批 · 5') && zpLabel.includes('最新：v4 定稿'), `label=${zpLabel}`);
+    zpLabel.includes('已呈判 · 5') && zpLabel.includes('最新：v4 定稿'), `label=${zpLabel}`);
   // 正文起点必须紧贴折首。量滚动容器内的偏移量而非 viewport 坐标——与当前滚动位置无关。
   // 阈值不用 window.innerHeight：滚动容器是 .work，它上面还有 mainbar/notice 吃掉 80–130px，
   // 拿视口高当尺子等于白送这么多松弛。也不用 clientHeight（那是「勉强够一屏」，松 700+px，
@@ -300,7 +300,7 @@ async function runSmoke(docEl) {
     : -1;
   chk('doc-starts-right-below-fold', docOffset >= 0 && docOffset < 320,
     `offset=${Math.round(docOffset)} limit=320 workH=${workEl?.clientHeight} vh=${window.innerHeight}`);
-  // 总批块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
+  // 判块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
   const zpBox = document.querySelector('.zongpi-shown');
   chk('zongpi-in-flow-above-doc',
     getComputedStyle(zpBox).position === 'static' &&
@@ -351,9 +351,9 @@ async function runSmoke(docEl) {
   }
   chk('cmd-enter-in-draft-card-not-submit', !window.__lastReview);
 
-  // 真暴露面：总批输入框没有自己的 keydown 处理，⌘Enter 从这里直冲全局监听器
-  // （写总批写到一半把攒着的 inline 草稿全发出去——第二轮评审点名的第二触发面）
-  [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('总批'))?.click();
+  // 真暴露面：判输入框没有自己的 keydown 处理，⌘Enter 从这里直冲全局监听器
+  // （写判写到一半把攒着的 inline 草稿全发出去——第二轮评审点名的第二触发面）
+  [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('判'))?.click();
   await sleep(200);
   const zongpiTa = document.querySelector('.zongpi-card .anno-input');
   chk('zongpi-card-open', Boolean(zongpiTa));
@@ -363,19 +363,19 @@ async function runSmoke(docEl) {
     await sleep(250);
   }
   chk('cmd-enter-in-zongpi-not-submit', !window.__lastReview);
-  // 真呈一条总批（此前只点「作罢」，createIssueComment 在整套冒烟里一次都没被调用过）：
-  // 折叠组默认收起之后，自己刚呈的那条必须自动冒出来——否则就退回「总批只能发不能看」的老缺口，
-  // 而 ui.js 里那句「重拉：让刚呈的总批立刻显示在折首」原本正是为它写的。
+  // 真呈一条判（此前只点「作罢」，createIssueComment 在整套冒烟里一次都没被调用过）：
+  // 折叠组默认收起之后，自己刚呈的那条必须自动冒出来——否则就退回「判只能发不能看」的老缺口，
+  // 而 ui.js 里那句「重拉：让刚呈的判立刻显示在折首」原本正是为它写的。
   const zpBefore = document.querySelectorAll('.zongpi-shown-item').length;
   if (zongpiTa) {
-    zongpiTa.value = '刚呈的这条总批必须自己冒出来';
+    zongpiTa.value = '刚呈的这条判必须自己冒出来';
     document.querySelector('.zongpi-card .anno-save')?.click();
     await sleep(500);
   }
   const zpAfter = [...document.querySelectorAll('.zongpi-shown-item')];
   chk('zongpi-auto-opens-after-send', zpBefore === 0 && zpAfter.length === ZONGPIS.length,
     `before=${zpBefore} after=${zpAfter.length} total=${ZONGPIS.length}`);
-  chk('zongpi-just-sent-on-top', (zpAfter[0]?.textContent || '').includes('刚呈的这条总批'),
+  chk('zongpi-just-sent-on-top', (zpAfter[0]?.textContent || '').includes('刚呈的这条判'),
     `first=${(zpAfter[0]?.textContent || '').replace(/\s+/g, ' ').slice(0, 24)}`);
   await sleep(150);
   const savedNotes = (JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items || [])
@@ -464,8 +464,8 @@ async function runSmoke(docEl) {
   const refBtn = [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('引用此处'));
   chk('copy-ref-btn-exists', Boolean(refBtn));
 
-  // 归档视图：已钦此的折子有地方看，且点进去是只读
-  const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
+  // 归档视图：已画可的折子有地方看，且点进去是只读
+  const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已画可'));
   chk('archive-tab-exists', Boolean(doneTab), doneTab?.textContent?.trim());
   if (doneTab) {
     doneTab.click(); await sleep(200);
@@ -524,7 +524,7 @@ async function runSmoke(docEl) {
   await sleep(200);
   chk('old-rev-cmd-enter-blocked', !window.__lastReview);
 
-  // 切回 head 后真点一次「提交朱批」——覆盖提交管线最后一公里：
+  // 切回 head 后真点一次「提交涂归」——覆盖提交管线最后一公里：
   // hunk gate 装配 / commit_id / 行号集合 / 成功后清草稿
   const opts = [...document.querySelectorAll('.rev-opt')];
   opts[opts.length - 1]?.click();

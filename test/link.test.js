@@ -127,7 +127,7 @@ test('buildDeepLink: 无折号退化成首页', () => {
   assert.equal(buildDeepLink('https://x.io/zhupi/', {}), 'https://x.io/zhupi/');
 });
 
-// ── F9 回奏对：从 PR body 里认出呈折的 Happy 会话 ──
+// ── F9 回奏：从 PR body 里认出呈折的 Happy 会话 ──
 import { parseHappySession } from '../src/link.js';
 
 test('认注释标记 → 默认站点的会话链接', () => {

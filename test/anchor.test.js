@@ -59,7 +59,7 @@ test('validRightLines: 裸空串上下文行按可批计（GitHub patch 偶见�
   assert.ok(s.has(3));
 });
 
-test('validRightLines: 无 patch（renamed / 二进制 / 图片）返回 null → 调用方全量降级总批', () => {
+test('validRightLines: 无 patch（renamed / 二进制 / 图片）返回 null → 调用方全量降级判', () => {
   assert.equal(validRightLines(null), null);
   assert.equal(validRightLines(undefined), null);
   assert.equal(validRightLines(''), null);

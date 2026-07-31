@@ -1,4 +1,4 @@
-// 批注卡三件套：草稿卡 / 已呈批注串 / 总批卡。
+// 批注卡三件套：草稿卡 / 已呈批注串 / 判卡。
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html, useEffect, useRef } from '../../vendor/preact-standalone.mjs';
 import * as A from '../anchor.js';
@@ -13,7 +13,7 @@ export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
       <div class="anno-quote">「${d.quote.length > 80 ? d.quote.slice(0, 80) + '…' : d.quote}」</div>
       <div class="anno-src">${sec ? sec + ' · ' : ''}第 ${d.line} 行</div>
       ${editing ? html`
-        <textarea class="anno-input" ref=${taRef} placeholder="朱批……" defaultValue=${d.note}
+        <textarea class="anno-input" ref=${taRef} placeholder="涂归……" defaultValue=${d.note}
           onKeyDown=${(e) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.stopPropagation(); onSave(d.id, taRef.current.value); }
           }}
@@ -55,11 +55,11 @@ export function ZongpiCard({ busy, onSend, onClose }) {
   useEffect(() => { setTimeout(() => taRef.current?.focus(), 0); }, []);
   return html`
     <div class="anno-card zongpi-card">
-      <div class="anno-src">总批 · 整折总评（呈出即达，不攒批）</div>
-      <textarea class="anno-input" ref=${taRef} rows="4" placeholder="总批……可以按序号列意见"></textarea>
+      <div class="anno-src">判 · 整折总评（呈出即达，不攒批）</div>
+      <textarea class="anno-input" ref=${taRef} rows="4" placeholder="判……可以按序号列意见"></textarea>
       <div class="anno-row">
         <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${onClose}>作罢</button>
-        <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSend(taRef.current.value)}>${busy ? '呈递中…' : '呈总批'}</button>
+        <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSend(taRef.current.value)}>${busy ? '呈递中…' : '呈判'}</button>
       </div>
     </div>`;
 }

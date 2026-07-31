@@ -1,4 +1,4 @@
-/* 御笔朱批 —— 宣纸 / 墨 / 朱砂 */
+/* 门下 —— 宣纸 / 墨 / 朱砂 */
 :root {
   --paper: #F5EFE3;
   --paper-raised: #FBF7EE;
@@ -159,7 +159,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .state { color: var(--ink-soft); font-size: 15px; padding: 8px 0; }
 .state.err { color: var(--cinnabar-deep); }
 
-/* ── M2 朱批 ── */
+/* ── M2 涂归 ── */
 ::highlight(zhupi-draft) { background-color: rgba(195, 64, 43, .16); }
 
 .zhupi-float {
@@ -279,7 +279,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .anno-static { position: static; width: 100%; }
 .anno-static::before { display: none; }
 
-/* 钦此用墨不用朱：朱砂只属于批注动作（评审定的规矩） */
+/* 画可用墨不用朱：朱砂只属于批注动作（评审定的规矩） */
 .btn-qinci {
   padding: 8px 22px; border-radius: 999px;
   background: var(--ink); color: var(--paper-raised);
@@ -352,7 +352,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   .anno-card::before { display: none; }
 }
 
-/* 已呈总批：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。
+/* 已呈判：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。
    默认折叠成一行（issue #1）：这块在正文之上，评审历史一长就把文档推下 2–3 屏，
    读者滚不到文档自己的 TL;DR。宽度对齐正文列（680px），markdown 复用 .anno-shown-body。 */
 .zongpi-shown {
@@ -388,7 +388,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .stale-banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .stale-reload { padding: 5px 14px; font-size: 13px; }
 
-/* 清单两栏：待批 / 已钦此（归档只读） */
+/* 清单两栏：待批 / 已画可（归档只读） */
 .list-tabs { display: flex; gap: 6px; padding: 0 4px 10px; }
 .list-tab {
   flex: 1; padding: 6px 10px; border-radius: 8px; border: 1px solid transparent;

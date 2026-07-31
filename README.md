@@ -2,7 +2,7 @@
 
 **English** · [中文](README.zh-CN.md)
 
-# 御笔朱批 · zhupi
+# 门下 · zhupi
 
 **A reading desk for AI-authored documents.**<br>
 Your agent submits a long document as a pull request. You read it *rendered* — not as a raw diff — highlight any sentence to leave a comment, submit the batch, and the agent revises. Merge = final.
@@ -27,7 +27,7 @@ zhupi is a lens over the same PR: same comments, same threads, same merge. It ju
 |---|---|
 | markdown diff doesn't render | renders the document, only |
 | comment entry isn't discoverable | select text → comment. The one main interaction |
-| `approve` blocked by "author cannot approve" | ships its own 钦此 = squash merge |
+| `approve` blocked by "author cannot approve" | ships its own 画可 = squash merge |
 | links drop you into a logged-out 404 | renders in place, never links out |
 
 ## How it works
@@ -63,14 +63,14 @@ Go to [charliezong18.github.io/zhupi](https://charliezong18.github.io/zhupi) (or
 
 The token lives in this browser's localStorage only. Lost your laptop? Revoke it on GitHub; blast radius = one repo.
 
-**3. Read, annotate, 钦此**
+**3. Read, annotate, 画可**
 
 | Action | What it does |
 |---|---|
-| Select a sentence → **朱批** | inline review comment anchored to that line |
-| **总批** | a conversation comment on the whole PR |
-| **提交朱批 · n** | submits the whole batch as one review |
-| **钦此** | squash merge = final |
+| Select a sentence → **涂归** | inline review comment anchored to that line |
+| **判** | a conversation comment on the whole PR |
+| **提交涂归 · n** | submits the whole batch as one review |
+| **画可** | squash merge = final |
 
 Drafts are kept in localStorage until you submit, so a stray refresh costs nothing.
 
@@ -110,7 +110,7 @@ gh pr create --title "<type>: <title>" --body "<template below>"
 Two rules that matter:
 
 - **The doc file holds the artifact and nothing else** — no status notes, no "here's what I did". Whatever ships at the end is what's in the file. Everything else goes in the PR body.
-- **Don't use `--draft`.** Draft PRs can't be merged, and the REST API can't undraft them (that needs GraphQL). In a single-person repo, draft buys you nothing and breaks the 钦此 button.
+- **Don't use `--draft`.** Draft PRs can't be merged, and the REST API can't undraft them (that needs GraphQL). In a single-person repo, draft buys you nothing and breaks the 画可 button.
 
 PR body template:
 
@@ -137,7 +137,7 @@ gh api -X POST repos/<owner>/<repo>/pulls/<n>/comments/<id>/replies -f body="...
 
 **Merging**
 
-The human presses 钦此 in the app (or you run `gh pr merge <n> --squash --delete-branch`). Merge = final = ship it to wherever the PR body said.
+The human presses 画可 in the app (or you run `gh pr merge <n> --squash --delete-branch`). Merge = final = ship it to wherever the PR body said.
 
 ## Known limits
 
