@@ -180,15 +180,23 @@ if (FAIL) {
 }
 
 // ?demo=1&deep=1：验直达进场——URL 带 ?pr=998（归档折）应直接开到它并切到已钦此栏
-if (new URLSearchParams(location.search).get('deep') === '1') {
+// ?demo=1&deep=miss&pr=9999：验折号找不到时**真的出提示**——pendingNotice 曾经只写不读
+// （声明了、赋值了、全文件没有第三处），深链失败一路静默。UI 胶水没测试就是会这样烂掉。
+const DEEP = new URLSearchParams(location.search).get('deep');
+if (DEEP === '1' || DEEP === 'miss') {
   setTimeout(() => {
     let pass = 0, fail = 0;
     const chk = (n, c, d = '') => { c ? pass++ : fail++; console.log(`[smoke] ${c ? 'PASS' : 'FAIL'} ${n}${d ? ` — ${d}` : ''}`); };
-    const crumb = document.querySelector('.crumb')?.textContent || '';
-    chk('deep-opened-target', crumb.includes('已钦此') || crumb.includes('归档'), `crumb=${crumb.slice(0, 40)}`);
-    const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
-    chk('deep-switched-tab', doneTab?.classList.contains('active'));
-    chk('deep-readonly', !document.querySelector('.btn-qinci'));
+    if (DEEP === 'miss') {
+      const notice = document.querySelector('.notice')?.textContent || '';
+      chk('deep-miss-notice-shown', notice.includes('9999'), `notice=${notice.slice(0, 60) || '(空)'}`);
+    } else {
+      const crumb = document.querySelector('.crumb')?.textContent || '';
+      chk('deep-opened-target', crumb.includes('已钦此') || crumb.includes('归档'), `crumb=${crumb.slice(0, 40)}`);
+      const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
+      chk('deep-switched-tab', doneTab?.classList.contains('active'));
+      chk('deep-readonly', !document.querySelector('.btn-qinci'));
+    }
     console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
   }, 1500);
 }
