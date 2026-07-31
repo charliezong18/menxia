@@ -357,6 +357,11 @@ async function runSmoke(docEl) {
   document.querySelector('.folder-body-toggle')?.click();  // 复原，别影响后面的断言
   await sleep(200);
 
+  // F1（摘要卡）：TLDR 那句在折首常显——收起态也在，不必展开就看得见「这折说了什么」。
+  chk('folder-body-tldr-always-visible',
+    (document.querySelector('.folder-body-tldr')?.textContent || '').includes('PR body 的五段结构化正文此前在门下不可见'),
+    `tldr=${(document.querySelector('.folder-body-tldr')?.textContent || 'NONE').slice(0, 30)}`);
+
   // issue #1：已呈判默认折叠。这块坐在正文之上，全展开就把文档推出首屏，
   // 读者滚不到文档自己的 TL;DR（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）。
   const zpToggle = document.querySelector('.zongpi-shown-toggle');
@@ -593,6 +598,14 @@ async function runSmoke(docEl) {
     // 切回待批继续后面的断言
     [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('待批'))?.click();
     await sleep(200);
+    // F1（摘要卡）：待批清单里，带五段 body 的折要出摘要行——一句 TLDR gist + 拍板角标，
+    // 不点进去就看得出「这折干了什么、要不要你拍板」。归档折（BODY_FREEFORM 无 TLDR）不出摘要行。
+    const openSummary = document.querySelector('#pr-list .pr-item .pr-summary');
+    chk('list-summary-tldr-and-decisions',
+      Boolean(openSummary)
+      && (openSummary.querySelector('.pr-tldr')?.textContent || '').includes('本折把它渲染到折首')
+      && (openSummary.querySelector('.pr-decisions')?.textContent || '').includes('待你拍板'),
+      `summary=${(openSummary?.textContent || 'NONE').replace(/\s+/g, ' ').slice(0, 40)}`);
     document.querySelector('#pr-list .pr-item')?.click();
     await sleep(900);
   }

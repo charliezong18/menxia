@@ -24,12 +24,14 @@ drafts-persisted
 external-link-not-hijacked
 fence-line-precise
 folder-body-height-capped
+folder-body-tldr-always-visible
 lang-chip-on-bilingual
 lang-default-zh
 lang-switch-to-en
 lang-tabs-collapsed
 link-jump-flash
 link-samples-rendered
+list-summary-tldr-and-decisions
 long-doc-scrollable
 margin-cards-ordered
 margin-cards-present

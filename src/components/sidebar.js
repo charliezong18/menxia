@@ -2,6 +2,23 @@
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
+import { folderSummary, DECISIONS_TITLE } from './folder-body.js';
+
+/**
+ * 清单卡的摘要行（F1，2026-07-31）：一句 TLDR gist + 「待你拍板 · n 条」角标。
+ * **只在有话说时出现**（同 checkBadge 的克制）：body 没 TLDR 也没拍板点就整行不画，
+ * 手开折 / 老折 / body 为空都优雅退回原样，不添噪音、不撑爆清单。
+ * gist 单行截断，长了省略号——清单是扫的，不是读的。
+ */
+function summaryLine(pr) {
+  const s = folderSummary(pr.body);
+  if (!s) return null;
+  return html`
+                <div class="pr-summary">
+                  ${s.tldr && html`<div class="pr-tldr">${s.tldr}</div>`}
+                  ${s.decisionCount ? html`<span class="pr-decisions">${S.folderBody.decisionsBadge(DECISIONS_TITLE, s.decisionCount)}</span>` : ''}
+                </div>`;
+}
 
 /**
  * 体例检查的角标。**只在有话说的时候出现**：
@@ -58,6 +75,7 @@ export function Sidebar({
                 <h3>${pr.title}</h3>
                 <div class="meta">#${pr.number} · ${pr.merged_at ? S.folder.mergedAt(timeAgo(pr.merged_at)) : S.folder.submittedAt(timeAgo(pr.updated_at))}${
                   pr.merged_at ? null : checkBadge(checks[pr.number])}</div>
+                ${summaryLine(pr)}
               </button>`)
             : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : (tab === 'open' ? S.nav.emptyOpen : S.nav.emptyDone)}</p>`}
         </nav>`}
