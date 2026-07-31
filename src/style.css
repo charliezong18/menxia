@@ -313,14 +313,17 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
    这里只做单列堆叠；右缘批注栏落到正文下方（position:static 让 JS 写的 top 失效，
    卡片回到正常流），v1 再上底部批注单那套设计。 */
 @media (max-width: 900px) {
-  #app { flex-direction: column; }
+  #app { flex-direction: column; height: auto; }
 
-  /* 竖排后 main 的 height:100% 成了主轴上的自动最小尺寸（min-height:auto 取
-     指定高度建议＝整视口），flex 压不回剩余空间：main 底部恰好一个 aside 的
-     高度伸出屏外，被 html/body 的 overflow:hidden 剪掉——手机上表现为大半屏
-     划不动、末屏永远读不到（390×844 实测 #app 溢出 241px）。min-height:0 解锁
-     收缩即可；height 别动，改 auto 会让 .work 不再是滚动容器。 */
-  main { min-height: 0; }
+  /* 真机第二轮反馈（#9 修的是内滚模型自己的账，救不了体验）：固定壳在手机上
+     把 aside(38vh)+mainbar 钉成上半屏触摸死区，正文只能在剩下 ~40% 的缝里滚。
+     这里改整页单轴滚动：壳全部入流随页滚走，手指放哪都能划，Safari 工具栏也
+     能自动收起。overflow 用 visible 不用 auto——body 一旦自成滚动容器，iOS
+     滚的就是 body 不是 document，工具栏永远不收。桌面照旧内滚；测试闸门跑在
+     --window-size=1440 上，不经过这个分支。 */
+  html, body { overflow: visible; }
+  main { height: auto; }
+  .work { flex: none; overflow: visible; }
 
   aside {
     width: 100%; height: auto; max-height: 38vh; flex: none;

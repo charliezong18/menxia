@@ -244,10 +244,15 @@ async function runSmoke(docEl) {
   await pick('镜片随时可以摘掉', '这句放结尾太谦虚了，提到开头', true);
   await pick('const DEBOUNCE_MS = 300;', '300ms 的依据补个注释', false);
 
-  // 长文档必须可滚（#root 高度链断裂那类雷靠这条抓；demo 文档特意长过一屏）
+  // 长文档必须可滚（#root 高度链断裂那类雷靠这条抓；demo 文档特意长过一屏）。
+  // 滚动主体跟着布局模型走：桌面内滚在 .work，窄屏（≤900px）整页滚在 document——
+  // 谁在窄窗口跑冒烟，这条不该假红。
   const work = document.querySelector('.work');
-  chk('long-doc-scrollable', Boolean(work && work.scrollHeight > work.clientHeight),
-    `scrollH=${work?.scrollHeight} clientH=${work?.clientHeight}`);
+  const narrow = matchMedia('(max-width: 900px)').matches;
+  const sEl = narrow ? document.scrollingElement : work;
+  const sMax = narrow ? innerHeight : (work?.clientHeight ?? 0);
+  chk('long-doc-scrollable', Boolean(sEl && sEl.scrollHeight > sMax),
+    `narrow=${narrow} scrollH=${sEl?.scrollHeight} viewH=${sMax}`);
 
   // 两次划批各产出一张卡（含已呈串共 4 张），提交按钮随草稿出现
   const draftCards = document.querySelectorAll('.anno-card:not(.anno-shown)').length;
