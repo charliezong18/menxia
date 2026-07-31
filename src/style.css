@@ -103,6 +103,17 @@ aside .brand-row { padding: 0 6px 22px; }
 }
 .pr-item h3 { font-family: var(--songti); font-size: 15.5px; font-weight: 700; line-height: 1.45; }
 .pr-item .meta { margin-top: 5px; font-size: 12.5px; color: var(--ink-soft); }
+/* 清单摘要（F1）：TLDR gist 两行截断 + 拍板角标。常态压得住，别把扫读的清单撑成读物。 */
+.pr-summary { margin-top: 6px; }
+.pr-tldr {
+  font-size: 12.5px; line-height: 1.5; color: var(--ink-soft);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.pr-decisions {
+  display: inline-block; margin-top: 5px; padding: 1px 7px; border-radius: 6px;
+  font-family: var(--songti); font-size: 11.5px; letter-spacing: .04em;
+  color: var(--cinnabar-deep); background: rgba(195,64,43,.08); border: 1px solid var(--rule);
+}
 
 main { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: column; }
 .mainbar {
@@ -399,6 +410,8 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 .folder-body-toggle:hover { color: var(--ink); }
 .folder-body-toggle.has-decisions { color: var(--cinnabar); }
+/* F1：TLDR 那句常显（收起态也在），坐在标题下、正文之上，让「这折说了什么」不必展开就看得见。 */
+.folder-body-tldr { margin: 6px 0 0; font-size: 14px; line-height: 1.65; color: var(--ink); }
 /* 同 .zongpi-shown：.anno-shown-body 的数值是给右缘窄卡调的，搬到 680px 的折首块上要放大一档，
    且必须用两段选择器压过它，不靠源码顺序。 */
 /* **高度封顶 + 块内滚动**（复审补）：这块有拍板点时默认展开，而 body 多长由写折那方决定、

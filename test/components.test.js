@@ -6,9 +6,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
 // 组件模块会 import vendored preact；node 里没有 DOM，但 preact 本身 import 期不碰 document。
-const { Sidebar } = await import('../src/components/sidebar.js');
 const { Topbar } = await import('../src/components/topbar.js');
-// zongpi-shown 走 render.js，那个模块 import 期就要 window.markdownit——node 里补个桩即可，
+// zongpi-shown / sidebar（F1 起接了 folder-body）走 render.js，那个模块 import 期就要
+// window.markdownit——node 里补个桩即可，
 // 本组件测试只关心「折不折 / 排序 / 摘要」，不验 markdown 引擎本身（那由冒烟层的真浏览器覆盖）。
 // 桩必须和生产一样严：markdown-it 对非字符串是直接抛（Input data should be a String），
 // 桩要是更宽容（返回 '<p>null</p>'），就会系统性掩盖「传了 null 进去整个 app 白屏」那一类 bug。
@@ -21,9 +21,10 @@ globalThis.window = {
     },
   }),
 };
+const { Sidebar } = await import('../src/components/sidebar.js');
 const { ZongpiShown, summarize } = await import('../src/components/zongpi-shown.js');
 const { OtherThreads } = await import('../src/components/other-threads.js');
-const { FolderBody, parseFolderBody, hasDecisions } = await import('../src/components/folder-body.js');
+const { FolderBody, parseFolderBody, hasDecisions, folderSummary } = await import('../src/components/folder-body.js');
 const { CommentBody } = await import('../src/components/comment-body.js');
 
 // 在 vnode 树里按谓词找第一个节点
@@ -320,6 +321,89 @@ test('折子说明：收起态不渲染正文；展开态走 CommentBody（唯�
   const inner = find(open, (v) => typeof v.props?.cls === 'string' && v.props.cls.includes('folder-body-text'));
   assert.ok(inner, '展开态应挂出正文');
   assert.equal(inner.type, CommentBody, '必须复用 CommentBody，不许另开一个 dangerouslySetInnerHTML');
+});
+
+// ── F1 · 摘要卡（2026-07-31）：TLDR + 待你拍板 渲成折首常显行 + 清单每折一句 gist ──
+
+test('F1 摘要：parseFolderBody 顺带切出 TLDR 段（复用已有 sections，不新加解析）', () => {
+  const p = parseFolderBody(FIVE_SECTION_BODY);
+  assert.equal(p.tldr, '一句话说清这折干了什么。');
+});
+
+test('F1 摘要：folderSummary 给标准五段 body 出 gist + 拍板条数', () => {
+  const s = folderSummary(FIVE_SECTION_BODY);
+  assert.equal(s.tldr, '一句话说清这折干了什么。');
+  assert.equal(s.decisionCount, 2);
+});
+
+test('F1 摘要：缺段优雅降级——只有 TLDR 没拍板点，只出 gist；只有拍板点没 TLDR，只出条数', () => {
+  const onlyTldr = '## TLDR\n\n就一句话。\n\n## 怎么用\n\n随便。';
+  const s1 = folderSummary(onlyTldr);
+  assert.equal(s1.tldr, '就一句话。');
+  assert.equal(s1.decisionCount, 0);
+
+  const onlyDecisions = '## 待你拍板\n\n1. 甲\n2. 乙\n3. 丙';
+  const s2 = folderSummary(onlyDecisions);
+  assert.equal(s2.tldr, '');
+  assert.equal(s2.decisionCount, 3);
+});
+
+test('F1 摘要：段乱序不影响——TLDR 排在拍板点之后照样各归各位', () => {
+  // 写入侧模板顺序是 目的地/直达链/TLDR/待你拍板/怎么用；这里把 TLDR 故意挪到最后
+  const scrambled = '## 待你拍板\n\n1. 只一条\n\n## 目的地\n\n随便\n\n## TLDR\n\n倒着放也认得出。';
+  const s = folderSummary(scrambled);
+  assert.equal(s.tldr, '倒着放也认得出。');
+  assert.equal(s.decisionCount, 1);
+});
+
+test('F1 摘要：空 / null / 无内容 body 一律返回 null（清单整行不画，不白屏、不占位）', () => {
+  for (const bad of [null, undefined, '', '   \n\n  ', '<!-- happy-session: cms7to0mrdy6cwc0u6md6o9gy -->']) {
+    assert.equal(folderSummary(bad), null, `folderSummary(${JSON.stringify(bad)}) 应为 null`);
+  }
+  // 手开折（散文、零 ## 段）：既没 TLDR 段也没拍板点 → 清单不添摘要行（保持原样）
+  assert.equal(folderSummary('**性质**：读物快照。\n\n随便写点。'), null);
+  // 非字符串也不炸
+  assert.doesNotThrow(() => folderSummary(42));
+});
+
+test('F1 摘要：gist 抽成纯文本——去 markdown 记号、压多行为单行（清单里没有 CommentBody sink）', () => {
+  const md = '## TLDR\n\n- **要点**：把 [链接](http://x) 里的 `code`\n  换行接着写';
+  const s = folderSummary(md);
+  assert.ok(!/[#>*`\[\]]/.test(s.tldr), `gist 不该带 markdown 记号：${s.tldr}`);
+  assert.ok(!s.tldr.includes('\n'), 'gist 必须是单行');
+  assert.match(s.tldr, /要点.*把.*链接.*里的 code.*换行接着写/);
+});
+
+test('F1 摘要：折首块把 TLDR 那句常显（收起态也在），不必展开就看得见', () => {
+  const collapsed = FolderBody({ body: FIVE_SECTION_BODY, open: false, onToggle: () => {} });
+  const tldrLine = find(collapsed, byClass('folder-body-tldr'));
+  assert.ok(tldrLine, '收起态也应有 TLDR 常显行');
+  assert.equal(tldrLine.props.children, '一句话说清这折干了什么。');
+  // 没 TLDR 段的 body：常显行不出（不硬占一行空白）
+  const noTldr = '## 待你拍板\n\n1. 甲';
+  assert.equal(find(FolderBody({ body: noTldr, open: false, onToggle: () => {} }), byClass('folder-body-tldr')), null);
+});
+
+test('F1 摘要：清单卡带上 gist + 拍板角标；无摘要的折不画摘要行', () => {
+  const withSummary = { number: 43, title: '有摘要', body: FIVE_SECTION_BODY, updated_at: new Date().toISOString() };
+  const plain = { number: 7, title: '手开折', body: '**性质**：读物快照。', updated_at: new Date().toISOString() };
+  const tree = Sidebar({
+    q: '', hits: null, searching: '', prs: [withSummary, plain], donePrs: [], tab: 'open', cur: null,
+    demo: false, timeAgo: () => '刚刚',
+    onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
+    onTab() {}, onOpenPR() {}, onSettings() {},
+  });
+  const summaries = [];
+  (function walk(v) {
+    if (!v || typeof v !== 'object') return;
+    if (Array.isArray(v)) return v.forEach(walk);
+    if (byClass('pr-summary')(v)) summaries.push(v);
+    walk(v.props?.children);
+  })(tree);
+  assert.equal(summaries.length, 1, '只有带 TLDR/拍板点的折出摘要行');
+  const flat = JSON.stringify(summaries[0]);
+  assert.match(flat, /一句话说清这折干了什么/);
+  assert.match(flat, /待你拍板 · 2 条/);
 });
 
 test('折卡角标：没传 checks 也不炸（老调用点 / demo 模式）', () => {

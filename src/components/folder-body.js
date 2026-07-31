@@ -29,6 +29,11 @@ const MARKER_RE = /<!--\s*happy-session:[\s\S]*?-->/gi;
 // 徽章上顺带显示它，那是复用同一个事实源，不是它变成了文案。
 export const DECISIONS_TITLE = '待你拍板';
 
+// 「这折说了什么」那一段。同 `DECISIONS_TITLE`，是跨系统契约、逐字对齐写入侧，故意不进 strings.js。
+// F1（2026-07-31 定）把它当摘要：折首块常显一行、清单里每折带一句 gist，让「这折要不要现在读」
+// 十秒内看得出。取自 `parseFolderBody` 已切好的 sections，不新加任何解析。
+export const TLDR_TITLE = 'TLDR';
+
 // `## <段名>` 的识别。写入侧拼的是 `## ${title}\n\n${v}`，所以只可能是列 0 的 ATX 二级标题；
 // 判定仍容 0–3 空格缩进（CommonMark 的块级起手规则），手写折不至于因为一个空格就整段认不出。
 const H2_RE = /^ {0,3}##\s+(.+?)\s*#*\s*$/;
@@ -88,23 +93,56 @@ export function parseFolderBody(raw) {
   if (!text) return null;
   const sections = splitSections(text);
   const decisions = sections.get(DECISIONS_TITLE) || null;
-  return { text, sections, decisions, decisionCount: countItems(decisions) };
+  const tldr = sections.get(TLDR_TITLE) || null;
+  return { text, sections, decisions, tldr, decisionCount: countItems(decisions) };
 }
 
 /** 有没有拍板点——决定这折的说明块默认展开还是收起（`ui.js` 开折时算一次）。 */
 export const hasDecisions = (raw) => Boolean(parseFolderBody(raw)?.decisions);
+
+// 摘要的纯文本 gist：markdown 抽成单行给清单用。**只做减法**——去掉 `##` 标题、`>`、列表符、
+// 强调星号、链接壳，把换行压成空格，够短就成。不渲染 HTML（清单里没有那道 CommentBody sink，
+// 也不该有第二个），所以这里必须自己保证输出是纯文本。围栏原样留着，不深究——gist 只取前一句。
+function gistText(md) {
+  return String(md ?? '')
+    .replace(/`{1,3}/g, '')                       // 反引号
+    .replace(/^\s{0,3}#{1,6}\s+/gm, '')           // ATX 标题记号
+    .replace(/^\s{0,3}>\s?/gm, '')                // 引用
+    .replace(/^\s{0,3}(?:\d+[.)]|[-*+])\s+/gm, '') // 列表符
+    .replace(/\*\*|__|\*|_/g, '')                 // 强调
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')      // 链接留文字
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * 清单卡要的最小摘要：一句 gist + 拍板条数。没有 TLDR 也没有拍板点就返回 `null`，
+ * 调用方据此整块不渲染（与折首块「无内容不占位」同一约定，优雅降级不白屏）。
+ * F1（2026-07-31）：清单此前只有标题 + 折号，看不出这折干了什么、要不要你拍板。
+ */
+export function folderSummary(raw) {
+  const parsed = parseFolderBody(raw);
+  if (!parsed) return null;
+  const tldr = gistText(parsed.tldr) || '';
+  const decisionCount = parsed.decisionCount;
+  if (!tldr && !decisionCount) return null;
+  return { tldr, decisionCount };
+}
 
 export function FolderBody({ body, open, onToggle, hydrate }) {
   const parsed = parseFolderBody(body);
   if (!parsed) return null;
   const n = parsed.decisionCount;
   const badge = parsed.decisions ? S.folderBody.decisionsBadge(DECISIONS_TITLE, n) : '';
+  // F1：TLDR 那句常显（收起态也在），别把「这折说了什么」埋进要点一下才展开的正文里。
+  const tldr = gistText(parsed.tldr);
   return html`
             <div class=${'folder-body' + (parsed.decisions ? ' has-decisions' : '')}>
               <button class=${'folder-body-toggle' + (parsed.decisions ? ' has-decisions' : '')}
                 aria-expanded=${open} onClick=${() => onToggle()}>
                 ${open ? '▾' : '▸'} ${S.folderBody.toggle(badge)}
               </button>
+              ${tldr && html`<p class="folder-body-tldr">${tldr}</p>`}
               ${open && html`
                 <${CommentBody} text=${parsed.text} hydrate=${hydrate}
                   cls="anno-shown-body folder-body-text" />`}

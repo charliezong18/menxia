@@ -50,7 +50,7 @@ run_page() {
 
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=22
-SMOKE_EXPECT=63
+SMOKE_EXPECT=65
 
 WHAT="${1:-all}"
 STATUS=0
