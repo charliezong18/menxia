@@ -384,6 +384,35 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .zongpi-shown .zongpi-shown-body p, .zongpi-shown .zongpi-shown-body li { margin-bottom: 8px; }
 @media (max-width: 900px) { .zongpi-shown { margin-left: 0; } }
 
+/* 折子说明（PR body 的五段）：与「已呈总批」同一套壳，坐在它上面——拍板点比评审历史更该先入眼。
+   issue #13：有「待你拍板」就默认展开，标题用朱砂描一下左缘，让「这折要你决定」在余光里就看得见；
+   没有拍板点时退回墨色安静系，与总批块无异（常态不添噪音）。 */
+.folder-body {
+  margin: 0 0 20px 26px; padding: 10px 16px; max-width: 680px;
+  background: var(--paper-raised); border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink-soft); border-radius: 9px;
+}
+.folder-body.has-decisions { border-left-color: var(--cinnabar); }
+.folder-body-toggle {
+  display: block; width: 100%; text-align: left; padding: 2px 0;
+  font-family: var(--songti); font-size: 12.5px; letter-spacing: .08em; color: var(--ink-soft);
+}
+.folder-body-toggle:hover { color: var(--ink); }
+.folder-body-toggle.has-decisions { color: var(--cinnabar); }
+/* 同 .zongpi-shown：.anno-shown-body 的数值是给右缘窄卡调的，搬到 680px 的折首块上要放大一档，
+   且必须用两段选择器压过它，不靠源码顺序。 */
+.folder-body .folder-body-text { margin-top: 12px; font-size: 14.5px; line-height: 1.7; }
+.folder-body .folder-body-text h1,
+.folder-body .folder-body-text h2,
+.folder-body .folder-body-text h3 {
+  font-family: var(--songti); font-size: 15px; margin: 12px 0 6px;
+}
+.folder-body .folder-body-text table { font-size: 13px; }
+.folder-body .folder-body-text code { font-size: 13px; font-family: var(--mono); }
+.folder-body .folder-body-text ul, .folder-body .folder-body-text ol { padding-left: 22px; }
+.folder-body .folder-body-text p, .folder-body .folder-body-text li { margin-bottom: 8px; }
+@media (max-width: 900px) { .folder-body { margin-left: 0; } }
+
 /* 旧版横幅：Pages 缓存 10 分钟，用户无从判断新旧——explicitly 告诉他 */
 .stale-banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .stale-reload { padding: 5px 14px; font-size: 13px; }

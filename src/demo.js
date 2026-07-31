@@ -36,6 +36,47 @@ ${Array.from({ length: 14 }, (_, i) => `第 ${i + 1} 段填充：读折台的滚
 // 旧版正文：删掉「为什么要有 demo 模式」一节——rev 切换后正文明显变短（冒烟断言据此）
 const DOC_OLD = DOC.replace(/## 为什么要有 demo 模式[\s\S]*?结尾一段：镜片随时可以摘掉，数据与循环全部留在 GitHub。\n\n/, '');
 
+// 呈折说明（PR body）。**照 menxia-mcp `buildBody` 的真实产物摆**：五段 `## 段名`、段间空行、
+// 尾巴一行「回奏对」标记。issue #13 之前门下只从这里抠会话 id，五段一个字都不渲染——
+// 「待你拍板」（要他决定的问题清单）因此彻底不可见。冒烟靶必须带全五段，否则那条断言测的是空气。
+// 段里塞了标题 / 列表 / 表格：markdown 真渲染这条断言要有东西可断。
+const BODY = `## 目的地
+
+merge 后作为门下 issue #13 的实现依据。不对外发布。
+
+## 直达链
+
+[渲染版](https://charliezong18.github.io/menxia/?pr=999)
+
+## TLDR
+
+PR body 的五段结构化正文此前在门下不可见，本折把它渲染到折首。
+
+| 段 | 之前 | 之后 |
+|---|---|---|
+| 待你拍板 | 看不见 | 折首默认展开 |
+
+## 待你拍板
+
+1. 折首折叠块（B）还是独立 tab（A）？
+2. 有「待你拍板」时默认展开，其余默认收起——这个条件展开可以吗？
+3. 段序原样保留，不把「待你拍板」提到最前，行不行？
+
+## 怎么用
+
+逐篇批。批完在这个会话说「读批注」，我逐条回话并出 v2。
+
+<!-- happy-session: cmsdemo0000demo0000demo -->
+`;
+
+// 手开折的 body：没有任何 `## 段名`，只有散文（review #7 就长这样）。
+// 归档折用它当靶——「认不出五段 ⇒ 不该判成有拍板点 ⇒ 默认收起」这条路径要有真数据走。
+const BODY_FREEFORM = `读物快照。**这两篇是要发到别人仓库去的**，比内部文档更该被你逐句挑。
+
+划句朱批。你说「发」我才发，不说就一直压着。
+
+<!-- happy-session: cmsdemo0000demo0000demo -->`;
+
 const PR = {
   number: 999,
   title: '涂归 demo 折（不落库）',
@@ -43,7 +84,7 @@ const PR = {
   draft: false,
   node_id: 'DEMO',
   head: { sha: 'demo0000' },
-  body: '演示折。\n\n<!-- happy-session: cmsdemo0000demo0000demo -->',
+  body: BODY,
 };
 
 // 整份新增文件的 patch：全行可批
@@ -123,6 +164,7 @@ export const demoApi = {
   listMergedPRs: async () => [{
     ...PR, number: 998, title: '涂归 demo 折 · 已画可（归档样例）',
     merged_at: new Date(Date.now() - 864e5).toISOString(),
+    body: BODY_FREEFORM,  // 手开折：无五段结构 → 说明块该默认收起（issue #13 的条件展开）
   }],
   listPRFiles: async () => [
     { filename: 'docs/demo.md', status: 'added', patch: PATCH },
@@ -280,6 +322,41 @@ async function runSmoke(docEl) {
   chk('shown-threads>=1', document.querySelectorAll('.anno-shown').length >= 1);
   chk('reply-rendered>=1', document.querySelectorAll('.anno-reply').length >= 1);
 
+  // issue #13：折子说明（PR body 五段）。这折的 body 有「待你拍板」→ 必须默认摊开，
+  // 不点任何东西就能读到拍板点。这是本 issue 的全部要害：该被看见的东西不许静默消失。
+  const fbToggle = document.querySelector('.folder-body-toggle');
+  const fbLabel = (fbToggle?.textContent || '').replace(/\s+/g, ' ').trim();
+  chk('body-expanded-by-default-with-decisions',
+    Boolean(fbToggle) && fbToggle.getAttribute('aria-expanded') === 'true'
+    && Boolean(document.querySelector('.folder-body-text')),
+    `label=${fbLabel} aria=${fbToggle?.getAttribute('aria-expanded')}`);
+  chk('body-decisions-visible-without-click',
+    (document.querySelector('.folder-body-text')?.textContent || '').includes('折首折叠块（B）还是独立 tab（A）'),
+    `label=${fbLabel}`);
+  // 「回奏对」标记是 HTML 注释，而 markdown-it 在 html:false 下把它**转义成可见文本**，
+  // 不剥就是每折正文尾巴上挂一行 `<!-- happy-session: … -->` 给读者看。
+  chk('body-session-marker-not-visible',
+    !(document.querySelector('.folder-body')?.textContent || '').includes('happy-session'),
+    `tail=${(document.querySelector('.folder-body-text')?.textContent || '').slice(-40)}`);
+  // 真走 markdown 渲染（与评论正文同一条路），不是 pre-wrap 把 ## 和表格裸露给读者
+  chk('body-markdown-rendered',
+    Boolean(document.querySelector('.folder-body-text h2')) &&
+    Boolean(document.querySelector('.folder-body-text table')),
+    `h2=${document.querySelectorAll('.folder-body-text h2').length}`);
+  const fbBox = document.querySelector('.folder-body');
+  chk('body-block-in-flow-above-doc',
+    getComputedStyle(fbBox).position === 'static'
+    && fbBox.getBoundingClientRect().bottom <= document.getElementById('doc').getBoundingClientRect().top + 1,
+    `pos=${getComputedStyle(fbBox).position}`);
+  // 收得回去：折叠钮不是装饰，aria-expanded 要跟着状态走（#5 补的那条无障碍规矩）
+  fbToggle?.click();
+  await sleep(200);
+  chk('body-toggle-collapses',
+    !document.querySelector('.folder-body-text')
+    && document.querySelector('.folder-body-toggle')?.getAttribute('aria-expanded') === 'false');
+  document.querySelector('.folder-body-toggle')?.click();  // 复原，别影响后面的断言
+  await sleep(200);
+
   // issue #1：已呈判默认折叠。这块坐在正文之上，全展开就把文档推出首屏，
   // 读者滚不到文档自己的 TL;DR（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）。
   const zpToggle = document.querySelector('.zongpi-shown-toggle');
@@ -289,14 +366,19 @@ async function runSmoke(docEl) {
     `items=${document.querySelectorAll('.zongpi-shown-item').length}`);
   chk('zongpi-toggle-shows-count-and-gist',
     zpLabel.includes('已呈判 · 5') && zpLabel.includes('最新：v4 定稿'), `label=${zpLabel}`);
-  // 正文起点必须紧贴折首。量滚动容器内的偏移量而非 viewport 坐标——与当前滚动位置无关。
-  // 阈值不用 window.innerHeight：滚动容器是 .work，它上面还有 mainbar/notice 吃掉 80–130px，
-  // 拿视口高当尺子等于白送这么多松弛。也不用 clientHeight（那是「勉强够一屏」，松 700+px，
-  // 「默认展开最新一条」这种半吊子回归照样能钻过去）——验收标准是「折叠块只占一行」，钉死 320。
+  // 正文起点必须紧贴总批折叠块。量两个盒子之间的距离，而非 viewport 坐标——与当前滚动位置无关。
+  // 阈值不用 window.innerHeight：拿视口高当尺子等于白送 80–130px 松弛；也不用 clientHeight
+  // （那是「勉强够一屏」，松 700+px，「默认展开最新一条」这种半吊子回归照样能钻过去）——
+  // 验收标准是「折叠块只占一行」，钉死 320。
+  //
+  // **起点从 .work 顶改成总批块底（issue #13）**：折子说明块进来之后坐在总批之上，且按设计
+  // 有拍板点就默认展开，量到 .work 顶会把它的高度算进来，这条断言就变成在管别的事了。
+  // 这条要守的一直是「总批块不许默认摊开挡住正文」，量它自己的底到正文顶最贴题。
   const workEl = document.querySelector('.work');
   const docBox = document.getElementById('doc');
-  const docOffset = workEl && docBox
-    ? docBox.getBoundingClientRect().top - workEl.getBoundingClientRect().top + workEl.scrollTop
+  const foldBox = document.querySelector('.zongpi-shown');
+  const docOffset = foldBox && docBox
+    ? docBox.getBoundingClientRect().top - foldBox.getBoundingClientRect().bottom
     : -1;
   chk('doc-starts-right-below-fold', docOffset >= 0 && docOffset < 320,
     `offset=${Math.round(docOffset)} limit=320 workH=${workEl?.clientHeight} vh=${window.innerHeight}`);
@@ -474,6 +556,13 @@ async function runSmoke(docEl) {
     await sleep(800);
     chk('archive-readonly-no-qinci', !document.querySelector('.btn-qinci'));
     chk('archive-readonly-notice', (document.querySelector('.rev-notice')?.textContent || '').includes('归档'));
+    // issue #13 的条件展开另一半：归档折的 body 是手开的散文（无五段），认不出拍板点 ⇒ 默认收起。
+    // 逐折重算的证据也在这条里——上一折是展开态，切过来必须自己变回收起。
+    const fbArc = document.querySelector('.folder-body-toggle');
+    chk('archive-body-collapsed-without-decisions',
+      Boolean(fbArc) && fbArc.getAttribute('aria-expanded') === 'false'
+      && !document.querySelector('.folder-body-text'),
+      `aria=${fbArc?.getAttribute('aria-expanded')}`);
     // 归档折上划句不该出浮批钮
     const blk = [...document.querySelectorAll('#doc [data-line]')]
       .find((x) => x.textContent.trim().length > 4);

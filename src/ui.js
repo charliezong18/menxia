@@ -17,6 +17,7 @@ import { Sidebar } from './components/sidebar.js';
 import { Topbar } from './components/topbar.js';
 import { OtherThreads } from './components/other-threads.js';
 import { ZongpiShown } from './components/zongpi-shown.js';
+import { FolderBody, hasDecisions } from './components/folder-body.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -34,7 +35,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js', 'src/demo.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
-  'src/components/comment-body.js'];
+  'src/components/comment-body.js', 'src/components/folder-body.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -72,6 +73,7 @@ function App() {
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
   const [zongpiOpen, setZongpiOpen] = useState(false); // 「已呈判」折叠组展开态（默认收起，issue #1）
+  const [bodyOpen, setBodyOpen] = useState(false);   // 「折子说明」展开态：有「待你拍板」才默认展开（issue #13）
   // 折号 → 体例检查判词。CI 只在 open 折上跑，已画可的不查。
   const [checks, setChecks] = useState({});
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
@@ -246,6 +248,10 @@ function App() {
     setComments([]);
     setZongpis([]);
     setZongpiOpen(false);   // 每开一折都从收起态起：否则上一折展开过，下一折又被历史挡住正文
+    // 「折子说明」相反：**这折有拍板点就默认摊开**（issue #13）——它不是历史，是这折要他决定的事，
+    // 收起来就等于回到「拍板点静默消失」。没拍板点才收起，把常态成本压回一行标题。
+    // 逐折重算（不是沿用上一折的状态）：展开与否是这折的属性，不是用户的偏好。
+    setBodyOpen(hasDecisions(pr.body));
     setCur({ pr, files: null, docs: null });
     setDrafts(A.loadDrafts(pr.number));
     // 立刻清岛屿并示 loading：否则 listPRFiles 整个往返期间旧折正文挂着，
@@ -801,6 +807,8 @@ function App() {
             <p class="rev-notice">此折已画可归档 · 只读（要再批就开新折）</p>`}
           ${cur && !archived && !onHead && html`
             <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
+          ${cur && html`<${FolderBody} body=${cur.pr.body} open=${bodyOpen}
+            onToggle=${() => setBodyOpen((o) => !o)} hydrate=${hydrateComment} />`}
           ${cur && html`<${ZongpiShown} zongpis=${zongpis} open=${zongpiOpen}
             onToggle=${() => setZongpiOpen((o) => !o)} hydrate=${hydrateComment} />`}
           ${langSibling && html`

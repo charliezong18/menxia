@@ -23,6 +23,8 @@ globalThis.window = {
 };
 const { ZongpiShown, summarize } = await import('../src/components/zongpi-shown.js');
 const { OtherThreads } = await import('../src/components/other-threads.js');
+const { FolderBody, parseFolderBody, hasDecisions } = await import('../src/components/folder-body.js');
+const { CommentBody } = await import('../src/components/comment-body.js');
 
 // 在 vnode 树里按谓词找第一个节点
 function find(vnode, pred) {
@@ -152,6 +154,7 @@ test('折叠组：两个 toggle 都要有 aria-expanded，且随展开态变化�
       open,
       onToggle: () => {},
     }), 'other-threads-toggle'],
+    ['折子说明', (open) => FolderBody({ body: FIVE_SECTION_BODY, open, onToggle: () => {} }), 'folder-body-toggle'],
   ];
   for (const [label, build, cls] of cases) {
     for (const open of [true, false]) {
@@ -222,6 +225,101 @@ test('折卡角标：已画可的折不画（CI 只在 open 折上跑）', () =>
     walk(v.props?.children);
   })(tree);
   assert.equal(found, false, '已画可的折不该有体例角标');
+});
+
+// ── 折子说明：PR body 的五段（issue #13，2026-07-31 加）──
+//
+// 逐字照写入侧 `menxia-mcp/src/body.ts` 的 buildBody 产物摆：`## 段名` + 空行 + 段正文，
+// 段间空行相连，尾巴一行「回奏对」标记。对着 review #43 / #49 / #55 的真 body 核过。
+const FIVE_SECTION_BODY = `## 目的地
+
+merge 后作为实现依据。不对外发布。
+
+## 直达链
+
+[渲染版](https://charliezong18.github.io/menxia/?pr=43)
+
+## TLDR
+
+一句话说清这折干了什么。
+
+## 待你拍板
+
+1. 第一个要你决定的事
+2. 第二个要你决定的事
+
+## 怎么用
+
+逐篇批。批完说「读批注」。
+
+<!-- happy-session: cms7to0mrdy6cwc0u6md6o9gy -->
+`;
+
+test('折子说明：五段全在时切得出段，「待你拍板」认得出并数得对条数', () => {
+  const p = parseFolderBody(FIVE_SECTION_BODY);
+  assert.deepEqual([...p.sections.keys()], ['目的地', '直达链', 'TLDR', '待你拍板', '怎么用']);
+  assert.match(p.decisions, /第一个要你决定的事/);
+  assert.equal(p.decisionCount, 2);
+  assert.equal(hasDecisions(FIVE_SECTION_BODY), true);
+});
+
+test('折子说明：「回奏对」标记不许露脸（html:false 是把注释转义成可见文本，不是丢掉）', () => {
+  const p = parseFolderBody(FIVE_SECTION_BODY);
+  assert.ok(!p.text.includes('happy-session'), `标记没剥干净：${p.text.slice(-60)}`);
+  // 只剥这一种注释：正文里当资料引用的注释不该被连坐吃掉
+  assert.match(parseFolderBody('正文\n\n<!-- 这条要留着 -->').text, /这条要留着/);
+});
+
+test('折子说明：缺「待你拍板」的折默认收起（条件展开的另一半）', () => {
+  const noDecisions = FIVE_SECTION_BODY.replace(/## 待你拍板[\s\S]*?(?=## 怎么用)/, '');
+  const p = parseFolderBody(noDecisions);
+  assert.equal(p.decisions, null);
+  assert.equal(hasDecisions(noDecisions), false);
+  assert.ok(p.text.includes('## TLDR'), '其余段照旧要渲染，不能因为缺一段就整块不出');
+});
+
+test('折子说明：手开折（整篇散文、零个 ## 段）照样渲染，只是不判成有拍板点', () => {
+  // review #7 的真实形态：全篇加粗小标题，一个 `##` 都没有
+  const prose = '**性质**：读物快照。\n\n**TLDR**\n- 一条\n- 两条\n\n<!-- happy-session: cms0wmqzxynjiwc0u3lqohjbv -->';
+  const p = parseFolderBody(prose);
+  assert.equal(p.sections.size, 0);
+  assert.equal(p.decisions, null);
+  assert.match(p.text, /读物快照/, '认不出结构 ≠ 不给看');
+  assert.ok(find(FolderBody({ body: prose, open: false, onToggle: () => {} }), byClass('folder-body-toggle')));
+});
+
+test('折子说明：body 为 null / 空 / 只有一行标记时整块不渲染，且绝不炸（#5 那次白屏）', () => {
+  for (const bad of [null, undefined, '', '   \n\n  ', '<!-- happy-session: cms7to0mrdy6cwc0u6md6o9gy -->']) {
+    assert.equal(parseFolderBody(bad), null, `parse(${JSON.stringify(bad)}) 应为 null`);
+    assert.equal(FolderBody({ body: bad, open: true, onToggle: () => {} }), null,
+      `FolderBody(${JSON.stringify(bad)}) 应整块不渲染`);
+  }
+  // markdown-it 对非字符串直接抛，抛在渲染里就是整个 #root 卸空——非字符串输入也要接住
+  assert.doesNotThrow(() => FolderBody({ body: 42, open: true, onToggle: () => {} }));
+  assert.doesNotThrow(() => FolderBody({ body: { nope: 1 }, open: true, onToggle: () => {} }));
+});
+
+test('折子说明：围栏里的 `## 待你拍板` 不是段（认错一次 = 默认展开态判反，且没人会发现）', () => {
+  const body = '## TLDR\n\n给个例子：\n\n```md\n## 待你拍板\n\n1. 假的\n```\n\n完。';
+  const p = parseFolderBody(body);
+  assert.deepEqual([...p.sections.keys()], ['TLDR']);
+  assert.equal(p.decisions, null);
+  // 条数也要认围栏：代码示例里的 `- foo` 不是拍板点
+  const fenced = parseFolderBody('## 待你拍板\n\n只有散文，没有编号。\n\n```sh\n- 这不是拍板点\n```');
+  assert.equal(fenced.decisionCount, 0, '数不出来就不显示条数，绝不编一个');
+});
+
+test('折子说明：收起态不渲染正文；展开态走 CommentBody（唯一那条渲染路径）', () => {
+  const collapsed = FolderBody({ body: FIVE_SECTION_BODY, open: false, onToggle: () => {} });
+  assert.equal(find(collapsed, byClass('folder-body-text')), null, '收起态不得渲染正文');
+  const label = find(collapsed, byClass('folder-body-toggle')).props.children.flat(9).join('');
+  assert.match(label, /▸/);
+  assert.match(label, /折子说明（待你拍板 · 2 条）/, '标题上要点明有几条拍板点');
+
+  const open = FolderBody({ body: FIVE_SECTION_BODY, open: true, onToggle: () => {} });
+  const inner = find(open, (v) => typeof v.props?.cls === 'string' && v.props.cls.includes('folder-body-text'));
+  assert.ok(inner, '展开态应挂出正文');
+  assert.equal(inner.type, CommentBody, '必须复用 CommentBody，不许另开一个 dangerouslySetInnerHTML');
 });
 
 test('折卡角标：没传 checks 也不炸（老调用点 / demo 模式）', () => {
