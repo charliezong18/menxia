@@ -382,6 +382,23 @@ async function runSmoke(docEl) {
     : -1;
   chk('doc-starts-right-below-fold', docOffset >= 0 && docOffset < 320,
     `offset=${Math.round(docOffset)} limit=320 workH=${workEl?.clientHeight} vh=${window.innerHeight}`);
+  // ↑ 那条改窄之后，「上面所有块加起来不许把正文顶下去」这个**累计预算**就没人守了 —— 而
+  // 折子说明块恰恰默认展开、长度由写折方决定。所以把累计那条单独补回来（复审补）：
+  // 量 .work 顶到正文顶，语义是「最多趟过一屏就够到正文」。阈值用视口高而不是钉死 320：
+  // 说明块按设计要占地方（CSS 封顶 42vh），钉 320 会把合法设计判红；而一屏是 issue #1
+  // 那句抱怨（「读者滚不到文档自己的 TL;DR」）的字面含义，超了就是真的又犯了。
+  const stackOffset = workEl && docBox
+    ? docBox.getBoundingClientRect().top - workEl.getBoundingClientRect().top + workEl.scrollTop
+    : -1;
+  chk('doc-within-one-screen-of-top', stackOffset >= 0 && stackOffset < window.innerHeight,
+    `stack=${Math.round(stackOffset)} limit=${window.innerHeight}`);
+  // 封顶必须真的生效：展开态的说明块正文不许超过 42vh（+2px 取整余量）。没有这条，
+  // 上面那条累计预算能被一个「刚好这次 fixture 不长」蒙混过去，长 body 上线才炸。
+  const fbText = document.querySelector('.folder-body .folder-body-text');
+  const fbH = fbText ? fbText.getBoundingClientRect().height : -1;
+  chk('folder-body-height-capped', fbText !== null && fbH <= window.innerHeight * 0.42 + 2,
+    `h=${Math.round(fbH)} cap=${Math.round(window.innerHeight * 0.42)}`);
+  // 总批块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
   // 判块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
   const zpBox = document.querySelector('.zongpi-shown');
   chk('zongpi-in-flow-above-doc',

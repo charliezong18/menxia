@@ -401,7 +401,14 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .folder-body-toggle.has-decisions { color: var(--cinnabar); }
 /* 同 .zongpi-shown：.anno-shown-body 的数值是给右缘窄卡调的，搬到 680px 的折首块上要放大一档，
    且必须用两段选择器压过它，不靠源码顺序。 */
-.folder-body .folder-body-text { margin-top: 12px; font-size: 14.5px; line-height: 1.7; }
+/* **高度封顶 + 块内滚动**（复审补）：这块有拍板点时默认展开，而 body 多长由写折那方决定、
+   读的这方管不住——#43 那种五段带表格的 body 一展开就是几百 px。不封顶它就会把正文顶下去，
+   正是 issue #1「读者滚不到文档自己的 TL;DR」的复发路径，只是换了个块干同一件事。
+   封在 42vh：拍板点一屏内看得见，看不完在块内滚，**正文起点不受 body 长度摆布**。 */
+.folder-body .folder-body-text {
+  margin-top: 12px; font-size: 14.5px; line-height: 1.7;
+  max-height: 42vh; overflow-y: auto; overscroll-behavior: contain;
+}
 .folder-body .folder-body-text h1,
 .folder-body .folder-body-text h2,
 .folder-body .folder-body-text h3 {
