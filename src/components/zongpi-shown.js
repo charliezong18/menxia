@@ -1,6 +1,6 @@
 // 「已呈总批」折叠组：整折级的会话评论，落在折首（不锚任何行）。
 // 由来（issue #1）：长评审历史下这块整个展开挡在正文前，PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏，
-// 读者滚不到文档自己的 TL;DR。交互对齐「其他 N 串」：默认折叠 + 走 renderMarkdown，不新造一套。
+// 读者滚不到文档自己的 TL;DR。交互对齐「其他 N 串」：默认折叠 + 走 CommentBody，不新造一套。
 import { html } from '../../vendor/preact-standalone.mjs';
 import { CommentBody } from './comment-body.js';
 

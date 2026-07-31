@@ -31,7 +31,7 @@ const api = DEMO ? demoApi : gh;
 // 新增源文件必须登记在这里，否则改了它不算「新版本」、用户手上会一直跑旧代码。
 // 子组件拆出去后曾漏登记，改 cards.js 不触发提示（2026-07-28 补）。
 const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js', 'src/anchor.js',
-  'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js',
+  'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js', 'src/demo.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js'];

@@ -138,7 +138,6 @@ export const demoApi = {
   // 换 blob URL 的桩：回一张 1×1 gif 的 data URL。原本是 throw（demo 文档里没图，从没被调用过），
   // 但评论正文接上 hydrate 之后要能断言「相对路径真被换掉了」，throw 只能验到降级占位符
   getFileBlobUrl: async (path) => {
-    console.log('[demo] getFileBlobUrl', path);
     return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
   },
   listPRComments: async () => COMMENTS,
