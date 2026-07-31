@@ -84,7 +84,7 @@ function App() {
 
   const docRef = useRef(null);
   const autoRan = useRef(false); // 冒烟只跑一次（切折会让 docTick 回到 1）
-  const deepLink = useRef(parseDeepLink(location.search, gh.getRepoSlug() || (DEMO ? 'demo/repo' : '')));
+  const deepLink = useRef(parseDeepLink(location.search));
   const pendingNotice = useRef(null); // 深链失败提示：要熬过随后的 setNotice('')
   const jumpRef = useRef(null);  // 搜索命中 → 开折后跳到那一段 {prNumber, path, line}
   const indexRef = useRef(null); // 全文索引缓存（本次会话内）
@@ -100,6 +100,15 @@ function App() {
 
   const say = useCallback((t) => setNotice(t), []);
 
+  // 把暂存的深链提示放出来。openPR 一进门就 setNotice('')，所以得等它之后再送——
+  // 缺了这一步，pendingNotice 就是只写不读，深链失败会全程静默（#7 顺带修）。
+  const flushPending = useCallback(() => {
+    const m = pendingNotice.current;
+    if (!m) return;
+    pendingNotice.current = null;
+    setTimeout(() => setNotice(m), 0);
+  }, []);
+
   // 草稿变更统一走这里：内存 + localStorage 同步写，没有 effect 时序问题
   const mutateDrafts = useCallback((prNumber, fn) => {
     setDrafts((ds) => {
@@ -113,10 +122,35 @@ function App() {
 
   useEffect(() => { if (!DEMO) detectNewBuild().then(setStale); }, []);
 
+  // 深链自带的仓 vs 本地配的仓（#7）。病根：以前深链是拿**收链人**配的仓去解析**发链人**给的折号——
+  // 发给协审人的 ?pr=30 会落到他自己那个仓的第 30 折上（串台），?ref= 形态则被仓名比对直接判死（静默）。
+  // 链接现在自我描述，这里负责对账。返回 true = 本地原本没配仓、这次是从链接里认来的。
+  function adoptDeepLinkRepo() {
+    const want = deepLink.current?.repo;
+    if (!want) return false;                       // 老链接没带仓：照旧按当前仓解析，行为不变
+    const have = gh.getRepoSlug();
+    if (!have) { gh.setRepoSlug(want); return true; } // 头一回进来：省得收链人还得回头问仓名叫啥
+    if (want.toLowerCase() === have.toLowerCase()) return false;
+    // 切仓绝不静默：钥匙未必开得了那个仓，而且本地只存一个仓，切了就得手动切回来。
+    // 全名摆在弹窗里也是防钓鱼——别人发的链接不能悄悄把 app 指到他的仓上。
+    if (confirm(`这条直达链指向 ${want}，你当前配的是 ${have}。\n切到 ${want}？（钥匙要能开它，否则切过去读不到）`)) {
+      gh.setRepoSlug(want);
+    } else {
+      deepLink.current = null;                     // 不切，就别拿这条链去本仓瞎找折号
+      pendingNotice.current = `留在 ${have} 没动——那条链接指向 ${want}，要读得先切仓。`;
+    }
+    return false;
+  }
+
   // ── 启动 ──
   useEffect(() => {
     if (DEMO) { loadPRs(); return; }
-    if (!gh.getToken()) { setPhase('setup'); return; }
+    const adopted = adoptDeepLinkRepo();
+    if (!gh.getToken()) {
+      setPhase('setup');
+      if (adopted) setSetupMsg(`奏折仓库已按你点开的这条链接填好（${gh.getRepoSlug()}）——配一把开得了它的钥匙就能读。`);
+      return;
+    }
     if (!gh.getRepoSlug()) { setPhase('setup'); setSetupMsg('这版起奏折仓库改成填的了——补一次 owner/repo，钥匙照旧粘一遍。'); return; }
     loadPRs();
   }, []);
@@ -161,6 +195,7 @@ function App() {
           if (dl.path) jumpRef.current = { prNumber: target.number, path: dl.path, line: dl.line || 1 };
           setTab(target.merged_at ? 'done' : 'open');
           openPR(target);
+          flushPending();
           return;
         }
         // 用 ref 暂存：紧接着的 boot/loadPRs 会 setNotice('') 把它冲掉
@@ -169,6 +204,7 @@ function App() {
           : '这条直达链接没带折号（blob 形态只指到文件），已打开清单首折。';
       }
       if (list.length && !R.current.cur) openPR(list[0]); // 在途中用户已手点开折子就别顶掉他
+      flushPending();
     } catch (err) {
       if (err.tokenDead) { gh.clearToken(); setPhase('setup'); setSetupMsg('钥匙失效了，换一把。'); return; }
       say(err.rateLimited ? '碰到 GitHub 限流，缓一会儿再刷新。' : `拉取失败：${err.message}`);
@@ -350,7 +386,13 @@ function App() {
       .map((el) => ({ line: +el.dataset.line, el }))
       .filter((x) => x.line)
       .sort((a, b) => a.line - b.line);
-  }, [docTick]);
+    // docPath 也在依赖里（#2）：blockTops 描述的是「当前文档的块」，它的失效条件本来就该含
+    // 「换了文档」。只认 docTick 的话，切 doc-tab 时 marginItems 已按新文档重建出一批新 DOM 节点，
+    // 而 blockTops / layoutCards 身份不变 → 布局 effect 整个不触发 → 新卡片一个 style.top 都没有，
+    // 全塌到容器顶端叠在一起，要等正文取回来（一整个网络往返）才归位。
+    // 附带收益：岛屿 replaceChildren 之后旧 blockTops 里存的是已脱离文档的节点，
+    // 这一版顺手让它跟着失效，不留 detached 引用。
+  }, [docTick, docPath]);
 
   const layoutCards = useCallback(() => {
     const col = document.getElementById('margin-col');
@@ -466,7 +508,8 @@ function App() {
   useEffect(() => {
     if (DEMO) return;
     const url = cur?.pr
-      ? buildDeepLink(location.origin + location.pathname, { prNumber: cur.pr.number, path: docPath })
+      ? buildDeepLink(location.origin + location.pathname,
+        { repo: gh.getRepoSlug(), prNumber: cur.pr.number, path: docPath })
       : location.origin + location.pathname;
     if (location.href !== url) history.replaceState(null, '', url);
   }, [cur?.pr?.number, docPath]);
@@ -509,7 +552,7 @@ function App() {
            : buildRef({ slug, prNumber: cur?.pr?.number }))
       : (() => {
           const url = buildDeepLink(location.origin + location.pathname,
-            { prNumber: cur?.pr?.number, path: a ? docPath : null, line: a?.line });
+            { repo: slug, prNumber: cur?.pr?.number, path: a ? docPath : null, line: a?.line });
           const q = (a?.quote || '').trim().slice(0, 60);
           return q ? `[「${q}」](${url})` : url;
         })();

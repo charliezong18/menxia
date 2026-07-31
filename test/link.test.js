@@ -63,36 +63,64 @@ test('buildRef: 超长引文截断（60 字）', () => {
 });
 
 // ── F7 外部直达链接 ──
+// #7：深链一旦跨人传递，就不能再拿收链人本地配的仓去解析——链接必须自带仓。
+// 所以 parseDeepLink 不再收 slug 参数：它对本地配置一无所知，只如实回报链接说了什么。
 import { parseDeepLink, buildDeepLink } from '../src/link.js';
 
 test('parseDeepLink: ?pr=13 及带 path/line', () => {
-  assert.deepEqual(parseDeepLink('?pr=13', SLUG), { prNumber: 13, path: null, line: null });
-  assert.deepEqual(parseDeepLink('?pr=13&path=docs/a.md&line=42', SLUG),
-    { prNumber: 13, path: 'docs/a.md', line: 42 });
+  assert.deepEqual(parseDeepLink('?pr=13'), { repo: null, prNumber: 13, path: null, line: null });
+  assert.deepEqual(parseDeepLink('?pr=13&path=docs/a.md&line=42'),
+    { repo: null, prNumber: 13, path: 'docs/a.md', line: 42 });
 });
 
-test('parseDeepLink: ?ref= 走 F6 那套解析（零新语法）', () => {
+test('parseDeepLink: ?repo= 让链接自带仓（跨人传链的前提）', () => {
+  assert.deepEqual(parseDeepLink('?repo=charliezong18/agent-commons&pr=3'),
+    { repo: 'charliezong18/agent-commons', prNumber: 3, path: null, line: null });
+});
+
+test('parseDeepLink: repo 值不合法就当没带，不拖垮整条链', () => {
+  // 宁可退化成「没带仓」（后续按当前仓解析，行为同老链接），也不能整条链变 null 打不开
+  ['nope', 'a/b/c', 'owner/', '/repo', 'ow ner/repo'].forEach((bad) =>
+    assert.equal(parseDeepLink(`?repo=${encodeURIComponent(bad)}&pr=3`).repo, null, `应忽略：${bad}`));
+  assert.equal(parseDeepLink('?repo=nope&pr=3').prNumber, 3);
+});
+
+test('parseDeepLink: ?ref= 走 F6 那套解析，并回报它指向哪个仓', () => {
   assert.deepEqual(
-    parseDeepLink('?ref=' + encodeURIComponent('https://github.com/charliezong18/review/blob/main/docs/a.md#L7'), SLUG),
-    { prNumber: null, path: 'docs/a.md', line: 7 });
+    parseDeepLink('?ref=' + encodeURIComponent('https://github.com/charliezong18/review/blob/main/docs/a.md#L7')),
+    { repo: 'charliezong18/review', prNumber: null, path: 'docs/a.md', line: 7 });
+});
+
+test('parseDeepLink: ?ref= 指向别的仓不再静默失效（#7 的病根）', () => {
+  // 旧行为：parseZhupiLink 拿收链人配的 slug 一比对不上 → return null → 连报错都没有。
+  // 新行为：进场链接一律按它自己写的仓解析，切不切仓交给 UI 去问人。
+  assert.deepEqual(
+    parseDeepLink('?ref=' + encodeURIComponent('https://github.com/charliezong18/agent-commons/pull/1')),
+    { repo: 'charliezong18/agent-commons', prNumber: 1, path: null, line: null });
 });
 
 test('parseDeepLink: 垃圾输入一律 null（不能让烂链接把 app 带沟里）', () => {
   ['', '?', '?pr=', '?pr=abc', '?pr=0', '?pr=-3', '?foo=1',
-   '?ref=' + encodeURIComponent('https://github.com/slopus/happy/pull/1')].forEach((s) =>
-    assert.equal(parseDeepLink(s, SLUG), null, `应拒绝：${s}`));
+   '?ref=' + encodeURIComponent('https://evil.example.com/charliezong18/review/pull/1'),
+   '?ref=not-a-url', '?repo=owner/repo'].forEach((s) =>
+    assert.equal(parseDeepLink(s), null, `应拒绝：${s}`));
 });
 
 test('parseDeepLink: 非法 line 退化成 null 而不是崩', () => {
-  assert.equal(parseDeepLink('?pr=5&line=abc', SLUG).line, null);
-  assert.equal(parseDeepLink('?pr=5&line=0', SLUG).line, null);
+  assert.equal(parseDeepLink('?pr=5&line=abc').line, null);
+  assert.equal(parseDeepLink('?pr=5&line=0').line, null);
 });
 
-test('buildDeepLink ↔ parseDeepLink 往返一致', () => {
-  const url = buildDeepLink('https://x.io/zhupi/', { prNumber: 13, path: 'docs/a.md', line: 42 });
-  assert.equal(url, 'https://x.io/zhupi/?pr=13&path=docs%2Fa.md&line=42');
-  assert.deepEqual(parseDeepLink(new URL(url).search, SLUG),
-    { prNumber: 13, path: 'docs/a.md', line: 42 });
+test('buildDeepLink ↔ parseDeepLink 往返一致（带仓）', () => {
+  const url = buildDeepLink('https://x.io/zhupi/',
+    { repo: 'charliezong18/review', prNumber: 13, path: 'docs/a.md', line: 42 });
+  assert.equal(url, 'https://x.io/zhupi/?repo=charliezong18%2Freview&pr=13&path=docs%2Fa.md&line=42');
+  assert.deepEqual(parseDeepLink(new URL(url).search),
+    { repo: 'charliezong18/review', prNumber: 13, path: 'docs/a.md', line: 42 });
+});
+
+test('buildDeepLink: 不给 repo 就不吐 repo=（老链接照旧能生成）', () => {
+  assert.equal(buildDeepLink('https://x.io/zhupi/', { prNumber: 13 }), 'https://x.io/zhupi/?pr=13');
 });
 
 test('buildDeepLink: 无折号退化成首页', () => {

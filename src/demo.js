@@ -179,15 +179,23 @@ if (FAIL) {
 }
 
 // ?demo=1&deep=1：验直达进场——URL 带 ?pr=998（归档折）应直接开到它并切到已钦此栏
-if (new URLSearchParams(location.search).get('deep') === '1') {
+// ?demo=1&deep=miss&pr=9999：验折号找不到时**真的出提示**——pendingNotice 曾经只写不读
+// （声明了、赋值了、全文件没有第三处），深链失败一路静默。UI 胶水没测试就是会这样烂掉。
+const DEEP = new URLSearchParams(location.search).get('deep');
+if (DEEP === '1' || DEEP === 'miss') {
   setTimeout(() => {
     let pass = 0, fail = 0;
     const chk = (n, c, d = '') => { c ? pass++ : fail++; console.log(`[smoke] ${c ? 'PASS' : 'FAIL'} ${n}${d ? ` — ${d}` : ''}`); };
-    const crumb = document.querySelector('.crumb')?.textContent || '';
-    chk('deep-opened-target', crumb.includes('已钦此') || crumb.includes('归档'), `crumb=${crumb.slice(0, 40)}`);
-    const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
-    chk('deep-switched-tab', doneTab?.classList.contains('active'));
-    chk('deep-readonly', !document.querySelector('.btn-qinci'));
+    if (DEEP === 'miss') {
+      const notice = document.querySelector('.notice')?.textContent || '';
+      chk('deep-miss-notice-shown', notice.includes('9999'), `notice=${notice.slice(0, 60) || '(空)'}`);
+    } else {
+      const crumb = document.querySelector('.crumb')?.textContent || '';
+      chk('deep-opened-target', crumb.includes('已钦此') || crumb.includes('归档'), `crumb=${crumb.slice(0, 40)}`);
+      const doneTab = [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('已钦此'));
+      chk('deep-switched-tab', doneTab?.classList.contains('active'));
+      chk('deep-readonly', !document.querySelector('.btn-qinci'));
+    }
     console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
   }, 1500);
 }
@@ -417,6 +425,14 @@ async function runSmoke(docEl) {
   [...document.querySelectorAll('.lang-opt')].find((b) => b.textContent.trim() === '中')?.click();
   await sleep(400);
   [...document.querySelectorAll('.doc-tab')].find((b) => b.textContent.includes('demo'))?.click();
+  // #2：换文档那一拍——卡片已按新文档重建，正文岛屿还没取回来。此刻卡片必须已经有定位，
+  // 否则就是「全塌到容器顶端叠成一坨、等一个网络往返才归位」。取样点必须在 sleep 之前，
+  // 等下去就看不见了（demo 的 api 零延迟，真 GitHub 上这个窗口是一整个往返）。
+  await Promise.resolve();
+  const midTops = [...document.querySelectorAll('#margin-col .anno-card')].map((el) => el.style.top);
+  chk('cards-positioned-during-doc-switch',
+    midTops.length > 0 && midTops.every((t) => t && t !== 'auto'),
+    `n=${midTops.length} tops=${midTops.map((t) => t || 'UNSET').join('|') || 'NONE'}`);
   await sleep(600);
 
   // 折间链接：本仓链接被拦成 app 内跳转；外链放行不拦

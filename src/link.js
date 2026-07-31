@@ -51,23 +51,49 @@ export function buildRef({ slug, prNumber, path, line, quote, ref }) {
 }
 
 // ── F7 外部直达链接（deep link）──
-// 支持两种进场形态，都收敛成 F6 已有的 {prNumber, path, line}：
-//   ?pr=13 / ?pr=13&path=docs/a.md&line=42   —— 短、好念、agent 好拼
-//   ?ref=<GitHub permalink>                  —— F6 已认得的三种链接原样塞进来，零新语法
-export function parseDeepLink(search, slug) {
+// 支持两种进场形态，都收敛成 F6 已有的 {prNumber, path, line} 再加一个 repo：
+//   ?repo=owner/name&pr=13&path=docs/a.md&line=42   —— 短、好念、agent 好拼
+//   ?ref=<GitHub permalink>                          —— F6 已认得的三种链接原样塞进来，零新语法
+//
+// #7：这里**故意不收 slug**。深链的病根就是拿收链人本地配的仓去解析别人发来的链接——
+// 发给协审人的 `?pr=30` 会落到他自己那个仓的第 30 折上（串台），而 `?ref=` 形态更阴：
+// parseZhupiLink 比对仓名不符直接 return null，连报错都没有（静默失效）。
+// 进场链接必须自我描述，本函数对本地配置一无所知，只如实回报链接说了什么；
+// 「要不要切到这个仓」是 UI 该问人的事，不是解析该替人做的决定。
+// repo 为 null = 链接没说，按当前仓解析（老链接照旧能用）。
+export function parseDeepLink(search) {
   const q = new URLSearchParams(search || '');
   const ref = q.get('ref');
-  if (ref) return parseZhupiLink(ref, slug);
+  if (ref) {
+    const repo = repoOf(ref);
+    const parsed = repo && parseZhupiLink(ref, repo);
+    return parsed ? { repo, ...parsed } : null;
+  }
   const pr = q.get('pr');
   if (!pr) return null;
   const prNumber = parseInt(pr, 10);
   if (!Number.isFinite(prNumber) || prNumber <= 0) return null;
   const line = parseInt(q.get('line') || '', 10);
   return {
+    repo: validRepo(q.get('repo')),
     prNumber,
     path: q.get('path') || null,
     line: Number.isFinite(line) && line > 0 ? line : null,
   };
+}
+
+// owner/repo 的字面校验（GitHub 允许的就这些字符）。烂值一律当「没带仓」而不是让整条链变 null——
+// 链接打不开的代价远高于少切一次仓。
+const validRepo = (s) => (/^[\w.-]+\/[\w.-]+$/.test(String(s || '')) ? s : null);
+
+// 从 GitHub permalink 里取 owner/repo。非 github.com 一律 null（交给 parseDeepLink 拒掉）。
+function repoOf(href) {
+  try {
+    const u = new URL(href, 'https://github.com');
+    if (u.hostname !== 'github.com') return null;
+    const [owner, repo] = u.pathname.replace(/^\/+/, '').split('/');
+    return validRepo(`${owner}/${repo}`);
+  } catch { return null; }
 }
 
 // ── F9 回奏对（回呈折的 Happy 会话）──
@@ -105,9 +131,12 @@ function sessionUrl(href) {
 }
 
 // 当前位置 → 可分享地址（写地址栏 + 「拷直达链」都用它）
-export function buildDeepLink(origin, { prNumber, path, line }) {
+// repo 放最前：链接一眼看得出指向哪个仓，收链人也不必靠自己的本地配置猜（#7）。
+export function buildDeepLink(origin, { repo, prNumber, path, line }) {
   if (!prNumber) return origin;
-  const q = new URLSearchParams({ pr: String(prNumber) });
+  const q = new URLSearchParams();
+  if (repo) q.set('repo', repo);
+  q.set('pr', String(prNumber));
   if (path) q.set('path', path);
   if (line) q.set('line', String(line));
   return `${origin}?${q}`;
