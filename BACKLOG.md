@@ -34,6 +34,8 @@ Things that are thought through but not scheduled.
 
 **Risk to defend against**: pre-filled comments **anchor your judgment** — people who see a ready-made opinion tend to nod along and think less. Mitigation: draft comments collapse to a one-line title by default, and you expand them only after your own read-through; or offer a "blindfold first" toggle. Don't build F2 until this is solved.
 
+**✅ Decided (2026-07-31, reading folder #15 annotations)**: the anchoring mitigation is the "blindfold first" toggle — draft comments stay covered as a column until you've done your own pass, then uncover. One added implementation requirement: **configurable review** — when submitting a folder, the draft review's type and model are configurable: type by document nature (code / design / etc., each with its own review lens), model selectable (Fable, GPT 5.6, Gemini, ...). Configuration and invocation live entirely on the agent side; the desk still renders by marker only — the architectural boundary stays put.
+
 ---
 
 ## F3 · One-tap accept / plus-one
@@ -45,6 +47,8 @@ Things that are thought through but not scheduled.
 **How**: pure frontend + GitHub API — **准** = repost the draft comment's content as a real 朱批 (or add a 👍 reaction to the original comment and mark it adopted); **加一** = open the comment box pre-filled with the quote; **驳** = hide locally and log one negative signal (usable for improving F2's prompt).
 
 **Undecided**: does **准** become a new comment under your name, or does it stamp an "approved" marker on the draft comment? The former is clearer for the agent (it only recognizes real 朱批), the latter is less work. Leaning toward the former.
+
+**✅ Decided (2026-07-31, reading folder #15 annotations)**: the former — 准 converts the draft into a formal annotation under Charlie's name (the agent keeps recognizing only formal annotations; semantics unchanged). Folded into F2's implementation scope, not scheduled separately.
 
 ---
 
