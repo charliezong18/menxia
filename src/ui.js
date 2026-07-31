@@ -18,6 +18,7 @@ import { Topbar } from './components/topbar.js';
 import { OtherThreads } from './components/other-threads.js';
 import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions } from './components/folder-body.js';
+import { S } from './strings.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
@@ -32,7 +33,7 @@ const api = DEMO ? demoApi : gh;
 // 新增源文件必须登记在这里，否则改了它不算「新版本」、用户手上会一直跑旧代码。
 // 子组件拆出去后曾漏登记，改 cards.js 不触发提示（2026-07-28 补）。
 const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js', 'src/anchor.js',
-  'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js', 'src/demo.js',
+  'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js', 'src/demo.js', 'src/strings.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js'];
@@ -117,7 +118,7 @@ function App() {
       const nd = fn(ds);
       const err = A.saveDrafts(prNumber, nd);
       // 存不下必须明说：草稿是这里唯一不可再生的数据（配额爆时曾静默吞掉）
-      if (err) setTimeout(() => setNotice('草稿存不进本地存储（配额可能满了）——先提交已写的批注，别再往下攒。'), 0);
+      if (err) setTimeout(() => setNotice(S.draft.quotaFull), 0);
       return nd;
     });
   }, []);
@@ -135,11 +136,11 @@ function App() {
     if (want.toLowerCase() === have.toLowerCase()) return false;
     // 切仓绝不静默：钥匙未必开得了那个仓，而且本地只存一个仓，切了就得手动切回来。
     // 全名摆在弹窗里也是防钓鱼——别人发的链接不能悄悄把 app 指到他的仓上。
-    if (confirm(`这条直达链指向 ${want}，你当前配的是 ${have}。\n切到 ${want}？（钥匙要能开它，否则切过去读不到）`)) {
+    if (confirm(S.deepLink.repoSwitchConfirm(want, have))) {
       gh.setRepoSlug(want);
     } else {
       deepLink.current = null;                     // 不切，就别拿这条链去本仓瞎找折号
-      pendingNotice.current = `留在 ${have} 没动——那条链接指向 ${want}，要读得先切仓。`;
+      pendingNotice.current = S.deepLink.repoSwitchDeclined(have, want);
     }
     return false;
   }
@@ -150,10 +151,10 @@ function App() {
     const adopted = adoptDeepLinkRepo();
     if (!gh.getToken()) {
       setPhase('setup');
-      if (adopted) setSetupMsg(`敕草仓库已按你点开的这条链接填好（${gh.getRepoSlug()}）——配一把开得了它的钥匙就能读。`);
+      if (adopted) setSetupMsg(S.setup.repoAdoptedFromLink(gh.getRepoSlug()));
       return;
     }
-    if (!gh.getRepoSlug()) { setPhase('setup'); setSetupMsg('这版起敕草仓库改成填的了——补一次 owner/repo，钥匙照旧粘一遍。'); return; }
+    if (!gh.getRepoSlug()) { setPhase('setup'); setSetupMsg(S.setup.repoNowRequired); return; }
     loadPRs();
   }, []);
 
@@ -171,8 +172,7 @@ function App() {
     const map = Object.fromEntries(got);
     setChecks(map);
     if (Object.values(map).some((v) => v?.state === 'unreadable')) {
-      setNotice('读不到体例检查结果 —— 钥匙缺 Checks: Read 权限。折卡上的红绿会一直空着，'
-        + '那是「看不见」不是「没问题」。去 GitHub 的 token 设置里补上这一项。');
+      setNotice(S.check.unreadableNotice);
     }
   }
 
@@ -202,36 +202,36 @@ function App() {
         }
         // 用 ref 暂存：紧接着的 boot/loadPRs 会 setNotice('') 把它冲掉
         pendingNotice.current = dl.prNumber
-          ? `直达链接指向第 ${dl.prNumber} 折，但清单里没有（可能已删或不在本仓）。`
-          : '这条直达链接没带折号（blob 形态只指到文件），已打开清单首折。';
+          ? S.deepLink.folderNotFound(dl.prNumber)
+          : S.deepLink.noFolderNumber;
       }
       if (list.length && !R.current.cur) openPR(list[0]); // 在途中用户已手点开折子就别顶掉他
       flushPending();
     } catch (err) {
-      if (err.tokenDead) { gh.clearToken(); setPhase('setup'); setSetupMsg('钥匙失效了，换一把。'); return; }
-      say(err.rateLimited ? '碰到 GitHub 限流，缓一会儿再刷新。' : `拉取失败：${err.message}`);
+      if (err.tokenDead) { gh.clearToken(); setPhase('setup'); setSetupMsg(S.setup.tokenDead); return; }
+      say(err.rateLimited ? S.list.rateLimited : S.list.failed(err.message));
     }
   }
 
   async function onSaveToken(repoRaw, tokenRaw) {
     const slug = gh.parseRepoSlug(repoRaw);
-    if (!slug) return setSetupMsg('敕草仓库要填成 owner/repo（贴 GitHub 链接也行）。');
-    if (!tokenRaw.trim()) return setSetupMsg('先粘一把钥匙。');
-    setSetupMsg('验钥中…');
+    if (!slug) return setSetupMsg(S.setup.repoFormat);
+    if (!tokenRaw.trim()) return setSetupMsg(S.setup.tokenMissing);
+    setSetupMsg(S.setup.verifying);
     gh.setRepoSlug(slug);
     gh.setToken(tokenRaw);
     try {
       const { canWrite, prAccess } = await gh.verifyToken();
       if (!prAccess) {
         gh.clearToken();
-        return setSetupMsg('钥匙差一项：Pull requests: Read and write。回 GitHub 的 token 页补上（不用重新生成，改完点 Update），再回来点存钥。');
+        return setSetupMsg(S.setup.tokenMissingPRScope);
       }
       setSetupMsg('');
       await loadPRs();
-      if (!canWrite) say('提醒：这把钥匙没有 Contents 写权限，读批都行，但「画可」（merge）会失败。');
+      if (!canWrite) say(S.setup.tokenNoWriteWarn);
     } catch (err) {
       gh.clearToken();
-      setSetupMsg(`这把钥匙开不了 ${gh.repoSlug()}：${err.message}`);
+      setSetupMsg(S.setup.tokenCannotOpen(gh.repoSlug(), err.message));
     }
   }
 
@@ -260,7 +260,7 @@ function App() {
     if (el) {
       const p = document.createElement('p');
       p.className = 'state';
-      p.textContent = '展折中…';
+      p.textContent = S.doc.loading;
       el.replaceChildren(p);
     }
     (async () => {
@@ -269,7 +269,7 @@ function App() {
         if (R.current.cur?.pr.number !== pr.number) return; // 世界已变，丢弃
         const docs = files.filter(isDoc);
         setCur({ pr, files, docs });
-        if (!docs.length) setDocErr('此折无 markdown 正文（代码 PR 的 diff 视图在北极星里）。');
+        if (!docs.length) setDocErr(S.doc.noMarkdown);
         else {
           const jp = jumpRef.current;
           const want = jp?.prNumber === pr.number && docs.find((f) => f.filename === jp.path);
@@ -279,7 +279,7 @@ function App() {
         }
       } catch (err) {
         if (R.current.cur?.pr.number !== pr.number) return;
-        setDocErr(`展折失败：${err.message}`);
+        setDocErr(S.doc.loadFailed(err.message));
       }
     })();
     // rev 序列 + 已呈批注串：与正文并行拉，各自带世界守卫，失败不影响读折主线
@@ -315,7 +315,7 @@ function App() {
     el.replaceChildren();
     const p = document.createElement('p');
     p.className = 'state';
-    p.textContent = '展折中…';
+    p.textContent = S.doc.loading;
     el.appendChild(p);
     (async () => {
       try {
@@ -344,7 +344,7 @@ function App() {
         el.replaceChildren();
         const q = document.createElement('p');
         q.className = 'state err';
-        q.textContent = `展折失败：${err.message}`;
+        q.textContent = S.doc.loadFailed(err.message);
         el.appendChild(q);
       }
     })();
@@ -536,7 +536,7 @@ function App() {
       const slug = gh.getRepoSlug();
       const ref = cur?.pr?.head?.sha;
       if (slug && ref) window.open(`https://github.com/${slug}/blob/${ref}/${rel}`, '_blank', 'noopener');
-      else say(`这折里没有 ${rel}`);
+      else say(S.doc.relLinkMissing(rel));
       return;
     }
 
@@ -562,8 +562,8 @@ function App() {
           const q = (a?.quote || '').trim().slice(0, 60);
           return q ? `[「${q}」](${url})` : url;
         })();
-    try { await navigator.clipboard.writeText(md); say(`已拷贝引用：${md.slice(0, 60)}${md.length > 60 ? '…' : ''}`); }
-    catch { say(`拷贝失败，手动复制：${md}`); }
+    try { await navigator.clipboard.writeText(md); say(S.ref.copied(`${md.slice(0, 60)}${md.length > 60 ? '…' : ''}`)); }
+    catch { say(S.ref.copyFailed(md)); }
   }
 
   // F8 切语言：留在当前折当前篇，只换语言变体（找不到对应版就什么都不做）
@@ -580,11 +580,11 @@ function App() {
   // ── 搜索：标题即输即filter；回车翻全折全文（含归档），命中点击直达段落 ──
   async function runSearch() {
     const query = q.trim();
-    if (query.length < 2) return say('搜索词至少两个字。');
+    if (query.length < 2) return say(S.search.tooShort);
     const all = [...prs, ...donePrs];
     if (!indexRef.current) {
-      setSearching('翻折中…');
-      indexRef.current = await buildIndex(api, all, (d, t) => setSearching(`翻折中 ${d}/${t}…`));
+      setSearching(S.search.indexing);
+      indexRef.current = await buildIndex(api, all, (d, t) => setSearching(S.search.indexingProgress(d, t)));
       setSearching('');
     }
     setHits(searchIndex(indexRef.current, query));
@@ -594,7 +594,7 @@ function App() {
   function jumpTo({ prNumber, path, line }) {
     const all = [...prs, ...donePrs];
     const target = prNumber ? all.find((p) => p.number === prNumber) : cur?.pr;
-    if (!target) return say(`跳不过去：本仓没有第 ${prNumber} 折（可能已删或不在清单里）。`);
+    if (!target) return say(S.jump.folderMissing(prNumber));
     if (path) jumpRef.current = { prNumber: target.number, path, line: line || 1 };
     setTab(target.merged_at ? 'done' : 'open');
     if (target.number === cur?.pr?.number && path === docPath && line) {
@@ -621,11 +621,11 @@ function App() {
     const c = R.current.cur;
     const ds = R.current.drafts;
     if (!c || !ds.length || R.current.busy) return;
-    if (R.current.archived) return say('这折已画可归档，只读——要再批就开新折。');
-    if (!R.current.onHead) return say('正在读旧版——批注只能呈给最新版，先切回 head 再提交。');
-    if (R.current.editing) return say('有一条涂归还在编辑：先「存批」或「作罢」它，再呈回。');
+    if (R.current.archived) return say(S.submit.archivedReadonly);
+    if (!R.current.onHead) return say(S.submit.oldRevBlocked);
+    if (R.current.editing) return say(S.submit.editingBlocked);
     const noteless = ds.filter((d) => !d.note.trim());
-    if (noteless.length) return say(`还有 ${noteless.length} 条涂归没写内容（空批注不呈）——写完或作罢它们再提交。`);
+    if (noteless.length) return say(S.submit.emptyNotes(noteless.length));
     // 在途中世界可能变（切折/刷新）——入口快照，完成回调只认这份
     const prNumber = c.pr.number;
     const ref = c.pr.head.sha;
@@ -639,17 +639,17 @@ function App() {
       else fallback.push(d);
     });
     const body = fallback.length
-      ? `以下涂归锚定不到可批注行（或写于旧版本），并入判：\n\n${fallback.map(A.fmtDraft).join('\n\n---\n\n')}`
-      : `门下 · ${inline.length} 条`; // body 恒非空：COMMENT 的 body 是文档必填项，不赌空串
+      ? S.submit.fallbackBody(fallback.map(A.fmtDraft).join('\n\n---\n\n'))
+      : S.submit.inlineBody(inline.length); // body 恒非空：COMMENT 的 body 是文档必填项，不赌空串
     setBusy(true);
     try {
       await api.submitReview(prNumber, { body, comments: inline, commitId: ref });
       A.saveDrafts(prNumber, []); // 直接清对应 key；内存只在世界没变时动
       if (R.current.cur?.pr.number === prNumber) setDrafts([]);
       loadComments(prNumber); // 重拉已呈串：让刚呈的立即出现在右缘（世界守卫在 loadComments 内）
-      say(`已呈回 ${inline.length} 条涂归${fallback.length ? `（${fallback.length} 条并入判）` : ''}——回 Happy 说「读批注」。`);
+      say(S.submit.done(inline.length, fallback.length));
     } catch (err) {
-      say(`呈递失败（草稿都还在）：${err.message}`);
+      say(S.submit.failed(err.message));
     } finally {
       setBusy(false);
     }
@@ -666,9 +666,9 @@ function App() {
       setZongpi(false);
       loadComments(c.pr.number); // 重拉：让刚呈的判立刻显示在折首
       setZongpiOpen(true);       // 折叠组默认收起，自己刚发的那条必须展开给他看见——否则回到「只能发不能看」
-      say('判已呈——回 Happy 说「读批注」。');
+      say(S.zongpi.sent);
     } catch (err) {
-      say(`判呈递失败：${err.message}`);
+      say(S.zongpi.failed(err.message));
     } finally {
       setBusy(false);
     }
@@ -678,11 +678,11 @@ function App() {
   async function qinci() {
     const c = R.current.cur;
     if (!c) return;
-    if (!R.current.onHead) return say('正在读旧版——画可定的是最新版，先切回 head 再画可。');
+    if (!R.current.onHead) return say(S.merge.oldRevBlocked);
     const pr = c.pr;
     const pending = R.current.drafts.length;
-    const warn = pending ? `\n注意：还有 ${pending} 条涂归草稿没呈回，merge 之后就没处提交了。` : '';
-    if (!confirm(`画可定稿：squash merge #${pr.number}「${pr.title}」？${warn}`)) return;
+    const warn = pending ? S.merge.pendingDraftsWarn(pending) : '';
+    if (!confirm(S.merge.confirm(pr.number, pr.title, warn))) return;
     setBusy(true);
     try {
       if (pr.draft) {
@@ -690,13 +690,13 @@ function App() {
         pr.draft = false; // 本地同步：merge 失败重试不再重打 markReady
       }
       await api.mergePR(pr.number, pr.head.sha); // 带 sha：agent 中途推新版则 409，所批即所合
-      say(`已画可：#${pr.number} 定稿归档。对外交付回 Happy 说一声。`);
+      say(S.merge.done(pr.number));
       setCur(null);
       setDocPath(null);
       setDocErr(null);
       await loadPRs();
     } catch (err) {
-      say(`画可失败：${err.message}${pr.draft ? `（此折是 draft；若是 GraphQL 被钥匙拒了，回 Happy 说「画可 #${pr.number}」我来执行）` : ''}`);
+      say(S.merge.failed(err.message, pr.draft, pr.number));
     } finally {
       setBusy(false);
     }
@@ -711,15 +711,15 @@ function App() {
   if (phase === 'setup') return html`<${Setup} msg=${setupMsg} onSave=${onSaveToken}
     canCancel=${Boolean(gh.getToken() && gh.getRepoSlug())}
     onCancel=${() => { setSetupMsg(''); setPhase('app'); if (!prs.length) loadPRs(); }}
-    onForget=${() => { gh.clearToken(); setSetupMsg('钥匙已清除。粘一把新的再进来。'); }} />`;
+    onForget=${() => { gh.clearToken(); setSetupMsg(S.setup.tokenCleared); }} />`;
 
   const docDrafts = drafts.filter((d) => d.path === docPath);
   const others = drafts.length - docDrafts.length;
   const timeAgo = (iso) => {
     const mins = Math.round((Date.now() - new Date(iso)) / 60000);
-    if (mins < 60) return `${mins} 分钟前`;
-    if (mins < 1440) return `${Math.round(mins / 60)} 小时前`;
-    return `${Math.round(mins / 1440)} 天前`;
+    if (mins < 60) return S.time.minutesAgo(mins);
+    if (mins < 1440) return S.time.hoursAgo(Math.round(mins / 60));
+    return S.time.daysAgo(Math.round(mins / 1440));
   };
 
   // 已呈批注串：按能否定位到当前文档分两组
@@ -792,29 +792,29 @@ function App() {
             </div>`}
           ${cur && revs.length > 1 && html`
             <div class="rev-row">
-              <span class="rev-label">本</span>
+              <span class="rev-label">${S.rev.label}</span>
               <div class="rev-switch">
                 ${revs.map((r) => html`
                   <button key=${r.sha}
                     class=${'rev-opt' + (r.sha === curRevSha ? ' active' : '')}
-                    title=${`v${r.v} · ${r.sha.slice(0, 7)}${r.when ? ' · ' + timeAgo(r.when) : ''}${r.isHead ? '（最新）' : ''}`}
+                    title=${S.rev.optionTitle(r.v, r.sha.slice(0, 7), r.when ? ' · ' + timeAgo(r.when) : '', r.isHead)}
                     onClick=${() => setViewed(r.isHead ? null : r.sha)}>
                     v${r.v}${r.isHead ? '' : ' · ' + r.sha.slice(0, 7)}
                   </button>`)}
               </div>
             </div>`}
           ${cur && archived && html`
-            <p class="rev-notice">此折已画可归档 · 只读（要再批就开新折）</p>`}
+            <p class="rev-notice">${S.rev.archivedNotice}</p>`}
           ${cur && !archived && !onHead && html`
-            <p class="rev-notice">在读 v${revs.find((r) => r.sha === curRevSha)?.v ?? '?'}（旧版）· 批注请回最新版</p>`}
+            <p class="rev-notice">${S.rev.oldRevNotice(revs.find((r) => r.sha === curRevSha)?.v ?? '?')}</p>`}
           ${cur && html`<${FolderBody} body=${cur.pr.body} open=${bodyOpen}
             onToggle=${() => setBodyOpen((o) => !o)} hydrate=${hydrateComment} />`}
           ${cur && html`<${ZongpiShown} zongpis=${zongpis} open=${zongpiOpen}
             onToggle=${() => setZongpiOpen((o) => !o)} hydrate=${hydrateComment} />`}
           ${langSibling && html`
-            <div class="lang-switch" title="同一折的中英两版，切页不离开当前折">
-              <button class=${'lang-opt' + (curLangOf === 'zh' ? ' active' : '')} onClick=${() => switchLang('zh')}>中</button>
-              <button class=${'lang-opt' + (curLangOf === 'en' ? ' active' : '')} onClick=${() => switchLang('en')}>EN</button>
+            <div class="lang-switch" title=${S.docLang.switchTitle}>
+              <button class=${'lang-opt' + (curLangOf === 'zh' ? ' active' : '')} onClick=${() => switchLang('zh')}>${S.docLang.zh}</button>
+              <button class=${'lang-opt' + (curLangOf === 'en' ? ' active' : '')} onClick=${() => switchLang('en')}>${S.docLang.en}</button>
             </div>`}
           <div class="read-row" onClick=${onDocClick}>
             ${docErr ? html`<article id="doc"><p class="state err">${docErr}</p></article>`
@@ -822,7 +822,7 @@ function App() {
             <div id="margin-col" class="margin-col">
               ${zongpi && html`<${ZongpiCard} busy=${busy} onSend=${sendZongpi} onClose=${() => setZongpi(false)} />`}
               ${marginItems.map((m) => m.el)}
-              ${others > 0 && html`<p class="margin-note">另有 ${others} 条涂归在此折其他文档</p>`}
+              ${others > 0 && html`<p class="margin-note">${S.margin.otherDocs(others)}</p>`}
             </div>
           </div>
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
@@ -831,7 +831,7 @@ function App() {
       </main>
       ${float && html`
         <button class="zhupi-float" style=${{ left: `${Math.min(float.rect.left + 8, window.innerWidth - 76)}px`, top: `${float.rect.top + 6}px` }}
-          onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>涂归</button>`}
+          onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>${S.action.annotate}</button>`}
     </div>`;
 }
 

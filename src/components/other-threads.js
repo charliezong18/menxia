@@ -3,13 +3,14 @@
 import { html } from '../../vendor/preact-standalone.mjs';
 import * as A from '../anchor.js';
 import { CommentBody } from './comment-body.js';
+import { S } from '../strings.js';
 
 export function OtherThreads({ threads, open, onToggle, hydrate }) {
   if (!threads.length) return null;
   return html`
             <div class="other-threads">
               <button class="other-threads-toggle" aria-expanded=${open} onClick=${() => onToggle()}>
-                ${open ? '▾' : '▸'} 其他 ${threads.length} 串（其他文档 / 无法定位）
+                ${open ? '▾' : '▸'} ${S.otherThreads.toggle(threads.length)}
               </button>
               ${open && html`
                 <div class="other-threads-list">
@@ -18,12 +19,12 @@ export function OtherThreads({ threads, open, onToggle, hydrate }) {
                     return html`
                       <div class="anno-card anno-shown anno-static" key=${'o' + t.root.id}>
                         <div class="anno-src"><span class="anno-who">${t.root.user?.login || '?'}</span>
-                          <span class="anno-path">${(t.root.path || '整折').split('/').pop()}</span></div>
-                        ${quote && html`<div class="anno-quote-shown">「${quote}」</div>`}
+                          <span class="anno-path">${(t.root.path || S.otherThreads.wholeFolder).split('/').pop()}</span></div>
+                        ${quote && html`<div class="anno-quote-shown">${S.card.quote(quote)}</div>`}
                         <${CommentBody} text=${body} hydrate=${hydrate} />
                         ${t.replies.map((r) => html`
                           <div class="anno-reply" key=${'o' + r.id}>
-                            <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
+                            <div class="anno-reply-who">${S.card.replyWho(r.user?.login || '?')}</div>
                             <${CommentBody} text=${r.body} hydrate=${hydrate} />
                           </div>`)}
                       </div>`;

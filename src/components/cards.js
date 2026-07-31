@@ -3,6 +3,7 @@
 import { html, useEffect, useRef } from '../../vendor/preact-standalone.mjs';
 import * as A from '../anchor.js';
 import { CommentBody } from './comment-body.js';
+import { S } from '../strings.js';
 
 export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
   const taRef = useRef();
@@ -10,10 +11,10 @@ export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
   const sec = doc ? A.sectionOf(doc, d.blockLine) : '';
   return html`
     <div class="anno-card" data-block-line=${d.blockLine} key=${d.id}>
-      <div class="anno-quote">「${d.quote.length > 80 ? d.quote.slice(0, 80) + '…' : d.quote}」</div>
-      <div class="anno-src">${sec ? sec + ' · ' : ''}第 ${d.line} 行</div>
+      <div class="anno-quote">${S.card.quote(d.quote.length > 80 ? d.quote.slice(0, 80) + '…' : d.quote)}</div>
+      <div class="anno-src">${S.card.srcLine(sec, d.line)}</div>
       ${editing ? html`
-        <textarea class="anno-input" ref=${taRef} placeholder="涂归……" defaultValue=${d.note}
+        <textarea class="anno-input" ref=${taRef} placeholder=${S.card.draftPlaceholder} defaultValue=${d.note}
           onKeyDown=${(e) => {
             if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.stopPropagation(); onSave(d.id, taRef.current.value); }
           }}
@@ -23,10 +24,10 @@ export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
             if (v && v !== d.note) onSave(d.id, taRef.current.value);
           }}></textarea>
         <div class="anno-row">
-          <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onDrop(d.id)}>作罢</button>
-          <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSave(d.id, taRef.current.value)}>存批</button>
+          <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onDrop(d.id)}>${S.action.discard}</button>
+          <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSave(d.id, taRef.current.value)}>${S.action.saveDraft}</button>
         </div>` : html`
-        <div class="anno-note" title="点击修改" onClick=${() => onEdit(d.id)}>${d.note}</div>`}
+        <div class="anno-note" title=${S.card.editTitle} onClick=${() => onEdit(d.id)}>${d.note}</div>`}
     </div>`;
 }
 
@@ -36,15 +37,15 @@ export function ShownThread({ t, blockLine, outdated, hydrate }) {
   const { quote, body } = A.parseCommentBody(t.root.body);
   return html`
     <div class="anno-card anno-shown" data-block-line=${blockLine} key=${'c' + t.root.id}>
-      ${quote && html`<div class="anno-quote-shown">「${quote}」</div>`}
+      ${quote && html`<div class="anno-quote-shown">${S.card.quote(quote)}</div>`}
       <div class="anno-src">
         <span class="anno-who">${t.root.user?.login || '?'}</span>
-        ${outdated ? html`<span class="anno-outdated" title="此行已随新版漂移">旧</span>` : ''}
+        ${outdated ? html`<span class="anno-outdated" title=${S.card.outdatedTitle}>${S.card.outdatedBadge}</span>` : ''}
       </div>
       <${CommentBody} text=${body} hydrate=${hydrate} />
       ${t.replies.map((r) => html`
         <div class="anno-reply" key=${'c' + r.id}>
-          <div class="anno-reply-who">回话 · ${r.user?.login || '?'}</div>
+          <div class="anno-reply-who">${S.card.replyWho(r.user?.login || '?')}</div>
           <${CommentBody} text=${r.body} hydrate=${hydrate} />
         </div>`)}
     </div>`;
@@ -55,11 +56,11 @@ export function ZongpiCard({ busy, onSend, onClose }) {
   useEffect(() => { setTimeout(() => taRef.current?.focus(), 0); }, []);
   return html`
     <div class="anno-card zongpi-card">
-      <div class="anno-src">判 · 整折总评（呈出即达，不攒批）</div>
-      <textarea class="anno-input" ref=${taRef} rows="4" placeholder="判……可以按序号列意见"></textarea>
+      <div class="anno-src">${S.card.zongpiHeader}</div>
+      <textarea class="anno-input" ref=${taRef} rows="4" placeholder=${S.card.zongpiPlaceholder}></textarea>
       <div class="anno-row">
-        <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${onClose}>作罢</button>
-        <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSend(taRef.current.value)}>${busy ? '呈递中…' : '呈判'}</button>
+        <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${onClose}>${S.action.discard}</button>
+        <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSend(taRef.current.value)}>${busy ? S.action.sending : S.action.sendZongpi}</button>
       </div>
     </div>`;
 }

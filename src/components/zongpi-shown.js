@@ -3,6 +3,7 @@
 // 读者滚不到文档自己的 TL;DR。交互对齐「其他 N 串」：默认折叠 + 走 CommentBody，不新造一套。
 import { html } from '../../vendor/preact-standalone.mjs';
 import { CommentBody } from './comment-body.js';
+import { S } from '../strings.js';
 
 // 折叠头的摘要：取最新一条的首行，剥掉 markdown 装饰。不调 LLM（守 BACKLOG 的架构边界）。
 export function summarize(body, max = 30) {
@@ -42,7 +43,7 @@ export function ZongpiShown({ zongpis, open, onToggle, hydrate }) {
   return html`
             <div class="zongpi-shown">
               <button class="zongpi-shown-toggle" aria-expanded=${open} onClick=${() => onToggle()}>
-                ${open ? '▾' : '▸'} 已呈判 · ${zongpis.length}${gist ? `（最新：${gist}）` : ''}
+                ${open ? '▾' : '▸'} ${S.zongpiShown.toggle(zongpis.length, gist)}
               </button>
               ${open && html`
                 <div class="zongpi-shown-list">

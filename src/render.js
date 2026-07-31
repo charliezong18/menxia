@@ -1,4 +1,6 @@
 // markdown 渲染 —— 块级元素带 data-line / data-line-end，M2 锚定以此为主锚
+import { S } from './strings.js';
+
 const md = window.markdownit({ html: false, linkify: true, typographer: false });
 
 // 打行号的规则。表格行（tr_open）与缩进代码块（code_block）实测带 map，一并覆盖：
@@ -53,6 +55,6 @@ function normalize(p) {
 function placeholder(path) {
   const el = document.createElement('p');
   el.className = 'state err';
-  el.textContent = `图取不到：${path}`;
+  el.textContent = S.doc.imageMissing(path);
   return el;
 }

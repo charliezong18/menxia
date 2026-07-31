@@ -1,6 +1,7 @@
 // 侧栏：搜索框 / 搜索结果 / 待批·已画可两栏 / 设置入口。
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html } from '../../vendor/preact-standalone.mjs';
+import { S } from '../strings.js';
 
 /**
  * 体例检查的角标。**只在有话说的时候出现**：
@@ -10,9 +11,9 @@ import { html } from '../../vendor/preact-standalone.mjs';
  */
 function checkBadge(v) {
   if (!v) return null;
-  if (v.state === 'fail') return html`<span class="chk chk-bad" title=${`体例不合格（${v.name || '检查'}）—— 点开折看哪条`}>✗ 体例</span>`;
-  if (v.state === 'running') return html`<span class="chk chk-run" title="体例检查还在跑">⋯ 体例</span>`;
-  if (v.state === 'pass') return html`<span class="chk chk-ok" title="体例合格">✓</span>`;
+  if (v.state === 'fail') return html`<span class="chk chk-bad" title=${S.check.failTitle(v.name || S.check.defaultName)}>${S.check.failBadge}</span>`;
+  if (v.state === 'running') return html`<span class="chk chk-run" title=${S.check.runningTitle}>${S.check.runningBadge}</span>`;
+  if (v.state === 'pass') return html`<span class="chk chk-ok" title=${S.check.passTitle}>${S.check.passBadge}</span>`;
   return null;   // none / unreadable
 }
 
@@ -22,32 +23,32 @@ export function Sidebar({
 }) {
   return html`
       <aside>
-        <div class="brand-row"><span class="seal">可</span><span class="brand">门下</span></div>
+        <div class="brand-row"><span class="seal">${S.brand.seal}</span><span class="brand">${S.brand.name}</span></div>
         
         <div class="search-row">
-          <input class="search-input" placeholder="检题 / 回车检全文" value=${q}
+          <input class="search-input" placeholder=${S.search.placeholder} value=${q}
             onInput=${(e) => { onQuery(e.target.value); }}
             onKeyDown=${(e) => { if (e.key === 'Enter') onSearch(); if (e.key === 'Escape') onClearSearch(); }} />
-          ${(q || hits) && html`<button class="btn-ghost search-clear" onClick=${onClearSearch}>清</button>`}
+          ${(q || hits) && html`<button class="btn-ghost search-clear" onClick=${onClearSearch}>${S.search.clear}</button>`}
         </div>
         ${searching && html`<p class="state">${searching}</p>`}
         ${hits && html`
           <nav id="pr-list" class="search-results">
             ${hits.length ? hits.map(({ pr, hits: hs }) => html`
               <div class="search-group" key=${'s' + pr.number}>
-                <div class="search-group-title">#${pr.number} ${pr.title}${pr.merged_at ? ' · 已画可' : ''}</div>
+                <div class="search-group-title">#${pr.number} ${pr.title}${pr.merged_at ? S.search.mergedSuffix : ''}</div>
                 ${hs.map((h, i) => html`
                   <button class="search-hit" key=${'h' + pr.number + '-' + i} onClick=${() => onJumpToHit(pr, h)}>
-                    ${h.kind === 'title' ? html`<span class="search-hit-meta">标题命中</span>`
-                      : html`<span class="search-hit-meta">${h.path.split('/').pop()} · 第 ${h.line} 行</span>`}
+                    ${h.kind === 'title' ? html`<span class="search-hit-meta">${S.search.titleHit}</span>`
+                      : html`<span class="search-hit-meta">${S.search.lineHit(h.path.split('/').pop(), h.line)}</span>`}
                     <span class="search-hit-snippet">${h.snippet}</span>
                   </button>`)}
-              </div>`) : html`<p class="state">没搜到「${q}」。</p>`}
+              </div>`) : html`<p class="state">${S.search.noResults(q)}</p>`}
           </nav>`}
         ${!hits && html`
         <div class="list-tabs">
-          <button class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>待批 ${prs.length}</button>
-          <button class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => onTab('done')}>已画可 ${donePrs.length}</button>
+          <button class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(prs.length)}</button>
+          <button class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => onTab('done')}>${S.nav.tabDone(donePrs.length)}</button>
         </div>
         <nav id="pr-list">
           ${(tab === 'open' ? prs : donePrs).filter((p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase())).length
@@ -55,11 +56,11 @@ export function Sidebar({
               <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
                 onClick=${() => onOpenPR(pr)}>
                 <h3>${pr.title}</h3>
-                <div class="meta">#${pr.number} · ${pr.merged_at ? `画可于 ${timeAgo(pr.merged_at)}` : `呈于 ${timeAgo(pr.updated_at)}`}${
+                <div class="meta">#${pr.number} · ${pr.merged_at ? S.folder.mergedAt(timeAgo(pr.merged_at)) : S.folder.submittedAt(timeAgo(pr.updated_at))}${
                   pr.merged_at ? null : checkBadge(checks[pr.number])}</div>
               </button>`)
-            : html`<p class="state">${q.trim() ? `标题没有「${q.trim()}」——回车搜全文。` : (tab === 'open' ? '此刻无折可批。' : '还没有画可过的折子。')}</p>`}
+            : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : (tab === 'open' ? S.nav.emptyOpen : S.nav.emptyDone)}</p>`}
         </nav>`}
-        ${!demo && html`<button class="settings" onClick=${onSettings}>设置 · 钥匙</button>`}
+        ${!demo && html`<button class="settings" onClick=${onSettings}>${S.nav.settings}</button>`}
       </aside>`;
 }

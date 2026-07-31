@@ -11,6 +11,7 @@
 // 没有就默认收起，把常态成本压回一行标题。
 import { html } from '../../vendor/preact-standalone.mjs';
 import { CommentBody } from './comment-body.js';
+import { S } from '../strings.js';
 
 // 「回奏对」标记。**必须剥掉**：`html:false` 下 markdown-it 不是丢弃 HTML 注释，而是把它
 // **转义成可见文本**（实测 `<!-- happy-session: … -->` 渲成 `<p>&lt;!-- happy-session: … --&gt;</p>`），
@@ -22,6 +23,10 @@ const MARKER_RE = /<!--\s*happy-session:[\s\S]*?-->/gi;
 // 段名与写入侧 `body.ts:27-31` 的 SECTIONS 逐字一致（那是唯一的事实源）。
 // 这里只用来认「待你拍板」在不在，不用来重排正文——正文原样交给 markdown 渲染，
 // 段序、层级、措辞都是写折那方的决定，读的这方不改写。
+//
+// **故意不进 `strings.js`**（#14）：它是跨系统契约不是界面文案——写入侧改了段名，这边不报错、
+// 只是静默认不出拍板点。词表是「可以随便改的字」，把契约放进去等于给它盖了张可改的章。
+// 徽章上顺带显示它，那是复用同一个事实源，不是它变成了文案。
 export const DECISIONS_TITLE = '待你拍板';
 
 // `## <段名>` 的识别。写入侧拼的是 `## ${title}\n\n${v}`，所以只可能是列 0 的 ATX 二级标题；
@@ -93,12 +98,12 @@ export function FolderBody({ body, open, onToggle, hydrate }) {
   const parsed = parseFolderBody(body);
   if (!parsed) return null;
   const n = parsed.decisionCount;
-  const badge = parsed.decisions ? `${DECISIONS_TITLE}${n ? ` · ${n} 条` : ''}` : '';
+  const badge = parsed.decisions ? S.folderBody.decisionsBadge(DECISIONS_TITLE, n) : '';
   return html`
             <div class=${'folder-body' + (parsed.decisions ? ' has-decisions' : '')}>
               <button class=${'folder-body-toggle' + (parsed.decisions ? ' has-decisions' : '')}
                 aria-expanded=${open} onClick=${() => onToggle()}>
-                ${open ? '▾' : '▸'} 折子说明${badge ? `（${badge}）` : ''}
+                ${open ? '▾' : '▸'} ${S.folderBody.toggle(badge)}
               </button>
               ${open && html`
                 <${CommentBody} text=${parsed.text} hydrate=${hydrate}
