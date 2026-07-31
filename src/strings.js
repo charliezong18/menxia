@@ -108,6 +108,15 @@ export const S = deepFreeze({
       + '那是「看不见」不是「没问题」。去 GitHub 的 token 设置里补上这一项。',
   },
 
+  // F13「需核实」标记：agent 标的未验证声明。顶栏计数 + 列表角标 + 正文标记 tooltip。
+  verify: {
+    markerTip: 'AI 标注的未验证声明，看到请自行核实',
+    count: (n) => `需核实 ${n}`,
+    countTitle: '本篇有 AI 标注的未验证声明，看到请自行核实',
+    badge: (n) => `⚑ ${n}`,
+    badgeTitle: (n) => `这折有 ${n} 处「需核实」标记 —— AI 标注的未验证声明`,
+  },
+
   // 搜索
   search: {
     placeholder: '检题 / 回车检全文',

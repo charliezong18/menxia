@@ -9,6 +9,7 @@ import { renderMarkdown, hydrateRelativeImages } from './render.js';
 import * as A from './anchor.js';
 import { demoApi, autoAnnotate } from './demo.js';
 import { buildIndex, searchIndex } from './search.js';
+import { decorateVerifyMarkers, countVerifyMarkers } from './verify.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
 import { siblingFor, visibleDocs, getLang, setLang, variantOf } from './lang.js';
 import { Setup } from './components/setup.js';
@@ -77,6 +78,10 @@ function App() {
   const [bodyOpen, setBodyOpen] = useState(false);   // 「折子说明」展开态：有「待你拍板」才默认展开（issue #13）
   // 折号 → 体例检查判词。CI 只在 open 折上跑，已画可的不查。
   const [checks, setChecks] = useState({});
+  const [verifyN, setVerifyN] = useState(0);         // F13：当前打开这篇文档里的「需核实」标记数（0=不显示）
+  // F13：折号 → 全折「需核实」总数，喂列表角标。**不为它单发请求**——只吃已有取文路径的
+  // 副产物：搜索建索引时顺带全算一遍，或某折打开渲染后回填这一折。没搜过又没打开过的折不显示。
+  const [verifyCounts, setVerifyCounts] = useState({});
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待批 / done=已画可（归档，只读）
@@ -313,6 +318,7 @@ function App() {
     const ref = viewed || cur.pr.head.sha; // null=head
     let dead = false;
     el.replaceChildren();
+    setVerifyN(0);                    // F13：切文档先清计数，取文/渲染后再据实设回
     const p = document.createElement('p');
     p.className = 'state';
     p.textContent = S.doc.loading;
@@ -322,6 +328,8 @@ function App() {
         const text = await api.getFileText(docPath, ref);
         if (dead) return;
         el.innerHTML = renderMarkdown(text);
+        // F13：渲染后在纯文本层给「需核实」标记加可见状态；返回本篇标记数供顶栏显示。
+        setVerifyN(decorateVerifyMarkers(el, S.verify.markerTip));
         await hydrateRelativeImages(el, { docPath, ref, fetchBlobUrl: api.getFileBlobUrl });
         if (dead) return;
         setDocTick((t) => t + 1);
@@ -586,6 +594,20 @@ function App() {
       setSearching(S.search.indexing);
       indexRef.current = await buildIndex(api, all, (d, t) => setSearching(S.search.indexingProgress(d, t)));
       setSearching('');
+      // F13：索引里已备齐各折全文——顺带把「需核实」总数全算一遍喂列表角标，不另发请求。
+      // 中英成对文档（foo.md ↔ foo.zh-CN.md）是同一批声明，按 base 归并取最大值，不重复计。
+      setVerifyCounts((prev) => {
+        const next = { ...prev };
+        for (const { pr, files } of indexRef.current) {
+          const byBase = new Map();
+          for (const [path, text] of Object.entries(files)) {
+            const base = variantOf(path)?.base || path;
+            byBase.set(base, Math.max(byBase.get(base) || 0, countVerifyMarkers(text)));
+          }
+          next[pr.number] = [...byBase.values()].reduce((s, n) => s + n, 0);
+        }
+        return next;
+      });
     }
     setHits(searchIndex(indexRef.current, query));
   }
@@ -770,14 +792,14 @@ function App() {
   return html`
     <div id="app">
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
-        tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks}
+        tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks} verifyCounts=${verifyCounts}
         onQuery=${(v) => { setQ(v); if (hits) setHits(null); }}
         onSearch=${runSearch} onClearSearch=${clearSearch} onJumpToHit=${jumpToHit}
         onTab=${setTab} onOpenPR=${openPR}
         onSettings=${() => { setPhase('setup'); setSetupMsg(''); }} />
       <main>
         <${Topbar} cur=${cur} archived=${archived} onHead=${onHead} busy=${busy}
-          draftCount=${drafts.length} happyUrl=${happyUrl} stale=${stale} notice=${notice}
+          draftCount=${drafts.length} verifyN=${verifyN} happyUrl=${happyUrl} stale=${stale} notice=${notice}
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
           onCopyRef=${copyRef} onZongpi=${() => setZongpi((z) => !z)}
           onSubmit=${submitAll} onQinci=${qinci} />

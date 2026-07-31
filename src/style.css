@@ -480,3 +480,22 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .chk-bad { color: #c8342b; font-weight: 600; }
 .chk-run { color: #8a8a8a; }
 .chk-ok  { color: #2e7d32; }
+
+/* F13「需核实」标记 —— AI 标注的未验证声明。
+   正文标记：虚线下划线 + 一个小角标（悬停解释），克制到只提示「这句还没核实」，不喧宾夺主。 */
+.verify-marker {
+  text-decoration: underline dashed var(--cinnabar);
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+  cursor: help;
+}
+.verify-tag {
+  margin-left: 1px; font-size: .62em; font-weight: 700; color: var(--cinnabar);
+  vertical-align: super; line-height: 0;
+}
+/* 顶栏「需核实 N」：读折时提示本篇有几处未验证声明 */
+.verify-count {
+  margin-left: 8px; padding: 0 6px; border-radius: 4px; font-size: 11px;
+  border: 1px solid var(--cinnabar); color: var(--cinnabar-deep); white-space: nowrap;
+}
+/* 列表折卡角标：这折共几处「需核实」 */
+.verify-badge { margin-left: .5em; font-size: .85em; color: var(--cinnabar-deep); white-space: nowrap; }

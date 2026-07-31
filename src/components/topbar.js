@@ -4,13 +4,14 @@ import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
 
 export function Topbar({
-  cur, archived, onHead, busy, draftCount, happyUrl, stale, notice,
+  cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice,
   onRefresh, onCopyRef, onZongpi, onSubmit, onQinci,
 }) {
   // 多个顶层节点：htm 会返回数组，Preact 直接当 Fragment 渲染（这个 standalone 包没导出 Fragment）
   return html`
         <div class="mainbar">
-          <span class="crumb">${S.topbar.crumbRoot} ${cur ? html`/ <b>${cur.pr.title}</b>` : ''}</span>
+          <span class="crumb">${S.topbar.crumbRoot} ${cur ? html`/ <b>${cur.pr.title}</b>` : ''}${
+            cur && verifyN > 0 ? html`<span class="verify-count" title=${S.verify.countTitle}>${S.verify.count(verifyN)}</span>` : ''}</span>
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { onRefresh(); }}>${S.action.refresh}</button>
             ${cur && html`<button class="btn-ghost" title=${S.action.copyRefTitle} onClick=${onCopyRef}>${S.action.copyRef}</button>`}
