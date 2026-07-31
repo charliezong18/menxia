@@ -72,6 +72,8 @@ function App() {
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
   const [zongpiOpen, setZongpiOpen] = useState(false); // 「已呈总批」折叠组展开态（默认收起，issue #1）
+  // 折号 → 体例检查判词。CI 只在 open 折上跑，已钦此的不查。
+  const [checks, setChecks] = useState({});
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待批 / done=已钦此（归档，只读）
@@ -119,6 +121,25 @@ function App() {
     loadPRs();
   }, []);
 
+  // 并行取每折的体例检查结论。
+  //
+  // `unreadable`（钥匙缺 Checks: Read）**不逐折显示** —— 那会让 19 张卡同时打问号，
+  // 是噪音不是信息。它是一次性的配置问题，出一条通知就够了。
+  async function loadChecks(list) {
+    if (!api.checkVerdict) return;                       // demo 模式没有这个口
+    const open = list.filter((p) => !p.merged_at && p.head?.sha);
+    const got = await Promise.all(open.map(async (p) => {
+      try { return [p.number, await api.checkVerdict(p.head.sha)]; }
+      catch { return [p.number, { state: 'none' }]; }     // 网络抖动不该长成红叉
+    }));
+    const map = Object.fromEntries(got);
+    setChecks(map);
+    if (Object.values(map).some((v) => v?.state === 'unreadable')) {
+      setNotice('读不到体例检查结果 —— 钥匙缺 Checks: Read 权限。折卡上的红绿会一直空着，'
+        + '那是「看不见」不是「没问题」。去 GitHub 的 token 设置里补上这一项。');
+    }
+  }
+
   async function loadPRs() {
     setPhase('app');
     setNotice('');
@@ -127,6 +148,10 @@ function App() {
       const list = await api.listOpenPRs();
       if (api.listMergedPRs) api.listMergedPRs().then(setDonePrs).catch(() => {});
       setPrs(list);
+      // 体例检查的红绿。**不 await** —— 清单先出来，红绿随后补上；
+      // 19 折就是 19 个请求，串起来等要好几秒，而它只是个角标。
+      // 拿不到就当没有：这里失败不该拖累整个清单（loadChecks 自己吞异常）。
+      loadChecks(list);
       const dl = deepLink.current;
       if (dl) {
         deepLink.current = null;   // 只认一次，之后随手切折不再被它拽回来
@@ -696,7 +721,7 @@ function App() {
   return html`
     <div id="app">
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
-        tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo}
+        tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks}
         onQuery=${(v) => { setQ(v); if (hits) setHits(null); }}
         onSearch=${runSearch} onClearSearch=${clearSearch} onJumpToHit=${jumpToHit}
         onTab=${setTab} onOpenPR=${openPR}

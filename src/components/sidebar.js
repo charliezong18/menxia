@@ -2,8 +2,22 @@
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html } from '../../vendor/preact-standalone.mjs';
 
+/**
+ * 体例检查的角标。**只在有话说的时候出现**：
+ * 老折（CI 装上之前的）没有检查，什么都不画 —— 空着比一排灰点干净。
+ * `unreadable` 也不画：那是一次性的钥匙配置问题，ui.js 出一条通知就够了，
+ * 19 张卡同时打问号是噪音不是信息。
+ */
+function checkBadge(v) {
+  if (!v) return null;
+  if (v.state === 'fail') return html`<span class="chk chk-bad" title=${`体例不合格（${v.name || '检查'}）—— 点开折看哪条`}>✗ 体例</span>`;
+  if (v.state === 'running') return html`<span class="chk chk-run" title="体例检查还在跑">⋯ 体例</span>`;
+  if (v.state === 'pass') return html`<span class="chk chk-ok" title="体例合格">✓</span>`;
+  return null;   // none / unreadable
+}
+
 export function Sidebar({
-  q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo,
+  q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {},
   onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings,
 }) {
   return html`
@@ -41,7 +55,8 @@ export function Sidebar({
               <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
                 onClick=${() => onOpenPR(pr)}>
                 <h3>${pr.title}</h3>
-                <div class="meta">#${pr.number} · ${pr.merged_at ? `钦此于 ${timeAgo(pr.merged_at)}` : `呈于 ${timeAgo(pr.updated_at)}`}</div>
+                <div class="meta">#${pr.number} · ${pr.merged_at ? `钦此于 ${timeAgo(pr.merged_at)}` : `呈于 ${timeAgo(pr.updated_at)}`}${
+                  pr.merged_at ? null : checkBadge(checks[pr.number])}</div>
               </button>`)
             : html`<p class="state">${q.trim() ? `标题没有「${q.trim()}」——回车搜全文。` : (tab === 'open' ? '此刻无折可批。' : '还没有钦此过的折子。')}</p>`}
         </nav>`}

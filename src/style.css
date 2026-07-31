@@ -427,3 +427,10 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .lang-opt:hover { color: var(--ink); }
 .lang-opt.active { background: var(--chip); color: var(--ink); }
 @media (max-width: 900px) { .lang-switch { margin-left: 0; } }
+
+/* 体例检查角标。窄栏里只给一个字的宽度 —— 「✗ 体例」四字已是上限。
+   合格只画一个 ✓：绿色的东西不需要解释，红色的才需要。 */
+.chk { margin-left: .5em; font-size: .85em; white-space: nowrap; }
+.chk-bad { color: #c8342b; font-weight: 600; }
+.chk-run { color: #8a8a8a; }
+.chk-ok  { color: #2e7d32; }
