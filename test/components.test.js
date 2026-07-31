@@ -170,3 +170,65 @@ test('已呈总批：带时区偏移 / 毫秒的时间戳也要排对（字符�
   const list = find(ZongpiShown({ zongpis: mixed, open: true, onToggle: () => {} }), byClass('zongpi-shown-list'));
   assert.deepEqual(list.props.children.map((v) => v.key), ['z1', 'z2'], '23:00Z 晚于 22:30Z');
 });
+
+// ── 体例检查角标（2026-07-31 加）──
+//
+// 角标要**只在有话说的时候出现**。老折（CI 装上之前的）没有检查，
+// 一排灰点是噪音；`unreadable` 更不能逐折画 —— 那是钥匙配置问题，
+// 出一条通知就够了，19 张卡同时打问号会把真信号淹掉。
+test('折卡角标：只有 fail / running / pass 画，none 与 unreadable 不画', () => {
+  const base = {
+    q: '', hits: null, searching: '', tab: 'open', cur: null, demo: false,
+    donePrs: [], timeAgo: () => '刚刚',
+    onQuery: () => {}, onSearch: () => {}, onClearSearch: () => {}, onJumpToHit: () => {},
+    onTab: () => {}, onOpenPR: () => {}, onSettings: () => {},
+  };
+  const pr = (n) => ({ number: n, title: 't' + n, updated_at: '2026-07-31T00:00:00Z' });
+  const tree = Sidebar({
+    ...base,
+    prs: [pr(1), pr(2), pr(3), pr(4), pr(5)],
+    checks: {
+      1: { state: 'fail', name: '九条规则' },
+      2: { state: 'running' },
+      3: { state: 'pass' },
+      4: { state: 'none' },
+      5: { state: 'unreadable' },
+    },
+  });
+  const all = [];
+  (function walk(v) {
+    if (!v || typeof v !== 'object') return;
+    if (Array.isArray(v)) { v.forEach(walk); return; }
+    if (typeof v.props?.class === 'string' && v.props.class.startsWith('chk')) all.push(v.props.class);
+    walk(v.props?.children);
+  })(tree);
+  assert.deepEqual(all.sort(), ['chk chk-bad', 'chk chk-ok', 'chk chk-run'],
+    'none 与 unreadable 不该画出角标');
+});
+
+test('折卡角标：已钦此的折不画（CI 只在 open 折上跑）', () => {
+  const tree = Sidebar({
+    q: '', hits: null, searching: '', tab: 'done', cur: null, demo: false, prs: [],
+    donePrs: [{ number: 9, title: 'merged', merged_at: '2026-07-30T00:00:00Z', updated_at: '2026-07-30T00:00:00Z' }],
+    timeAgo: () => '昨天', checks: { 9: { state: 'fail' } },
+    onQuery: () => {}, onSearch: () => {}, onClearSearch: () => {}, onJumpToHit: () => {},
+    onTab: () => {}, onOpenPR: () => {}, onSettings: () => {},
+  });
+  let found = false;
+  (function walk(v) {
+    if (!v || typeof v !== 'object') return;
+    if (Array.isArray(v)) { v.forEach(walk); return; }
+    if (typeof v.props?.class === 'string' && v.props.class.startsWith('chk')) found = true;
+    walk(v.props?.children);
+  })(tree);
+  assert.equal(found, false, '已钦此的折不该有体例角标');
+});
+
+test('折卡角标：没传 checks 也不炸（老调用点 / demo 模式）', () => {
+  assert.doesNotThrow(() => Sidebar({
+    q: '', hits: null, searching: '', tab: 'open', cur: null, demo: true,
+    prs: [{ number: 1, title: 't', updated_at: '2026-07-31T00:00:00Z' }], donePrs: [],
+    timeAgo: () => '', onQuery: () => {}, onSearch: () => {}, onClearSearch: () => {},
+    onJumpToHit: () => {}, onTab: () => {}, onOpenPR: () => {}, onSettings: () => {},
+  }));
+});
