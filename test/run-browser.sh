@@ -23,11 +23,24 @@ fi
 CI_FLAGS=()
 [ -n "${CI:-}" ] && CI_FLAGS=(--no-sandbox --disable-dev-shm-usage)
 
-PORT="${PORT:-4188}"
-python3 -m http.server "$PORT" >/dev/null 2>&1 &
-SERVER=$!
-trap 'kill $SERVER 2>/dev/null' EXIT
-sleep 1
+# 并发隔离：同机多 worktree 会同时跑本脚本，默认端口/日志若共享，第二个 http.server 抢不到
+# 4188 端口静默死掉、Chrome 转而加载头一个 worktree 的代码，把「别的分支」的 RESULT 写进
+# 共享的 /tmp/zhupi-*.log，本脚本 grep 到就误判（实测捞到隔壁 pass=63）。故端口随机化、日志入
+# 本进程私有目录，两者都随 PID 唯一，互不踩踏。
+LOGDIR="$(mktemp -d "${TMPDIR:-/tmp}/zhupi-log.XXXXXX")"
+# 起本进程自己的服务器：端口被占（别的 worktree 先起了）时 http.server 会即刻 Errno 48 退出，
+# 靠 kill -0 探活换端口重试——绝不让 Chrome 连到别人的服务器、抓回别人的 RESULT。仍只依赖 python。
+PORT="${PORT:-$(( 4188 + RANDOM % 800 ))}"   # 显式 PORT= 优先；缺省随机化，避免多 worktree 撞 4188
+SERVER=""
+trap 'kill $SERVER 2>/dev/null; rm -rf "$LOGDIR" 2>/dev/null' EXIT
+for _ in $(seq 1 20); do
+  python3 -m http.server "$PORT" >/dev/null 2>&1 &
+  SERVER=$!
+  sleep 0.5
+  kill -0 "$SERVER" 2>/dev/null && break     # 还活着＝端口是我们的（被占的话已 Errno 48 退出）
+  PORT=$(( 4188 + RANDOM % 800 ))             # 撞了就换随机端口重试
+done
+sleep 0.5
 
 # Chrome --headless 截图/加载后不会自己退出，用「产物就绪即杀」的模式跑
 run_page() {
@@ -57,11 +70,11 @@ STATUS=0
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "dom" ]; then
   echo "── DOM 单元（渲染行号规则 / 锚定几何）──"
-  run_page "http://127.0.0.1:$PORT/test/dom.test.html" /tmp/zhupi-dom.log 6000
-  grep -o '\[dom\] [A-Z]* [^"]*' /tmp/zhupi-dom.log | sed 's/^/  /' || true
-  RESULT=$(grep -o '\[dom\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-dom.log | tail -1)
+  run_page "http://127.0.0.1:$PORT/test/dom.test.html" "$LOGDIR/dom.log" 6000
+  grep -o '\[dom\] [A-Z]* [^"]*' "$LOGDIR/dom.log" | sed 's/^/  /' || true
+  RESULT=$(grep -o '\[dom\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/dom.log" | tail -1)
   if [ -z "$RESULT" ]; then
-    echo "  ✖ DOM 层没跑出结果（页面可能报错，详见 /tmp/zhupi-dom.log）"
+    echo "  ✖ DOM 层没跑出结果（页面可能报错，详见 $LOGDIR/dom.log）"
     STATUS=1
   elif [ "$RESULT" = "[dom] RESULT pass=$DOM_EXPECT fail=0" ]; then
     echo "  ✔ $RESULT"
@@ -73,11 +86,11 @@ fi
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   echo "── 端到端冒烟（demo 免 token，真实事件路径划批 + rev 切换）──"
-  run_page "http://127.0.0.1:$PORT/index.html?demo=1&auto=1" /tmp/zhupi-smoke.log 30000
-  grep -o '\[smoke\] [^"]*' /tmp/zhupi-smoke.log | sed 's/^/  /' || true
-  RESULT=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-smoke.log | tail -1)
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&auto=1" "$LOGDIR/smoke.log" 30000
+  grep -o '\[smoke\] [^"]*' "$LOGDIR/smoke.log" | sed 's/^/  /' || true
+  RESULT=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/smoke.log" | tail -1)
   if [ -z "$RESULT" ]; then
-    echo "  ✖ 冒烟没跑出结果（详见 /tmp/zhupi-smoke.log）"
+    echo "  ✖ 冒烟没跑出结果（详见 $LOGDIR/smoke.log）"
     STATUS=1
   elif [ "$RESULT" = "[smoke] RESULT pass=$SMOKE_EXPECT fail=0" ]; then
     echo "  ✔ $RESULT"
@@ -87,22 +100,22 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   fi
 
   # 直达链接：URL 带 ?pr=998 应直接开到那折（归档折 → 自动切已钦此栏、只读）
-  run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=1&pr=998" /tmp/zhupi-deep.log 5000
-  grep -o '\[smoke\] [^"]*' /tmp/zhupi-deep.log | sed 's/^/  /' || true
-  RD=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-deep.log | tail -1)
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=1&pr=998" "$LOGDIR/deep.log" 5000
+  grep -o '\[smoke\] [^"]*' "$LOGDIR/deep.log" | sed 's/^/  /' || true
+  RD=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/deep.log" | tail -1)
   if [ "$RD" = "[smoke] RESULT pass=3 fail=0" ]; then echo "  ✔ deep $RD"; else echo "  ✖ deep $RD（期望 pass=3 fail=0）"; STATUS=1; fi
 
   # 直达链接指向不存在的折：必须出提示，不许静默（pendingNotice 曾经只写不读）
-  run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=miss&pr=9999" /tmp/zhupi-deepmiss.log 5000
-  grep -o '\[smoke\] [^"]*' /tmp/zhupi-deepmiss.log | sed 's/^/  /' || true
-  RM=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-deepmiss.log | tail -1)
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=miss&pr=9999" "$LOGDIR/deepmiss.log" 5000
+  grep -o '\[smoke\] [^"]*' "$LOGDIR/deepmiss.log" | sed 's/^/  /' || true
+  RM=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/deepmiss.log" | tail -1)
   if [ "$RM" = "[smoke] RESULT pass=1 fail=0" ]; then echo "  ✔ deep-miss $RM"; else echo "  ✖ deep-miss $RM（期望 pass=1 fail=0）"; STATUS=1; fi
 
   # 故障注入两场：403 限流不得清 token（历史上误删过），401 才回设置页
   for mode in 403 401; do
-    run_page "http://127.0.0.1:$PORT/index.html?demo=1&fail=$mode" "/tmp/zhupi-fail$mode.log" 4000
-    grep -o "\[smoke\] [^\"]*" "/tmp/zhupi-fail$mode.log" | sed 's/^/  /' || true
-    R=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "/tmp/zhupi-fail$mode.log" | tail -1)
+    run_page "http://127.0.0.1:$PORT/index.html?demo=1&fail=$mode" "$LOGDIR/fail$mode.log" 4000
+    grep -o "\[smoke\] [^\"]*" "$LOGDIR/fail$mode.log" | sed 's/^/  /' || true
+    R=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/fail$mode.log" | tail -1)
     EXP=$([ "$mode" = "403" ] && echo 3 || echo 2)
     if [ "$R" = "[smoke] RESULT pass=$EXP fail=0" ]; then echo "  ✔ fail=$mode $R"; else echo "  ✖ fail=$mode $R（期望 pass=$EXP fail=0）"; STATUS=1; fi
   done
