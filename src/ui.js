@@ -17,7 +17,8 @@ import { Sidebar } from './components/sidebar.js';
 import { Topbar } from './components/topbar.js';
 import { OtherThreads } from './components/other-threads.js';
 import { ZongpiShown } from './components/zongpi-shown.js';
-import { FolderBody, hasDecisions } from './components/folder-body.js';
+import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-body.js';
+import { assembleCarry } from './carry.js';
 import { S } from './strings.js';
 
 const params = new URLSearchParams(location.search);
@@ -34,6 +35,7 @@ const api = DEMO ? demoApi : gh;
 // 子组件拆出去后曾漏登记，改 cards.js 不触发提示（2026-07-28 补）。
 const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js', 'src/anchor.js',
   'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js', 'src/demo.js', 'src/strings.js',
+  'src/carry.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js'];
@@ -50,6 +52,45 @@ async function detectNewBuild() {
 }
 
 const isDoc = (f) => f.filename.endsWith('.md') && f.status !== 'removed';
+
+// F12 携卷：写剪贴板。navigator.clipboard 在非安全上下文 / 被拒时会 reject——返回布尔，
+// 调用方据此决定要不要走可全选文本框兜底。大卷（22 章 ≈ 上百 KB）照常直接放，只在真写不进时兜底。
+async function writeClipboard(text) {
+  try {
+    if (!navigator.clipboard?.writeText) return false;
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch { return false; }
+}
+
+// 剪贴板写不进时的兜底：弹一个可全选（自动 select）的文本框，用户 ⌘A/⌘C 手动拷。
+// 用命令式 DOM（不进 Preact 渲染树）：携卷是一次性动作，overlay 关了就销毁，不留状态、不动共享组件。
+function showCopyFallback(text) {
+  const prev = document.querySelector('.carry-fallback');
+  if (prev) prev.remove();
+  const overlay = document.createElement('div');
+  overlay.className = 'carry-fallback';
+  const panel = document.createElement('div');
+  panel.className = 'carry-fallback-panel';
+  const title = document.createElement('div');
+  title.className = 'carry-fallback-title';
+  title.textContent = S.carry.fallbackTitle;
+  const ta = document.createElement('textarea');
+  ta.className = 'carry-fallback-text';
+  ta.readOnly = true;
+  ta.value = text;
+  const close = document.createElement('button');
+  close.className = 'btn-ghost carry-fallback-close';
+  close.textContent = S.carry.fallbackClose;
+  const dismiss = () => overlay.remove();
+  close.addEventListener('click', dismiss);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) dismiss(); });
+  panel.append(title, ta, close);
+  overlay.append(panel);
+  document.body.append(overlay);
+  ta.focus();
+  ta.select();
+}
 
 
 
@@ -84,6 +125,7 @@ function App() {
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
   const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中
   const [searching, setSearching] = useState('');     // 手上跑的是旧版（见 detectNewBuild）
+  const [carrying, setCarrying] = useState(false);    // F12 携卷：正在取全文拼装（大折要一会儿）
 
   const docRef = useRef(null);
   const autoRan = useRef(false); // 冒烟只跑一次（切折会让 docTick 回到 1）
@@ -566,6 +608,50 @@ function App() {
     catch { say(S.ref.copyFailed(md)); }
   }
 
+  // F12 携卷：把整折拼成自包含 markdown 拷进剪贴板，粘给任意 agent 接续。
+  // 正文按需取（docs 只存元数据，正文是懒加载的）——走 getFileText 这条已有路径补齐每篇，
+  // 不造新 API。批注串 / 判 / 拍板点本就在内存里，直接喂纯函数 assembleCarry（拼装逻辑单测在那）。
+  async function carryOut() {
+    const pr = R.current.cur?.pr;
+    if (!pr) return;
+    if (carrying) return;
+    setCarrying(true);
+    try {
+      const ref = curRevSha || pr.head?.sha;
+      const mdFiles = (R.current.cur.docs || []).filter((f) => f.filename.endsWith('.md'));
+      // 每篇正文并行取（当前读的那一篇也照取一遍：便宜，且省得把 DOM 反解析回 markdown）。
+      // 单篇失败不拖垮整卷——取不到就留 null，assembleCarry 落个占位。
+      const docs = await Promise.all(mdFiles.map(async (f) => {
+        let text = null;
+        try { text = await api.getFileText(f.filename, ref); } catch { /* 单篇取不到不阻断 */ }
+        return { path: f.filename, lang: variantOf(f.filename)?.lang || null, text };
+      }));
+      if (R.current.cur?.pr.number !== pr.number) return; // 组装期间切了折，丢弃
+      if (!docs.some((d) => d.text != null) && mdFiles.length) {
+        say(S.carry.empty);
+        return;
+      }
+      const md = assembleCarry({
+        pr: { number: pr.number, title: pr.title, url: pr.html_url, body: pr.body },
+        docs,
+        threads,
+        zongpis,
+        decisions: parseFolderBody(pr.body)?.decisions || null,
+        deepLink: buildDeepLink(location.origin + location.pathname,
+          { repo: gh.getRepoSlug() || undefined, prNumber: pr.number }),
+        assembledAt: new Date().toLocaleString(),
+        parseCommentBody: A.parseCommentBody,
+      });
+      const ok = await writeClipboard(md);
+      if (ok) say(S.carry.done(md.length));
+      else showCopyFallback(md);   // 大卷进不了剪贴板：弹可全选文本框，别把十万字塞进 notice
+    } catch (err) {
+      say(S.carry.failed(err.message));
+    } finally {
+      setCarrying(false);
+    }
+  }
+
   // F8 切语言：留在当前折当前篇，只换语言变体（找不到对应版就什么都不做）
   // 目标语言由参数决定，不是「翻到对面」——此前点已激活的语言键会把人翻到另一语言，
   // 且 chip 继续显示旧状态（第六轮评审）。当前语言一律从 docPath 派生，偏好只管默认选篇。
@@ -778,8 +864,9 @@ function App() {
       <main>
         <${Topbar} cur=${cur} archived=${archived} onHead=${onHead} busy=${busy}
           draftCount=${drafts.length} happyUrl=${happyUrl} stale=${stale} notice=${notice}
+          carrying=${carrying}
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
-          onCopyRef=${copyRef} onZongpi=${() => setZongpi((z) => !z)}
+          onCopyRef=${copyRef} onCarry=${carryOut} onZongpi=${() => setZongpi((z) => !z)}
           onSubmit=${submitAll} onQinci=${qinci} />
         <div class="work">
           ${cur?.docs?.length > 1 && html`
