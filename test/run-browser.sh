@@ -50,7 +50,7 @@ run_page() {
 
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=22
-SMOKE_EXPECT=53
+SMOKE_EXPECT=54
 
 WHAT="${1:-all}"
 STATUS=0
@@ -91,6 +91,12 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   grep -o '\[smoke\] [^"]*' /tmp/zhupi-deep.log | sed 's/^/  /' || true
   RD=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-deep.log | tail -1)
   if [ "$RD" = "[smoke] RESULT pass=3 fail=0" ]; then echo "  ✔ deep $RD"; else echo "  ✖ deep $RD（期望 pass=3 fail=0）"; STATUS=1; fi
+
+  # 直达链接指向不存在的折：必须出提示，不许静默（pendingNotice 曾经只写不读）
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=miss&pr=9999" /tmp/zhupi-deepmiss.log 5000
+  grep -o '\[smoke\] [^"]*' /tmp/zhupi-deepmiss.log | sed 's/^/  /' || true
+  RM=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' /tmp/zhupi-deepmiss.log | tail -1)
+  if [ "$RM" = "[smoke] RESULT pass=1 fail=0" ]; then echo "  ✔ deep-miss $RM"; else echo "  ✖ deep-miss $RM（期望 pass=1 fail=0）"; STATUS=1; fi
 
   # 故障注入两场：403 限流不得清 token（历史上误删过），401 才回设置页
   for mode in 403 401; do
