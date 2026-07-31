@@ -1,0 +1,40 @@
+name: pages-alert
+
+# 门下的部署是 legacy Pages「从 main 直接 Jekyll 构建」，失败完全静默：
+# 站点不报错、不回滚，就是停在上一次成功的版本。2026-07-31 因为一个误提交的
+# node_modules 符号链接静默停更 13 小时才被发现。这个 workflow 就是那次的补丁。
+#
+# page_build 是 legacy Pages 构建完成时触发的事件（GitHub 自己发
+# "Page build failure" 邮件用的也是它），payload 带 build.status 和 build.error.message。
+
+on:
+  page_build:          # Pages 构建完成就触发，成功/失败都触发
+  workflow_dispatch:   # 手动跑一次 = 自检推送通道
+
+jobs:
+  alert:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.build.status == 'errored' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: ntfy push
+        env:
+          TOPIC: ${{ secrets.NTFY_TOPIC }}
+          REPO: ${{ github.repository }}
+          BUILD_STATUS: ${{ github.event.build.status }}
+          BUILD_ERROR: ${{ github.event.build.error.message }}
+          BUILD_SHA: ${{ github.event.build.commit }}
+        run: |
+          if [ "$BUILD_STATUS" = "errored" ]; then
+            TITLE="门下部署失败"
+            MSG=$(printf '线上已停更，还停在上一次成功的版本。\ncommit %.7s\n%s' \
+                  "$BUILD_SHA" "${BUILD_ERROR:-（GitHub 没给错误详情）}")
+          else
+            TITLE="门下告警自检"
+            MSG="手动触发的通道测试，收到说明告警链路是通的。"
+          fi
+          # -sSf：推送失败就让 job 挂掉，至少还有 GitHub 自己的失败通知兜底，
+          # 免得出现「告警器自己哑了也没人知道」。
+          jq -nc --arg topic "$TOPIC" --arg title "$TITLE" --arg message "$MSG" \
+                 --arg click "https://github.com/$REPO/actions" \
+                 '{$topic,$title,$message,$click,priority:4,tags:["rotating_light"]}' \
+            | curl -sSf -X POST https://ntfy.sh -H 'Content-Type: application/json' --data-binary @-
