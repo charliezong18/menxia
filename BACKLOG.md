@@ -230,3 +230,19 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 **How**: headings already carry `data-line` in the rendered DOM; pure frontend.
 
 **Status**: approved on #60, after F1; build after the 8/8 reckoning.
+
+---
+
+## F15 · Check `mergeable` before the merge button (turn the 405 into a sentence) (2026-07-31, hit for real)
+
+**What**: know whether a folder can still be merged *before* pressing the merge button. If it can't, say "this conflicts with main" and point at what collided — instead of surfacing GitHub's raw `405 Method Not Allowed`.
+
+**Why**: hit for real on 2026-07-31 — merging #35 failed and the UI showed only "405 — Pull Request has merge conflicts". Technically accurate (the merge API returns 405 for any unmergeable PR), but it leaves "so what do I do now" entirely to the reader. The actual story: that PR was opened on 07-30, main then absorbed 31 commits — one batch of which **redid the same backfill** — and 20 files collided add/add, leaving half the PR redundant. None of that was on screen. **Conflicts are not an edge case**: the longer a folder stays open the more certain they get, and long-lived folders are exactly the ones that most need merging.
+
+**How**: `mergeable` is **not returned by the list API**, so today's `listOpen`/`listArchived` never see it; it needs one `GET /pulls/{num}` when a folder is opened (**a genuinely new call, not a free ride** — `github.js` currently only fetches files/comments/commits for a single PR). Then: (1) grey out the merge button and mark "has conflicts" when `mergeable === false`; (2) show a plain-language line pointing at GitHub's conflict view.
+
+**Trap**: GitHub computes `mergeable` **asynchronously** — right after a push it returns `null`, meaning "still computing". `null` must be treated as unknown (button stays live, failure still falls through to today's error path) and **never as false**, or the merge button locks up exactly when the agent has just pushed a new revision.
+
+**Cost**: one extra API call per folder, plus a non-awkward way to render the `null` state.
+
+**Status**: classified as **friction**, not a new feature (the user is blocked and can't tell what to do next), so the 08-08 feature freeze does not apply.
