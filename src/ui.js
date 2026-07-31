@@ -18,6 +18,8 @@ import { Topbar } from './components/topbar.js';
 import { OtherThreads } from './components/other-threads.js';
 import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions } from './components/folder-body.js';
+import { Outline, ChapterList } from './components/outline.js';
+import { extractOutline, hasOutline, chapterList, shouldUseChapterList } from './toc.js';
 import { S } from './strings.js';
 
 const params = new URLSearchParams(location.search);
@@ -36,7 +38,8 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/render.js', 'src/link.js', 'src/search.js', 'src/lang.js', 'src/demo.js', 'src/strings.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
-  'src/components/comment-body.js', 'src/components/folder-body.js'];
+  'src/components/comment-body.js', 'src/components/folder-body.js',
+  'src/toc.js', 'src/components/outline.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -400,6 +403,9 @@ function App() {
     // 这一版顺手让它跟着失效，不留 detached 引用。
   }, [docTick, docPath]);
 
+  // F14 篇内大纲：与 blockTops 同源同失效条件（换文档/正文就位重算），只抽标题不动 DOM。
+  const outlineItems = useMemo(() => extractOutline(docRef.current), [docTick, docPath]);
+
   const layoutCards = useCallback(() => {
     const col = document.getElementById('margin-col');
     const doc = docRef.current;
@@ -590,6 +596,15 @@ function App() {
     setHits(searchIndex(indexRef.current, query));
   }
   function clearSearch() { setQ(''); setHits(null); }
+  // F14 大纲点标题：跳到当前文档里那一行。复用搜索/深链那条 scroll-to-line + 闪一下的路径
+  // （找 data-line ≤ 目标行的最近块），不新造第二套定位逻辑。
+  function jumpToLine(line) {
+    const el = docRef.current;
+    if (!el) return;
+    let hit = null;
+    el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
+    if (hit) { hit.scrollIntoView({ block: 'start' }); hit.classList.add('search-flash'); setTimeout(() => hit.classList.remove('search-flash'), 1600); }
+  }
   // 折间跳转：目标折在哪个栏自动切过去；带 path/line 就落到那一段
   function jumpTo({ prNumber, path, line }) {
     const all = [...prs, ...donePrs];
@@ -767,6 +782,12 @@ function App() {
   // 否则 `demo.md` 会被 variantOf 判成「英文」把整排 tab 翻成英文版（本轮自查踩到）
   const curLangOf = langSibling ? (variantOf(docPath)?.lang || lang) : lang;
 
+  // F14：章多时用下拉取代 tab 条（双语已合并计数）；篇内大纲够长才出浮栏。
+  const docNames = cur?.docs ? cur.docs.map((f) => f.filename) : [];
+  const useChapterList = shouldUseChapterList(docNames, curLangOf);
+  const chapters = useChapterList ? chapterList(docNames, docPath, curLangOf) : [];
+  const showOutline = hasOutline(outlineItems);
+
   return html`
     <div id="app">
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
@@ -782,7 +803,10 @@ function App() {
           onCopyRef=${copyRef} onZongpi=${() => setZongpi((z) => !z)}
           onSubmit=${submitAll} onQinci=${qinci} />
         <div class="work">
-          ${cur?.docs?.length > 1 && html`
+          ${cur?.docs?.length > 1 && useChapterList && html`
+            <${ChapterList} chapters=${chapters}
+              onOpenChapter=${(path) => { setViewed(null); setDocPath(path); }} />`}
+          ${cur?.docs?.length > 1 && !useChapterList && html`
             <div class="doc-tabs">
               ${cur.docs.filter((f) => visibleDocs(cur.docs.map((x) => x.filename), curLangOf).includes(f.filename)).map((f) => html`
                 <button key=${f.filename} class=${'doc-tab' + (f.filename === docPath ? ' active' : '')}
@@ -827,6 +851,8 @@ function App() {
           </div>
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
             onToggle=${() => setOtherOpen((o) => !o)} hydrate=${hydrateComment} />
+          ${cur && !docErr && showOutline && html`
+            <${Outline} items=${outlineItems} docRef=${docRef} onJump=${jumpToLine} />`}
         </div>
       </main>
       ${float && html`

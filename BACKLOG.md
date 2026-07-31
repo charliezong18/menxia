@@ -221,7 +221,7 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 ---
 
-## F14 · TOC / tiered reading for long folders (2026-07-31, from eval folder #60)
+## F14 · TOC / tiered reading for long folders (2026-07-31 ✅ done)
 
 **What**: a floating outline generated from headings on the reading page; multi-chapter folders (#31: 22 chapters) get a chapter list view.
 
@@ -230,3 +230,11 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 **How**: headings already carry `data-line` in the rendered DOM; pure frontend.
 
 **Status**: approved on #60, after F1; build after the 8/8 reckoning.
+
+**What was built** (both halves — volume and length):
+
+*Floating outline (length).* A right-edge fixed rail extracts the document's `h1/h2/h3` (the same levels `anchor.js` already treats as sections) straight from the rendered DOM via `data-line` — no change to the render pipeline. Items are indented by level, clicking one jumps to that block, and a **scroll-spy** highlight follows the current reading position. It only appears when the document has **≥ 3 headings** (short documents stay quiet — no noise), and only on viewports **≥ 1500px** wide, where the rail at `right:0` provably clears the content block (sidebar 300 + content ~1040) and therefore never overlaps the right-margin annotation column; below that width it simply doesn't render (narrow screens aren't broken, just no rail). It's collapsible.
+
+*Chapter list (volume).* When a folder has **more than 7 visible chapters**, the wrapping doc-tab strip is replaced by a compact chapter dropdown (native `details/summary`) that lists every chapter with its number and jumps on click. The count and the list reuse **F8's bilingual pairing** (`lang.js` `visibleDocs`/`langPairs`) verbatim, so `foo.md` ↔ `foo.zh-CN.md` collapse to one chapter and the current chapter stays highlighted across a language switch. The 7-chapter threshold is where the pill strip starts wrapping to a second row and loses its one-glance overview — below it, tabs are unchanged (the demo folder's 2 chapters keep the tabs, so the end-to-end smoke path is untouched).
+
+*Coexistence.* Jumping reuses the existing search/deep-link scroll-to-line path (`data-line ≤ target`, flash), not a second locator. Scroll-spy only **reads** heading geometry (`getBoundingClientRect`), writes no layout, and the outline is `position: fixed` (out of flow), so `layoutCards`' block-top measurements and the annotation-card anchoring are untouched. New logic lives in two new files (`src/toc.js` pure logic + `src/components/outline.js` view); the touch on `ui.js` is additive (imports, two derived values, one memo, one jump helper, a conditional tab/dropdown swap, and one `<Outline>` render). Extraction, scroll-spy math, and bilingual chapter pairing are unit-tested in `test/toc.test.js` (13 cases).

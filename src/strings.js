@@ -203,6 +203,13 @@ export const S = deepFreeze({
     en: 'EN',
   },
 
+  // F14 大纲 / 章列表
+  outline: {
+    title: '大纲',
+    aria: '本篇大纲',
+    chapterLabel: (i, n) => `第 ${i} / ${n} 章`,
+  },
+
   // 批注卡
   card: {
     quote: (text) => `「${text}」`,
