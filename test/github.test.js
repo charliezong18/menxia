@@ -162,3 +162,82 @@ test('每个请求都带 Authorization 与 API 版本头', async () => {
   assert.equal(h.Authorization, 'Bearer github_pat_test');
   assert.equal(h['X-GitHub-Api-Version'], '2022-11-28');
 });
+
+// ── 体例检查的判词（2026-07-31 加）──
+//
+// 命脉是 `unreadable` 与 `none` 必须分开：混成一个「无」，
+// 「钥匙没权限」就长得跟「这折没跑过检查」一模一样 ——
+// 而前者意味着你以为体例查过了、其实是我们看不见。
+// 与 verifyToken 那三层是同一条教训（2026-07-26 翻过车）。
+
+test('checkVerdict: 全绿 → pass', async () => {
+  stubFetch(() => ok({ check_runs: [{ status: 'completed', conclusion: 'success' }] }));
+  assert.deepEqual(await gh.checkVerdict('abc'), { state: 'pass' });
+});
+
+test('checkVerdict: 有失败的 → fail，且带 url 点得进去', async () => {
+  stubFetch(() => ok({ check_runs: [
+    { status: 'completed', conclusion: 'success', name: '别的' },
+    { status: 'completed', conclusion: 'failure', name: '九条规则', html_url: 'https://x/run/1' },
+  ] }));
+  const v = await gh.checkVerdict('abc');
+  assert.equal(v.state, 'fail');
+  assert.equal(v.url, 'https://x/run/1');
+  assert.equal(v.name, '九条规则');
+});
+
+test('checkVerdict: 还在跑 → running（别过早说绿）', async () => {
+  stubFetch(() => ok({ check_runs: [
+    { status: 'completed', conclusion: 'success' },
+    { status: 'in_progress' },
+  ] }));
+  assert.equal((await gh.checkVerdict('abc')).state, 'running');
+});
+
+test('checkVerdict: 这折压根没有检查 → none（CI 装上之前的老折）', async () => {
+  stubFetch(() => ok({ check_runs: [] }));
+  assert.equal((await gh.checkVerdict('abc')).state, 'none');
+});
+
+test('checkVerdict: 403/404 → unreadable，**不能当成 none**', async () => {
+  for (const code of [403, 404]) {
+    stubFetch(() => fail(code, 'Resource not accessible'));
+    const v = await gh.checkVerdict('abc');
+    assert.equal(v.state, 'unreadable', `${code} 应判 unreadable`);
+    assert.notEqual(v.state, 'none', `${code} 绝不能退化成「没有检查」`);
+  }
+});
+
+test('checkVerdict: neutral / skipped 不算失败（那是「没什么可说的」不是「不合格」）', async () => {
+  stubFetch(() => ok({ check_runs: [
+    { status: 'completed', conclusion: 'neutral' },
+    { status: 'completed', conclusion: 'skipped' },
+  ] }));
+  assert.equal((await gh.checkVerdict('abc')).state, 'pass');
+});
+
+test('checkVerdict: 500 照常抛（只吞权限那两种，别把网络故障也说成看不见）', async () => {
+  stubFetch(() => fail(500, 'boom'));
+  await assert.rejects(() => gh.checkVerdict('abc'));
+});
+
+test('verifyToken: 缺 Checks: Read 时 checksAccess=false，而不是整个存钥失败', async () => {
+  stubFetch((url) => {
+    if (url.includes('/check-runs')) return fail(403, 'Resource not accessible');
+    if (url.includes('/pulls')) return ok([]);
+    return ok({ permissions: { push: true }, default_branch: 'main' });
+  });
+  const r = await gh.verifyToken();
+  assert.equal(r.prAccess, true);
+  assert.equal(r.checksAccess, false);
+  assert.equal(r.canWrite, true);
+});
+
+test('verifyToken: 权限齐全时 checksAccess=true', async () => {
+  stubFetch((url) => {
+    if (url.includes('/check-runs')) return ok({ check_runs: [] });
+    if (url.includes('/pulls')) return ok([]);
+    return ok({ permissions: { push: true }, default_branch: 'main' });
+  });
+  assert.equal((await gh.verifyToken()).checksAccess, true);
+});

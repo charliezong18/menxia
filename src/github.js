@@ -68,7 +68,50 @@ export async function verifyToken() {
     if (err.status === 403 || err.status === 404) prAccess = false;
     else throw err;
   }
-  return { repo, canWrite: Boolean(repo.permissions?.push), prAccess };
+  // 第四层：体例检查（要 Checks: Read）。2026-07-31 加。
+  // 理由与上面那三层一模一样 —— 缺这个权限时 check-runs 返 403，
+  // 而 403 与「这折没跑过检查」在界面上会长成同一个样子（都是「没有」）。
+  // 于是你看到一折没红没绿，以为体例查过了，实际是**我们看不见**。
+  // 存钥这一刻就说出来，别等进了清单再猜。
+  let checksAccess = true;
+  try {
+    await json(`/repos/${repoSlug()}/commits/${repo.default_branch}/check-runs?per_page=1`);
+  } catch (err) {
+    if (err.status === 403 || err.status === 404) checksAccess = false;
+    else throw err;
+  }
+  return { repo, canWrite: Boolean(repo.permissions?.push), prAccess, checksAccess };
+}
+
+/**
+ * 一折的体例检查判词。
+ *
+ * **五种状态，`unreadable` 必须与 `none` 分开** —— 混成一个「无」的后果是
+ * 「钥匙没权限」长得跟「这折没跑过检查」一模一样，而前者意味着你以为查过了、其实没看见。
+ * 这跟 verifyToken 那三层是同一条教训（2026-07-26 翻过车）。
+ *
+ *   pass       全绿
+ *   fail       有失败的（带 url，点得进去看是哪条规则）
+ *   running    还在跑
+ *   none       这折没有检查（CI 装上之前的老折都是这个）
+ *   unreadable 钥匙缺 Checks: Read —— 看不见，不是没有
+ */
+export async function checkVerdict(sha) {
+  let data;
+  try {
+    data = await json(`/repos/${repoSlug()}/commits/${sha}/check-runs`);
+  } catch (err) {
+    if (err.status === 403 || err.status === 404) return { state: 'unreadable' };
+    throw err;
+  }
+  const runs = data?.check_runs || [];
+  if (!runs.length) return { state: 'none' };
+  if (runs.some((r) => r.status !== 'completed')) return { state: 'running' };
+  // neutral / skipped 不算失败 —— 它们是「这次没什么可说的」，不是「不合格」。
+  const bad = runs.filter((r) => !['success', 'neutral', 'skipped'].includes(r.conclusion));
+  return bad.length
+    ? { state: 'fail', url: bad[0].html_url, name: bad[0].name }
+    : { state: 'pass' };
 }
 
 export const listOpenPRs = () =>
