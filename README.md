@@ -7,7 +7,7 @@
 **A reading desk for AI-authored documents.**<br>
 Your agent submits a long document as a pull request. You read it *rendered* — not as a raw diff — highlight any sentence to leave a comment, submit the batch, and the agent revises. Merge = final.
 
-[**Live app**](https://charliezong18.github.io/zhupi) · [Spec](SPEC.md) · [Backlog](BACKLOG.md)
+[**Live app**](https://charliezong18.github.io/menxia) · [Spec](SPEC.md) · [Backlog](BACKLOG.md)
 
 </div>
 
@@ -54,7 +54,7 @@ your-review-repo/
 
 **2. Open the app and hand it a key**
 
-Go to [charliezong18.github.io/zhupi](https://charliezong18.github.io/zhupi) (or your own fork's Pages URL). Fill in `owner/repo`, then paste a [fine-grained PAT](https://github.com/settings/personal-access-tokens/new) scoped to **that one repo** with exactly two permissions:
+Go to [charliezong18.github.io/menxia](https://charliezong18.github.io/menxia) (or your own fork's Pages URL). Fill in `owner/repo`, then paste a [fine-grained PAT](https://github.com/settings/personal-access-tokens/new) scoped to **that one repo** with exactly two permissions:
 
 - **Contents: Read and write**
 - **Pull requests: Read and write** ← the one everyone forgets; without it the list 403s
@@ -87,7 +87,7 @@ Want to see it move before wiring up a token? `?demo=1&auto=1` runs a tokenless 
 
 The app hardcodes nothing — no repo, no owner, no analytics. Forking is three steps:
 
-1. **Fork this repo**, then Settings → Pages → Source: *Deploy from a branch* → `main` / root. Your app is live at `https://<you>.github.io/zhupi` within a minute. There is nothing to build.
+1. **Fork this repo**, then Settings → Pages → Source: *Deploy from a branch* → `main` / root. Your app is live at `https://<you>.github.io/menxia` within a minute. There is nothing to build.
 2. **Create your review repo** (private) with a `docs/` folder.
 3. **Open your Pages URL**, fill in `owner/repo` + token. Done.
 

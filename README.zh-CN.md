@@ -7,7 +7,7 @@
 **AI 产出的阅读批注台。**<br>
 agent 把长文档当「敕草」以 PR 呈上来，你在**渲染态**正文上划句落「涂归」，批完一键呈回，agent 逐条回话改出下一版；**画可** = merge = 定稿。
 
-[**在线试用**](https://charliezong18.github.io/zhupi) · [Spec](SPEC.zh-CN.md) · [Backlog](BACKLOG.zh-CN.md)
+[**在线试用**](https://charliezong18.github.io/menxia) · [Spec](SPEC.zh-CN.md) · [Backlog](BACKLOG.zh-CN.md)
 
 </div>
 
@@ -54,7 +54,7 @@ your-review-repo/
 
 **2. 开 app，给一把钥匙**
 
-打开 [charliezong18.github.io/zhupi](https://charliezong18.github.io/zhupi)（或你自己 fork 的 Pages 地址）。填 `owner/repo`，然后去生成一把 [fine-grained PAT](https://github.com/settings/personal-access-tokens/new)，只授权**那一个仓库**，权限正好两项：
+打开 [charliezong18.github.io/menxia](https://charliezong18.github.io/menxia)（或你自己 fork 的 Pages 地址）。填 `owner/repo`，然后去生成一把 [fine-grained PAT](https://github.com/settings/personal-access-tokens/new)，只授权**那一个仓库**，权限正好两项：
 
 - **Contents: Read and write**
 - **Pull requests: Read and write** ← 最容易漏的一项，漏了进清单就 403
@@ -87,7 +87,7 @@ your-review-repo/
 
 零写死：没有仓库名、没有 owner、没有埋点。fork 三步：
 
-1. **Fork 本仓库**，然后 Settings → Pages → Source: *Deploy from a branch* → `main` / root。一分钟内你的 app 就在 `https://<你>.github.io/zhupi` 上线了。没有构建步骤。
+1. **Fork 本仓库**，然后 Settings → Pages → Source: *Deploy from a branch* → `main` / root。一分钟内你的 app 就在 `https://<你>.github.io/menxia` 上线了。没有构建步骤。
 2. **建你自己的 review 仓库**（私有），里面开一个 `docs/` 目录。
 3. **打开你的 Pages 地址**，填 `owner/repo` + 钥匙。完事。
 
