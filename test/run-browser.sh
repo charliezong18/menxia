@@ -48,6 +48,24 @@ run_page() {
   rm -rf "$dir" 2>/dev/null || true
 }
 
+# 钉死断言名字清单（不只是总数）：删一条加一条互相抵消时总数不变，但名字集会变，diff 里现形。
+# 抽名字用和上面日志展示同一套 [^"]* 边界（Chrome 的 --enable-logging 会给每条 console 追加
+# `", source: …`，[^"]* 恰好切在那个引号前），再去掉 PASS/FAIL 与 ` — 明细` 后缀，排序去重。
+# 对不上就打 diff 并返回非零，交给调用方置 STATUS=1。
+check_names() { # $1=tag(dom|smoke)  $2=logfile  $3=golden
+  local tag="$1" log="$2" golden="$3" actual
+  actual="$(mktemp)"
+  grep -oE "\[$tag\] (PASS|FAIL) [^\"]*" "$log" \
+    | sed -E "s/^\[$tag\] (PASS|FAIL) //; s/ — .*\$//; s/[[:space:]]+\$//" \
+    | LC_ALL=C sort -u > "$actual"
+  if diff -u "$golden" "$actual" >/tmp/zhupi-$tag-names.diff 2>&1; then
+    rm -f "$actual"; return 0
+  fi
+  echo "  ✖ 断言名字清单与 $golden 对不上（+新增 / -缺失）："
+  sed 's/^/    /' /tmp/zhupi-$tag-names.diff
+  rm -f "$actual"; return 1
+}
+
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=22
 SMOKE_EXPECT=63
@@ -69,6 +87,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "dom" ]; then
     echo "  ✖ $RESULT（期望 pass=$DOM_EXPECT fail=0——条数对不上也算红，防断言被悄悄删掉）"
     STATUS=1
   fi
+  check_names dom /tmp/zhupi-dom.log test/dom-assertions.golden || STATUS=1
 fi
 
 if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
@@ -85,6 +104,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
     echo "  ✖ $RESULT（期望 pass=$SMOKE_EXPECT fail=0）"
     STATUS=1
   fi
+  check_names smoke /tmp/zhupi-smoke.log test/smoke-assertions.golden || STATUS=1
 
   # 直达链接：URL 带 ?pr=998 应直接开到那折（归档折 → 自动切已钦此栏、只读）
   run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=1&pr=998" /tmp/zhupi-deep.log 5000
