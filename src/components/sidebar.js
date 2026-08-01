@@ -79,7 +79,7 @@ function qianCounts(prs, donePrs) {
 export function Sidebar({
   q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {}, verifyCounts = {},
   qian = null, onQian = () => {},
-  onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings,
+  onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings, onDash,
 }) {
   const match = (p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase());
   // 签集与「按签」跨状态清单。qian 非空 = 处在「按签」视图：把 open+merged 里挂该签的折
@@ -140,6 +140,7 @@ export function Sidebar({
           <button data-tab="open" class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(counts.desk.length)}</button>
           <button data-tab="done" class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => onTab('done')}>${S.nav.tabDone(donePrs.length)}</button>
           <button data-tab="shelf" class=${'list-tab list-tab-shelf' + (tab === 'shelf' ? ' active' : '')} onClick=${() => onTab('shelf')}>${S.nav.tabShelf(counts.shelf.length)}</button>
+          ${onDash && html`<button class="list-tab dash-btn" title=${S.nav.dashTitle} onClick=${onDash}>${S.nav.dash}</button>`}
         </div>
         <nav id="pr-list" class=${tab === 'shelf' ? 'shelf-list' : ''}>
           ${tab === 'shelf' && list.length ? html`<p class="shelf-hint">${S.shelf.hint}</p>` : ''}

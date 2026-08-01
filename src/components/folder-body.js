@@ -18,7 +18,10 @@ import { S } from '../strings.js';
 // 于是每折正文尾巴上都挂一行乱码。形状照抄写入侧 `menxia-mcp/src/body.ts:46` 与
 // 本仓 `link.js:84` 的 MARKER_RE，只多一个 `g`：body 从旧折模板复制粘贴时可能带进不止一条。
 // **只剥这一种注释**，不做通用 HTML 注释清洗——那会连正文里当资料引用的注释一起吃掉。
-const MARKER_RE = /<!--\s*happy-session:[\s\S]*?-->/gi;
+// 2026-07-31 补上 `menxia-rel`（折务追踪 #61 的关系标记，写入侧 `track.ts` 焊的）：
+// 它与 `happy-session` 同族、同样是给机器读的，不剥同样会被转义成一行可见乱码。
+// 新标记落地那天就得连这条一起改——不然每折正文尾巴上挂一行 `<!-- menxia-rel: … -->`。
+const MARKER_RE = /<!--\s*(?:happy-session|menxia-rel):[\s\S]*?-->/gi;
 
 // 段名与写入侧 `body.ts:27-31` 的 SECTIONS 逐字一致（那是唯一的事实源）。
 // 这里只用来认「待你拍板」在不在，不用来重排正文——正文原样交给 markdown 渲染，

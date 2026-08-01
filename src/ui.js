@@ -25,6 +25,7 @@ import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-b
 import { assembleCarry } from './carry.js';
 import { Outline, ChapterList, ChapterRail } from './components/outline.js';
 import { ScrollEnds, scroller } from './components/scroll-ends.js';
+import { Dashboard } from './components/dashboard.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList } from './toc.js';
 import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
@@ -49,6 +50,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
   'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js',
   'src/slug.js', 'src/components/scroll-ends.js', 'src/components/image-view.js',
+  'src/components/dashboard.js',
   // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
   'src/verify.js'];
 async function detectNewBuild() {
@@ -142,6 +144,7 @@ function App() {
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待审 / done=已画可（归档，只读）
   const [qian, setQianState] = useState(params.get('qian') || null); // 「按签」视图选中的签，null=三栏
+  const [dash, setDash] = useState(false);       // F16 总览：按项目摊开待审折，看谁等谁、谁盖了谁
   const [donePrs, setDonePrs] = useState([]);
   const [nextUp, setNextUp] = useState(null);    // 画可后的落地条：下一折是谁——只提示，不自动跳，等他自己踩
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
@@ -1043,7 +1046,8 @@ function App() {
         qian=${qian} onQian=${setQian}
         onQuery=${(v) => { setQ(v); if (hits) setHits(null); }}
         onSearch=${runSearch} onClearSearch=${clearSearch} onJumpToHit=${jumpToHit}
-        onTab=${setTab} onOpenPR=${openPR}
+        onTab=${(t) => { setTab(t); setDash(false); }} onOpenPR=${(pr) => { setDash(false); openPR(pr); }}
+        onDash=${() => setDash((d) => !d)}
         onSettings=${() => { setPhase('setup'); setSetupMsg(''); }} />
       <main>
         <${Topbar} cur=${cur} archived=${archived} onHead=${onHead} busy=${busy}
@@ -1055,12 +1059,26 @@ function App() {
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
           onCopyRef=${copyRef} onCarry=${carryOut} onZongpi=${() => setZongpi((z) => !z)}
           onSubmit=${submitAll} onQinci=${qinci} />
-        <div class="work" onClick=${onAnchorClick}>
+        ${dash && html`
+          <${Dashboard} prs=${prs} donePrs=${donePrs} cur=${cur} timeAgo=${timeAgo}
+            onOpen=${(pr) => { setDash(false); openPR(pr); }}
+            onOpenNum=${(n) => {
+              const target = [...prs, ...donePrs].find((p) => p.number === n);
+              if (!target) { say(S.deepLink.folderNotFound(n)); return; }
+              setDash(false);
+              setTab(target.merged_at ? 'done' : 'open');
+              openPR(target);
+            }}
+            onClose=${() => setDash(false)} />`}
+        ${/* 总览开着时**藏**读折区而不是卸载它：#doc 是 ref 挂的岛屿，
+             卸载会连同已渲染的正文与批注锚点一起丢，回来要整篇重取重渲。 */ ''}
+        <div class=${'work' + (dash ? ' work-hidden' : '')} onClick=${onAnchorClick}>
         <div class="stage-row">
           ${cur?.docs?.length > 1 && useChapterList && html`
             <${ChapterRail} chapters=${chapters}
               onOpenChapter=${(path) => { setViewed(null); setDocPath(path); }} />`}
         <div class="stage-main">
+
           ${cur?.docs?.length > 1 && useChapterList && html`
             <${ChapterList} chapters=${chapters}
               onOpenChapter=${(path) => { setViewed(null); setDocPath(path); }} />`}

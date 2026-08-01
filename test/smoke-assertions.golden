@@ -27,6 +27,13 @@ cmd-enter-in-zongpi-not-submit
 cmd-enter-saves-draft
 comment-relative-image-hydrated
 copy-ref-btn-exists
+dash-button-present
+dash-closes-back-to-reading
+dash-draws-relations
+dash-groups-by-project
+dash-hides-reading-area
+dash-marks-zombie
+dash-opens
 diff-add-line-colored
 diff-add-visually-tinted
 diff-block-rendered
