@@ -10,7 +10,7 @@ export function Topbar({
   // 多个顶层节点：htm 会返回数组，Preact 直接当 Fragment 渲染（这个 standalone 包没导出 Fragment）
   return html`
         <div class="mainbar">
-          <span class="crumb">${S.topbar.crumbRoot} ${cur ? html`/ <b>${cur.pr.title}</b>` : ''}${
+          <span class="crumb">${S.topbar.crumbRoot} ${cur ? html`/ <span class="crumb-no">#${cur.pr.number}</span> <b>${cur.pr.title}</b>` : ''}${
             cur && verifyN > 0 ? html`<span class="verify-count" title=${S.verify.countTitle}>${S.verify.count(verifyN)}</span>` : ''}</span>
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { onRefresh(); }}>${S.action.refresh}</button>

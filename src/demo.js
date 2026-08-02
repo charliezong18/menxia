@@ -630,8 +630,14 @@ async function runSmoke(docEl) {
       await sleep(200);
     }
     chk('archive-float-suppressed', !document.querySelector('.zhupi-float'));
-    // 切回待批继续后面的断言
-    [...document.querySelectorAll('.list-tab')].find((b) => b.textContent.includes('待批'))?.click();
+    // 切回待审继续后面的断言。
+    // 用 data-tab 不用文字：这行原来是 textContent.includes('待批')，2026-08-02 把词表漏网的
+    // 「待批」改成定稿词「待审」时，find 静默返回 undefined —— 没点、没报错，后面 6 条断言
+    //（摘要卡 + 整条 submit 管线）连锁塌掉，看起来像提交管线坏了。裸字符串当跨层契约就是这样：
+    // 改了不报错，只是什么都不做。选择器一律锚在不上屏的属性上。
+    const openTab = document.querySelector('.list-tab[data-tab="open"]');
+    if (!openTab) chk('list-tab-open-selector', false, '找不到 [data-tab="open"]——选择器与渲染脱钩了');
+    openTab?.click();
     await sleep(200);
     // F1（摘要卡）：待批清单里，带五段 body 的折要出摘要行——一句 TLDR gist + 拍板角标，
     // 不点进去就看得出「这折干了什么、要不要你拍板」。归档折（BODY_FREEFORM 无 TLDR）不出摘要行。

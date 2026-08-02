@@ -67,7 +67,7 @@ export const S = deepFreeze({
 
   // 顶栏
   topbar: {
-    crumbRoot: '待批',
+    crumbRoot: '待审',
   },
 
   // 新版横幅（detectNewBuild）
@@ -78,7 +78,7 @@ export const S = deepFreeze({
 
   // 侧栏导航 / 两栏清单
   nav: {
-    tabOpen: (n) => `待批 ${n}`,
+    tabOpen: (n) => `待审 ${n}`,
     tabDone: (n) => `已画可 ${n}`,
     emptyOpen: '此刻无折可批。',
     emptyDone: '还没有画可过的折子。',
