@@ -500,14 +500,32 @@ function App() {
   // ── 全局监听：划选 / ⌘Enter / 滚动收浮钮 ──
   const submitRef = useRef();
   useEffect(() => {
+    // 当前选区 → 浮钮，鼠标与触屏两条路径共用的唯一落点
+    const showFloat = () => {
+      const a = A.computeAnchor(docRef.current);
+      setFloat(a ? { ...a, rect: { left: a.rect.right, top: a.rect.bottom } } : null);
+    };
     const onMouseUp = (e) => {
       if (e.target.closest('.zhupi-float, .anno-card, .zongpi-card')) return;
       if (e.target.closest('aside, .mainbar')) { if (R.current.float) setFloat(null); return; } // 点按钮也要收浮钮
       if (!R.current.canAnnotate) { if (R.current.float) setFloat(null); return; } // 旧版/归档只读：不出浮批钮
-      setTimeout(() => {
-        const a = A.computeAnchor(docRef.current);
-        setFloat(a ? { ...a, rect: { left: a.rect.right, top: a.rect.bottom } } : null);
-      }, 0);
+      setTimeout(showFloat, 0);
+    };
+    // 触屏路径：iOS Safari 把长按选字与拖选择手柄整段手势交给原生选择 UI，不派发合成的
+    // mouse 事件——只挂 mouseup 的话 iPad 上手指选中后浮钮永远不出（接妙控走 mousedown 则正常）。
+    // 只对触摸输入启用：桌面拖选途中 selectionchange 连续派发，放行会让浮钮在松手前跟着选区跳。
+    let byTouch = false;
+    let selTimer = 0;
+    const onTouchStart = () => { byTouch = true; };  // 早于长按被系统接管，必定收得到
+    const onMouseDown = () => { byTouch = false; };  // 含 iPad 接妙控：一律退回 mouseup 路径
+    const onSelectionChange = () => {
+      if (!byTouch) return;
+      clearTimeout(selTimer);
+      selTimer = setTimeout(() => {
+        if (!byTouch) return; // 期间来了 mousedown（轻点收选区）：交回 mouseup 判
+        if (!R.current.canAnnotate) { if (R.current.float) setFloat(null); return; } // 与 mouseup 同一道只读闸
+        showFloat();
+      }, 250); // 拖手柄期间连发，等停稳再出钮
     };
     const onKeyDown = (e) => {
       if (!(e.metaKey || e.ctrlKey) || e.key !== 'Enter') return;
@@ -518,10 +536,17 @@ function App() {
     };
     const onScroll = () => { if (R.current.float) setFloat(null); }; // 内滚不派发 mousedown，浮钮会残留
     document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('touchstart', onTouchStart, { passive: true });
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('selectionchange', onSelectionChange);
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('scroll', onScroll, true);
     return () => {
+      clearTimeout(selTimer);
       document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchstart', onTouchStart);
+      document.removeEventListener('mousedown', onMouseDown);
+      document.removeEventListener('selectionchange', onSelectionChange);
       document.removeEventListener('keydown', onKeyDown);
       document.removeEventListener('scroll', onScroll, true);
     };

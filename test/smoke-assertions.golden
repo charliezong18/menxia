@@ -35,6 +35,7 @@ list-summary-tldr-and-decisions
 long-doc-scrollable
 margin-cards-ordered
 margin-cards-present
+mouse-drag-holds-float-until-mouseup
 old-rev-body-shorter
 old-rev-cmd-enter-blocked
 old-rev-float-suppressed
@@ -52,6 +53,8 @@ submit-btn-visible
 submit-commit-id
 submit-fired
 submit-line-set
+touch-probe-range-built
+touch-selection-shows-float
 verify-count-in-topbar
 verify-marker-rendered
 zongpi-auto-opens-after-send

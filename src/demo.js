@@ -253,9 +253,9 @@ export async function autoAnnotate(docEl) {
 
 async function runSmoke(docEl) {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  const pick = async (text, note, save) => {
+  const rangeFor = (text) => {
     const block = [...docEl.querySelectorAll('[data-line]')].find((b) => b.textContent.includes(text));
-    if (!block) return;
+    if (!block) return null;
     const idx = block.textContent.indexOf(text);
     const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
     let pos = 0, sN = null, sO = 0, node, r = null;
@@ -268,6 +268,10 @@ async function runSmoke(docEl) {
       }
       pos = next;
     }
+    return r;
+  };
+  const pick = async (text, note, save) => {
+    const r = rangeFor(text);
     if (!r) return;
     const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
     docEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
@@ -291,6 +295,30 @@ async function runSmoke(docEl) {
   };
 
   await sleep(300);
+
+  // 触屏路径（iPad 实测：接触控板能批、手指不能）。iOS Safari 把长按选字与拖手柄整段手势
+  // 交给原生选择 UI，不派发合成 mouse 事件——只挂 mouseup 时手指选中后浮钮永远不出。
+  // 两条钉死两侧：手指要能出钮；鼠标按下拖选途中不许出钮（桌面零回归的闸门——selectionchange
+  // 在拖选期间连续派发，误让它对鼠标生效的话浮钮会在松手前就冒出来跟着选区跳）。
+  const tRange = rangeFor('迁移到 Preact 之后');
+  chk('touch-probe-range-built', Boolean(tRange)); // 防靶文失配导致下面两条空转假绿
+  if (tRange) {
+    document.dispatchEvent(new Event('touchstart', { bubbles: true })); // 早于长按被系统接管
+    getSelection().removeAllRanges();
+    getSelection().addRange(tRange);
+    await sleep(450); // 过 250ms 防抖
+    chk('touch-selection-shows-float', Boolean(document.querySelector('.zhupi-float')));
+
+    getSelection().removeAllRanges();
+    await sleep(400); // 让上一轮防抖落地收钮，再验鼠标侧
+    document.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    getSelection().addRange(tRange); // 模拟按住拖选：选区在变，但还没 mouseup
+    await sleep(450);
+    chk('mouse-drag-holds-float-until-mouseup', !document.querySelector('.zhupi-float'));
+    getSelection().removeAllRanges();
+    await sleep(50);
+  }
+
   await pick('镜片随时可以摘掉', '这句放结尾太谦虚了，提到开头', true);
   await pick('const DEBOUNCE_MS = 300;', '300ms 的依据补个注释', false);
 
