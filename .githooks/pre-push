@@ -9,17 +9,40 @@
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
 
-REMOTE_REF="${1:-origin}"
-# 这次 push 实际带过去的文件：远端有对应分支就比 diff，没有就拿整棵树当新分支处理
-BASE="$(git rev-parse --verify --quiet "refs/remotes/$REMOTE_REF/$(git branch --show-current)" || true)"
-if [ -n "$BASE" ]; then
-  CHANGED="$(git diff --name-only "$BASE"..HEAD)"
-else
+# 这次 push 实际带过去的文件。基准必须取自「推去哪」——git 从 stdin 逐行喂
+#   <本地ref> <本地sha> <远端ref> <远端sha>
+# 远端 sha 就是目标分支此刻的位置，正是该比的基准。
+#
+# 旧写法拿「当前分支名」去猜同名远端分支，源≠分支名的推送必猜错。2026-08-02 实伤：
+# 先推 fix/touch-annotate、再 `git push origin HEAD:main`，第二次比的是「我的分支 vs 一秒前
+# 刚推上去的同名副本」= 空 diff → 判成纯文档 → 浏览器层整个跳过，一次改 ui.js 的提交
+# 直奔生产没过闸。算不出增量时一律当全改了：这道闸门只许往严的方向倒。
+is_zero() { [[ "$1" =~ ^0+$ ]]; }
+CHANGED=""
+NREF=0
+WIDEN=0
+while read -r _lref lsha _rref rsha; do
+  [ -z "${lsha:-}" ] && continue
+  is_zero "$lsha" && continue                      # 删远端分支：没内容可测
+  NREF=$((NREF + 1))
+  if ! is_zero "$rsha" && git cat-file -e "${rsha}^{commit}" 2>/dev/null; then
+    CHANGED+="$(git diff --name-only "$rsha" "$lsha")"$'\n'
+  else
+    WIDEN=1                                        # 新建远端分支 / 本地没这个对象：算不出增量
+  fi
+done
+if [ "$NREF" -eq 0 ] || [ "$WIDEN" -eq 1 ]; then
   CHANGED="$(git ls-files)"
 fi
 
 # 只动文档就别跑 90 秒的浏览器层——闸门要挡的是代码，不是错别字
 CODE_TOUCHED="$(echo "$CHANGED" | grep -E '^(src/|index\.html|vendor/|test/|\.githooks/)' || true)"
+
+# 供 test/prepush.test.js 验分类：只报判定，不跑那 90 秒
+if [ -n "${PREPUSH_DRYRUN:-}" ]; then
+  [ -z "$CODE_TOUCHED" ] && echo "DRYRUN docs-only" || echo "DRYRUN code"
+  exit 0
+fi
 
 echo "── pre-push 闸门 ──"
 # 量测随每次 push 打脸：账本停摆过 7 个 commit，根因是记账没有触发点。
