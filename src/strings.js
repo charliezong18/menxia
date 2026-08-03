@@ -238,6 +238,7 @@ export const S = deepFreeze({
     title: '大纲',
     aria: '本篇大纲',
     chapterLabel: (i, n) => `第 ${i} / ${n} 章`,
+    chapterAria: '本折章列表',
   },
 
   // 批注卡

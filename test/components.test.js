@@ -15,6 +15,10 @@ const { Topbar } = await import('../src/components/topbar.js');
 globalThis.window = {
   markdownit: () => ({
     renderer: { rules: {} },
+    // render.js 模块顶层要挂双链 inline rule；桩缺这一层，整个文件 import 就炸。
+    // 空实现而非真规则：本文件不测渲染管线，那归 render-safety.test.js（它跑真 markdown-it）。
+    // 补形状、不补行为——补行为才会变成上面警告的那种「更宽容的桩」。
+    inline: { ruler: { before: () => {} } },
     render: (t) => {
       if (typeof t !== 'string') throw new TypeError('Input data should be a String');
       return `<p>${t}</p>`;

@@ -20,7 +20,7 @@ import { OtherThreads } from './components/other-threads.js';
 import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-body.js';
 import { assembleCarry } from './carry.js';
-import { Outline, ChapterList } from './components/outline.js';
+import { Outline, ChapterList, ChapterRail } from './components/outline.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList } from './toc.js';
 import { S } from './strings.js';
 
@@ -940,6 +940,9 @@ function App() {
           onSubmit=${submitAll} onQinci=${qinci} />
         <div class="work">
         <div class="stage-row">
+          ${cur?.docs?.length > 1 && useChapterList && html`
+            <${ChapterRail} chapters=${chapters}
+              onOpenChapter=${(path) => { setViewed(null); setDocPath(path); }} />`}
         <div class="stage-main">
           ${cur?.docs?.length > 1 && useChapterList && html`
             <${ChapterList} chapters=${chapters}

@@ -31,9 +31,21 @@
   /* 大纲占的版心宽度。默认 0——它 <1500 时是 display:none，不该还占着位子把版心
      算宽（算宽了 .work 的居中式就以为放不下，退回贴左，白瞎两边的空白）。 */
   --toc-slot: 0px;
-  --stage: calc(var(--main-w) + var(--toc-slot));
+  /* 章栏（版心左侧）占的宽度。与 --toc-slot 同一套写法、同一个理由：不显示时必须是 0，
+     否则版心算宽偏大，.work 的居中式会以为放不下而退回贴左。 */
+  --chap-w: 200px;
+  --chap-slot: 0px;
+  --stage: calc(var(--chap-slot) + var(--main-w) + var(--toc-slot));
 }
 @media (min-width: 1500px) { :root { --toc-slot: calc(var(--col-gap) + var(--toc-w)); } }
+/* 章栏断点是硬算的，改任一栏宽都要重算：
+   左栏 300 + 左右留白 36×2 + 版心（章栏 200 + 间距 34 + 正文摞 1040 + 大纲槽 294）= 1940。
+   低于它就没有「正文左边的空地」，章列表退回正文之上的下拉（.chapters）。二者永不并存。 */
+@media (min-width: 1940px) {
+  :root { --chap-slot: calc(var(--chap-w) + var(--col-gap)); }
+  .chapter-rail { display: flex; }
+  .chapters { display: none; }
+}
 
 /* 紧凑档（1280–1709）：默认几何塞不下，按可让步顺序收紧。
    眉批栏 300 一格不动——批注卡的宽度是这个阅读器的立身之本，宁可收正文。
@@ -656,6 +668,31 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 
 /* ── F14 章下拉（章多时取代 tab 条）—— 与 doc-tabs 同一左缩进，墨色控件 ── */
+/* 章栏（左）。视觉语言照抄大纲栏，镜像到版心左侧；sticky 的前提同样是父级
+   .stage-row 的 align-items: flex-start（拉伸满高就没有滑动余量）。
+   默认 display:none，够宽才由上面那条断点打开——与 .toc 同构。 */
+.chapter-rail {
+  position: sticky; z-index: 20; top: 10px; width: var(--chap-w);
+  flex: none; align-self: flex-start;
+  max-height: calc(100vh - 190px); display: none; flex-direction: column;
+  background: var(--veil); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 8px 6px; box-shadow: 0 2px 10px var(--shadow);
+}
+.chapter-rail-head {
+  font-family: var(--songti); font-size: 12.5px; letter-spacing: .08em;
+  color: var(--ink-soft); padding: 4px 8px 8px;
+}
+.chapter-rail-list { list-style: none; overflow-y: auto; }
+.chapter-rail-opt {
+  display: flex; gap: 8px; width: 100%; text-align: left; align-items: baseline;
+  padding: 5px 8px; border-radius: 6px; font-size: 13px; color: var(--ink-soft);
+  line-height: 1.45;
+}
+.chapter-rail-opt:hover { color: var(--ink); background: var(--paper-raised); }
+.chapter-rail-opt.active { color: var(--ink); font-weight: 600; }
+.chapter-rail-num { font: 11px var(--mono); opacity: .6; flex: none; }
+.chapter-rail-name { min-width: 0; }
+
 .chapters { margin: 0 0 22px var(--art-indent); position: relative; }
 .chapters-summary {
   display: inline-flex; align-items: baseline; gap: 10px; cursor: pointer; list-style: none;

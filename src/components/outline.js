@@ -62,9 +62,33 @@ export function Outline({ items, docRef, onJump }) {
     </nav>`;
 }
 
+// ── 章列表·左栏（2026-08-03 反馈：「把第一章第二章也变成悬浮窗，放正文左边的空地里」）──
+// 与右侧大纲同一套视觉语言，镜像到版心左侧：大纲管**篇内**（这一章讲了什么），
+// 章栏管**篇间**（这本书有哪些章）。两者不重叠，所以可以并存。
+// 不做 JS 测宽——测宽要挂 resize 监听、还会和 CSS 断点各算一套，迟早对不上。
+export function ChapterRail({ chapters, onOpenChapter }) {
+  const idx = chapters.findIndex((c) => c.active);
+  return html`
+    <nav class="chapter-rail" aria-label=${S.outline.chapterAria}>
+      <div class="chapter-rail-head">${S.outline.chapterLabel(idx >= 0 ? idx + 1 : 1, chapters.length)}</div>
+      <ol class="chapter-rail-list">
+        ${chapters.map((c, i) => html`
+          <li key=${c.path}>
+            <button class=${'chapter-rail-opt' + (c.active ? ' active' : '')} title=${c.name}
+              onClick=${() => onOpenChapter(c.path)}>
+              <span class="chapter-rail-num">${i + 1}</span><span class="chapter-rail-name">${c.name}</span>
+            </button>
+          </li>`)}
+      </ol>
+    </nav>`;
+}
+
 // ── 章下拉（取代 tab 条）──
 // chapters：chapterList 的产物（[{ path, name, active }]）。onOpenChapter(path)：切到该章（= setDocPath）。
 // 用原生 details/summary：零依赖、点外部自动收（浏览器管），键盘可达，不引状态管理。
+//
+// ⚠️ 它与 `ChapterRail` 是**同一份数据的两种版式**，由 CSS 断点二选一显示（见 --chap-slot）：
+// 够宽摊成左栏，不够宽留在正文之上当下拉。改任一个先想想另一个。
 export function ChapterList({ chapters, onOpenChapter }) {
   const cur = chapters.find((c) => c.active);
   const idx = chapters.findIndex((c) => c.active);

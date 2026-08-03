@@ -55,3 +55,46 @@ test('正常 markdown 仍照常渲染（防「一刀切全转义」把功能也�
   assert.match(out, /<strong>/);
   assert.match(out, /href="https:\/\/example\.com"/);
 });
+
+// ── frontmatter 与双链（2026-08-03，vault 文档搬进弘文馆后暴露）──────────
+const { stripFrontmatter: sfm } = await import('../src/render.js');
+
+test('frontmatter 换成等量空行——行号必须纹丝不动', () => {
+  const src = '---\ncreated_by: claude\ntags: [a]\n---\n# 标题\n正文';
+  const out = sfm(src);
+  assert.doesNotMatch(out, /created_by/, 'frontmatter 不该渲染出来');
+  assert.equal(out.split('\n').length, src.split('\n').length, '总行数不变（涂归锚在行号上）');
+  assert.equal(out.split('\n')[4], '# 标题', '标题仍在第 5 行');
+});
+
+test('frontmatter：没有 / 不完整 / 正文里的 --- 一律不动', () => {
+  assert.equal(sfm('# 只有正文'), '# 只有正文');
+  assert.equal(sfm('---\n没有闭合'), '---\n没有闭合');
+  const mid = '# 标题\n\n---\n\n分隔线不是 frontmatter';
+  assert.equal(sfm(mid), mid, '只认文件开头那一段');
+  assert.equal(sfm(null), '');
+});
+
+test('双链 [[目标]] 渲成同折内相对链接，交给 resolveRelativeDocLink 那条路', () => {
+  const h = renderMarkdown('下一章 → [[01 这是个什么东西]]');
+  assert.match(h, /<a href="01%20%E8%BF%99%E6%98%AF%E4%B8%AA%E4%BB%80%E4%B9%88%E4%B8%9C%E8%A5%BF\.md"/);
+  assert.match(h, /class="wikilink"/);
+  assert.match(h, />01 这是个什么东西</, '显示名保持原样');
+});
+
+test('双链：别名 / 锚点 / 已带扩展名', () => {
+  assert.match(renderMarkdown('[[foo|叫我别名]]'), /href="foo\.md"[^>]*>.*叫我别名/s);
+  assert.match(renderMarkdown('[[foo#某节]]'), /href="foo\.md#%E6%9F%90%E8%8A%82"/);
+  assert.match(renderMarkdown('[[a.md]]'), /href="a\.md"/, '别拼成 a.md.md');
+});
+
+test('双链：代码块里的不认（inline rule 天然不进代码）', () => {
+  assert.match(renderMarkdown('`[[foo]]`'), /<code>\[\[foo\]\]<\/code>/);
+  assert.doesNotMatch(renderMarkdown('```\n[[foo]]\n```'), /<a /);
+  assert.doesNotMatch(renderMarkdown('[[]]'), /<a /, '空目标原样留着');
+});
+
+test('双链不劫持普通链接与脚注式写法', () => {
+  assert.match(renderMarkdown('[普通](x.md)'), /href="x\.md"/);
+  assert.doesNotMatch(renderMarkdown('[[嵌套[方括号]]]'), /class="wikilink"/);
+});
