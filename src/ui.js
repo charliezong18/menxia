@@ -485,6 +485,8 @@ function App() {
   // 只依赖「改变 margin-col 自身子元素集合/高度」的 state。正文之上的块（判、rev 行、tab 条）
   // 高度变了也不用重排：layoutCards 算的是 block.top − colRect.top，而 #doc 与 #margin-col 是
   // .read-row 里顶对齐的 flex 兄弟，一起上下平移，差值恒定。（评审实测：展/收判前后 tops 逐像素相同）
+  // 2026-08-03 起 .read-row 里还有第三个兄弟 .toc（大纲），排在 #margin-col 之后、宽屏才现身。
+  // 它不参与这套测量：后置兄弟改不了前两者的 top，且它是 sticky，滚动时的位移不进布局流。
   useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick, comments, viewed, layoutCards]);
   useEffect(() => {
     if (typeof ResizeObserver === 'undefined' || !docRef.current) return;
@@ -984,11 +986,11 @@ function App() {
               ${marginItems.map((m) => m.el)}
               ${others > 0 && html`<p class="margin-note">${S.margin.otherDocs(others)}</p>`}
             </div>
+            ${cur && !docErr && showOutline && html`
+              <${Outline} items=${outlineItems} docRef=${docRef} onJump=${jumpToLine} />`}
           </div>
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
             onToggle=${() => setOtherOpen((o) => !o)} hydrate=${hydrateComment} />
-          ${cur && !docErr && showOutline && html`
-            <${Outline} items=${outlineItems} docRef=${docRef} onJump=${jumpToLine} />`}
         </div>
       </main>
       ${float && html`

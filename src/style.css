@@ -14,6 +14,32 @@
   --songti: "Songti SC", "STSongti-SC", serif;
   --sans: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: "SF Mono", Menlo, monospace;
+
+  /* ── 版心几何（2026-08-03）──
+     这几个数原先写死在各处：26px 左缩进散在 8 条规则里、680px 散在 4 条。提成变量是因为
+     下面要开第二套几何（笔记本档），字面量必然失同步——改了 article 却漏改 .folder-body
+     的 max-width，块就跟正文错位，而且不报错。改这里之前先读 --stage 的算式。 */
+  --rail-w: 300px;      /* 左栏：折清单 */
+  --art-indent: 26px;   /* 正文列左缩进；正文之上的块（tab 条/判/折首/语言钮）全部对齐它 */
+  --art-w: 680px;       /* 正文列：16.5px 下 ≈41 字/行 */
+  --col-gap: 34px;      /* 正文｜眉批｜大纲 三栏间距；批注卡的引线长度也取它 */
+  --marg-w: 300px;      /* 眉批栏 */
+  --toc-w: 208px;       /* 大纲栏 */
+  --work-pad: 36px;     /* .work 左右最小留白 */
+  --stage: calc(var(--art-indent) + var(--art-w) + var(--col-gap)
+              + var(--marg-w) + var(--col-gap) + var(--toc-w));
+}
+
+/* 笔记本档（1500–1659）：四栏都要，但默认几何差 170px 塞不下，按可让步顺序收紧。
+   眉批栏 300 一格不动——批注卡的宽度是这个阅读器的立身之本，宁可收正文。
+   正文 620 在中文 16.5px 下是 37.5 字/行，仍在 35–45 舒适区，不是硬挤。
+   核账：1500 − 240(左栏) − 26×2(留白) = 1208 可用，版心 16+620+26+300+26+184 = 1172，余 36。
+   下限 1464；再窄就放不下第四栏，回落到「无大纲」的三栏版式。 */
+@media (min-width: 1500px) and (max-width: 1659px) {
+  :root {
+    --rail-w: 240px; --art-indent: 16px; --art-w: 620px;
+    --col-gap: 26px; --toc-w: 184px; --work-pad: 26px;
+  }
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -80,7 +106,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 #app { display: flex; height: 100%; }
 
 aside {
-  width: 300px; height: 100%; flex: none; padding: 26px 18px;
+  width: var(--rail-w); height: 100%; flex: none; padding: 26px 18px;
   border-right: 1px solid var(--rule); background: var(--veil);
   display: flex; flex-direction: column;
 }
@@ -153,11 +179,16 @@ main { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: colum
   color: var(--cinnabar-deep);
 }
 
-.work { flex: 1; min-height: 0; overflow-y: auto; padding: 30px 36px 60px; }
-.read-row { display: flex; gap: 34px; align-items: flex-start; }
-article { flex: none; width: 680px; margin-left: 26px; min-width: 0; }
+.work { flex: 1; min-height: 0; overflow-y: auto; padding: 30px var(--work-pad) 60px; }
+/* 版心居中（2026-08-03 反馈：大屏上「很可笑」）——版心宽度是写死的，宽屏下整块一直贴左，
+   2560 的屏上右边空掉 1200+px。这里只补对称留白，一栏的宽度都不改：拉宽正文反而回行困难。
+   max() 让这条规则在所有视口下都安全：窄到放不下版心时取 --work-pad，退回原来的贴左版式，
+   所以不需要包 media query。<900 的手机档由后面的 padding 简写覆盖掉它。 */
+.work { padding-inline: max(var(--work-pad), calc((100% - var(--stage)) / 2)); }
+.read-row { display: flex; gap: var(--col-gap); align-items: flex-start; }
+article { flex: none; width: var(--art-w); margin-left: var(--art-indent); min-width: 0; }
 
-.doc-tabs { display: flex; gap: 8px; margin: 0 0 22px 26px; flex-wrap: wrap; }
+.doc-tabs { display: flex; gap: 8px; margin: 0 0 22px var(--art-indent); flex-wrap: wrap; }
 .doc-tab {
   padding: 6px 14px; border-radius: 999px; border: 1px solid var(--rule);
   background: var(--paper-raised); font: 13px var(--mono); color: var(--ink-soft);
@@ -204,7 +235,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 .zhupi-float:hover { background: var(--cinnabar-deep); }
 
-.margin-col { position: relative; width: 300px; flex: none; }
+.margin-col { position: relative; width: var(--marg-w); flex: none; }
 
 .anno-card {
   position: absolute; left: 0; width: 100%;
@@ -212,7 +243,8 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   padding: 13px 14px; box-shadow: 0 2px 8px var(--shadow);
 }
 .anno-card::before {
-  content: ""; position: absolute; left: -34px; top: 24px; width: 34px; height: 2px;
+  content: ""; position: absolute; top: 24px; height: 2px;
+  left: calc(-1 * var(--col-gap)); width: var(--col-gap);
   background: var(--cinnabar); opacity: .5;
 }
 .zongpi-card::before { display: none; }
@@ -287,7 +319,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .anno-reply-who { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 3px; }
 
 /* ── M3：rev 版本切换 ── */
-.rev-row { display: flex; align-items: center; gap: 10px; margin: 0 0 18px 26px; flex-wrap: wrap; }
+.rev-row { display: flex; align-items: center; gap: 10px; margin: 0 0 18px var(--art-indent); flex-wrap: wrap; }
 .rev-label { font-family: var(--songti); font-size: 12.5px; color: var(--ink-soft); letter-spacing: .08em; }
 .rev-switch { display: inline-flex; gap: 6px; flex-wrap: wrap; }
 .rev-opt {
@@ -297,13 +329,13 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .rev-opt:hover { color: var(--ink); }
 .rev-opt.active { border-color: var(--ink); color: var(--ink); background: var(--chip); }
 .rev-notice {
-  margin: 0 0 16px 26px; padding: 7px 13px; font-size: 12.5px;
+  margin: 0 0 16px var(--art-indent); padding: 7px 13px; font-size: 12.5px;
   background: var(--chip); border: 1px solid var(--rule); border-radius: 8px;
   color: var(--ink-soft);
 }
 
 /* ── M3：其他文档 / 无法定位的串（折叠组，静态流式不参与对齐）── */
-.other-threads { margin: 30px 0 0 26px; max-width: 680px; }
+.other-threads { margin: 30px 0 0 var(--art-indent); max-width: var(--art-w); }
 .other-threads-toggle {
   font-family: var(--songti); font-size: 13px; color: var(--ink-soft); letter-spacing: .05em; padding: 4px 0;
 }
@@ -389,7 +421,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
    默认折叠成一行（issue #1）：这块在正文之上，评审历史一长就把文档推下 2–3 屏，
    读者滚不到文档自己的 TL;DR。宽度对齐正文列（680px），markdown 复用 .anno-shown-body。 */
 .zongpi-shown {
-  margin: 0 0 20px 26px; padding: 10px 16px; max-width: 680px;
+  margin: 0 0 20px var(--art-indent); padding: 10px 16px; max-width: var(--art-w);
   background: var(--paper-raised); border: 1px solid var(--rule);
   border-left: 3px solid var(--ink-soft); border-radius: 9px;
 }
@@ -421,7 +453,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
    issue #13：有「待你拍板」就默认展开，标题用朱砂描一下左缘，让「这折要你决定」在余光里就看得见；
    没有拍板点时退回墨色安静系，与总批块无异（常态不添噪音）。 */
 .folder-body {
-  margin: 0 0 20px 26px; padding: 10px 16px; max-width: 680px;
+  margin: 0 0 20px var(--art-indent); padding: 10px 16px; max-width: var(--art-w);
   background: var(--paper-raised); border: 1px solid var(--rule);
   border-left: 3px solid var(--ink-soft); border-radius: 9px;
 }
@@ -498,7 +530,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 
 /* F8 语言切页：同一折的中英两版。墨色分段控件，朱砂仍只属于批注动作 */
 .lang-switch {
-  display: inline-flex; gap: 4px; margin: 0 0 16px 26px;
+  display: inline-flex; gap: 4px; margin: 0 0 16px var(--art-indent);
   border: 1px solid var(--rule); border-radius: 999px; padding: 3px; background: var(--paper-raised);
 }
 .lang-opt {
@@ -554,13 +586,20 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   padding: 12px; outline: none; white-space: pre; overflow: auto;
 }
 .carry-fallback-close { align-self: flex-end; }
-/* ── F14 篇内浮动大纲 ──
-   固定在视口右缘，z-index 20 —— 压在浮批钮(30)之下，绝不抢批注动作。
-   只在够宽的视口出现：正文块(侧栏300 + 内容~1040)右缘约 1376px，栏宽 200 贴 right:0，
-   ≥1500 时二者之间还留着安全余量，天然不遮右缘批注栏；不够宽就整块隐藏（窄屏不破坏，只是没有它）。 */
+/* ── F14 篇内大纲 ──
+   z-index 20 —— 压在浮批钮(30)之下，绝不抢批注动作。
+   收在 .read-row 里当第三栏、sticky 跟着正文滚；放不下就整块隐藏（窄屏不破坏版式，只是没有它）。
+   1500 起出现：≥1660 用默认几何，1500–1659 用上面那套收紧的笔记本档几何——两档都是入流四栏，
+   区别只在各栏宽度，故这里只有一个 display 断点。
+   2026-08-03 之前是 position:fixed 钉视口右缘，那时 1500 这个断点是算错的：眉批栏右缘恒在
+   1376px，而 right:18 的大纲左缘在 vw−226，vw<1602 时二者相压——1500–1601 的视口上大纲一直
+   盖着眉批栏，注释里却写着「留着安全余量」。改成入流后这类重叠在结构上不再可能。
+   sticky 能在 flex 里生效全靠 .read-row 的 align-items: flex-start（拉伸就没有滑动余量）。
+   max-height 按最坏情况(顶上还有 .notice 条)留，宁可矮一点让 .toc-list 内滚，不许溢出视口底。 */
 .toc {
-  position: fixed; z-index: 20; top: 96px; right: 18px; width: 208px;
-  max-height: calc(100vh - 132px); display: none; flex-direction: column;
+  position: sticky; z-index: 20; top: 10px; width: var(--toc-w);
+  flex: none; align-self: flex-start;
+  max-height: calc(100vh - 190px); display: none; flex-direction: column;
   background: var(--veil); border: 1px solid var(--rule); border-radius: 10px;
   padding: 8px 6px; box-shadow: 0 2px 10px var(--shadow);
 }
@@ -587,7 +626,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 
 /* ── F14 章下拉（章多时取代 tab 条）—— 与 doc-tabs 同一左缩进，墨色控件 ── */
-.chapters { margin: 0 0 22px 26px; position: relative; }
+.chapters { margin: 0 0 22px var(--art-indent); position: relative; }
 .chapters-summary {
   display: inline-flex; align-items: baseline; gap: 10px; cursor: pointer; list-style: none;
   padding: 6px 16px; border-radius: 999px; border: 1px solid var(--rule);
