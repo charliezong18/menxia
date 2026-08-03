@@ -76,19 +76,21 @@ export const S = deepFreeze({
     reload: '刷新用新版',
   },
 
-  // 侧栏导航 / 两栏清单
+  // 侧栏导航 / 三栏清单
   nav: {
     tabOpen: (n) => `待审 ${n}`,
     tabDone: (n) => `已画可 ${n}`,
+    tabShelf: (n) => `弘文馆 ${n}`,
     emptyOpen: '此刻无折可批。',
     emptyDone: '还没有画可过的折子。',
+    emptyShelf: '馆中暂无闲读。',
     settings: '设置 · 钥匙',
   },
 
   // 弘文馆：闲读书架（唐制里弘文馆正是门下省下辖的藏书、教授之所）。
   // 「不催办」是它的全部意义，所以这几句里一个催促词都不许有。
+  // title 已并入 nav.tabShelf（2026-08-03 从底部折叠区升为第三个 tab）。
   shelf: {
-    title: (n) => `弘文馆 · ${n}`,
     hint: '闲时读，不催。',
   },
 

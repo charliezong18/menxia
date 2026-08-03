@@ -24,21 +24,23 @@
   --art-w: 680px;       /* 正文列：16.5px 下 ≈41 字/行 */
   --col-gap: 34px;      /* 正文｜眉批｜大纲 三栏间距；批注卡的引线长度也取它 */
   --marg-w: 300px;      /* 眉批栏 */
-  --toc-w: 208px;       /* 大纲栏 */
+  --toc-w: 260px;       /* 大纲栏（2026-08-03 由 208 加宽：标题老被截断） */
   --work-pad: 36px;     /* .work 左右最小留白 */
-  --stage: calc(var(--art-indent) + var(--art-w) + var(--col-gap)
-              + var(--marg-w) + var(--col-gap) + var(--toc-w));
+  /* 正文那一摞（正文列 + 眉批栏）的宽度：大纲是它的兄弟，不在其内 */
+  --main-w: calc(var(--art-indent) + var(--art-w) + var(--col-gap) + var(--marg-w));
+  --stage: calc(var(--main-w) + var(--col-gap) + var(--toc-w));
 }
 
-/* 笔记本档（1500–1659）：四栏都要，但默认几何差 170px 塞不下，按可让步顺序收紧。
+/* 笔记本档（1500–1709）：四栏都要，但默认几何塞不下，按可让步顺序收紧。
    眉批栏 300 一格不动——批注卡的宽度是这个阅读器的立身之本，宁可收正文。
    正文 620 在中文 16.5px 下是 37.5 字/行，仍在 35–45 舒适区，不是硬挤。
-   核账：1500 − 240(左栏) − 26×2(留白) = 1208 可用，版心 16+620+26+300+26+184 = 1172，余 36。
-   下限 1464；再窄就放不下第四栏，回落到「无大纲」的三栏版式。 */
-@media (min-width: 1500px) and (max-width: 1659px) {
+   核账：1500 − 240(左栏) − 26×2(留白) = 1208 可用，版心 16+620+26+300+26+200 = 1188，余 20。
+   上界 1709 由默认几何倒推：300 + 36×2 + 1334 = 1706，不到 1710 就放不下默认版心，
+   所以这一档必须一路顶到 1709，否则 1660–1709 会横向溢出。改任一栏宽都要重算这两个数。 */
+@media (min-width: 1500px) and (max-width: 1709px) {
   :root {
     --rail-w: 240px; --art-indent: 16px; --art-w: 620px;
-    --col-gap: 26px; --toc-w: 184px; --work-pad: 26px;
+    --col-gap: 26px; --toc-w: 200px; --work-pad: 26px;
   }
 }
 
@@ -116,20 +118,14 @@ aside .brand-row { padding: 0 6px 22px; }
 .settings { margin-top: 16px; padding: 6px; font-size: 13px; color: var(--ink-soft); text-align: left; }
 .settings:hover { color: var(--ink); }
 
-/* 弘文馆：闲读书架。**整块都是安静的**——灰、细、默认收起、排在待审之后。
-   朱砂在这儿一点都不许出现：那是批注动作的颜色，而书架的全部意义是「没人等你」。 */
-.shelf { margin-top: 14px; border-top: 1px dashed var(--rule); padding-top: 12px; }
-.shelf-toggle {
-  display: flex; align-items: center; gap: 6px; width: 100%;
-  font-family: var(--songti); font-size: 13.5px; letter-spacing: .08em;
-  color: var(--ink-soft); padding: 4px 6px; text-align: left;
-}
-.shelf-toggle:hover { color: var(--ink); }
-.shelf-caret { font-size: 11px; opacity: .7; }
-.shelf-hint { font-size: 12px; color: var(--ink-soft); opacity: .75; padding: 2px 6px 4px; margin: 0; }
-.shelf-items { margin-top: 8px; }
-.shelf-items .pr-item { opacity: .82; }
-.shelf-items .pr-item:hover, .shelf-items .pr-item.active { opacity: 1; }
+/* 弘文馆：闲读书架。**整块都是安静的**——灰、细。
+   朱砂在这儿一点都不许出现：那是批注动作的颜色，而书架的全部意义是「没人等你」。
+   2026-08-03 由「待审列表底部的折叠区」升为第三个 tab：原先那版在 #pr-list 最底下，
+   清单一长，展开出来的卡全落在可视区外，点了像没反应。安静≠藏起来，所以给它一个
+   固定入口，但仍不进「待审 n」的计数、卡也仍压着透明度，不与待审争注意力。 */
+.shelf-hint { font-size: 12px; color: var(--ink-soft); opacity: .75; padding: 2px 6px 8px; margin: 0; }
+.shelf-list .pr-item { opacity: .82; }
+.shelf-list .pr-item:hover, .shelf-list .pr-item.active { opacity: 1; }
 .kind-chip {
   margin-left: 8px; padding: 1px 7px; border-radius: 999px;
   border: 1px solid var(--rule); font-size: 11.5px; color: var(--ink-soft);
@@ -185,6 +181,13 @@ main { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: colum
    max() 让这条规则在所有视口下都安全：窄到放不下版心时取 --work-pad，退回原来的贴左版式，
    所以不需要包 media query。<900 的手机档由后面的 padding 简写覆盖掉它。 */
 .work { padding-inline: max(var(--work-pad), calc((100% - var(--stage)) / 2)); }
+/* 版心行：左边是正文那一摞（含正文之上的 tab 条/判/折首等块），右边是大纲栏。
+   大纲提到这一层、不再待在 .read-row 里，是因为 sticky 只能在自己父元素的范围内滑动：
+   待在 .read-row 里时它最高只能顶到正文顶，而正文上面还压着折首说明那一大块，
+   于是「置顶」看起来根本没生效（2026-08-03 反馈）。提上来后它的范围就是整个版心。
+   align-items: flex-start 是 sticky 生效的前提——拉伸满高就没有滑动余量了。 */
+.stage-row { display: flex; gap: var(--col-gap); align-items: flex-start; }
+.stage-main { flex: none; width: var(--main-w); min-width: 0; }
 .read-row { display: flex; gap: var(--col-gap); align-items: flex-start; }
 article { flex: none; width: var(--art-w); margin-left: var(--art-indent); min-width: 0; }
 
@@ -405,6 +408,11 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   .work { padding: 18px 16px 48px; }
   .doc-tabs { margin-left: 0; }
 
+  /* 版心行也要塌成单列：大纲在这一档本就 display:none，但 .stage-main 的定宽会
+     把正文顶出屏幕，必须放开（漏了这条手机上就是横向溢出）。 */
+  .stage-row { flex-direction: column; gap: 0; }
+  .stage-main { width: 100%; }
+
   .read-row { flex-direction: column; gap: 20px; }
   article { width: 100%; margin-left: 0; }
   article h1 { font-size: 23px; }
@@ -492,13 +500,19 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .stale-reload { padding: 5px 14px; font-size: 13px; }
 
 /* 清单两栏：待批 / 已画可（归档只读） */
-.list-tabs { display: flex; gap: 6px; padding: 0 4px 10px; }
+/* 三个 tab 要挤进 240px 的左栏（笔记本档），所以 padding/字号都比两个 tab 时紧一档，
+   且 min-width:0 + nowrap + ellipsis 兜底：数字涨到三位数也只是截断，不换行、不撑破。 */
+.list-tabs { display: flex; gap: 4px; padding: 0 4px 10px; }
 .list-tab {
-  flex: 1; padding: 6px 10px; border-radius: 8px; border: 1px solid transparent;
-  font-family: var(--songti); font-size: 13.5px; color: var(--ink-soft);
+  flex: 1; min-width: 0; padding: 6px 4px; border-radius: 8px; border: 1px solid transparent;
+  font-family: var(--songti); font-size: 12.5px; color: var(--ink-soft);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .list-tab:hover { color: var(--ink); }
 .list-tab.active { background: var(--chip); border-color: var(--rule); color: var(--ink); }
+/* 弘文馆 tab 永远比另外两个淡一档——它是书架不是待办，选中了也不该抢眼。 */
+.list-tab-shelf { opacity: .8; }
+.list-tab-shelf.active { opacity: 1; }
 .pr-item.pr-done::before { background: var(--ink-soft); opacity: .5; }
 .pr-item.pr-done h3 { color: var(--ink-soft); }
 .setup-forget { color: var(--cinnabar-deep); }
@@ -588,13 +602,13 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .carry-fallback-close { align-self: flex-end; }
 /* ── F14 篇内大纲 ──
    z-index 20 —— 压在浮批钮(30)之下，绝不抢批注动作。
-   收在 .read-row 里当第三栏、sticky 跟着正文滚；放不下就整块隐藏（窄屏不破坏版式，只是没有它）。
-   1500 起出现：≥1660 用默认几何，1500–1659 用上面那套收紧的笔记本档几何——两档都是入流四栏，
+   是 .stage-row 的第二栏（正文那一摞的兄弟），sticky 从版心最顶开始跟着滚；
+   放不下就整块隐藏（窄屏不破坏版式，只是没有它）。
+   1500 起出现：≥1710 用默认几何，1500–1709 用收紧的笔记本档几何——两档都是入流四栏，
    区别只在各栏宽度，故这里只有一个 display 断点。
    2026-08-03 之前是 position:fixed 钉视口右缘，那时 1500 这个断点是算错的：眉批栏右缘恒在
    1376px，而 right:18 的大纲左缘在 vw−226，vw<1602 时二者相压——1500–1601 的视口上大纲一直
    盖着眉批栏，注释里却写着「留着安全余量」。改成入流后这类重叠在结构上不再可能。
-   sticky 能在 flex 里生效全靠 .read-row 的 align-items: flex-start（拉伸就没有滑动余量）。
    max-height 按最坏情况(顶上还有 .notice 条)留，宁可矮一点让 .toc-list 内滚，不许溢出视口底。 */
 .toc {
   position: sticky; z-index: 20; top: 10px; width: var(--toc-w);
@@ -605,8 +619,8 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 @media (min-width: 1500px) { .toc { display: flex; } }
 .toc-head {
-  flex: none; text-align: left; padding: 4px 8px 8px;
-  font-family: var(--songti); font-size: 13.5px; letter-spacing: .1em; color: var(--ink-soft);
+  flex: none; text-align: left; padding: 5px 8px 9px;
+  font-family: var(--songti); font-size: 15px; letter-spacing: .1em; color: var(--ink-soft);
 }
 .toc-head:hover { color: var(--ink); }
 .toc-collapsed .toc-head { padding-bottom: 4px; }
@@ -614,13 +628,13 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .toc-item { margin: 0; }
 .toc-link {
   display: block; width: 100%; text-align: left;
-  padding: 4px 8px; border-radius: 6px; border-left: 2px solid transparent;
-  font-size: 12.5px; line-height: 1.5; color: var(--ink-soft);
+  padding: 5px 9px; border-radius: 6px; border-left: 2px solid transparent;
+  font-size: 14px; line-height: 1.55; color: var(--ink-soft);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .toc-link:hover { background: var(--hover); color: var(--ink); }
-.toc-l2 .toc-link { padding-left: 18px; }
-.toc-l3 .toc-link { padding-left: 30px; font-size: 12px; }
+.toc-l2 .toc-link { padding-left: 20px; }
+.toc-l3 .toc-link { padding-left: 33px; font-size: 13px; }
 .toc-active .toc-link {
   color: var(--ink); border-left-color: var(--cinnabar); background: var(--chip);
 }

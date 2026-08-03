@@ -443,31 +443,41 @@ test('splitShelf：只有 wait:闲 进书架，没标的一律留在待审', () 
   assert.deepEqual(splitShelf(undefined), { desk: [], shelf: [] }, '空输入不炸');
 });
 
-test('侧栏：书架折不进待审计数，收起时不画折卡', () => {
+test('侧栏：书架折不进待审计数，待审栏里不画书架折卡', () => {
   const props = {
-    q: '', hits: null, searching: '', tab: 'open', cur: null, demo: false,
+    q: '', hits: null, searching: '', cur: null, demo: false,
     prs: [labeled(1, 'kind:读物', 'wait:闲'), labeled(2, 'kind:设计', 'wait:你拍')],
     donePrs: [], timeAgo: () => '刚刚',
     onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
-    onTab() {}, onOpenPR() {}, onSettings() {}, onToggleShelf() {},
+    onTab() {}, onOpenPR() {}, onSettings() {},
   };
-  const collapsed = JSON.stringify(Sidebar({ ...props, shelfOpen: false }));
-  assert.match(collapsed, /待审 1/, '弘文馆的折不计进待审');
-  assert.match(collapsed, /弘文馆 · 1/);
-  assert.doesNotMatch(collapsed, /"t1"/, '收起时不该画出书架里的折卡');
+  const open = JSON.stringify(Sidebar({ ...props, tab: 'open' }));
+  assert.match(open, /待审 1/, '弘文馆的折不计进待审');
+  assert.match(open, /弘文馆 1/, '第三个 tab 带自己的计数');
+  assert.doesNotMatch(open, /"t1"/, '待审栏里不该出现书架里的折');
 
-  const open = JSON.stringify(Sidebar({ ...props, shelfOpen: true }));
-  assert.match(open, /"t1"/, '展开后书架折卡出现');
-  assert.match(open, /kind-chip/, '书架折卡带分类角标');
-  assert.match(open, /读物/);
+  const shelf = JSON.stringify(Sidebar({ ...props, tab: 'shelf' }));
+  assert.match(shelf, /"t1"/, '切到弘文馆才画书架折卡');
+  assert.doesNotMatch(shelf, /"t2"/, '弘文馆里不该混进待审的折');
+  assert.match(shelf, /kind-chip/, '书架折卡带分类角标');
+  assert.match(shelf, /读物/);
 });
 
-test('侧栏：一折不带 wait:闲 时，书架整块不占位', () => {
-  const flat = JSON.stringify(Sidebar({
-    q: '', hits: null, searching: '', tab: 'open', cur: null, demo: false,
+// 2026-08-03：这条断言从「没有闲折就整块不画」翻了面。
+// 原规矩把书架当角标那样克制（有话说才出现），那时它是待审列表底部的一个折叠区。
+// 升成第三个 tab 后判据变了：tab 是**导航**不是装饰，而会忽隐忽现的入口正是这次报障的
+// 病根（「左下角是有个弘文馆，但点开之后里面都没有」）。已画可为 0 时也照样在，三个
+// tab 一视同仁。克制改由别处承担：不进待审计数、tab 与折卡都压着透明度。
+test('侧栏：没有闲折时弘文馆 tab 仍在，只是计数为 0', () => {
+  const props = {
+    q: '', hits: null, searching: '', cur: null, demo: false,
     prs: [labeled(2, 'kind:设计', 'wait:你拍')], donePrs: [], timeAgo: () => '',
     onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
-    onTab() {}, onOpenPR() {}, onSettings() {}, onToggleShelf() {},
-  }));
-  assert.doesNotMatch(flat, /弘文馆/, '没有闲折就整块不画（同角标的克制）');
+    onTab() {}, onOpenPR() {}, onSettings() {},
+  };
+  const flat = JSON.stringify(Sidebar({ ...props, tab: 'open' }));
+  assert.match(flat, /弘文馆 0/, '入口常驻，不随存量忽隐忽现');
+
+  const empty = JSON.stringify(Sidebar({ ...props, tab: 'shelf' }));
+  assert.match(empty, /馆中暂无闲读/, '空馆给一句话，不是一片空白');
 });

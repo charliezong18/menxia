@@ -65,12 +65,17 @@ function folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf = 
 
 export function Sidebar({
   q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {}, verifyCounts = {},
-  shelfOpen = false,
-  onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings, onToggleShelf,
+  onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings,
 }) {
   const match = (p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase());
-  // 弘文馆只在待审栏分（已画可栏是归档，本来就没人催，再分一次纯属噪音）
-  const { desk, shelf } = tab === 'open' ? splitShelf(prs.filter(match)) : { desk: donePrs.filter(match), shelf: [] };
+  // 弘文馆只从待审里分（已画可栏是归档，本来就没人催，再分一次纯属噪音）。
+  // 2026-08-03：从「待审列表底部的折叠区」升为第三个 tab。原先那版功能正确、数也对，
+  // 但折叠区在 #pr-list 的最底下——清单一长，展开出来的卡全在可视区外，点了像没反应。
+  // 反馈原话：「左下角是有个弘文馆，但点开之后里面都没有」。位置错了，不是逻辑错了。
+  const split = splitShelf(prs.filter(match));   // 受搜索词过滤，喂列表
+  const counts = splitShelf(prs);                // 不受过滤，喂 tab 上的数字
+  const list = tab === 'done' ? donePrs.filter(match) : tab === 'shelf' ? split.shelf : split.desk;
+  const emptyMsg = tab === 'done' ? S.nav.emptyDone : tab === 'shelf' ? S.nav.emptyShelf : S.nav.emptyOpen;
   return html`
       <aside>
         <div class="brand-row"><span class="seal">${S.brand.seal}</span><span class="brand">${S.brand.name}</span></div>
@@ -97,24 +102,15 @@ export function Sidebar({
           </nav>`}
         ${!hits && html`
         <div class="list-tabs">
-          <button data-tab="open" class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(splitShelf(prs).desk.length)}</button>
+          <button data-tab="open" class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(counts.desk.length)}</button>
           <button data-tab="done" class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => onTab('done')}>${S.nav.tabDone(donePrs.length)}</button>
+          <button data-tab="shelf" class=${'list-tab list-tab-shelf' + (tab === 'shelf' ? ' active' : '')} onClick=${() => onTab('shelf')}>${S.nav.tabShelf(counts.shelf.length)}</button>
         </div>
-        <nav id="pr-list">
-          ${desk.length
-            ? desk.map((pr) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR }))
-            : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : (tab === 'open' ? S.nav.emptyOpen : S.nav.emptyDone)}</p>`}
-          ${shelf.length ? html`
-            <div class="shelf">
-              <button class="shelf-toggle" aria-expanded=${shelfOpen} onClick=${() => onToggleShelf && onToggleShelf()}>
-                ${S.shelf.title(shelf.length)}<span class="shelf-caret">${shelfOpen ? '▾' : '▸'}</span>
-              </button>
-              ${shelfOpen ? html`
-                <div class="shelf-items">
-                  ${shelf.map((pr) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf: true }))}
-                </div>`
-                : html`<p class="shelf-hint">${S.shelf.hint}</p>`}
-            </div>` : ''}
+        <nav id="pr-list" class=${tab === 'shelf' ? 'shelf-list' : ''}>
+          ${tab === 'shelf' && list.length ? html`<p class="shelf-hint">${S.shelf.hint}</p>` : ''}
+          ${list.length
+            ? list.map((pr) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf: tab === 'shelf' }))
+            : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : emptyMsg}</p>`}
         </nav>`}
         ${!demo && html`<button class="settings" onClick=${onSettings}>${S.nav.settings}</button>`}
       </aside>`;
