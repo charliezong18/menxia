@@ -28,16 +28,22 @@
   --work-pad: 36px;     /* .work 左右最小留白 */
   /* 正文那一摞（正文列 + 眉批栏）的宽度：大纲是它的兄弟，不在其内 */
   --main-w: calc(var(--art-indent) + var(--art-w) + var(--col-gap) + var(--marg-w));
-  --stage: calc(var(--main-w) + var(--col-gap) + var(--toc-w));
+  /* 大纲占的版心宽度。默认 0——它 <1500 时是 display:none，不该还占着位子把版心
+     算宽（算宽了 .work 的居中式就以为放不下，退回贴左，白瞎两边的空白）。 */
+  --toc-slot: 0px;
+  --stage: calc(var(--main-w) + var(--toc-slot));
 }
+@media (min-width: 1500px) { :root { --toc-slot: calc(var(--col-gap) + var(--toc-w)); } }
 
-/* 笔记本档（1500–1709）：四栏都要，但默认几何塞不下，按可让步顺序收紧。
+/* 紧凑档（1280–1709）：默认几何塞不下，按可让步顺序收紧。
    眉批栏 300 一格不动——批注卡的宽度是这个阅读器的立身之本，宁可收正文。
    正文 620 在中文 16.5px 下是 37.5 字/行，仍在 35–45 舒适区，不是硬挤。
-   核账：1500 − 240(左栏) − 26×2(留白) = 1208 可用，版心 16+620+26+300+26+200 = 1188，余 20。
-   上界 1709 由默认几何倒推：300 + 36×2 + 1334 = 1706，不到 1710 就放不下默认版心，
-   所以这一档必须一路顶到 1709，否则 1660–1709 会横向溢出。改任一栏宽都要重算这两个数。 */
-@media (min-width: 1500px) and (max-width: 1709px) {
+   这一档里 1500 起多一栏大纲（见 --toc-slot 与 .toc 的 display 断点），1280–1499 是三栏。
+   两端都是硬算出来的，改任一栏宽都要重算：
+   · 下界 1280 —— 三栏最少要 240(左栏) + 26×2(留白) + 962(版心) = 1254，留 26 余量。
+   · 上界 1709 —— 默认四栏最少要 300 + 36×2 + 1334 = 1706；不到 1710 就得留在这一档，
+     否则 1660–1709 会横向溢出。 */
+@media (min-width: 1280px) and (max-width: 1709px) {
   :root {
     --rail-w: 240px; --art-indent: 16px; --art-w: 620px;
     --col-gap: 26px; --toc-w: 200px; --work-pad: 26px;
@@ -376,10 +382,36 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   ::highlight(zhupi-draft) { background-color: rgba(210, 84, 60, .28); }
 }
 
-/* ── 窄屏应急（不是 v1 完整移动端，只求「能读能批」）──
-   桌面两栏在手机上会把正文挤出屏幕：侧栏占死 300px、article 固定 680px。
-   这里只做单列堆叠；右缘批注栏落到正文下方（position:static 让 JS 写的 top 失效，
-   卡片回到正常流），v1 再上底部批注单那套设计。 */
+/* ── 单列档（≤1279）：放弃右缘眉批栏，正文单列、批注落到正文下方 ──
+   判据是「放不下眉批栏」，不是「屏幕小」。此前这个断点设在 900，但三栏的硬下限是
+   1254px，于是 900–1253 是一整段死区：桌面版式放不下、手机版式又不接管，眉批栏直接
+   冲出屏幕——iPad 13" 横屏（1024）正落在里面，实测横向溢出 352px（2026-08-03 反馈）。
+   收在 1279 而不是更高，是因为 1280 起用紧凑几何还能保住三栏，眉批栏能留则留。
+   --main-w 在这一档改取正文宽：单列时版心就是正文本身，居中式据此把它摆正中间，
+   否则会按含眉批栏的 1040 去算，判定放不下而退回贴左，右边空一大片。
+   ⚠️ 手机外壳（侧栏挪到顶、整页滚、缩字号）不在这一档，见下面的 ≤900。 */
+@media (max-width: 1279px) {
+  :root { --rail-w: 240px; --work-pad: 28px; --main-w: var(--art-w); }
+
+  .stage-row { flex-direction: column; gap: 0; }
+  .stage-main { width: 100%; }
+  .read-row { flex-direction: column; gap: 20px; }
+  article { width: 100%; margin-left: 0; }
+
+  /* 正文之上的块本来对齐正文列，单列了就跟着放开左缩进与宽度上限 */
+  .doc-tabs, .rev-row, .rev-notice, .other-threads,
+  .zongpi-shown, .folder-body, .lang-switch, .chapters {
+    margin-left: 0; max-width: 100%;
+  }
+
+  /* 批注卡：回到正常流，别再按锚点绝对定位（单列没有右缘可对齐） */
+  .margin-col { width: 100%; min-height: 0 !important; }
+  .anno-card { position: static; width: 100%; margin-bottom: 12px; }
+  .anno-card::before { display: none; }
+}
+
+/* ── 手机外壳（≤900）——不是 v1 完整移动端，只求「能读能批」。
+   单列版式已由上面那一档负责，这里只管「壳」：侧栏挪到顶、整页滚、字号收一档。 */
 @media (max-width: 900px) {
   #app { flex-direction: column; height: auto; }
 
@@ -406,23 +438,10 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 
   .notice { margin: 10px 16px 0; }
   .work { padding: 18px 16px 48px; }
-  .doc-tabs { margin-left: 0; }
 
-  /* 版心行也要塌成单列：大纲在这一档本就 display:none，但 .stage-main 的定宽会
-     把正文顶出屏幕，必须放开（漏了这条手机上就是横向溢出）。 */
-  .stage-row { flex-direction: column; gap: 0; }
-  .stage-main { width: 100%; }
-
-  .read-row { flex-direction: column; gap: 20px; }
-  article { width: 100%; margin-left: 0; }
   article h1 { font-size: 23px; }
   article p, article ul, article ol { font-size: 16px; }
   article table { font-size: 13.5px; display: block; overflow-x: auto; }
-
-  /* 批注卡：回到正常流，别再按锚点绝对定位（窄屏没有右缘可对齐） */
-  .margin-col { width: 100%; min-height: 0 !important; }
-  .anno-card { position: static; width: 100%; margin-bottom: 12px; }
-  .anno-card::before { display: none; }
 }
 
 /* 已呈判：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。
@@ -455,7 +474,6 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .zongpi-shown .zongpi-shown-body code { font-size: 13px; font-family: var(--mono); }
 .zongpi-shown .zongpi-shown-body ul, .zongpi-shown .zongpi-shown-body ol { padding-left: 22px; }
 .zongpi-shown .zongpi-shown-body p, .zongpi-shown .zongpi-shown-body li { margin-bottom: 8px; }
-@media (max-width: 900px) { .zongpi-shown { margin-left: 0; } }
 
 /* 折子说明（PR body 的五段）：与「已呈总批」同一套壳，坐在它上面——拍板点比评审历史更该先入眼。
    issue #13：有「待你拍板」就默认展开，标题用朱砂描一下左缘，让「这折要你决定」在余光里就看得见；
@@ -493,7 +511,6 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .folder-body .folder-body-text code { font-size: 13px; font-family: var(--mono); }
 .folder-body .folder-body-text ul, .folder-body .folder-body-text ol { padding-left: 22px; }
 .folder-body .folder-body-text p, .folder-body .folder-body-text li { margin-bottom: 8px; }
-@media (max-width: 900px) { .folder-body { margin-left: 0; } }
 
 /* 旧版横幅：Pages 缓存 10 分钟，用户无从判断新旧——explicitly 告诉他 */
 .stale-banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -553,7 +570,6 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 .lang-opt:hover { color: var(--ink); }
 .lang-opt.active { background: var(--chip); color: var(--ink); }
-@media (max-width: 900px) { .lang-switch { margin-left: 0; } }
 
 /* 体例检查角标。窄栏里只给一个字的宽度 —— 「✗ 体例」四字已是上限。
    合格只画一个 ✓：绿色的东西不需要解释，红色的才需要。 */
@@ -667,4 +683,3 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .chapters-opt:hover { background: var(--hover); color: var(--ink); }
 .chapters-opt.active { color: var(--ink); background: var(--chip); }
 .chapters-num { font: 11px var(--mono); color: var(--ink-soft); flex: none; min-width: 1.6em; }
-@media (max-width: 900px) { .chapters { margin-left: 0; } }
