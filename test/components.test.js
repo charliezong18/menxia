@@ -414,3 +414,60 @@ test('折卡角标：没传 checks 也不炸（老调用点 / demo 模式）', (
     onJumpToHit: () => {}, onTab: () => {}, onOpenPR: () => {}, onSettings: () => {},
   }));
 });
+
+// ── 弘文馆（闲读书架，2026-08-02）──────────────────────────────────
+const { splitShelf, kindOf, waitOf, isShelved } = await import('../src/track.js');
+
+const labeled = (number, ...names) => ({
+  number, title: 't' + number, updated_at: '2026-08-02T00:00:00Z',
+  labels: names.map((name) => ({ name })),
+});
+
+test('折务 label 读侧：认前缀、缺标返 null、字符串形态也吃得下', () => {
+  const pr = labeled(1, 'proj:menxia', 'kind:读物', 'wait:闲');
+  assert.equal(kindOf(pr), '读物');
+  assert.equal(waitOf(pr), '闲');
+  assert.equal(kindOf({ number: 2 }), null, '没有 labels 字段不该炸');
+  assert.equal(waitOf({ number: 2, labels: [] }), null);
+  assert.equal(waitOf({ labels: ['wait:你拍'] }), '你拍', 'label 是裸字符串时也认');
+});
+
+test('splitShelf：只有 wait:闲 进书架，没标的一律留在待审', () => {
+  const shelved = labeled(1, 'kind:读物', 'wait:闲');
+  const waiting = labeled(2, 'kind:设计', 'wait:你拍');
+  const bare = { number: 3, title: '老折没标' };
+  const { desk, shelf } = splitShelf([shelved, waiting, bare]);
+  assert.deepEqual(shelf.map((p) => p.number), [1]);
+  assert.deepEqual(desk.map((p) => p.number), [2, 3], '漏标不该把折静默藏进书架');
+  assert.equal(isShelved(bare), false);
+  assert.deepEqual(splitShelf(undefined), { desk: [], shelf: [] }, '空输入不炸');
+});
+
+test('侧栏：书架折不进待审计数，收起时不画折卡', () => {
+  const props = {
+    q: '', hits: null, searching: '', tab: 'open', cur: null, demo: false,
+    prs: [labeled(1, 'kind:读物', 'wait:闲'), labeled(2, 'kind:设计', 'wait:你拍')],
+    donePrs: [], timeAgo: () => '刚刚',
+    onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
+    onTab() {}, onOpenPR() {}, onSettings() {}, onToggleShelf() {},
+  };
+  const collapsed = JSON.stringify(Sidebar({ ...props, shelfOpen: false }));
+  assert.match(collapsed, /待审 1/, '弘文馆的折不计进待审');
+  assert.match(collapsed, /弘文馆 · 1/);
+  assert.doesNotMatch(collapsed, /"t1"/, '收起时不该画出书架里的折卡');
+
+  const open = JSON.stringify(Sidebar({ ...props, shelfOpen: true }));
+  assert.match(open, /"t1"/, '展开后书架折卡出现');
+  assert.match(open, /kind-chip/, '书架折卡带分类角标');
+  assert.match(open, /读物/);
+});
+
+test('侧栏：一折不带 wait:闲 时，书架整块不占位', () => {
+  const flat = JSON.stringify(Sidebar({
+    q: '', hits: null, searching: '', tab: 'open', cur: null, demo: false,
+    prs: [labeled(2, 'kind:设计', 'wait:你拍')], donePrs: [], timeAgo: () => '',
+    onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
+    onTab() {}, onOpenPR() {}, onSettings() {}, onToggleShelf() {},
+  }));
+  assert.doesNotMatch(flat, /弘文馆/, '没有闲折就整块不画（同角标的克制）');
+});

@@ -53,7 +53,16 @@ export function ShownThread({ t, blockLine, outdated, hydrate }) {
 
 export function ZongpiCard({ busy, onSend, onClose }) {
   const taRef = useRef();
-  useEffect(() => { setTimeout(() => taRef.current?.focus(), 0); }, []);
+  // **先滚到它，再 focus**（2026-08-02 实测「判不了」）：窄屏（≤900px）批注列不在右缘，
+  // 而是整列落到正文**下方**——长折按下「判」，卡片开在四五屏之外，看上去就是没反应。
+  // 顺序不能反：iOS Safari 会吞掉非用户手势里的 focus()（键盘不弹，也不带滚动），
+  // 而 scrollIntoView 不受这条限制，所以滚动必须自己走，不能指望 focus 顺带把它带上来。
+  useEffect(() => {
+    setTimeout(() => {
+      taRef.current?.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
+      taRef.current?.focus();
+    }, 0);
+  }, []);
   return html`
     <div class="anno-card zongpi-card">
       <div class="anno-src">${S.card.zongpiHeader}</div>

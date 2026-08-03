@@ -3,6 +3,7 @@
 import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
 import { folderSummary, DECISIONS_TITLE } from './folder-body.js';
+import { splitShelf, kindOf } from '../track.js';
 
 /**
  * 清单卡的摘要行（F1，2026-07-31）：一句 TLDR gist + 「待你拍板 · n 条」角标。
@@ -41,10 +42,35 @@ function verifyBadge(n) {
   return html`<span class="verify-badge" title=${S.verify.badgeTitle(n)}>${S.verify.badge(n)}</span>`;
 }
 
+/**
+ * 一张折卡。从内联的 map 里提出来，好让待审与弘文馆两条路共用同一张卡
+ * ——两份卡渲染迟早分叉，而「清单里少个角标」这种分叉极难发现。
+ *
+ * **是普通函数、直接调用，不是 `<${FolderCard}>` 组件**：`components.test.js` 靠静态遍历
+ * vdom 找 `.pr-summary` / `.chk` 这些类名断言角标画没画，而组件 vnode 要跑过才有子树
+ * ——写成组件会让那两条断言看见空树。
+ */
+function folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf = false }) {
+  const kind = shelf ? kindOf(pr) : null;
+  return html`
+              <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
+                onClick=${() => onOpenPR(pr)}>
+                <h3>${pr.title}</h3>
+                <div class="meta">#${pr.number} · ${pr.merged_at ? S.folder.mergedAt(timeAgo(pr.merged_at)) : S.folder.submittedAt(timeAgo(pr.updated_at))}${
+                  pr.merged_at ? null : checkBadge(checks[pr.number])}${verifyBadge(verifyCounts[pr.number])}${
+                  kind ? html`<span class="kind-chip">${kind}</span>` : null}</div>
+                ${summaryLine(pr)}
+              </button>`;
+}
+
 export function Sidebar({
   q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {}, verifyCounts = {},
-  onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings,
+  shelfOpen = false,
+  onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings, onToggleShelf,
 }) {
+  const match = (p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase());
+  // 弘文馆只在待审栏分（已画可栏是归档，本来就没人催，再分一次纯属噪音）
+  const { desk, shelf } = tab === 'open' ? splitShelf(prs.filter(match)) : { desk: donePrs.filter(match), shelf: [] };
   return html`
       <aside>
         <div class="brand-row"><span class="seal">${S.brand.seal}</span><span class="brand">${S.brand.name}</span></div>
@@ -71,20 +97,24 @@ export function Sidebar({
           </nav>`}
         ${!hits && html`
         <div class="list-tabs">
-          <button data-tab="open" class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(prs.length)}</button>
+          <button data-tab="open" class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(splitShelf(prs).desk.length)}</button>
           <button data-tab="done" class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => onTab('done')}>${S.nav.tabDone(donePrs.length)}</button>
         </div>
         <nav id="pr-list">
-          ${(tab === 'open' ? prs : donePrs).filter((p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase())).length
-            ? (tab === 'open' ? prs : donePrs).filter((p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase())).map((pr) => html`
-              <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
-                onClick=${() => onOpenPR(pr)}>
-                <h3>${pr.title}</h3>
-                <div class="meta">#${pr.number} · ${pr.merged_at ? S.folder.mergedAt(timeAgo(pr.merged_at)) : S.folder.submittedAt(timeAgo(pr.updated_at))}${
-                  pr.merged_at ? null : checkBadge(checks[pr.number])}${verifyBadge(verifyCounts[pr.number])}</div>
-                ${summaryLine(pr)}
-              </button>`)
+          ${desk.length
+            ? desk.map((pr) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR }))
             : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : (tab === 'open' ? S.nav.emptyOpen : S.nav.emptyDone)}</p>`}
+          ${shelf.length ? html`
+            <div class="shelf">
+              <button class="shelf-toggle" aria-expanded=${shelfOpen} onClick=${() => onToggleShelf && onToggleShelf()}>
+                ${S.shelf.title(shelf.length)}<span class="shelf-caret">${shelfOpen ? '▾' : '▸'}</span>
+              </button>
+              ${shelfOpen ? html`
+                <div class="shelf-items">
+                  ${shelf.map((pr) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf: true }))}
+                </div>`
+                : html`<p class="shelf-hint">${S.shelf.hint}</p>`}
+            </div>` : ''}
         </nav>`}
         ${!demo && html`<button class="settings" onClick=${onSettings}>${S.nav.settings}</button>`}
       </aside>`;

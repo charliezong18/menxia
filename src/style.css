@@ -90,6 +90,25 @@ aside .brand-row { padding: 0 6px 22px; }
 .settings { margin-top: 16px; padding: 6px; font-size: 13px; color: var(--ink-soft); text-align: left; }
 .settings:hover { color: var(--ink); }
 
+/* 弘文馆：闲读书架。**整块都是安静的**——灰、细、默认收起、排在待审之后。
+   朱砂在这儿一点都不许出现：那是批注动作的颜色，而书架的全部意义是「没人等你」。 */
+.shelf { margin-top: 14px; border-top: 1px dashed var(--rule); padding-top: 12px; }
+.shelf-toggle {
+  display: flex; align-items: center; gap: 6px; width: 100%;
+  font-family: var(--songti); font-size: 13.5px; letter-spacing: .08em;
+  color: var(--ink-soft); padding: 4px 6px; text-align: left;
+}
+.shelf-toggle:hover { color: var(--ink); }
+.shelf-caret { font-size: 11px; opacity: .7; }
+.shelf-hint { font-size: 12px; color: var(--ink-soft); opacity: .75; padding: 2px 6px 4px; margin: 0; }
+.shelf-items { margin-top: 8px; }
+.shelf-items .pr-item { opacity: .82; }
+.shelf-items .pr-item:hover, .shelf-items .pr-item.active { opacity: 1; }
+.kind-chip {
+  margin-left: 8px; padding: 1px 7px; border-radius: 999px;
+  border: 1px solid var(--rule); font-size: 11.5px; color: var(--ink-soft);
+}
+
 .pr-item {
   display: block; width: 100%; text-align: left; position: relative;
   padding: 14px 14px 12px 18px; border-radius: 9px; margin-bottom: 10px;

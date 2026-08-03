@@ -42,7 +42,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js',
-  'src/toc.js', 'src/components/outline.js'];
+  'src/toc.js', 'src/components/outline.js', 'src/track.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -118,6 +118,7 @@ function App() {
   const [zongpis, setZongpis] = useState([]);    // 已呈判（会话区），否则判只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
+  const [shelfOpen, setShelfOpen] = useState(false); // 弘文馆展开态（默认收起：书架不该挤占待审）
   const [zongpiOpen, setZongpiOpen] = useState(false); // 「已呈判」折叠组展开态（默认收起，issue #1）
   const [bodyOpen, setBodyOpen] = useState(false);   // 「折子说明」展开态：有「待你拍板」才默认展开（issue #13）
   // 折号 → 体例检查判词。CI 只在 open 折上跑，已画可的不查。
@@ -925,6 +926,7 @@ function App() {
     <div id="app">
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
         tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks} verifyCounts=${verifyCounts}
+        shelfOpen=${shelfOpen} onToggleShelf=${() => setShelfOpen((o) => !o)}
         onQuery=${(v) => { setQ(v); if (hits) setHits(null); }}
         onSearch=${runSearch} onClearSearch=${clearSearch} onJumpToHit=${jumpToHit}
         onTab=${setTab} onOpenPR=${openPR}
