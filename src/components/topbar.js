@@ -1,12 +1,15 @@
-// 顶栏：面包屑 + 动作区（刷新/引用/回奏/判/提交/画可）+ 新版横幅与提示条。
+// 顶栏：面包屑 + 动作区（刷新/引用/回奏/判/字号/提交/画可）+ 新版横幅与提示条。
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
+import { READ_STEPS, percentOf } from '../readsize.js';
 
 export function Topbar({
   cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice, carrying,
+  readStep = 1, onReadStep,
   onRefresh, onCopyRef, onCarry, onZongpi, onSubmit, onQinci,
 }) {
+  const pct = percentOf(readStep);
   // 多个顶层节点：htm 会返回数组，Preact 直接当 Fragment 渲染（这个 standalone 包没导出 Fragment）
   return html`
         <div class="mainbar">
@@ -20,6 +23,13 @@ export function Topbar({
             ${cur && html`<button class="btn-ghost" title=${S.action.carryTitle} disabled=${carrying}
               onClick=${onCarry}>${carrying ? S.action.carrying : S.action.carry}</button>`}
             ${cur && html`<button class="btn-ghost" title=${archived ? S.action.zongpiArchivedTitle : ''} onClick=${onZongpi}>${S.action.zongpi}</button>`}
+            ${cur && onReadStep && html`
+              <span class="read-size">
+                <button class="read-size-btn" disabled=${readStep <= 0}
+                  title=${S.readSize.smallerTitle(pct)} onClick=${() => onReadStep(readStep - 1)}>${S.readSize.smaller}</button>
+                <button class="read-size-btn" disabled=${readStep >= READ_STEPS.length - 1}
+                  title=${S.readSize.largerTitle(pct)} onClick=${() => onReadStep(readStep + 1)}>${S.readSize.larger}</button>
+              </span>`}
             ${cur && draftCount > 0 && html`
               <button class="btn-primary btn-submit" disabled=${busy || !onHead}
                 title=${onHead ? '' : S.action.submitOldRevTitle} onClick=${onSubmit}>

@@ -12,6 +12,7 @@ import { buildIndex, searchIndex } from './search.js';
 import { decorateVerifyMarkers, countVerifyMarkers } from './verify.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
 import { siblingFor, visibleDocs, getLang, setLang, variantOf } from './lang.js';
+import { getReadStep, setReadStep, scaleOf, clampStep } from './readsize.js';
 import { Setup } from './components/setup.js';
 import { DraftCard, ShownThread, ZongpiCard } from './components/cards.js';
 import { Sidebar } from './components/sidebar.js';
@@ -42,7 +43,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js',
-  'src/toc.js', 'src/components/outline.js', 'src/track.js'];
+  'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -127,6 +128,7 @@ function App() {
   // 副产物：搜索建索引时顺带全算一遍，或某折打开渲染后回填这一折。没搜过又没打开过的折不显示。
   const [verifyCounts, setVerifyCounts] = useState({});
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
+  const [readStep, setReadStepState] = useState(getReadStep()); // 正文字号档位，记住上次
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待批 / done=已画可（归档，只读）
   const [donePrs, setDonePrs] = useState([]);
@@ -484,9 +486,11 @@ function App() {
   // 只依赖「改变 margin-col 自身子元素集合/高度」的 state。正文之上的块（判、rev 行、tab 条）
   // 高度变了也不用重排：layoutCards 算的是 block.top − colRect.top，而 #doc 与 #margin-col 是
   // .read-row 里顶对齐的 flex 兄弟，一起上下平移，差值恒定。（评审实测：展/收判前后 tops 逐像素相同）
-  // 2026-08-03 起 .read-row 里还有第三个兄弟 .toc（大纲），排在 #margin-col 之后、宽屏才现身。
-  // 它不参与这套测量：后置兄弟改不了前两者的 top，且它是 sticky，滚动时的位移不进布局流。
-  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick, comments, viewed, layoutCards]);
+  // 大纲（.toc）不参与这套测量：它是 .stage-row 的第二栏、根本不在 .read-row 里，且是 sticky，
+  // 滚动时的位移不进布局流。
+  // readStep 必须在依赖里：改字号会改正文里每个块的 top，卡片得跟着重排。ResizeObserver 通常
+  // 也会因为正文变高而触发，但那是巧合不是保证——高度碰巧不变而块位移了它就不响。
+  useLayoutEffect(() => { layoutCards(); }, [drafts, editing, zongpi, docTick, comments, viewed, readStep, layoutCards]);
   useEffect(() => {
     if (typeof ResizeObserver === 'undefined' || !docRef.current) return;
     const ro = new ResizeObserver(() => layoutCards());
@@ -924,7 +928,7 @@ function App() {
   const showOutline = hasOutline(outlineItems);
 
   return html`
-    <div id="app">
+    <div id="app" style=${{ '--read-scale': scaleOf(readStep) }}>
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
         tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks} verifyCounts=${verifyCounts}
         onQuery=${(v) => { setQ(v); if (hits) setHits(null); }}
@@ -935,6 +939,8 @@ function App() {
         <${Topbar} cur=${cur} archived=${archived} onHead=${onHead} busy=${busy}
           draftCount=${drafts.length} verifyN=${verifyN} happyUrl=${happyUrl} stale=${stale} notice=${notice}
           carrying=${carrying}
+          readStep=${readStep}
+          onReadStep=${(i) => { const c = clampStep(i); setReadStepState(c); setReadStep(c); }}
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
           onCopyRef=${copyRef} onCarry=${carryOut} onZongpi=${() => setZongpi((z) => !z)}
           onSubmit=${submitAll} onQinci=${qinci} />

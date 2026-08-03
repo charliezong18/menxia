@@ -26,6 +26,9 @@
   --marg-w: 300px;      /* 眉批栏 */
   --toc-w: 260px;       /* 大纲栏（2026-08-03 由 208 加宽：标题老被截断） */
   --work-pad: 36px;     /* .work 左右最小留白 */
+  /* 正文字号倍率（顶栏 A⁻/A⁺）。实际值由 ui.js 写在 #app 的行内样式上；这里的 1 是兜底，
+     保证 JS 没跑起来时样式表自身仍然成立（默认档就是 1，所以视觉上无差别）。 */
+  --read-scale: 1;
   /* 正文那一摞（正文列 + 眉批栏）的宽度：大纲是它的兄弟，不在其内 */
   --main-w: calc(var(--art-indent) + var(--art-w) + var(--col-gap) + var(--marg-w));
   /* 大纲占的版心宽度。默认 0——它 <1500 时是 display:none，不该还占着位子把版心
@@ -217,12 +220,17 @@ article { flex: none; width: var(--art-w); margin-left: var(--art-indent); min-w
 .doc-tab:hover { color: var(--ink); }
 .doc-tab.active { border-color: var(--ink-soft); color: var(--ink); }
 
-/* ── 文档渲染排版 ── */
-article h1 { font-family: var(--songti); font-size: 27px; line-height: 1.4; margin-bottom: 4px; }
-article h2 { font-family: var(--songti); font-size: 20px; margin: 30px 0 12px; }
-article h3 { font-family: var(--songti); font-size: 17px; margin: 24px 0 10px; }
-article p { font-size: 16.5px; line-height: 1.9; margin-bottom: 15px; }
-article ul, article ol { margin: 0 0 15px 22px; font-size: 16.5px; line-height: 1.9; }
+/* ── 文档渲染排版 ──
+   每个 font-size 都乘 --read-scale（顶栏 A⁻/A⁺ 调，默认 1 = 原样）。写成 calc 而不是
+   把 article 设成基准再让子元素用 em，是因为这套数值是逐个调出来的、彼此不成整齐比例，
+   换算成 em 会引入一堆 1.212em 这种读不懂的数，且改任一处都要重算别处。
+   行高全是无单位倍数，自动跟着字号走，不用管。
+   ⚠️ 新增带 font-size 的 article 规则记得一起乘，漏了就是「放大后这一块不跟着动」。 */
+article h1 { font-family: var(--songti); font-size: calc(27px * var(--read-scale)); line-height: 1.4; margin-bottom: 4px; }
+article h2 { font-family: var(--songti); font-size: calc(20px * var(--read-scale)); margin: 30px 0 12px; }
+article h3 { font-family: var(--songti); font-size: calc(17px * var(--read-scale)); margin: 24px 0 10px; }
+article p { font-size: calc(16.5px * var(--read-scale)); line-height: 1.9; margin-bottom: 15px; }
+article ul, article ol { margin: 0 0 15px 22px; font-size: calc(16.5px * var(--read-scale)); line-height: 1.9; }
 article li { margin-bottom: 4px; }
 article a { color: var(--cinnabar-deep); }
 article hr { border: 0; border-top: 1px solid var(--rule); margin: 24px 0; }
@@ -230,13 +238,13 @@ article blockquote {
   border-left: 3px solid var(--rule); padding-left: 14px; margin: 0 0 15px;
   color: var(--ink-soft);
 }
-article code { font: 14px var(--mono); background: var(--chip); padding: 2px 6px; border-radius: 4px; }
+article code { font: 14px var(--mono); font-size: calc(14px * var(--read-scale)); background: var(--chip); padding: 2px 6px; border-radius: 4px; }
 article pre {
   background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 9px;
   padding: 14px 16px; overflow-x: auto; margin-bottom: 16px;
 }
-article pre code { background: none; padding: 0; font-size: 13px; line-height: 1.7; }
-article table { border-collapse: collapse; width: 100%; margin: 6px 0 18px; font-size: 14.5px; }
+article pre code { background: none; padding: 0; font-size: calc(13px * var(--read-scale)); line-height: 1.7; }
+article table { border-collapse: collapse; width: 100%; margin: 6px 0 18px; font-size: calc(14.5px * var(--read-scale)); }
 article th, article td { border: 1px solid var(--rule); padding: 9px 12px; text-align: left; line-height: 1.6; }
 article th { font-family: var(--songti); background: var(--chip); font-weight: 700; }
 article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px; }
@@ -269,15 +277,19 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   background: var(--cinnabar); opacity: .5;
 }
 .zongpi-card::before { display: none; }
+/* 眉批卡跟着 --read-scale 走，但**只放大要读的字**：引文、批注正文、输入框。
+   .anno-src 这类「谁·什么时候」的元信息标签不动——它们是标签不是读物，跟着涨只会
+   把 300px 定宽卡撑得更高，把引线拉得更容易与正文错开。栏宽本身也不动，所以放大的
+   代价是卡变高、每行字数变少，这是这一档定宽栏能给的全部余量。 */
 .anno-quote {
   border-left: 3px solid var(--cinnabar); padding: 2px 2px 2px 10px;
-  font-family: var(--songti); font-size: 13.5px; line-height: 1.6; margin-bottom: 6px;
+  font-family: var(--songti); font-size: calc(13.5px * var(--read-scale)); line-height: 1.6; margin-bottom: 6px;
 }
 .anno-src { font-size: 12px; color: var(--ink-soft); margin-bottom: 8px; }
-.anno-note { font-size: 13.5px; line-height: 1.65; cursor: pointer; }
+.anno-note { font-size: calc(13.5px * var(--read-scale)); line-height: 1.65; cursor: pointer; }
 .anno-input {
   width: 100%; min-height: 64px; padding: 10px 12px; resize: vertical;
-  font: 13.5px/1.65 var(--sans); color: var(--ink);
+  font: 13.5px/1.65 var(--sans); font-size: calc(13.5px * var(--read-scale)); color: var(--ink);
   background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; outline: none;
 }
 .anno-input:focus { border-color: var(--cinnabar); }
@@ -307,7 +319,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .anno-shown::before { background: var(--ink-soft); opacity: .35; } /* 连接线用墨不用朱 */
 .anno-quote-shown {
   border-left: 3px solid var(--ink-soft); padding: 2px 2px 2px 10px;
-  font-family: var(--songti); font-size: 13px; line-height: 1.6; margin-bottom: 6px;
+  font-family: var(--songti); font-size: calc(13px * var(--read-scale)); line-height: 1.6; margin-bottom: 6px;
   color: var(--ink-soft);
 }
 .anno-who { font-weight: 600; color: var(--ink); }
@@ -318,7 +330,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .anno-path { margin-left: 8px; font: 11px var(--mono); color: var(--ink-soft); }
 /* 批注/回话正文走 markdown 渲染（agent 的回话天然是 markdown），所以撤掉 pre-wrap：
    渲染后换行由块级元素负责，留着 pre-wrap 会让每个 <p> 之间再多出一段空白。 */
-.anno-shown-body { font-size: 13px; line-height: 1.65; color: var(--ink); }
+.anno-shown-body { font-size: calc(13px * var(--read-scale)); line-height: 1.65; color: var(--ink); }
 .anno-shown-body > :first-child { margin-top: 0; }
 .anno-shown-body > :last-child { margin-bottom: 0; }
 .anno-shown-body p { margin: 0 0 6px; }
@@ -375,6 +387,17 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 .btn-qinci:hover { opacity: .88; }
 .btn-qinci:disabled { opacity: .55; }
+
+/* 字号 A⁻/A⁺：顶栏里最不重要的控件，所以做成一对连体小钮，比 .btn-ghost 更收敛——
+   它旁边就是「画可」，那是全站唯一的定稿动作，不能被一个字号钮抢走视线。
+   到顶/到底时按钮置灰而不是消失：消失会让另一个钮左右跳位。 */
+.read-size { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; }
+.read-size-btn {
+  padding: 5px 10px; font: 13px var(--mono); color: var(--ink-soft); line-height: 1.2;
+}
+.read-size-btn + .read-size-btn { border-left: 1px solid var(--rule); }
+.read-size-btn:hover:not(:disabled) { background: var(--hover); color: var(--ink); }
+.read-size-btn:disabled { opacity: .35; cursor: default; }
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -451,9 +474,10 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   .notice { margin: 10px 16px 0; }
   .work { padding: 18px 16px 48px; }
 
-  article h1 { font-size: 23px; }
-  article p, article ul, article ol { font-size: 16px; }
-  article table { font-size: 13.5px; display: block; overflow-x: auto; }
+  /* 手机上整体收一档，但仍要乘 --read-scale——漏了乘就是「手机上 A⁺ 点了没反应」 */
+  article h1 { font-size: calc(23px * var(--read-scale)); }
+  article p, article ul, article ol { font-size: calc(16px * var(--read-scale)); }
+  article table { font-size: calc(13.5px * var(--read-scale)); display: block; overflow-x: auto; }
 }
 
 /* 已呈判：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。
@@ -476,14 +500,14 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 /* 复用 .anno-shown-body 那套 markdown 规则，但它的数值是给 300px / 13px 的右缘卡调的，
    搬到 680px / 14.5px 的折首块上要整体放大一档。用两段选择器压过它，不靠「碰巧写在后面」
    —— 谁把 CSS 排个序，字号就无声退回 13px，三层测试照样全绿。 */
-.zongpi-shown .zongpi-shown-body { font-size: 14.5px; line-height: 1.7; }
+.zongpi-shown .zongpi-shown-body { font-size: calc(14.5px * var(--read-scale)); line-height: 1.7; }
 .zongpi-shown .zongpi-shown-body h1,
 .zongpi-shown .zongpi-shown-body h2,
 .zongpi-shown .zongpi-shown-body h3 {
   font-family: var(--songti); font-size: 15px; margin: 12px 0 6px;
 }
-.zongpi-shown .zongpi-shown-body table { font-size: 13px; }
-.zongpi-shown .zongpi-shown-body code { font-size: 13px; font-family: var(--mono); }
+.zongpi-shown .zongpi-shown-body table { font-size: calc(13px * var(--read-scale)); }
+.zongpi-shown .zongpi-shown-body code { font-size: calc(13px * var(--read-scale)); font-family: var(--mono); }
 .zongpi-shown .zongpi-shown-body ul, .zongpi-shown .zongpi-shown-body ol { padding-left: 22px; }
 .zongpi-shown .zongpi-shown-body p, .zongpi-shown .zongpi-shown-body li { margin-bottom: 8px; }
 
@@ -503,7 +527,7 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 .folder-body-toggle:hover { color: var(--ink); }
 .folder-body-toggle.has-decisions { color: var(--cinnabar); }
 /* F1：TLDR 那句常显（收起态也在），坐在标题下、正文之上，让「这折说了什么」不必展开就看得见。 */
-.folder-body-tldr { margin: 6px 0 0; font-size: 14px; line-height: 1.65; color: var(--ink); }
+.folder-body-tldr { margin: 6px 0 0; font-size: calc(14px * var(--read-scale)); line-height: 1.65; color: var(--ink); }
 /* 同 .zongpi-shown：.anno-shown-body 的数值是给右缘窄卡调的，搬到 680px 的折首块上要放大一档，
    且必须用两段选择器压过它，不靠源码顺序。 */
 /* **高度封顶 + 块内滚动**（复审补）：这块有拍板点时默认展开，而 body 多长由写折那方决定、
@@ -511,16 +535,16 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
    正是 issue #1「读者滚不到文档自己的 TL;DR」的复发路径，只是换了个块干同一件事。
    封在 42vh：拍板点一屏内看得见，看不完在块内滚，**正文起点不受 body 长度摆布**。 */
 .folder-body .folder-body-text {
-  margin-top: 12px; font-size: 14.5px; line-height: 1.7;
+  margin-top: 12px; font-size: calc(14.5px * var(--read-scale)); line-height: 1.7;
   max-height: 42vh; overflow-y: auto; overscroll-behavior: contain;
 }
 .folder-body .folder-body-text h1,
 .folder-body .folder-body-text h2,
 .folder-body .folder-body-text h3 {
-  font-family: var(--songti); font-size: 15px; margin: 12px 0 6px;
+  font-family: var(--songti); font-size: calc(15px * var(--read-scale)); margin: 12px 0 6px;
 }
-.folder-body .folder-body-text table { font-size: 13px; }
-.folder-body .folder-body-text code { font-size: 13px; font-family: var(--mono); }
+.folder-body .folder-body-text table { font-size: calc(13px * var(--read-scale)); }
+.folder-body .folder-body-text code { font-size: calc(13px * var(--read-scale)); font-family: var(--mono); }
 .folder-body .folder-body-text ul, .folder-body .folder-body-text ol { padding-left: 22px; }
 .folder-body .folder-body-text p, .folder-body .folder-body-text li { margin-bottom: 8px; }
 

@@ -76,6 +76,14 @@ export const S = deepFreeze({
     reload: '刷新用新版',
   },
 
+  // 正文字号（顶栏 A⁻/A⁺）。只报百分比不报像素——像素是实现细节，且各元素倍率不同。
+  readSize: {
+    smaller: 'A⁻',
+    larger: 'A⁺',
+    smallerTitle: (pct) => `正文调小一档（现 ${pct}%）`,
+    largerTitle: (pct) => `正文调大一档（现 ${pct}%）`,
+  },
+
   // 侧栏导航 / 三栏清单
   nav: {
     tabOpen: (n) => `待审 ${n}`,
