@@ -15,9 +15,17 @@
 //    整折判）沉到各组末尾，再不行归到「未定位」尾巴。读的人顺着正文往下走，批注就在它该在的地方。
 // 3. **引文/批语/回话原样落 markdown**：它们本就是 markdown，LLM 直接读；不再套壳、不转义，
 //    只在整篇末尾统一汇总拍板点。
+// 4. **双语对只带一篇**：两份是互译，都塞进去等于让接手的 agent 为同一内容付两遍 token
+//    （#76 实测英文那份占整卷 48%）。按阅读偏好取一篇，被省的那篇留一行路径可自取——
+//    有一类折（对外英文草稿）英文才是交付物，不留路径就真的丢了。
+//    选片沿用 lang.js 的 visibleDocs，与阅读器 tab 栏同一套判据，不另造规则。
+
+import { visibleDocs, siblingFor, variantOf } from './lang.js';
 
 // 每篇文档正文的界定符：一条足够长、正文里不会撞上的水平分隔线。
 const RULE = '─'.repeat(60);
+
+const langLabel = (l) => (l === 'zh' ? '中文' : (l === 'en' ? 'English' : ''));
 
 // 批注串锚定行：line 是当前版行号，null 表示旧版漂移（outdated）。排序用它，取不到的排在最后。
 const anchorLineOf = (t) => {
@@ -57,11 +65,12 @@ function renderThread(t, parseBody, i) {
  * @param {?string}  deepLink    门下深链
  * @param {string}   assembledAt 组装时刻（人类可读串）
  * @param {function} parseCommentBody 注入：把 `> 引文` 从批注正文里拆出来
+ * @param {string}   lang        双语对带哪一篇（'zh' | 'en'），缺省与 getLang 一致取 'zh'
  * @returns {string} 自包含 markdown
  */
 export function assembleCarry({
   pr, docs = [], threads = [], zongpis = [], decisions = null,
-  deepLink = null, assembledAt, parseCommentBody,
+  deepLink = null, assembledAt, parseCommentBody, lang = 'zh',
 }) {
   const parseBody = parseCommentBody || ((raw) => ({ quote: '', body: String(raw || '') }));
   const P = [];
@@ -86,14 +95,21 @@ export function assembleCarry({
     P.push(fenced(String(pr.body).trim()));
   }
 
-  // ── 每篇文档全文 ──
+  // ── 每篇文档全文（双语对只出偏好语言那一篇）──
   P.push('## 正文');
-  if (!docs.length) {
+  const allPaths = docs.map((d) => d.path);
+  const keep = new Set(visibleDocs(allPaths, lang));
+  const shown = docs.filter((d) => keep.has(d.path));
+  if (!shown.length) {
     P.push('（此折无 markdown 正文。）');
   } else {
-    docs.forEach((d) => {
-      const langLabel = d.lang === 'zh' ? '中文' : (d.lang === 'en' ? 'English' : '');
-      P.push(`### 文档：\`${d.path}\`${langLabel ? `（${langLabel}）` : ''}`);
+    shown.forEach((d) => {
+      const label = langLabel(d.lang);
+      P.push(`### 文档：\`${d.path}\`${label ? `（${label}）` : ''}`);
+      const sib = siblingFor(d.path, allPaths);
+      if (sib) {
+        P.push(`> 另有一份 ${langLabel(variantOf(sib)?.lang)} 版：\`${sib}\`（互译，本卷未收）。`);
+      }
       P.push(fenced(d.text != null ? String(d.text) : '（正文取不到。）'));
     });
   }

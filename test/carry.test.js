@@ -1,4 +1,4 @@
-// F12 携卷组装函数：批注按文档位置排序、双语文件两份都带、文档正文里的 ``` 围栏不破碎。
+// F12 携卷组装函数：批注按文档位置排序、双语对只带一篇、文档正文里的 ``` 围栏不破碎。
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { assembleCarry } from '../src/carry.js';
@@ -24,16 +24,41 @@ test('头部带折号 / 标题 / PR 链接 / 深链 / 组装时间', () => {
   assert.match(md, /- 组装于：2026-07-31 10:00/);
 });
 
-test('每篇文档全文都带上，路径与语言标注正确（双语配对）', () => {
-  const docs = [
-    { path: 'docs/a.md', lang: 'en', text: 'Hello world body.' },
-    { path: 'docs/a.zh-CN.md', lang: 'zh', text: '中文正文内容。' },
-  ];
-  const md = call({ docs });
-  assert.match(md, /### 文档：`docs\/a\.md`（English）/);
+// 双语对是互译，两份都塞进去等于让接手的 agent 为同一份内容付两遍 token
+// （#76 实测：英文那份占整卷 48%）。只带偏好语言那篇，另一篇留一行路径可自取。
+const pair = [
+  { path: 'docs/a.md', lang: 'en', text: 'Hello world body.' },
+  { path: 'docs/a.zh-CN.md', lang: 'zh', text: '中文正文内容。' },
+];
+
+test('双语对只带偏好语言那一篇，另一篇只留一行指路', () => {
+  const md = call({ docs: pair, lang: 'zh' });
   assert.match(md, /### 文档：`docs\/a\.zh-CN\.md`（中文）/);
-  assert.ok(md.includes('Hello world body.'), '英文正文应原样带上');
   assert.ok(md.includes('中文正文内容。'), '中文正文应原样带上');
+  assert.ok(!md.includes('Hello world body.'), '英文正文不应进卷');
+  assert.match(md, /另有一份 English 版：`docs\/a\.md`/, '被省的那篇要留下路径');
+});
+
+test('lang 缺省按中文（与阅读器 getLang 的默认一致）', () => {
+  const md = call({ docs: pair });
+  assert.ok(md.includes('中文正文内容。'));
+  assert.ok(!md.includes('Hello world body.'));
+});
+
+test("lang='en' 时带英文那篇，指路行指向中文版", () => {
+  const md = call({ docs: pair, lang: 'en' });
+  assert.match(md, /### 文档：`docs\/a\.md`（English）/);
+  assert.ok(md.includes('Hello world body.'), '英文正文应原样带上');
+  assert.ok(!md.includes('中文正文内容。'), '中文正文不应进卷');
+  assert.match(md, /另有一份 中文 版：`docs\/a\.zh-CN\.md`/);
+});
+
+test('单语文档原样带上，且不加指路行', () => {
+  const docs = [{ path: 'docs/solo.md', lang: 'en', text: 'Only version.' }];
+  const md = call({ docs });
+  assert.match(md, /### 文档：`docs\/solo\.md`（English）/);
+  assert.ok(md.includes('Only version.'));
+  assert.ok(!md.includes('另有一份'), '没有兄弟篇就不该出现指路行');
 });
 
 test('文档正文里的 ``` 围栏不破碎（用分隔线包，不套外层围栏）', () => {

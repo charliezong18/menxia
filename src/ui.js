@@ -686,6 +686,7 @@ function App() {
           { repo: gh.getRepoSlug() || undefined, prNumber: pr.number }),
         assembledAt: new Date().toLocaleString(),
         parseCommentBody: A.parseCommentBody,
+        lang: curLangOf,   // 双语对只带在读的那篇；与 switchLang 同一个「当前语言」口径
       });
       const ok = await writeClipboard(md);
       if (ok) say(S.carry.done(md.length));
