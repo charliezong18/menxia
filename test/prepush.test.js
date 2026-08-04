@@ -26,8 +26,10 @@ test('推 HEAD:main 时基准取远端 main —— 回归：曾比出空 diff �
 });
 
 test('纯文档 push 仍走快速通道 —— 别把闸门修成永远全跑', () => {
-  // 657e180..220fa7a 是历史上一对纯 .md 提交（两者都是 main 的祖先，不会消失）
-  const line = `refs/heads/main ${sha('220fa7a')} refs/heads/main ${sha('657e180')}\n`;
+  // ff5837c..952eedb 是历史上一对纯 .md 提交（两者都是 main 的祖先）
+  // 注意：这两个是写死的 SHA，重写历史（filter-repo 之类）会让它们失效 —— 2026-08-04
+  // 修作者邮箱时就断过一次，靠这条测试当场拦下。届时用 .git/filter-repo/commit-map 重映射。
+  const line = `refs/heads/main ${sha('952eedb')} refs/heads/main ${sha('ff5837c')}\n`;
   assert.equal(verdict(line), 'DRYRUN docs-only');
 });
 
