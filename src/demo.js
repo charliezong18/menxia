@@ -87,6 +87,17 @@ const PR = {
   body: BODY,
 };
 
+// 弘文馆的样例折（review #69）。demo 里没有它的话，第三个 tab 点开永远是空的——
+// 而「点开里面什么都没有」正是这个功能上一轮报障的原话，demo 不该再复现一次。
+// 带 labels 是全部要点：弘文馆的判据只看 `kind:读物`（见 track.js）。
+const SHELF_PR = {
+  ...PR,
+  number: 997,
+  title: '读物：弘文馆样例（闲时读，不催）',
+  labels: [{ name: 'proj:menxia' }, { name: 'kind:读物' }, { name: 'wait:闲' }],
+  updated_at: new Date(Date.now() - 1728e5).toISOString(),
+};
+
 // 整份新增文件的 patch：全行可批
 const PATCH = ['@@ -0,0 +1,' + DOC.split('\n').length + ' @@', ...DOC.split('\n').map((l) => '+' + l)].join('\n');
 
@@ -160,7 +171,7 @@ const failErr = () => Object.assign(new Error(`${FAIL} demo failure`), {
 
 export const demoApi = {
   verifyToken: async () => ({ repo: {}, canWrite: true, prAccess: true }),
-  listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR]; },
+  listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR, SHELF_PR]; },
   listMergedPRs: async () => [{
     ...PR, number: 998, title: '涂归 demo 折 · 已画可（归档样例）',
     merged_at: new Date(Date.now() - 864e5).toISOString(),

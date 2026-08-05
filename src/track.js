@@ -28,15 +28,23 @@ export const kindOf = (pr) => valuesWithPrefix(pr, KIND_PREFIX)[0] || null;
 export const waitOf = (pr) => valuesWithPrefix(pr, WAIT_PREFIX)[0] || null;
 
 /**
- * 「闲」——弘文馆的判据。
+ * 弘文馆的判据：**`kind:读物`，但等你的不藏**（review #69 批定 2026-08-05）。
  *
- * **用 wait 而不是 kind 分组**：wait 本来就是「等谁」的红绿灯，闲＝不等任何人＝书架。
- * 这样 `kind:参考` 之类以后的闲置类自动归位，也不用新造一个跨系统字符串。
- * kind 只决定卡上显示的分类名（读物 / 参考 / …）。
+ * 呈折时提的推荐是 `wait:闲`，他选了 `kind:读物`——书架是按「这是什么」分的，
+ * 不是按「等谁」。当时 20 折里两个判据 100% 重合，换过来零行为差异。
+ *
+ * 加 `NEEDS_YOU` 这道阀是因为 kind 单独用有个静默失效面：#7「读物：两份待发的
+ * 对外草稿（发出去代表你，先过目）」这种折——kind 是读物，却卡着你签字才能发出去。
+ * 纯按 kind 分，它会进书架再没人想起来。**宁可多催，不可静默隐藏**，所以
+ * `wait:你拍` / `wait:你读` 一律留在待审，不管 kind 是什么。
+ *
+ * 这里硬编码取值（与文件顶上「只认前缀」的规矩相反）是自觉的例外：分组总得有个判据。
+ * 写侧词表在 menxia-mcp/src/track.ts，改那边的取值要回来同步这三个字符串。
  */
-export const IDLE = '闲';
+export const READING = '读物';
+const NEEDS_YOU = new Set(['你拍', '你读']);
 
-export const isShelved = (pr) => waitOf(pr) === IDLE;
+export const isShelved = (pr) => kindOf(pr) === READING && !NEEDS_YOU.has(waitOf(pr));
 
 /**
  * 把清单劈成「待审」与「弘文馆」两摊。

@@ -436,7 +436,7 @@ test('折务 label 读侧：认前缀、缺标返 null、字符串形态也吃�
   assert.equal(waitOf({ labels: ['wait:你拍'] }), '你拍', 'label 是裸字符串时也认');
 });
 
-test('splitShelf：只有 wait:闲 进书架，没标的一律留在待审', () => {
+test('splitShelf：只有 kind:读物 进书架，没标的一律留在待审', () => {
   const shelved = labeled(1, 'kind:读物', 'wait:闲');
   const waiting = labeled(2, 'kind:设计', 'wait:你拍');
   const bare = { number: 3, title: '老折没标' };
@@ -445,6 +445,23 @@ test('splitShelf：只有 wait:闲 进书架，没标的一律留在待审', () 
   assert.deepEqual(desk.map((p) => p.number), [2, 3], '漏标不该把折静默藏进书架');
   assert.equal(isShelved(bare), false);
   assert.deepEqual(splitShelf(undefined), { desk: [], shelf: [] }, '空输入不炸');
+});
+
+// #69 批定的判据是 kind:读物，但 kind 单独用有个静默失效面：#7「读物：两份待发的对外
+// 草稿（发出去代表你，先过目）」kind 是读物，却卡着他签字才能发出去。藏进书架就再没人想起来。
+test('splitShelf：等你的读物不藏——wait:你拍/你读 一律留在待审', () => {
+  const gating = labeled(1, 'kind:读物', 'wait:你拍');
+  const toRead = labeled(2, 'kind:读物', 'wait:你读');
+  const idle = labeled(3, 'kind:读物', 'wait:闲');
+  const noWait = labeled(4, 'kind:读物');
+  const { desk, shelf } = splitShelf([gating, toRead, idle, noWait]);
+  assert.deepEqual(desk.map((p) => p.number), [1, 2], '要你签字的读物不该被静默藏起来');
+  assert.deepEqual(shelf.map((p) => p.number), [3, 4], '不等你的读物才上架（含没标 wait 的）');
+});
+
+test('splitShelf：kind 不是读物就不上架，哪怕标了 wait:闲', () => {
+  const idleRef = labeled(1, 'kind:参考', 'wait:闲');
+  assert.equal(isShelved(idleRef), false, '书架按「这是什么」分，不按「等谁」分');
 });
 
 test('侧栏：书架折不进待审计数，待审栏里不画书架折卡', () => {

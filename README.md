@@ -42,6 +42,8 @@ your agent ──opens PR──▶  review repo (private)  ◀──comments─�
                                 └── merge = final = ship it
 ```
 
+**Not every folder is nagging you.** Folders labelled `kind:读物` land in the third sidebar tab, **弘文馆** — finished research, study material, long-form writing all live there: out of the review count, never nagged, while rendering, inline comments, conversation comments and merge keep working exactly as before. Read them when you feel like it. Anything gated on your sign-off (`wait:你拍` / `wait:你读`) stays in the queue instead, and **unlabelled folders always stay in the queue** — better to over-nag than to hide something silently.
+
 ## Quick start
 
 **1. Pick a review repo**

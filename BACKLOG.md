@@ -271,3 +271,27 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 **Cost**: one extra API call per folder, plus a non-awkward way to render the `null` state.
 
 **Status**: classified as **friction**, not a new feature (the user is blocked and can't tell what to do next), so the 08-08 feature freeze does not apply.
+
+---
+
+## F17 · 弘文馆 (Hongwenguan) — reading material stays out of the review queue (2026-08-02 ✅ built; criterion revised 2026-08-05 per #69)
+
+**What**: reading-type folders (finished research, study material, long-form writing) still arrive in 门下, but they are not todos — no nagging, no counting — while rendering, inline comments, conversation comments and merge all work exactly as before.
+
+**Why**: 门下's semantics were "open PR = review queue = you owe someone an action", which left reading material homeless: submit it and it masquerades as a chore; file it in the vault instead and you lose the whole annotate-by-sentence machine. On the day the criterion was settled, 10 of the 20 open folders were reading material — half the "queue" was stuff nobody should be nagged about.
+
+**How**: read-side only. `labels` already ship in the list endpoint's response, so `src/track.js` merely reads them to group — not one extra byte over the wire.
+
+**Status**: design folder #69 (submitted 08-02) → implementation ran ahead (shelf split 08-02, promoted to a third tab 08-03) → #69 merged 2026-08-05 with all four decisions settled.
+
+**What got built**:
+
+*Grouping.* `splitShelf` cuts the queue in two; 弘文馆 is the third sidebar tab alongside "queue" and "merged", carrying its own count and **staying out of the queue count**, with both tab and cards held at reduced opacity. Shelved cards get an extra kind chip. An empty shelf gets a sentence, not a blank panel.
+
+*The position changed once.* The first version was a collapsible block at the bottom of the queue list. The bug report, verbatim: "there's a 弘文馆 in the bottom left, but there's nothing in it when I open it" — once the list is long, everything the block expands is below the fold. Promoting it to a tab also flipped one assertion: a tab is **navigation**, not decoration, so it stays put at a count of zero rather than blinking in and out with inventory.
+
+*Criterion (settled in #69).* `kind:读物` — the shelf is organised by *what a thing is*, not by *who it waits on*. (The submission recommended `wait:闲`; he picked kind. Across all 20 folders at the time the two criteria coincided 100%, so the switch is behaviourally free.) **Plus one valve: `wait:你拍` / `wait:你读` always stay in the queue**, because kind on its own has a silent-failure surface — #7 "reading: two outbound drafts (they go out over your name, read them first)" is kind 读物 yet gated on his sign-off before it can be sent. For the same reason **unlabelled folders always stay in the queue**: hiding a folder because a label was missed is this feature's one genuinely dangerous move, and nobody goes looking for what got hidden. Better to over-nag than to hide silently.
+
+*Destination.* Merging a reading folder means "finished reading": the final text is delivered to the vault under `Hang/读物/` and gets a line in that README's index. 门下 is the **currently-reading surface**, the vault is the **finished library** — any one piece lives in exactly one of them at a time, so there is no double-write and no drift.
+
+**Not done**: zero write-side changes — `kind:读物` and the "reading defaults to `wait:闲`" rule already existed in menxia-mcp, and `trackAudit`'s drift check only ever watched `wait:你拍/你读`, so idle folders were never nagged in the first place. The UI string table is Chinese-only rather than i18n, which retires the design folder's "bilingual `strings.js` UI strings" line automatically.
