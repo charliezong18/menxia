@@ -63,6 +63,8 @@ export const S = deepFreeze({
     carry: '携卷',
     carryTitle: '把整折（正文＋涂归＋判＋待拍板）拼成自包含 markdown 拷进剪贴板，粘给任意 agent 接着干',
     carrying: '携卷中…',
+    expand: '展读',
+    expandTitle: '展读此串——从眉批栏捞出来铺在宽栏上细读（Esc 收）',
   },
 
   // 顶栏
@@ -265,6 +267,14 @@ export const S = deepFreeze({
   // 右缘
   margin: {
     otherDocs: (n) => `另有 ${n} 条涂归在此折其他文档`,
+  },
+
+  // 展读浮窗（一串涂归铺在宽栏上细读）
+  threadView: {
+    aria: '展读涂归',
+    line: (n) => `第 ${n} 行`,
+    close: '掩卷',
+    closeTitle: '收起（Esc）',
   },
 
   // 折子说明块（正文取自 PR body，这里只有壳）

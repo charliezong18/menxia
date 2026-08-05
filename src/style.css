@@ -351,6 +351,64 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 .anno-reply-who { font-size: 11.5px; color: var(--ink-soft); margin-bottom: 3px; }
 
+/* 展读钮：串卡头一行的右端。只给 .anno-src-row 开 flex，不动裸 .anno-src——
+   草稿卡与「其他 N 串」也用那个类，改基类等于替它们改版式。
+   常显不做悬停才出：这一行本来只有一个用户名，右边全是空的，藏起来只会让人找不到。 */
+.anno-src-row { display: flex; align-items: center; }
+.anno-expand {
+  margin-left: auto; flex: none; white-space: nowrap;
+  padding: 1px 8px; border: 1px solid var(--rule); border-radius: 999px;
+  font-family: var(--songti); font-size: 11px; letter-spacing: .08em; color: var(--ink-soft);
+}
+.anno-expand:hover { color: var(--cinnabar-deep); border-color: var(--cinnabar); }
+
+/* ── 展读浮窗（为什么不是「加宽眉批栏」见 components/thread-view.js 顶部）──
+   z-index 50：压住浮批钮(30)，让位携卷兜底(1000)。 */
+.thread-view-backdrop {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(38, 33, 26, .38); padding: 5vh 24px;
+}
+.thread-view {
+  width: min(860px, 100%); max-height: 90vh; overflow-y: auto;
+  background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 14px;
+  box-shadow: 0 6px 28px var(--shadow); padding: 20px 28px 26px;
+}
+.thread-view:focus { outline: none; }   /* tabIndex=-1 只为收焦点，不该画出焦点框 */
+.thread-view-bar {
+  display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-soft);
+  padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--rule);
+}
+.thread-view-line { font: 11.5px var(--mono); }
+.thread-view-bar .anno-outdated { margin-left: 0; }
+.thread-view-close { margin-left: auto; font-size: 12.5px; padding: 4px 14px; }
+.thread-view-quote {
+  border-left: 3px solid var(--ink-soft); padding: 3px 3px 3px 14px; margin-bottom: 18px;
+  font-family: var(--songti); font-size: calc(15px * var(--read-scale)); line-height: 1.75;
+  color: var(--ink-soft);
+}
+/* markdown 复用 .anno-shown-body 那套规则，但它的数值是给 300px / 13px 的右缘卡调的，
+   搬到 860px 的浮窗上要整体放大一档。两段选择器压过它，与 .zongpi-shown 同一手法——
+   不靠「碰巧写在后面」，谁重排一次 CSS 都不会让字号无声退回 13px。 */
+.thread-view .anno-shown-body { font-size: calc(15px * var(--read-scale)); line-height: 1.75; }
+.thread-view .anno-shown-body p, .thread-view .anno-shown-body li { margin-bottom: 9px; }
+.thread-view .anno-shown-body ul, .thread-view .anno-shown-body ol { margin-bottom: 9px; padding-left: 24px; }
+.thread-view .anno-shown-body h1,
+.thread-view .anno-shown-body h2,
+.thread-view .anno-shown-body h3 { font-family: var(--songti); font-size: 16px; margin: 14px 0 7px; }
+.thread-view .anno-shown-body code { font-size: calc(13px * var(--read-scale)); font-family: var(--mono); }
+.thread-view .anno-shown-body pre { margin-bottom: 10px; padding: 12px 14px; }
+.thread-view .anno-shown-body blockquote { margin-bottom: 10px; padding-left: 14px; }
+/* 宽表是「挤」最典型的受害者：300px 里它被压成竖条。这里给足宽度，仍超宽就自己横滚，
+   别把整个浮窗顶宽（display:block 是让 overflow-x 对 table 生效的唯一办法，同 article table）。 */
+.thread-view .anno-shown-body table {
+  font-size: calc(13.5px * var(--read-scale)); margin-bottom: 10px;
+  display: block; max-width: 100%; overflow-x: auto;
+}
+.thread-view .anno-shown-body th, .thread-view .anno-shown-body td { padding: 6px 10px; }
+.thread-view-reply { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--rule); }
+.thread-view-reply .anno-reply-who { font-size: 12.5px; margin-bottom: 7px; }
+
 /* ── M3：rev 版本切换 ── */
 .rev-row { display: flex; align-items: center; gap: 10px; margin: 0 0 18px var(--art-indent); flex-wrap: wrap; }
 .rev-label { font-family: var(--songti); font-size: 12.5px; color: var(--ink-soft); letter-spacing: .08em; }

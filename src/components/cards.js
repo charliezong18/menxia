@@ -33,14 +33,17 @@ export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
 
 // 已呈批注串（墨色安静系，视觉降一档；朱砂只留给草稿的活跃态）
 // blockLine 用串的源文件行号（line ?? original_line）直接当锚，参与 layoutCards 对齐
-export function ShownThread({ t, blockLine, outdated, hydrate }) {
+export function ShownThread({ t, blockLine, outdated, hydrate, onExpand }) {
   const { quote, body } = A.parseCommentBody(t.root.body);
   return html`
     <div class="anno-card anno-shown" data-block-line=${blockLine} key=${'c' + t.root.id}>
       ${quote && html`<div class="anno-quote-shown">${S.card.quote(quote)}</div>`}
-      <div class="anno-src">
+      <div class="anno-src anno-src-row">
         <span class="anno-who">${t.root.user?.login || '?'}</span>
         ${outdated ? html`<span class="anno-outdated" title=${S.card.outdatedTitle}>${S.card.outdatedBadge}</span>` : ''}
+        ${onExpand && html`
+          <button class="anno-expand" title=${S.action.expandTitle} aria-label=${S.action.expandTitle}
+            onClick=${() => onExpand(t.root.id)}>${S.action.expand}</button>`}
       </div>
       <${CommentBody} text=${body} hydrate=${hydrate} />
       ${t.replies.map((r) => html`

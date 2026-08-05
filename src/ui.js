@@ -18,6 +18,7 @@ import { DraftCard, ShownThread, ZongpiCard } from './components/cards.js';
 import { Sidebar } from './components/sidebar.js';
 import { Topbar } from './components/topbar.js';
 import { OtherThreads } from './components/other-threads.js';
+import { ThreadView } from './components/thread-view.js';
 import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-body.js';
 import { assembleCarry } from './carry.js';
@@ -42,7 +43,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/carry.js',
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
-  'src/components/comment-body.js', 'src/components/folder-body.js',
+  'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
   'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js'];
 async function detectNewBuild() {
   try {
@@ -118,6 +119,8 @@ function App() {
   const [comments, setComments] = useState([]);  // 已呈 inline review comments（扁平）
   const [zongpis, setZongpis] = useState([]);    // 已呈判（会话区），否则判只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
+  const [viewThread, setViewThread] = useState(null); // 展读浮窗：存 root comment id，不存对象——
+                                                      // 存对象会在刷新/新回话到达后定格成旧快照
   const [otherOpen, setOtherOpen] = useState(false); // 「其他 N 串」折叠组展开态
   const [zongpiOpen, setZongpiOpen] = useState(false); // 「已呈判」折叠组展开态（默认收起，issue #1）
   const [bodyOpen, setBodyOpen] = useState(false);   // 「折子说明」展开态：有「待你拍板」才默认展开（issue #13）
@@ -151,7 +154,7 @@ function App() {
   const archived = Boolean(cur?.pr?.merged_at);
   const canAnnotate = onHead && !archived;      // 旧版 / 归档折一律只读
   const happyUrl = parseHappySession(cur?.pr?.body);   // 呈折的那次奏对（agent 埋在 PR body 里）
-  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate };
+  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate, viewThread };
 
   const say = useCallback((t) => setNotice(t), []);
 
@@ -512,7 +515,9 @@ function App() {
       setFloat(a ? { ...a, rect: { left: a.rect.right, top: a.rect.bottom } } : null);
     };
     const onMouseUp = (e) => {
-      if (e.target.closest('.zhupi-float, .anno-card, .zongpi-card')) return;
+      // .thread-view 同理入列：浮窗里划字是「读」不是「批」，computeAnchor 本来也会因
+      // 选区不在 #doc 内返回 null，但那条路径会顺手把浮钮清掉，白折腾一次 setState。
+      if (e.target.closest('.zhupi-float, .anno-card, .zongpi-card, .thread-view')) return;
       if (e.target.closest('aside, .mainbar')) { if (R.current.float) setFloat(null); return; } // 点按钮也要收浮钮
       if (!R.current.canAnnotate) { if (R.current.float) setFloat(null); return; } // 旧版/归档只读：不出浮批钮
       setTimeout(showFloat, 0);
@@ -534,6 +539,9 @@ function App() {
       }, 250); // 拖手柄期间连发，等停稳再出钮
     };
     const onKeyDown = (e) => {
+      // Esc 收展读浮窗。放在 ⌘Enter 之前、且不排除输入框——浮窗里没有可编辑区，
+      // 而「按 Esc 关不掉」是模态窗最招骂的一种坏法。
+      if (e.key === 'Escape' && R.current.viewThread != null) { setViewThread(null); return; }
       if (!(e.metaKey || e.ctrlKey) || e.key !== 'Enter') return;
       // 阻断修复：卡内 ⌘Enter 的同一事件会冒泡到这里——不排除输入框就会把整批当场呈出
       if (e.target.closest('textarea, input')) return;
@@ -904,9 +912,13 @@ function App() {
     ...docThreads.map(({ t, blockLine, outdated }) => ({
       blockLine,
       el: html`<${ShownThread} key=${'c' + t.root.id} t=${t} blockLine=${blockLine} outdated=${outdated}
-        hydrate=${hydrateComment} />`,
+        hydrate=${hydrateComment} onExpand=${setViewThread} />`,
     })),
   ].sort((a, b) => a.blockLine - b.blockLine);
+
+  // 展读浮窗按 id 现查现渲：串本身仍归 comments 那份 state 管，回话到了浮窗跟着更新。
+  // 串被删/切了文档就查不到 → 自然不渲染，不必再写一路清理。
+  const viewing = viewThread == null ? null : docThreads.find(({ t }) => t.root.id === viewThread);
 
   // rev 序列升序（旧→新）标 v 号；vN=head——demo smoke 依赖升序取首个当 v1
   const revs = commits.map((c, i) => ({
@@ -1008,6 +1020,9 @@ function App() {
       ${float && html`
         <button class="zhupi-float" style=${{ left: `${Math.min(float.rect.left + 8, window.innerWidth - 76)}px`, top: `${float.rect.top + 6}px` }}
           onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>${S.action.annotate}</button>`}
+      ${viewing && html`
+        <${ThreadView} key=${'v' + viewing.t.root.id} t=${viewing.t} blockLine=${viewing.blockLine}
+          outdated=${viewing.outdated} hydrate=${hydrateComment} onClose=${() => setViewThread(null)} />`}
     </div>`;
 }
 

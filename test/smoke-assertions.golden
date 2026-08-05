@@ -53,6 +53,13 @@ submit-btn-visible
 submit-commit-id
 submit-fired
 submit-line-set
+thread-expand-btn-actually-clickable
+thread-view-backdrop-closes
+thread-view-body-rendered
+thread-view-close-btn-closes
+thread-view-esc-closes
+thread-view-opens-on-expand
+thread-view-wider-than-margin-card
 touch-probe-range-built
 touch-selection-shows-float
 verify-count-in-topbar

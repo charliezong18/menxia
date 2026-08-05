@@ -350,6 +350,42 @@ async function runSmoke(docEl) {
   chk('shown-threads>=1', document.querySelectorAll('.anno-shown').length >= 1);
   chk('reply-rendered>=1', document.querySelectorAll('.anno-reply').length >= 1);
 
+  // 展读浮窗：把串从 300px 眉批栏捞出来铺宽。三条退路（掩卷钮 / Esc / 点幕布）各守一条——
+  // 关不掉的模态窗是这类功能唯一致命的坏法，所以三条都试，且每条都要真的把 DOM 清干净。
+  const expBtn = document.querySelector('#margin-col .anno-shown .anno-expand');
+  const expStyle = expBtn && getComputedStyle(expBtn);
+  chk('thread-expand-btn-actually-clickable',
+    Boolean(expBtn) && expStyle.pointerEvents !== 'none' && expStyle.visibility === 'visible'
+    && expBtn.offsetHeight > 0,
+    `btn=${Boolean(expBtn)} pe=${expStyle?.pointerEvents} h=${expBtn?.offsetHeight}`);
+  const expCardW = expBtn?.closest('.anno-card')?.getBoundingClientRect().width || 0;
+  expBtn?.click();
+  await sleep(200);
+  const tvPanel = document.querySelector('.thread-view');
+  chk('thread-view-opens-on-expand', Boolean(tvPanel));
+  // 这条是整个功能的判据：浮窗若还是眉批栏那点宽度，等于什么都没做。
+  const tvW = tvPanel?.getBoundingClientRect().width || 0;
+  chk('thread-view-wider-than-margin-card', tvW > expCardW * 2,
+    `panel=${Math.round(tvW)} card=${Math.round(expCardW)}`);
+  chk('thread-view-body-rendered',
+    (document.querySelector('.thread-view .anno-shown-body')?.textContent || '').trim().length > 0);
+  document.querySelector('.thread-view-close')?.click();
+  await sleep(200);
+  chk('thread-view-close-btn-closes', !document.querySelector('.thread-view'));
+
+  expBtn?.click();
+  await sleep(200);
+  document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  await sleep(200);
+  chk('thread-view-esc-closes', !document.querySelector('.thread-view'));
+
+  expBtn?.click();
+  await sleep(200);
+  const tvBack = document.querySelector('.thread-view-backdrop');
+  tvBack?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+  await sleep(200);
+  chk('thread-view-backdrop-closes', !document.querySelector('.thread-view'));
+
   // issue #13：折子说明（PR body 五段）。这折的 body 有「待你拍板」→ 必须默认摊开，
   // 不点任何东西就能读到拍板点。这是本 issue 的全部要害：该被看见的东西不许静默消失。
   const fbToggle = document.querySelector('.folder-body-toggle');
