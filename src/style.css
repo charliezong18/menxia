@@ -287,6 +287,8 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 .anno-src { font-size: 12px; color: var(--ink-soft); margin-bottom: 8px; }
 .anno-note { font-size: calc(13.5px * var(--read-scale)); line-height: 1.65; cursor: pointer; }
+/* 空草稿的占位：压暗+斜体，一眼看出「这条还没写」，但仍是个能点的实体靶子（见 cards.js） */
+.anno-note-empty { color: var(--ink-soft); font-style: italic; }
 .anno-input {
   width: 100%; min-height: 64px; padding: 10px 12px; resize: vertical;
   font: 13.5px/1.65 var(--sans); font-size: calc(13.5px * var(--read-scale)); color: var(--ink);

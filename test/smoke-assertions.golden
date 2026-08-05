@@ -21,6 +21,8 @@ doc-within-one-screen-of-top
 draft-cards>=2
 drafts-cleared-after-submit
 drafts-persisted
+empty-draft-dropped-on-switch
+empty-draft-starts-editing
 external-link-not-hijacked
 fence-line-precise
 folder-body-height-capped
@@ -48,6 +50,8 @@ search-hits-found
 search-input-exists
 search-jump-flash
 shown-threads>=1
+stale-empty-draft-opens-editor
+stale-empty-draft-still-clickable
 submit-body-nonempty
 submit-btn-visible
 submit-commit-id

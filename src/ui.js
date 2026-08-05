@@ -293,7 +293,7 @@ function App() {
   function openPR(pr) {
     setNotice('');
     setFloat(null);
-    setEditing(null);
+    editElsewhere(null);  // 换折前收掉空草稿：它存进的是**上一折**的 localStorage，回来还会堵在那儿
     setZongpi(false);
     setDocErr(null);
     setDocPath(null);
@@ -584,7 +584,7 @@ function App() {
       ts: Date.now(),
     };
     mutateDrafts(c.pr.number, (ds) => [...ds, d]);
-    setEditing(d.id);
+    editElsewhere(d.id);
     setFloat(null);
     window.getSelection()?.removeAllRanges();
   }
@@ -603,6 +603,23 @@ function App() {
     if (!c) return;
     mutateDrafts(c.pr.number, (ds) => ds.filter((d) => d.id !== id));
     setEditing((e) => (e === id ? null : e));
+  }
+
+  // 编辑焦点切走时，把还没写字的那条草稿一并收掉——**唯一的 setEditing 入口**（置 null 也走它）。
+  //
+  // 2026-08-05 报障：划句按「涂归」建了草稿却没写字，转头去划下一句，editing 一切走，
+  // 空草稿就留在原地。它退出编辑态后画的是 `.anno-note`（高度全靠内容撑），空内容 ⇒ 0px ⇒
+  // 点不着；作罢钮只在编辑态里 ⇒ 删不掉；呈回闸门又拦「空批注不呈」 ⇒ 交不上。三头堵死。
+  //
+  // 口径与 saveDraft 的「存了个空的＝作罢」完全一致，这里只是补上**隐式**切走这条路径。
+  // 不必担心误删正在写的：编辑中点正文只是 blur，editing 不动，textarea 照样挂着。
+  function editElsewhere(next) {
+    const c = R.current.cur;
+    const prev = R.current.editing;
+    if (c && prev && prev !== next) {
+      mutateDrafts(c.pr.number, (ds) => ds.filter((d) => d.id !== prev || d.note.trim()));
+    }
+    setEditing(next);
   }
 
   // 地址栏跟着当前折/文档走（replaceState 不进历史，免得返回键变成翻折）
@@ -907,7 +924,7 @@ function App() {
     ...docDrafts.map((d) => ({
       blockLine: d.blockLine,
       el: html`<${DraftCard} key=${d.id} d=${d} doc=${docRef.current} editing=${editing === d.id}
-        onEdit=${(id) => setEditing(id)} onSave=${saveDraft} onDrop=${dropDraft} />`,
+        onEdit=${editElsewhere} onSave=${saveDraft} onDrop=${dropDraft} />`,
     })),
     ...docThreads.map(({ t, blockLine, outdated }) => ({
       blockLine,

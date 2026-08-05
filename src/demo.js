@@ -747,5 +747,34 @@ async function runSmoke(docEl) {
   const leftover = JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items?.length ?? -1;
   chk('drafts-cleared-after-submit', leftover === 0, `leftover=${leftover}`);
 
+  // ── 空草稿死锁（2026-08-05 报障，放在提交之后跑：那时草稿已清空，是干净起点）──
+  // 原话：「第二个的那个评论我没加东西，不让我提交。然后我想过去加东西，结果点不开那个评论栏了」。
+  // 划句建了草稿却没写字就去划下一句 ⇒ 空草稿留在原地 ⇒ 它退出编辑态后画的 `.anno-note` 内容为空
+  // ⇒ 高 0px ⇒ 点不着；作罢钮只在编辑态里 ⇒ 删不掉；呈回闸门拦「空批注不呈」 ⇒ 交不上。三头堵死。
+  // 两层各钉一条：① 焦点切走时空草稿自己收掉；② 存量空草稿仍留得住手（占位撑起可点的靶子）。
+  await pick('镜片随时可以摘掉', '', false);                 // 建了不写
+  chk('empty-draft-starts-editing', Boolean(document.querySelector('.anno-input')));
+  await pick('const DEBOUNCE_MS = 300;', '改去写这句', true);  // 焦点切到新草稿
+  const afterSwitch = JSON.parse(localStorage.getItem('zhupi.drafts.999') || '{}')?.items || [];
+  chk('empty-draft-dropped-on-switch',
+    afterSwitch.length === 1 && afterSwitch[0].note === '改去写这句',
+    `left=${JSON.stringify(afterSwitch.map((d) => d.note))}`);
+
+  // 存量退路：把一条空草稿塞回 storage 再开折（模拟修复前已经卡在那儿的），它必须仍是实体靶子。
+  // 判据用 offsetHeight 而不是「元素在不在」——病根正是元素在、但高度为 0。
+  if (afterSwitch.length) {
+    localStorage.setItem('zhupi.drafts.999',
+      JSON.stringify({ items: [{ ...afterSwitch[0], id: 'stuck', note: '' }] }));
+    document.querySelector('#pr-list .pr-item')?.click();
+    await sleep(700);
+    const stuck = document.querySelector('.anno-note-empty');
+    chk('stale-empty-draft-still-clickable',
+      Boolean(stuck) && stuck.offsetHeight > 0 && getComputedStyle(stuck).pointerEvents !== 'none',
+      `el=${Boolean(stuck)} h=${stuck?.offsetHeight}`);
+    stuck?.click();
+    await sleep(200);
+    chk('stale-empty-draft-opens-editor', Boolean(document.querySelector('.anno-input')));
+  }
+
   console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
 }
