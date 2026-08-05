@@ -257,6 +257,8 @@ export const S = deepFreeze({
     srcLine: (section, line) => `${section ? section + ' · ' : ''}第 ${line} 行`,
     draftPlaceholder: '涂归……',
     editTitle: '点击修改',
+    // 空草稿退出编辑态时的占位。**它撑的是高度，不只是给个说明**——见 cards.js 那段注释。
+    emptyNote: '（未写 · 点此补上）',
     outdatedBadge: '旧',
     outdatedTitle: '此行已随新版漂移',
     replyWho: (who) => `回话 · ${who}`,

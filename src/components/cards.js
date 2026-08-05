@@ -5,6 +5,11 @@ import * as A from '../anchor.js';
 import { CommentBody } from './comment-body.js';
 import { S } from '../strings.js';
 
+// 非编辑态那行 `.anno-note` 是「点开改」的唯一靶子，而它的高度**完全由内容撑**
+// （没 padding、没 min-height）。所以 note 为空时必须画占位词，否则那是个 0px 的死靶子：
+// 2026-08-05 报障「我想过去加东西，结果点不开那个评论栏了」——空草稿改不了（点不着）、
+// 删不掉（作罢钮只在编辑态里）、又过不了呈回闸门（空批注不呈），三头堵死。
+// 空草稿本身已由 ui.js 的 editElsewhere 在切走焦点时收掉；这里是给存量草稿留的退路。
 export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
   const taRef = useRef();
   useEffect(() => { if (editing) setTimeout(() => taRef.current?.focus(), 0); }, [editing]);
@@ -27,7 +32,8 @@ export function DraftCard({ d, doc, editing, onEdit, onSave, onDrop }) {
           <button class="anno-ghost" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onDrop(d.id)}>${S.action.discard}</button>
           <button class="anno-save" onMouseDown=${(e) => e.preventDefault()} onClick=${() => onSave(d.id, taRef.current.value)}>${S.action.saveDraft}</button>
         </div>` : html`
-        <div class="anno-note" title=${S.card.editTitle} onClick=${() => onEdit(d.id)}>${d.note}</div>`}
+        <div class="anno-note${d.note ? '' : ' anno-note-empty'}" title=${S.card.editTitle}
+          onClick=${() => onEdit(d.id)}>${d.note || S.card.emptyNote}</div>`}
     </div>`;
 }
 
