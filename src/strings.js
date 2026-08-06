@@ -282,6 +282,17 @@ export const S = deepFreeze({
     closeTitle: '收起（Esc）',
   },
 
+  // 展图浮窗（正文图从栏宽里捞出来看原尺寸）
+  imageView: {
+    aria: '展图',
+    untitled: '（无题图）',
+    full: '原尺寸',
+    fit: '合观',
+    zoomTitle: '在「塞进屏幕」与「原尺寸（可滚）」之间切换——点图也行',
+    close: '掩卷',
+    closeTitle: '收起（Esc）',
+  },
+
   // 折子说明块（正文取自 PR body，这里只有壳）
   folderBody: {
     toggle: (badge) => `折子说明${badge ? `（${badge}）` : ''}`,

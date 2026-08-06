@@ -247,7 +247,9 @@ article pre code { background: none; padding: 0; font-size: calc(13px * var(--re
 article table { border-collapse: collapse; width: 100%; margin: 6px 0 18px; font-size: calc(14.5px * var(--read-scale)); }
 article th, article td { border: 1px solid var(--rule); padding: 9px 12px; text-align: left; line-height: 1.6; }
 article th { font-family: var(--songti); background: var(--chip); font-weight: 700; }
-article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px; }
+/* cursor: zoom-in 是这个功能唯一的自发现入口——图能点开这件事没有别的地方写着 */
+article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px; cursor: zoom-in; }
+article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎报能放大（见 image-view.js） */
 
 .state { color: var(--ink-soft); font-size: 15px; padding: 8px 0; }
 .state.err { color: var(--cinnabar-deep); }
@@ -393,6 +395,36 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
   box-shadow: 0 6px 28px var(--shadow); padding: 20px 28px 26px;
 }
 .thread-view:focus { outline: none; }   /* tabIndex=-1 只为收焦点，不该画出焦点框 */
+
+/* ── 展图浮窗（由来见 components/image-view.js 顶部）──
+   z-index 60：压住展读浮窗(50)——展读窗里的评论图将来也接上时，图必须盖在它上面；
+   仍让位携卷兜底(1000)。 */
+.img-view-backdrop {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(38, 33, 26, .58); padding: 3vh 16px;
+}
+.img-view {
+  display: flex; flex-direction: column;
+  width: min(1400px, 100%); max-height: 94vh;
+  background: var(--paper-raised); border: 1px solid var(--rule); border-radius: 14px;
+  box-shadow: 0 6px 28px var(--shadow); padding: 12px 16px 16px;
+}
+.img-view:focus { outline: none; }
+.img-view-bar {
+  display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-soft);
+  padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--rule);
+}
+.img-view-alt { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.img-view-close { margin-left: 0; }
+/* 合观：图整张塞进舞台。原尺寸：舞台双向可滚，图按自然像素铺开——「放大」要的就是这一档 */
+.img-view-stage {
+  flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
+  overflow: auto; background: var(--chip); border-radius: 9px;
+}
+.img-view-stage img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-in; }
+.img-view-stage.full { display: block; }
+.img-view-stage.full img { max-width: none; max-height: none; object-fit: none; cursor: zoom-out; }
 .thread-view-bar {
   display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-soft);
   padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid var(--rule);
