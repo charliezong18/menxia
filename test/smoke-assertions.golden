@@ -1,6 +1,7 @@
 anchor-click-flashes-heading
 anchor-click-keeps-url-clean
 anchor-heading-has-github-slug
+anchor-in-folder-body-intercepted
 anchor-links-rendered
 anchor-loose-frag-matches
 anchor-miss-says-so-not-silent
@@ -31,6 +32,7 @@ empty-draft-dropped-on-switch
 empty-draft-starts-editing
 external-link-not-hijacked
 fence-line-precise
+folder-body-anchor-rendered
 folder-body-height-capped
 folder-body-tldr-always-visible
 lang-chip-on-bilingual

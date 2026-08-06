@@ -1,4 +1,4 @@
-// 页内锚点：slug 生成（对齐 GitHub）+ 片段匹配的三级放宽。
+// 页内锚点：slug 生成（对齐 GitHub）+ 片段匹配的四级放宽。
 // 纯逻辑层，不碰 DOM——matchAnchor 只认 `{ id, text }`，元素由调用方自己挂。
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -18,6 +18,21 @@ test('slugify: CJK 标点也算标点（〈〉（）、，。「」全去掉）'
 
 test('slugify: 只换半角空格，不折叠——折叠就和 GitHub 分家了', () => {
   assert.equal(slugify('a  b'), 'a--b');
+});
+
+// 2026-08-06 双查：不可见字符不清掉会产出**非法 id**（HTML 的 id 不得含 ASCII 空白），
+// 且 NBSP/ZWSP 生成的 id 与正常 id 长得一样，手写的片段永远命不中。
+test('slugify: TAB / NBSP / U+3000 / ZWSP / ZWJ / 软连字符全部删掉', () => {
+  assert.equal(slugify('a\tb'), 'ab');
+  assert.equal(slugify('a b'), 'ab');
+  assert.equal(slugify('a　b'), 'ab');
+  assert.equal(slugify('a​b'), 'ab');
+  assert.equal(slugify('a­b'), 'ab');
+  assert.equal(slugify('👨‍👩‍👧 family'), '-family');   // emoji 被 \p{S} 删，ZWJ 不许留下
+});
+
+test('slugify: 半角空格照旧换连字符，不被「清空白」那一步顺手吃掉', () => {
+  assert.equal(slugify('回到 顶部'), '回到-顶部');
 });
 
 test('slugify: 空/纯标点得到空串（调用方据此不打 id）', () => {
@@ -56,12 +71,24 @@ test('matchAnchor ①：id 逐字相等', () => {
   assert.equal(matchAnchor(HEADS, 'highline-日模块')?.id, 'highline-日模块');
 });
 
-test('matchAnchor ②：片段是标题原文时，再 slug 一遍命中', () => {
+// 2026-08-06 双查抓到的静默错跳：两个标题 slug 同底（后者被去重成 `-1`），
+// 片段与**后者原文逐字相同**，可「再 slug 一遍」会先命中前者。逐字相等必须压在放宽规则之上。
+test('matchAnchor ②：逐字相等的标题原文优先于「slug 后同底」的另一个标题', () => {
+  const heads = [
+    { id: '无票日选项', text: '无票日选项' },
+    { id: '无票日选项-1', text: '无票日·选项' },
+  ];
+  assert.equal(matchAnchor(heads, '无票日·选项')?.id, '无票日选项-1');
+  assert.equal(matchAnchor(heads, '无票日选项')?.id, '无票日选项');       // 前者照旧
+  assert.equal(matchAnchor(heads, '无票日选项-1')?.id, '无票日选项-1');   // id 逐字仍最优先
+});
+
+test('matchAnchor ③：片段是标题原文时，再 slug 一遍命中', () => {
   assert.equal(matchAnchor(HEADS, '〈Highline 日模块〉')?.id, 'highline-日模块');
   assert.equal(matchAnchor(HEADS, 'Highline 日模块')?.id, 'highline-日模块');
 });
 
-test('matchAnchor ③：连字符/空格口径有出入时兜底', () => {
+test('matchAnchor ④：连字符/空格口径有出入时兜底', () => {
   assert.equal(matchAnchor(HEADS, 'Highline日模块')?.id, 'highline-日模块');
   assert.equal(matchAnchor(HEADS, 'backtotop')?.id, 'back-to_top');
 });

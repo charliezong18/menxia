@@ -39,12 +39,18 @@ md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
 // 标题文字：走 inline 的**子 token**，不用 `inline.content`（那是原始 markdown）。
 // `## **粗** 标题` 两者结果相同（星号会被 slugify 当标点抹掉），但 `## [名](url)` 的
 // content 连 URL 一起算进去，slug 就跟 GitHub 分家了——而 GitHub 只取可见文字。
+//
+// **没有「取不出就退回 content」的兜底**（2026-08-06 双查抓到）：`## ![封面](a.png)` 这种
+// 图片独占的标题，children 里一个 text 都没有，兜底会把整段原始 markdown（含 URL）灌进 slug，
+// 产出 `id="封面apng"`——正是上面那句注释声称要避免的事。取不出可见文字就不打 id，
+// 与「纯标点标题」同路径。图片的 alt 也不计入：`<img alt>` 不贡献 textContent，
+// GitHub 的锚同样不含它（`## 🚀 起步` → `-起步`）【alt 这条需核实】。
 const headingText = (inline) => (inline?.children || [])
   .map((t) => {
     if (t.type === 'text' || t.type === 'code_inline') return t.content;
     return t.type === 'softbreak' || t.type === 'hardbreak' ? ' ' : '';
   })
-  .join('') || String(inline?.content || '');
+  .join('');
 
 // ── Obsidian 双链 `[[目标]]` / `[[目标|显示名]]` ────────────────────────────
 // vault 搬进来的文档满篇都是它（「下一章 → [[01 这是个什么东西]]」），markdown-it
@@ -97,7 +103,13 @@ export const stripFrontmatter = (text) => {
   return '\n'.repeat((m[0].match(/\n/g) || []).length) + s.slice(m[0].length);
 };
 
-export const renderMarkdown = (text) => md.render(stripFrontmatter(text), { slugger: makeSlugger() });
+// headingIds **默认关**（2026-08-06 双查抓到）：id 是全文档唯一的资源，而这个渲染器同时喂
+// 正文和六个批注面（折首说明 / 判 / 其他串 / 浮窗 / 卡片，全走 comment-body.js 那一个 sink）。
+// 每次 render 各配一只 slugger，跨面就撞不上去重——正文和某条判里各写一个 `## 小结`，
+// DOM 里就有两个 `id="小结"`，而折首在 DOM 序上还排在正文之前，原生 `#小结` 会滚到批注上去。
+// 只有「当前在读的这一篇」才配打锚，所以由 ui.js 显式开，别改成默认开。
+export const renderMarkdown = (text, { headingIds = false } = {}) =>
+  md.render(stripFrontmatter(text), headingIds ? { slugger: makeSlugger() } : {});
 
 // 文档内相对图片：私有仓取不到 raw 链接，必须用 token 走 Contents API 换 blob URL。
 // base 用 md 文件自身所在目录（不是写死的 docs/），否则根目录或子目录的文档全解析错。

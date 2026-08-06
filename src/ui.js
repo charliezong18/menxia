@@ -379,7 +379,8 @@ function App() {
       try {
         const text = await api.getFileText(docPath, ref);
         if (dead) return;
-        el.innerHTML = renderMarkdown(text);
+        // 只有正文开 headingIds：页内锚的 id 全文档唯一，批注面不能跟着打（见 render.js 那段）
+        el.innerHTML = renderMarkdown(text, { headingIds: true });
         // F13：渲染后在纯文本层给「需核实」标记加可见状态；返回本篇标记数供顶栏显示。
         setVerifyN(decorateVerifyMarkers(el, S.verify.markerTip));
         await hydrateRelativeImages(el, { docPath, ref, fetchBlobUrl: api.getFileBlobUrl });
@@ -636,15 +637,6 @@ function App() {
     if (!a) return;
     const href = a.getAttribute('href');
 
-    // ⓪ 页内锚点 `[…](#slug)`：留在本篇里滚过去。**必须 preventDefault**——
-    //    地址栏是深链的载体（buildDeepLink 的 replaceState 常驻），放浏览器自己去处理
-    //    会往 URL 上挂一截 hash，跟那条 effect 来回打架，拷出去的直达链也变脏。
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      jumpToAnchor(href.slice(1));
-      return;
-    }
-
     // ① 文档内相对链接：同折里有这个文件就换文档（双语互链就靠它），
     //    没有就开 GitHub 上的对应文件——绝不能放它去 Pages 源站撞 404
     const rel = resolveRelativeDocLink(href, docPath);
@@ -665,6 +657,21 @@ function App() {
     e.preventDefault();
     jumpTo(parsed);
   }, [prs, donePrs, cur, docPath]);
+
+  // 页内锚点 `[…](#slug)`。**挂在 `.work` 上而不是 `.read-row`**：折首说明、判、其他串
+  // 都在 read-row 之外，那里写的 `#某节` 会走浏览器原生跳转——既不闪、也不过三级放宽，
+  // 还会往地址栏挂一截 hash（地址栏是深链的载体，脏了「拷直达链」就跟着脏）。
+  // 正文里的锚同样从这里过：`.read-row` 的 onDocClick 对 `#` 开头一律不认（①② 都返 null），
+  // 不 preventDefault，冒泡上来正好由这里接住，两条路不会互相抢。
+  const onAnchorClick = useCallback((e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    // 修饰键/中键：读者是想「在新标签打开」，那是浏览器的活，别抢（抢了就永远开不了新窗）
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    e.preventDefault();
+    const frag = a.getAttribute('href').slice(1);
+    if (frag) jumpToAnchor(frag);   // 光秃秃一个 `#` 是「回到顶部」的老写法，拦下但什么都不做
+  }, [docPath]);
 
   // 「引用此处」：把当前选中处拷成一条 GitHub permalink + 引文，粘进别的涂归即成链接
   async function copyRef(e) {
@@ -1003,7 +1010,7 @@ function App() {
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
           onCopyRef=${copyRef} onCarry=${carryOut} onZongpi=${() => setZongpi((z) => !z)}
           onSubmit=${submitAll} onQinci=${qinci} />
-        <div class="work">
+        <div class="work" onClick=${onAnchorClick}>
         <div class="stage-row">
           ${cur?.docs?.length > 1 && useChapterList && html`
             <${ChapterRail} chapters=${chapters}

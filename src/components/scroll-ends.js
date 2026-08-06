@@ -38,13 +38,18 @@ export function ScrollEnds({ tick }) {
     const kick = () => { if (!raf) raf = requestAnimationFrame(measure); };
     measure();
 
-    // 高度往往在挂载**之后**才定下来：图片是异步 hydrate 的，批注卡也会撑高右缘。
+    // 高度往往在挂载**之后**才定下来：图片是异步 hydrate 的，批注卡也会撑高右缘
+    // （`.margin-col` 的 min-height 由 ui.js 现算现写，它在流里，会顶起 `.stage-row`）。
     // 少了这只观察器，「加载完才够长」的那一篇要等到下次换篇才等到按钮。
     const work = document.querySelector('.work');
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(kick) : null;
     if (ro && work?.firstElementChild) ro.observe(work.firstElementChild);
+    // 拉窗口只改**容器**高度，内容盒子纹丝不动 → RO 不响。少了这条，把窗口拉矮到
+    // 该出钮时它不出、拉高到该收时它不收，一直卡到下次换篇（2026-08-06 双查抓到）。
+    window.addEventListener('resize', kick);
 
     return () => {
+      window.removeEventListener('resize', kick);
       ro?.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };

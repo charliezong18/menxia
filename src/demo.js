@@ -52,7 +52,7 @@ merge 后作为门下 issue #13 的实现依据。不对外发布。
 
 ## TLDR
 
-PR body 的五段结构化正文此前在门下不可见，本折把它渲染到折首。
+PR body 的五段结构化正文此前在门下不可见，本折把它渲染到折首。细节见正文的 [〈加长段〉](#加长段冒烟用别删)。
 
 | 段 | 之前 | 之后 |
 |---|---|---|
@@ -804,6 +804,19 @@ async function runSmoke(docEl) {
     const notices = [...document.querySelectorAll('.notice')].map((n) => n.textContent);
     chk('anchor-miss-says-so-not-silent', notices.some((t) => t.includes('根本没有这一节')),
       `notices=${notices.join('|') || 'NONE'}`);
+
+    // 折首说明里的锚也要拦（它在 .read-row **之外**）。不拦就走浏览器原生跳转：
+    // 不闪、不过三级放宽，还往地址栏挂 hash 把「拷直达链」拷脏。
+    head.classList.remove('search-flash');
+    const bodyAnchor = document.querySelector('.folder-body a[href^="#"]')
+      || [...document.querySelectorAll('a[href^="#"]')].find((x) => !dEl.contains(x));
+    chk('folder-body-anchor-rendered', Boolean(bodyAnchor));
+    if (bodyAnchor) {
+      bodyAnchor.click();
+      await sleep(150);
+      chk('anchor-in-folder-body-intercepted',
+        head.classList.contains('search-flash') && !location.hash, `hash=${location.hash}`);
+    }
   }
 
   const ends = () => [...document.querySelectorAll('.scroll-end')];

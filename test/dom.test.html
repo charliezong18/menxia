@@ -119,7 +119,7 @@ eq('第一节之内取 h1', sectionOf(stage, 3), '标题一');
 
 // ── 5. 标题 id：页内锚点 `[…](#slug)` 的落点 ──
 // 钉的是「与 GitHub 口径相同」，不是「我们自己算得出一个 id」——同一份 markdown 两处都要能跳。
-stage.innerHTML = renderMarkdown([
+const HEAD_MD = [
   '# 标题一',
   '',
   '## 加长段（冒烟用，别删）',
@@ -129,7 +129,10 @@ stage.innerHTML = renderMarkdown([
   '## 小结',
   '',
   '## 小结',
-].join('\n'));
+  '',
+  '## ![封面](https://example.com/cover.png)',
+].join('\n');
+stage.innerHTML = renderMarkdown(HEAD_MD, { headingIds: true });
 const hIds = [...stage.querySelectorAll('h1[id],h2[id]')].map((h) => h.id);
 eq('标题按 GitHub 口径打 id（CJK 标点全去掉）', hIds.slice(0, 2), ['标题一', '加长段冒烟用别删']);
 eq('标题里的链接只取可见文字，不把 URL 算进 slug', hIds[2], '带-外链-的标题');
@@ -137,11 +140,23 @@ eq('同名标题去重（第二个追加 -1）', hIds.slice(3), ['小结', '小�
 ok_('id 与 data-line 并存（涂归的锚不能被页内锚顶掉）',
   stage.querySelector('h1').dataset.line === '1' && stage.querySelector('h1').id === '标题一',
   `line=${stage.querySelector('h1').dataset.line} id=${stage.querySelector('h1').id}`);
+// 图片独占的标题取不出可见文字 → 不打 id。**别退回 inline.content**，那是原始 markdown，
+// 会把整条 URL 灌进 slug（`id="封面httpsexamplecomcoverpng"`）。
+eq('图片独占的标题不打 id（不把 URL 灌进 slug）',
+  [...stage.querySelectorAll('h2')].filter((h) => h.querySelector('img')).map((h) => h.id), ['']);
+// 批注面共用同一个渲染器；跟着打 id 就会跨面重复（正文与判里各一个「## 小结」）
+eq('不开 headingIds 时一个 id 都不打',
+  renderMarkdown(HEAD_MD).includes('id='), false);
 
 stage.innerHTML = renderMarkdown('见 [[#某节]]，以及 [[别篇#某节]]。');
 const wHrefs = [...stage.querySelectorAll('a.wikilink')].map((a) => a.getAttribute('href'));
 eq('双链只给锚＝本篇内跳转（不拼成 .md#…那种死链）', decodeURIComponent(wHrefs[0] ?? ''), '#某节');
-eq('双链带文件名时仍是「文件 + 锚」', decodeURI(wHrefs[1] ?? ''), '别篇.md#某节');
+// ⚠️ 名字里的「暂只切篇」不是啰嗦，是**防这条断言被读成「跨篇锚点可用」**：
+// 点击路径在 `link.js` 的 `resolveRelativeDocLink` 里就 `h.split('#')[0]` 把片段切掉了，
+// ui.js 拿到的只有文件名，`setDocPath` 换完篇落在顶部，`#某节` 静默蒸发。
+// 本条只钉 href 字符串这一层。补法：rel 命中折内时把片段存进 jumpRef，docTick 就位后调 jumpToAnchor。
+eq('双链带文件名时 href 仍是「文件 + 锚」（点击暂只切篇不落锚）',
+  decodeURI(wHrefs[1] ?? ''), '别篇.md#某节');
 
 console.log(`[dom] RESULT pass=${pass} fail=${fail}`);
 </script>
