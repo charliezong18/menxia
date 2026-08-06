@@ -1,6 +1,6 @@
 // 批注卡三件套：草稿卡 / 已呈批注串 / 判卡。
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
-import { html, useEffect, useRef } from '../../vendor/preact-standalone.mjs';
+import { html, useEffect, useLayoutEffect, useRef } from '../../vendor/preact-standalone.mjs';
 import * as A from '../anchor.js';
 import { CommentBody } from './comment-body.js';
 import { S } from '../strings.js';
@@ -60,20 +60,50 @@ export function ShownThread({ t, blockLine, outdated, hydrate, onExpand }) {
     </div>`;
 }
 
+// 判卡（整折级）——**钉在视口里，不随正文滚**。
+//
+// 2026-08-06 原话：「很多时候我是看到最底下才想给个总判，但总判的窗口永远固定在最开头」，
+// 要的是「不管我往上滑还是往下滑，它在屏幕中间都是固定位置」，好边看边写。
+//
+// 上一版的做法恰好是反的：卡留在眉批栏顶端，按下「判」用 `scrollIntoView` 把**人**拽到
+// 卡那儿去（2026-08-02 为治窄屏「判不了」加的）。人被拽走＝刚读到的那段没了，正是这次报障
+// 的来源。现在改成把**卡**送到人眼前，那句 scrollIntoView 一并删掉——卡本来就在视口里，
+// 再滚一次只会把正文推走。窄屏「判不了」也随之根治：不管眉批栏落到哪，卡都在屏幕中间。
+//
+// 为什么量 DOM 而不用纯 CSS：卡要横向对齐眉批栏，而眉批栏的 x 是「版心居中」算出来的，
+// 随视口宽、字号档（A±）、单双列断点一起动。在 CSS 里把那套居中数学再推一遍必然跟布局漂移；
+// 量一次 `#margin-col` 的实际矩形是唯一不会说谎的来源。窄屏单列时它自然量到整个正文宽，
+// 卡就横跨正文——那一档本来也没有右缘可贴。
 export function ZongpiCard({ busy, onSend, onClose }) {
   const taRef = useRef();
-  // **先滚到它，再 focus**（2026-08-02 实测「判不了」）：窄屏（≤900px）批注列不在右缘，
-  // 而是整列落到正文**下方**——长折按下「判」，卡片开在四五屏之外，看上去就是没反应。
-  // 顺序不能反：iOS Safari 会吞掉非用户手势里的 focus()（键盘不弹，也不带滚动），
-  // 而 scrollIntoView 不受这条限制，所以滚动必须自己走，不能指望 focus 顺带把它带上来。
-  useEffect(() => {
-    setTimeout(() => {
-      taRef.current?.scrollIntoView?.({ block: 'center', behavior: 'smooth' });
-      taRef.current?.focus();
-    }, 0);
+  const boxRef = useRef();
+
+  // useLayoutEffect 而不是 useEffect：量位置必须赶在**这一帧绘制之前**。
+  // 用 useEffect 的话第一帧会拿 `.anno-card` 的 `left:0; width:100%` 去画一张 fixed 卡，
+  // 于是判卡先横贯整个视口闪一下，再跳到眉批栏——每次按「判」都闪，非常显眼。
+  useLayoutEffect(() => {
+    const sync = () => {
+      const col = document.querySelector('#margin-col');
+      const box = boxRef.current;
+      if (!col || !box) return;
+      const r = col.getBoundingClientRect();
+      if (!r.width) return;                       // 栏还没布局好，等下一拍
+      box.style.left = `${Math.round(r.left)}px`;
+      box.style.width = `${Math.round(r.width)}px`;
+    };
+    sync();
+    // 只 focus，不滚动。iOS Safari 会吞掉非用户手势里的 focus()（键盘不弹），
+    // 所以仍留一拍 setTimeout 让它落在事件之后，但**不再**替用户滚屏。
+    setTimeout(() => { sync(); taRef.current?.focus(); }, 0);
+    window.addEventListener('resize', sync);
+    const col = document.querySelector('#margin-col');
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(sync) : null;
+    if (ro && col) ro.observe(col);
+    return () => { window.removeEventListener('resize', sync); ro?.disconnect(); };
   }, []);
+
   return html`
-    <div class="anno-card zongpi-card">
+    <div class="anno-card zongpi-card" ref=${boxRef}>
       <div class="anno-src">${S.card.zongpiHeader}</div>
       <textarea class="anno-input" ref=${taRef} rows="4" placeholder=${S.card.zongpiPlaceholder}></textarea>
       <div class="anno-row">

@@ -543,10 +543,44 @@ async function runSmoke(docEl) {
 
   // 真暴露面：判输入框没有自己的 keydown 处理，⌘Enter 从这里直冲全局监听器
   // （写判写到一半把攒着的 inline 草稿全发出去——第二轮评审点名的第二触发面）
-  [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('判'))?.click();
+  // 先滚到底再按「判」：这是报障的真实姿势——「看到最底下才想给个总判」。
+  // 旧实现在这里用 scrollIntoView 把人拽回卡片所在的开头，读到哪儿全丢了。
+  const zpHost = document.querySelector('.work');
+  zpHost.scrollTo({ top: zpHost.scrollHeight });
   await sleep(200);
+  const zpTopBefore = Math.round(zpHost.scrollTop);
+  [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('判'))?.click();
+  await sleep(400);   // 给足时间：旧实现是 smooth 滚动，短 sleep 会让它假绿
   const zongpiTa = document.querySelector('.zongpi-card .anno-input');
   chk('zongpi-card-open', Boolean(zongpiTa));
+  chk('zongpi-open-keeps-reading-position',
+    Math.abs(Math.round(zpHost.scrollTop) - zpTopBefore) <= 2,
+    `before=${zpTopBefore} after=${Math.round(zpHost.scrollTop)}`);
+  if (zongpiTa) {
+    const card = document.querySelector('.zongpi-card');
+    const cr = card.getBoundingClientRect();
+    const col = document.querySelector('#margin-col').getBoundingClientRect();
+    chk('zongpi-card-aligned-to-margin-col',
+      Math.abs(cr.left - col.left) <= 1 && Math.abs(cr.width - col.width) <= 1,
+      `card=${Math.round(cr.left)}/${Math.round(cr.width)} col=${Math.round(col.left)}/${Math.round(col.width)}`);
+    // **先钉「看得见」，再钉「不动」**：只验后者是假绿——卡被 layoutCards 写的内联 top
+    // 推到视口上方（实测 top=-95）时，它照样「纹丝不动」，断言照样绿，而人什么都看不到。
+    chk('zongpi-card-visible-in-viewport',
+      cr.top >= 0 && cr.bottom <= innerHeight && cr.width > 0,
+      `top=${Math.round(cr.top)} bottom=${Math.round(cr.bottom)} vh=${innerHeight}`);
+    // 钉住不动：往回滚半屏，卡在**视口里**的位置必须纹丝不动
+    const yBefore = Math.round(cr.top);
+    zpHost.scrollTo({ top: Math.max(0, zpHost.scrollTop - 600) });
+    await sleep(250);
+    chk('zongpi-card-stays-put-while-scrolling',
+      Math.abs(Math.round(card.getBoundingClientRect().top) - yBefore) <= 2,
+      `y=${yBefore}→${Math.round(card.getBoundingClientRect().top)}`);
+    // 压着别的卡时要在上层：普通批注卡不许盖住正在写的这张
+    const other = document.querySelector('.anno-card:not(.zongpi-card)');
+    chk('zongpi-card-above-other-cards',
+      !other || +getComputedStyle(card).zIndex > (+getComputedStyle(other).zIndex || 0),
+      `zongpi=${getComputedStyle(card).zIndex} other=${other ? getComputedStyle(other).zIndex : 'none'}`);
+  }
   if (zongpiTa) {
     zongpiTa.focus();
     zongpiTa.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', metaKey: true, bubbles: true }));
@@ -837,6 +871,22 @@ async function runSmoke(docEl) {
 
   const ends = () => [...document.querySelectorAll('.scroll-end')];
   chk('scroll-ends-rendered', ends().length === 2, `n=${ends().length}`);
+  // **位置就是这个部件的成败**：上一版摆在视口右下角、离正文 623px，他一百来折都没找着。
+  // 钉死「贴着正文左缘」：右边缘要在正文左边、且不许远过 120px（远了就等于又回到角落里）。
+  if (ends().length === 2) {
+    const rail = document.querySelector('.scroll-ends').getBoundingClientRect();
+    const art = document.getElementById('doc').getBoundingClientRect();
+    const gap = Math.round(art.left - rail.right);
+    chk('scroll-ends-hug-the-text', gap >= 0 && gap <= 60,
+      `箭头右缘=${Math.round(rail.right)} 正文左缘=${Math.round(art.left)} 间距=${gap}`);
+    // 固定在视口里，不随正文滚
+    const yBefore = Math.round(rail.top);
+    document.querySelector('.work').scrollTo({ top: 400 });
+    await sleep(200);
+    chk('scroll-ends-stay-put-while-scrolling',
+      Math.abs(Math.round(document.querySelector('.scroll-ends').getBoundingClientRect().top) - yBefore) <= 2,
+      `y=${yBefore}→${Math.round(document.querySelector('.scroll-ends').getBoundingClientRect().top)}`);
+  }
   if (ends().length === 2) {
     const host = document.querySelector('.work');
     ends()[1].click();                        // ↓ 到底

@@ -471,7 +471,11 @@ function App() {
     if (!col || !doc) return;
     const colRect = col.getBoundingClientRect();
     let prevBottom = 0;
-    [...col.children].forEach((card) => {
+    // 判卡跳过：它 2026-08-06 起是**钉在视口里**的 fixed 卡（见 cards.js），不参与右缘堆叠。
+    // 不跳过的话这里会给它写一个内联 `top`——内联样式压过 CSS 的 `top:50%`，再叠上
+    // `translateY(-50%)` 就把它推到视口上方去了（实测 top=-95，整张卡看不见）。
+    // 它也不该计进 prevBottom：那会在普通卡之间凭空顶出一段它自己已经不占的高度。
+    [...col.children].filter((c) => !c.classList.contains('zongpi-card')).forEach((card) => {
       let top = prevBottom + 12;
       const line = +card.dataset.blockLine;
       // 旧版视图下行号系 head 坐标，对旧版 DOM 会系统性挂错块——改静态堆叠（第四轮评审 D）

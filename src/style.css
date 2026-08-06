@@ -270,17 +270,36 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
    z-index 20 与大纲栏同档，压在浮批钮(30)之下：读者划到屏幕右下角落批时，
    抢走那一下点击的必须是「涂归」而不是「回到顶部」。
    竖排在视口右下角；`.toc` 底边止于 100vh-180px，与这里 22+80px 的高度不相碰。 */
+/* ── 到顶 / 到底：贴着正文左缘的固定小竖条 ──────────────────────────────
+   2026-08-06 第二轮反馈：上一版摆在**视口右下角**（34px 半透明圆圈、只有箭头字形），
+   他在一百来折里从没找着过。量出来的病根是三条一起：离正文列 623px（在 1728 宽的屏上
+   等于「另一个半球」）、背景 `--veil` 是 55% 半透明、没有一个字。
+   原话要的是「刷知乎往下滑时**屏幕侧边**那两个上下箭头」——重点在**贴着内容**，
+   不在角落。所以挪到左栏与正文之间那条空档里，垂直居中（他说偏上偏下无所谓，
+   居中最顺手），并换成实心纸底。
+
+   这里的 `left` 只是**兜底初值**：真正的 x 由 scroll-ends.js 量正文左缘写进内联样式。
+   原因见那边注释——版心是居中的，只认 `--rail-w` 的话屏幕越宽它离正文越远，
+   到 27" 就又回到「另一个半球」。 */
 .scroll-ends {
-  position: fixed; right: 18px; bottom: 22px; z-index: 20;
-  display: flex; flex-direction: column; gap: 8px;
+  position: fixed; z-index: 20;
+  left: calc(var(--rail-w) + 4px); top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 6px;
 }
 .scroll-end {
-  width: 34px; height: 34px; border-radius: 50%;
-  border: 1px solid var(--rule); background: var(--veil);
+  width: 32px; height: 32px; border-radius: 8px;
+  border: 1px solid var(--rule); background: var(--paper-raised);
   color: var(--ink-soft); font-size: 15px; line-height: 1;
-  box-shadow: 0 2px 10px var(--shadow);
+  box-shadow: 0 2px 8px var(--shadow);
 }
-.scroll-end:hover { color: var(--ink); background: var(--paper-raised); }
+.scroll-end:hover { color: var(--cinnabar); border-color: var(--cinnabar); }
+/* 手机壳：左栏挪到顶上，正文从 16px 起，**左边一丝空档都没有**——贴左缘就直接压在
+   每行的头一个字上（实测箭头占 6–38，正文左缘 16）。改贴右缘：中文正文左对齐，
+   行尾是参差的，压在右边挡住的字远少于压在行首。scroll-ends.js 的 place() 认出这一档后
+   会清掉内联 left，把位置交还给这里的 right。 */
+@media (max-width: 900px) {
+  .scroll-ends { left: auto; right: 6px; }
+}
 
 .margin-col { position: relative; width: var(--marg-w); flex: none; }
 
@@ -295,6 +314,23 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
   background: var(--cinnabar); opacity: .5;
 }
 .zongpi-card::before { display: none; }
+
+/* ── 判卡：钉在视口中间，不随正文滚（2026-08-06 反馈）──────────────────
+   它是**整折级**的，本来就不锚任何一行，所以没有「必须待在某个行号旁边」的约束——
+   把它从眉批栏的流里拎出来钉在屏幕上，代价最小、收益最直接：边读边写。
+   left/width 由 cards.js 量 `#margin-col` 写进来（版心居中的 x 算不进 CSS）。
+
+   压着别人是**预期内**的（他原话：「可能会和别的已经判了的窗口重叠，这是你要解决的问题」）。
+   三件事让重叠读起来是「浮在上面」而不是「串成一团」：
+     ① z-index 26 —— 高于普通批注卡，仍低于浮批钮(30)，划句涂归的那一下永远抢得过它；
+     ② 不透明纸底 + 更深的投影 —— `--paper-raised` 是实色，底下的卡不会透上来；
+     ③ 朱砂描边 —— 与普通卡的 `--rule` 灰边一眼分得开，知道这张是「我正在写的」。 */
+.zongpi-card {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  z-index: 26; margin: 0;
+  border-color: var(--cinnabar);
+  box-shadow: 0 6px 24px rgba(38, 33, 26, .22);
+}
 /* 眉批卡跟着 --read-scale 走，但**只放大要读的字**：引文、批注正文、输入框。
    .anno-src 这类「谁·什么时候」的元信息标签不动——它们是标签不是读物，跟着涨只会
    把 300px 定宽卡撑得更高，把引线拉得更容易与正文错开。栏宽本身也不动，所以放大的
@@ -551,6 +587,13 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
   .margin-col { width: 100%; min-height: 0 !important; }
   .anno-card { position: static; width: 100%; margin-bottom: 12px; }
   .anno-card::before { display: none; }
+  /* 判卡是例外，仍要钉在视口里 —— 这一档**更需要**它：单列版式下眉批栏整个落到正文
+     下方，判卡回到流里就等于埋在四五屏之外（2026-08-02 报障「判不了」的原病）。
+     上面那条 `.anno-card{position:static}` 排在本文件后段，同权重后来居上，会把
+     前面 `.zongpi-card` 的 fixed 覆盖掉——所以必须在这里再声明一次，不是冗余。 */
+  .zongpi-card {
+    position: fixed; top: 50%; transform: translateY(-50%); margin-bottom: 0;
+  }
 }
 
 /* ── 手机外壳（≤900）——不是 v1 完整移动端，只求「能读能批」。
