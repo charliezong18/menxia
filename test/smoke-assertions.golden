@@ -1,9 +1,18 @@
+anchor-click-flashes-heading
+anchor-click-keeps-url-clean
+anchor-heading-has-github-slug
+anchor-in-folder-body-intercepted
+anchor-links-rendered
+anchor-loose-frag-matches
+anchor-miss-says-so-not-silent
 archive-body-collapsed-without-decisions
 archive-float-suppressed
 archive-has-items
 archive-readonly-no-qinci
 archive-readonly-notice
 archive-tab-exists
+bare-hash-link-rendered
+bare-hash-scrolls-to-top
 body-block-in-flow-above-doc
 body-decisions-visible-without-click
 body-expanded-by-default-with-decisions
@@ -25,6 +34,7 @@ empty-draft-dropped-on-switch
 empty-draft-starts-editing
 external-link-not-hijacked
 fence-line-precise
+folder-body-anchor-rendered
 folder-body-height-capped
 folder-body-tldr-always-visible
 lang-chip-on-bilingual
@@ -45,6 +55,9 @@ old-rev-notice-shown
 old-rev-submit-disabled
 reply-rendered>=1
 rev-switcher-3-opts
+scroll-end-jumps-to-bottom
+scroll-end-jumps-to-top
+scroll-ends-rendered
 search-clear-restores
 search-hits-found
 search-input-exists

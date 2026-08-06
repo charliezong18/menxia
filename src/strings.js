@@ -153,9 +153,12 @@ export const S = deepFreeze({
     indexingProgress: (done, total) => `翻折中 ${done}/${total}…`,
   },
 
-  // 折间跳转
+  // 跳转：折间 / 篇内锚点 / 顶底
   jump: {
     folderMissing: (n) => `跳不过去：本仓没有第 ${n} 折（可能已删或不在清单里）。`,
+    anchorMissing: (frag) => `本篇没有叫「${frag}」的标题——锚点可能指着另一篇，或标题改过字。`,
+    toTop: '回到顶部',
+    toBottom: '回到底部',
   },
 
   // 设置页 / 钥匙

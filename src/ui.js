@@ -23,7 +23,9 @@ import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-body.js';
 import { assembleCarry } from './carry.js';
 import { Outline, ChapterList, ChapterRail } from './components/outline.js';
+import { ScrollEnds, scroller } from './components/scroll-ends.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList } from './toc.js';
+import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
 
 const params = new URLSearchParams(location.search);
@@ -44,7 +46,10 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
-  'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js'];
+  'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js',
+  'src/slug.js', 'src/components/scroll-ends.js',
+  // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
+  'src/verify.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -377,7 +382,8 @@ function App() {
       try {
         const text = await api.getFileText(docPath, ref);
         if (dead) return;
-        el.innerHTML = renderMarkdown(text);
+        // 只有正文开 headingIds：页内锚的 id 全文档唯一，批注面不能跟着打（见 render.js 那段）
+        el.innerHTML = renderMarkdown(text, { headingIds: true });
         // F13：渲染后在纯文本层给「需核实」标记加可见状态；返回本篇标记数供顶栏显示。
         setVerifyN(decorateVerifyMarkers(el, S.verify.markerTip));
         await hydrateRelativeImages(el, { docPath, ref, fetchBlobUrl: api.getFileBlobUrl });
@@ -390,11 +396,7 @@ function App() {
             // 找覆盖该行的块：优先 data-line ≤ 目标行的最近块
             let target = null;
             el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= jp.line) target = b; });
-            if (target) {
-              target.scrollIntoView({ block: 'center' });
-              target.classList.add('search-flash');
-              setTimeout(() => target.classList.remove('search-flash'), 1600);
-            }
+            flashTo(target, 'center');
           }, 60);
         }
       } catch (err) {
@@ -659,6 +661,24 @@ function App() {
     jumpTo(parsed);
   }, [prs, donePrs, cur, docPath]);
 
+  // 页内锚点 `[…](#slug)`。**挂在 `.work` 上而不是 `.read-row`**：折首说明、判、其他串
+  // 都在 read-row 之外，那里写的 `#某节` 会走浏览器原生跳转——既不闪、也不过三级放宽，
+  // 还会往地址栏挂一截 hash（地址栏是深链的载体，脏了「拷直达链」就跟着脏）。
+  // 正文里的锚同样从这里过：`.read-row` 的 onDocClick 对 `#` 开头一律不认（①② 都返 null），
+  // 不 preventDefault，冒泡上来正好由这里接住，两条路不会互相抢。
+  const onAnchorClick = useCallback((e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    // 修饰键/中键：读者是想「在新标签打开」，那是浏览器的活，别抢（抢了就永远开不了新窗）
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+    e.preventDefault();
+    const frag = a.getAttribute('href').slice(1);
+    // 光秃秃一个 `#` 是「回到顶部」的老写法。拦下却什么都不做＝把它变成按不动的死钮
+    // （2026-08-06 双查第二轮抓到，是上一轮修复亲手造的）——既然拦了，就得把它原本的活干了。
+    if (frag) jumpToAnchor(frag);
+    else scroller().scrollTo({ top: 0 });
+  }, [docPath]);
+
   // 「引用此处」：把当前选中处拷成一条 GitHub permalink + 引文，粘进别的涂归即成链接
   async function copyRef(e) {
     const a = A.computeAnchor(docRef.current);
@@ -761,6 +781,14 @@ function App() {
     setHits(searchIndex(indexRef.current, query));
   }
   function clearSearch() { setQ(''); setHits(null); }
+  // 滚过去 + 闪一下。四个跳转入口（大纲 / 深链 / 搜索命中 / 页内锚点）共用一条落地动作，
+  // 免得「跳到了但没闪」这种半截实现随新入口一个个长出来。
+  function flashTo(el, block = 'start') {
+    if (!el) return;
+    el.scrollIntoView({ block });
+    el.classList.add('search-flash');
+    setTimeout(() => el.classList.remove('search-flash'), 1600);
+  }
   // F14 大纲点标题：跳到当前文档里那一行。复用搜索/深链那条 scroll-to-line + 闪一下的路径
   // （找 data-line ≤ 目标行的最近块），不新造第二套定位逻辑。
   function jumpToLine(line) {
@@ -768,7 +796,21 @@ function App() {
     if (!el) return;
     let hit = null;
     el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
-    if (hit) { hit.scrollIntoView({ block: 'start' }); hit.classList.add('search-flash'); setTimeout(() => hit.classList.remove('search-flash'), 1600); }
+    flashTo(hit);
+  }
+  // 页内锚点 `[…](#slug)`：跳到本篇的那个标题（id 由 render.js 按 GitHub 口径生成）。
+  // 用文档自己的标题集匹配，不用 getElementById——后者是**全文档**作用域，
+  // 一个恰好叫 `doc`/`app`/`margin-col` 的 slug 会把读者送到界面骨架上去。
+  function jumpToAnchor(raw) {
+    const el = docRef.current;
+    if (!el) return;
+    let frag = raw;
+    try { frag = decodeURIComponent(raw); } catch { /* 非法百分号编码：按字面匹配 */ }
+    const heads = [...el.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')]
+      .map((h) => ({ id: h.id, text: h.textContent || '', el: h }));
+    const hit = matchAnchor(heads, frag);
+    if (!hit) return say(S.jump.anchorMissing(frag));
+    flashTo(hit.el);
   }
   // 折间跳转：目标折在哪个栏自动切过去；带 path/line 就落到那一段
   function jumpTo({ prNumber, path, line }) {
@@ -782,7 +824,7 @@ function App() {
       const el = docRef.current;
       let hit = null;
       el?.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
-      if (hit) { hit.scrollIntoView({ block: 'center' }); hit.classList.add('search-flash'); setTimeout(() => hit.classList.remove('search-flash'), 1600); }
+      flashTo(hit, 'center');
       return;
     }
     openPR(target);
@@ -974,7 +1016,7 @@ function App() {
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
           onCopyRef=${copyRef} onCarry=${carryOut} onZongpi=${() => setZongpi((z) => !z)}
           onSubmit=${submitAll} onQinci=${qinci} />
-        <div class="work">
+        <div class="work" onClick=${onAnchorClick}>
         <div class="stage-row">
           ${cur?.docs?.length > 1 && useChapterList && html`
             <${ChapterRail} chapters=${chapters}
@@ -1034,6 +1076,7 @@ function App() {
         </div>
         </div>
       </main>
+      ${cur && html`<${ScrollEnds} tick=${`${docTick}:${docPath}`} />`}
       ${float && html`
         <button class="zhupi-float" style=${{ left: `${Math.min(float.rect.left + 8, window.innerWidth - 76)}px`, top: `${float.rect.top + 6}px` }}
           onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>${S.action.annotate}</button>`}
