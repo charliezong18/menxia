@@ -140,7 +140,7 @@ function App() {
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [readStep, setReadStepState] = useState(getReadStep()); // 正文字号档位，记住上次
   const [stale, setStale] = useState(false);
-  const [tab, setTab] = useState('open');        // open=待批 / done=已画可（归档，只读）
+  const [tab, setTab] = useState('open');        // open=待审 / done=已画可（归档，只读）
   const [donePrs, setDonePrs] = useState([]);
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
   const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中

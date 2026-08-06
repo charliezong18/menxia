@@ -2,7 +2,7 @@
 
 **English** · [中文](README.zh-CN.md)
 
-# 门下 · zhupi
+# 门下 · menxia
 
 **A reading desk for AI-authored documents.**<br>
 Your agent submits a long document as a pull request. You read it *rendered* — not as a raw diff — highlight any sentence to leave a comment, submit the batch, and the agent revises. Merge = final.
@@ -21,11 +21,11 @@ Your agent submits a long document as a pull request. You read it *rendered* —
 
 Reviewing a 3,000-word doc your agent wrote is not a chat problem. You want to read it start to finish, mark the eight places that are wrong, hand them all back at once, and see how each one was handled in the next revision. GitHub's PR review does exactly that — except a markdown PR shows you `+` and `-` prefixed source, tables unreadable, and the comment gutter is invisible until you hover the right pixel.
 
-zhupi is a lens over the same PR: same comments, same threads, same merge. It just renders the document like a document.
+menxia is a lens over the same PR: same comments, same threads, same merge. It just renders the document like a document.
 
 And what separates it from "any markdown reader with comments" isn't the rendering — it's that **every document arrives with a responsive author attached**. The agent that wrote it reads your annotations structurally (JSON with reply state, not scraped HTML), answers each one in-thread, and every folder links back to the session that produced it. Reading AI output here is a loop, not a view; the app is the human end of that loop.
 
-| PAIN | zhupi |
+| PAIN | menxia |
 |---|---|
 | markdown diff doesn't render | renders the document, only |
 | comment entry isn't discoverable | select text → comment. The one main interaction |
@@ -99,7 +99,7 @@ Local development: `python3 -m http.server 4173`, then open http://127.0.0.1:417
 
 ## SOP: the agent side
 
-zhupi deliberately knows nothing about AI. It reads PRs; whoever opens them is your business. The loop below is the convention that makes it work — hand it to your agent (it fits in a CLAUDE.md / AGENTS.md / skill file as-is).
+menxia deliberately knows nothing about AI. It reads PRs; whoever opens them is your business. The loop below is the convention that makes it work — hand it to your agent (it fits in a CLAUDE.md / AGENTS.md / skill file as-is).
 
 **Submitting**
 
@@ -123,7 +123,7 @@ PR body template:
 **TLDR** — three lines, what changed and why
 **Decisions needed** — numbered, so comments can say "re: 2"
 **Known weak spots** — where you want the reviewer to push
-**How to review** — "annotate in zhupi, hit submit, then ping me"
+**How to review** — "annotate in menxia, hit submit, then ping me"
 ```
 
 **Collecting comments**

@@ -119,7 +119,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   fi
   check_names smoke "$LOGDIR/smoke.log" test/smoke-assertions.golden || STATUS=1
 
-  # 直达链接：URL 带 ?pr=998 应直接开到那折（归档折 → 自动切已钦此栏、只读）
+  # 直达链接：URL 带 ?pr=998 应直接开到那折（归档折 → 自动切已画可栏、只读）
   run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=1&pr=998" "$LOGDIR/deep.log" 5000
   grep -o '\[smoke\] [^"]*' "$LOGDIR/deep.log" | sed 's/^/  /' || true
   RD=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/deep.log" | tail -1)

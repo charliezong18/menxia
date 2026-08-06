@@ -1,10 +1,10 @@
 **English** · [中文](SPEC.zh-CN.md)
 
-# zhupi v0 spec — 御笔朱批, a reading and annotation desk
+# menxia v0 spec — a reading and annotation desk
 
-In one sentence: the AI (臣, the minister) submits a long document as a **奏折** (a memorial to the throne); you (御, the sovereign) **select a sentence and write a 朱批** (a vermilion annotation) on the rendered text; you submit the batch in one tap, the agent replies to every comment and produces the next revision; when you're satisfied, **钦此** (merge = final). The data, the versions and the review loop all stay in GitHub — this app is just a lens you can take off at any time.
+In one sentence: the AI (臣, the minister) submits a long document as a **敕草** (a draft edict); you (御, the sovereign) **select a sentence and write a 涂归** (strike-and-return, the Chancellery's mark on a draft) on the rendered text; you submit the batch in one tap, the agent replies to every comment and produces the next revision; when you're satisfied, **画可** (merge = final). The data, the versions and the review loop all stay in GitHub — this app is just a lens you can take off at any time.
 
-Revised per comments (v2): added design renders (§1), renamed to 朱批 (§2), plain-language v1→v2 comparison view (§7), tech stack comparison table (§8), plain-language anchoring (§9), glossary (§12), references (§13). v2.2 (verbal input 7/26): switched to **desktop web first**, mobile moved to v1 (§1 / §4 / §6 / §10). v2.3–2.4: diff-document concept render + split view (§10 / §1).
+Revised per comments (v2): added design renders (§1), renamed to 朱批 (§2; legacy term, changed 7/31), plain-language v1→v2 comparison view (§7), tech stack comparison table (§8), plain-language anchoring (§9), glossary (§12), references (§13). v2.2 (verbal input 7/26): switched to **desktop web first**, mobile moved to v1 (§1 / §4 / §6 / §10). v2.3–2.4: diff-document concept render + split view (§10 / §1).
 
 **v2.5 (2026-07-26): all three open questions decided — ② no comparison view ③ tech stack A (zero-build) ④ loose anchoring accepted; added §8.1, the quantified architecture switch gate. Spec finalized, M1 begins.**
 
@@ -28,7 +28,7 @@ Revised per comments (v2): added design renders (§1), renamed to 朱批 (§2), 
 
 Design language: rice-paper ground + ink type + cinnabar red reserved exclusively for the act of annotating; the background carries a very faint 朱丝栏 (the vertical ruling of memorial paper) texture; headings and buttons set in a Song serif (the sovereign's voice), body text in PingFang (modern reading).
 
-**① Desktop main view (the v0 battleground)** — document list on the left, rendered text in the middle, comment rail on the right: comments sit permanently alongside the text (Docs-style margin comments), and each card shows the 御批 → 臣回 (sovereign comments → minister replies) loop. 钦此 sits top right:
+**① Desktop main view (the v0 battleground)** — document list on the left, rendered text in the middle, comment rail on the right: comments sit permanently alongside the text (Docs-style margin comments), and each card shows the 御批 → 臣回 (sovereign comments → minister replies) loop. 画可 sits top right:
 
 ![Desktop main view](assets/mockups/4-desktop.png)
 
@@ -38,7 +38,7 @@ The three below are mobile designs (v1; kept here as drafts):
 
 ![List page](assets/mockups/1-list.png)
 
-**③ Reading page** — rendered body text, annotated sentences carry a cinnabar brush stroke, "submit 朱批 · n" is pinned to the bottom:
+**③ Reading page** — rendered body text, annotated sentences carry a cinnabar brush stroke, "submit 涂归 · n" is pinned to the bottom:
 
 ![Reading page](assets/mockups/2-read.png)
 
@@ -50,20 +50,22 @@ The three below are mobile designs (v1; kept here as drafts):
 
 ## §2 Name and vocabulary
 
-Named **朱批** per your direction (full product name 御笔朱批): repo `zhupi`, site `charliezong18.github.io/zhupi`, PWA home-screen name 朱批. Alternatives considered: 批红 (the Ming-dynasty practice of the eunuch directorate annotating on the emperor's behalf — dropped, too much "ghost-written by a eunuch"), 奏对, 御览 — 朱批 is the most precise: the action *is* the thing you do.
+Named **门下** (menxia, the Tang-dynasty Chancellery): repo `menxia`, site `charliezong18.github.io/menxia`, PWA home-screen name 门下. Edicts issued from the Secretariat passed through the Chancellery, which read and struck them (涂归) and then either marked them permitted (画可) or sent them back — which is exactly what this product does.
+
+*History (renamed 2026-07-31, original text preserved): "Named **朱批** per your direction (full product name 御笔朱批): repo `zhupi`, site `charliezong18.github.io/zhupi`, PWA home-screen name 朱批. Alternatives considered: 批红 (the Ming-dynasty practice of the eunuch directorate annotating on the emperor's behalf — dropped, too much "ghost-written by a eunuch"), 奏对, 御览 — 朱批 is the most precise: the action *is* the thing you do." Those are legacy terms, changed 7/31: 朱批 is a Qing-dynasty word that clashed with the rest of the Tang-dynasty naming, so the whole set was replaced (glossary finalized in review #50). The old address `…github.io/zhupi/` survives as a forwarding shell, so historical deep links keep working.*
 
 The mapping from interface vocabulary to what happens underneath (one vocabulary across the whole app; learn it once):
 
 | Interface term | Underlying action |
 |---|---|
-| 奏折 (memorial) | a document in one open PR in the review repo |
-| 朱批 (vermilion annotation) | an inline review comment, anchored to a specific sentence |
-| 总批 (general comment) | a conversation comment on the whole document — e.g. your numbered lists of feedback |
-| 提交朱批 (submit) | submit the accumulated comments as one review |
-| 钦此 (so ordered) | squash merge; final |
+| 敕草 (draft edict) | a document in one open PR in the review repo |
+| 涂归 (strike-and-return) | an inline review comment, anchored to a specific sentence |
+| 判 (a ruling on the whole draft) | a conversation comment on the whole document — e.g. your numbered lists of feedback |
+| 提交涂归 (submit) | submit the accumulated comments as one review |
+| 画可 (writing 可, "permitted") | squash merge; final |
 | 作罢 (let it go) | discard this half-written comment |
 
-总批 is a first-class citizen newly proposed in v2: across two live trials you spontaneously used "numbered list of opinions" general comments both times. That habit goes straight into the product rather than being treated as a fallback.
+判 is a first-class citizen newly proposed in v2: across two live trials you spontaneously used "numbered list of opinions" general comments both times. That habit goes straight into the product rather than being treated as a fallback.
 
 ## §3 Goals / non-goals
 
@@ -71,21 +73,21 @@ Goals (all of v0):
 
 - Read AI-authored markdown comfortably on a phone — rendered, not diff source
 - Annotate sentence by sentence as you read, write a general comment at any point, hand the whole batch back in one tap
-- A 钦此 button you can actually press
+- A 画可 button you can actually press
 - Kill the known PAINs one by one:
 
-| PAIN (from the pilot) | The zhupi fix |
+| PAIN (from the pilot) | The menxia fix |
 |---|---|
-| `approve` blocked by "author cannot approve" | ships its own 钦此 = merge |
+| `approve` blocked by "author cannot approve" | ships its own 画可 = merge |
 | comment entry isn't discoverable | select text → comment. The one main interaction |
 | markdown diff doesn't render | renders the document, only |
 | external links drop you into a logged-out 404 | renders in place + PWA, never links out |
 
-Non-goals (frozen for v0 — not built even if requested): feed ranking / unread management / push notifications (the rejected attention inbox); multi-repo browsing and code diff (not in v0, but listed as the v1 north star, see §10); AI integration (the review-loop skill owns the agent side entirely; zhupi doesn't know AI exists); editing documents (read + annotate only).
+Non-goals (frozen for v0 — not built even if requested): feed ranking / unread management / push notifications (the rejected attention inbox); multi-repo browsing and code diff (not in v0, but listed as the v1 north star, see §10); AI integration (the review-loop skill owns the agent side entirely; menxia doesn't know AI exists); editing documents (read + annotate only).
 
 ## §4 Form factor
 
-- A purely static single-page app hosted on GitHub Pages: a new public repo, `zhupi`
+- A purely static single-page app hosted on GitHub Pages: a new public repo, `menxia`
 - Code public, content private: the page contains no data and no secrets; documents are fetched live by the browser with your token
 - **Desktop web first** (v0): a wide two-column layout (document list + reading area) + a right-hand comment rail; keyboard shortcuts like ⌘Enter to submit
 - Mobile + PWA moved to v1 (the phone designs are ready — see §1, figures ②③④)
@@ -100,17 +102,17 @@ Non-goals (frozen for v0 — not built even if requested): feed ranking / unread
 
 **List page**: a list of open PRs (title / submission time / comment count / status seal); manual pull-to-refresh (no backend, no push — acceptable in v0).
 
-**Reading page**: fetch `docs/*.md` from the PR's head branch and render with markdown-it (tables, code blocks, task lists all supported); reading typography = 17px body, a maximum line width, 1.8 line height, dark mode following the system; 钦此 at the top, "submit 朱批 · n" at the bottom.
+**Reading page**: fetch `docs/*.md` from the PR's head branch and render with markdown-it (tables, code blocks, task lists all supported); reading typography = 17px body, a maximum line width, 1.8 line height, dark mode following the system; 画可 at the top, "submit 涂归 · n" at the bottom.
 
-**Annotating**: select text → a card lands in the right-hand comment rail (§1 figure ①, alongside the text; mobile v1 uses the bottom comment sheet, figure ④); comments are accumulated as local drafts first (localStorage, so a half-written comment can't be lost), and annotated sentences get a pale cinnabar highlight; "submit 朱批" writes the whole batch back as inline comments on that PR; the 总批 entry point is permanently in the top bar.
+**Annotating**: select text → a card lands in the right-hand comment rail (§1 figure ①, alongside the text; mobile v1 uses the bottom comment sheet, figure ④); comments are accumulated as local drafts first (localStorage, so a half-written comment can't be lost), and annotated sentences get a pale cinnabar highlight; "submit 门下" writes the whole batch back as inline comments on that PR; the 判 entry point is permanently in the top bar.
 
-**Closing the loop**: the reading page shows existing comment threads plus the agent's point-by-point replies (so when v2 comes back you can read how each one was handled); 钦此 pops one confirmation and then squash merges, and the document disappears from the list.
+**Closing the loop**: the reading page shows existing comment threads plus the agent's point-by-point replies (so when v2 comes back you can read how each one was handled); 画可 pops one confirmation and then squash merges, and the document disappears from the list.
 
 ## §7 Open question ②: the v1→v2 comparison view (in plain language)
 
 The scenario: you left 10 comments on v1, I revise and submit v2. When you re-read v2, there are two postures —
 
-- **A. No comparison view (the v0 plan)**: you simply re-read the rendered version; under each 朱批 is my reply ("done, section 3 rewritten"), and you locate the changes via the comment threads. Cost = you re-read, or skim by following the replies.
+- **A. No comparison view (the v0 plan)**: you simply re-read the rendered version; under each 涂归 is my reply ("done, section 3 rewritten"), and you locate the changes via the comment threads. Cost = you re-read, or skim by following the replies.
 - **B. Build a comparison view**: paragraphs in v2 that changed relative to v1 are highlighted automatically (like Word's track changes). Lovely, but it means paragraph-level diffing on rendered output plus the UI — the single most expensive piece in v0.
 
 The question is exactly: **is A enough for you?** My recommendation: use A in v0, and add B in v0.5 if it genuinely feels missing — by then there's real usage data showing how you actually hunt for changes on a re-read.
@@ -153,7 +155,7 @@ The counting rule for indicator 3 has to be honest: `innerHTML` / `appendChild` 
 
 **Cost estimate for a triggered migration**: the anchoring algorithm, the GitHub API wrapper and all the styling port over unchanged (those three are the bulk of the code); only the view layer is rewritten. The original "half a day to a day" estimate was optimistic — the genuinely expensive part is prying state out of the event closures it's scattered across. Which is why **the hedge worth doing whether or not you migrate** is: a single state object + an explicit `render()` + generation-counter guards (a poor man's one-way data flow, about 50 lines).
 
-**C (React + Next) has its own separate trigger**: only consider it when zhupi needs a **server** (push notifications, multi-person collaboration, a non-GitHub data source) — at which point the product's form has changed, not the architecture's capacity. Not evaluated within v0/v1.
+**C (React + Next) has its own separate trigger**: only consider it when menxia needs a **server** (push notifications, multi-person collaboration, a non-GitHub data source) — at which point the product's form has changed, not the architecture's capacity. Not evaluated within v0/v1.
 
 ### §8.2 Backend trigger conditions (when zero-backend stops being right)
 
@@ -176,7 +178,7 @@ If that day comes, the shape is decided in advance: a stateless Worker (Cloudfla
 
 ## §9 Open question ④: comment anchoring (in plain language)
 
-First, an extension of §8: **can A (zero-build) do sentence-level annotation?** It can — every capability sentence annotation needs (selecting text, getting the selection's position, injecting a highlight, positioning the rail cards) comes from the browser's **native** Selection API and DOM operations; a framework doesn't provide that layer. Hypothesis, the benchmark product, implements its annotation layer with native DOM injection. What a framework helps with is "automatic view refresh under complex state", and zhupi's state is one list of drafts. The genuinely hard part is the anchoring algorithm below — and that code is word-for-word identical under A or B.
+First, an extension of §8: **can A (zero-build) do sentence-level annotation?** It can — every capability sentence annotation needs (selecting text, getting the selection's position, injecting a highlight, positioning the rail cards) comes from the browser's **native** Selection API and DOM operations; a framework doesn't provide that layer. Hypothesis, the benchmark product, implements its annotation layer with native DOM injection. What a framework helps with is "automatic view refresh under complex state", and menxia's state is one list of drafts. The genuinely hard part is the anchoring algorithm below — and that code is word-for-word identical under A or B.
 
 "Anchoring" = you select a sentence on the rendered page, and the system has to work out **which line** of the source markdown file it corresponds to, in order to write it as a GitHub inline comment (GitHub pins comments to line numbers).
 
@@ -203,22 +205,22 @@ The original approach — "search the source file for the selected text to get t
 **Three hard constraints on the GitHub side (not discussed in the original spec; M2 must handle them)**:
 
 - **Only lines that appear in the PR diff can carry an inline comment**, otherwise 422. This works today because documents are files newly added by the PR (the whole file is in the diff) — an implicit premise. The north star's code PRs (which modify existing files) will hit this wall on day one.
-- **Submitting a review is atomic**: if any single comment in `POST /pulls/{n}/reviews` has an invalid line number, the entire batch dies. So the batch must be validated locally before submitting — parse the hunks from the `patch` field returned by `listPRFiles` and you know which lines are commentable; invalid ones automatically degrade to a 总批.
-- **Draft PRs can't be merged**, so 钦此 needs them marked ready first; REST can't change the draft field, that requires GraphQL, and **fine-grained PAT support for GraphQL needs testing**. If it doesn't work, the cheapest fix is to abandon draft in the convention (draft never bought anything in a private single-person repo). **✅ Handled (2026-07-26): the review-loop convention abandons draft (new documents are always ordinary PRs); for pre-existing draft documents the app tries GraphQL markReady before merging, and on failure hands you fallback wording to take back to Happy.**
+- **Submitting a review is atomic**: if any single comment in `POST /pulls/{n}/reviews` has an invalid line number, the entire batch dies. So the batch must be validated locally before submitting — parse the hunks from the `patch` field returned by `listPRFiles` and you know which lines are commentable; invalid ones automatically degrade to a 判.
+- **Draft PRs can't be merged**, so 画可 needs them marked ready first; REST can't change the draft field, that requires GraphQL, and **fine-grained PAT support for GraphQL needs testing**. If it doesn't work, the cheapest fix is to abandon draft in the convention (draft never bought anything in a private single-person repo). **✅ Handled (2026-07-26): the review-loop convention abandons draft (new documents are always ordinary PRs); for pre-existing draft documents the app tries GraphQL markReady before merging, and on failure hands you fallback wording to take back to Happy.**
 
 ## §10 Milestones (each step ships a playable link)
 
 1. **M1 skeleton** ✅: token settings page + desktop two-column layout (document list + reading area) + rendered reading — make *reading* comfortable first
-2. **M2 朱批** ✅: select → accumulate comments in the right-hand rail → hand the batch back in one tap (including 总批)
-3. **M3 the loop** ✅ (2026-07-26): comment threads and replies displayed, 钦此 (already shipped in M2.5), and **rev switching** (F4 tier 1: list versions from PR commits + a version dropdown on the reading page; read-only, no comparison). Implementation notes: threads attach to the current document via `line ?? original_line`, outdated ones are marked 旧, threads for other documents collapse into an "other N threads" group; switching to an old rev is read-only (no floating comment button, no draft highlights, 钦此/submit disabled, a subtle notice at the top). All 5 `?demo=1&auto=1` smoke checks green. The migration structurally eliminated DOM update sites — M3's new features tripped no gate indicator at all (details in MIGRATION-WATCH)
+2. **M2 涂归** ✅: select → accumulate comments in the right-hand rail → hand the batch back in one tap (including 判)
+3. **M3 the loop** ✅ (2026-07-26): comment threads and replies displayed, 画可 (already shipped in M2.5), and **rev switching** (F4 tier 1: list versions from PR commits + a version dropdown on the reading page; read-only, no comparison). Implementation notes: threads attach to the current document via `line ?? original_line`, outdated ones are marked 旧, threads for other documents collapse into an "other N threads" group; switching to an old rev is read-only (no floating comment button, no draft highlights, 画可/submit disabled, a subtle notice at the top). All 5 `?demo=1&auto=1` smoke checks green. The migration structurally eliminated DOM update sites — M3's new features tripped no gate indicator at all (details in MIGRATION-WATCH)
 
 **v1: mobile + PWA** (input 2026-07-26: the main review battleground is the computer, so desktop goes first; the phone designs in §1 figures ②③④ stay as drafts).
 
-**North star (scheduled after v1): diff documents** — real code PRs enter the same list, with the same 朱批/总批/钦此 semantics. This is the complete form of "design and diff share one entry point and one format" (the main ask added in a verbal 总批 on 2026-07-26); make the markdown-document half solid first. Concept render (the same right-hand comment rail landing on code lines; colour rule: **cinnabar belongs to the sovereign's annotations only**, added lines use tea-green, deleted lines use an ink strike, so nothing competes with the comments for red):
+**North star (scheduled after v1): diff documents** — real code PRs enter the same list, with the same 涂归/判/画可 semantics. This is the complete form of "design and diff share one entry point and one format" (the main ask added in a verbal 判 on 2026-07-26); make the markdown-document half solid first. Concept render (the same right-hand comment rail landing on code lines; colour rule: **cinnabar belongs to the sovereign's annotations only**, added lines use tea-green, deleted lines use an ink strike, so nothing competes with the comments for red):
 
 ![diff document · unified view (north star concept)](assets/mockups/5-diff.png)
 
-**Split view is the desktop default**, with a one-tap "unified / split" toggle in the top bar (input 2026-07-26: Charlie prefers side-by-side when reading diffs). Old on the left, new on the right; deleted lines struck in ink, added lines in tea-green, placeholder blocks hatched to mean "no corresponding line on this side"; 朱批 still lands on lines on the **new side** (GitHub's inline comments only recognize new-file line numbers), and the right-hand comment rail is unchanged:
+**Split view is the desktop default**, with a one-tap "unified / split" toggle in the top bar (input 2026-07-26: Charlie prefers side-by-side when reading diffs). Old on the left, new on the right; deleted lines struck in ink, added lines in tea-green, placeholder blocks hatched to mean "no corresponding line on this side"; 门下 still lands on lines on the **new side** (GitHub's inline comments only recognize new-file line numbers), and the right-hand comment rail is unchanged:
 
 ![diff document · split view](assets/mockups/6-diff-split.png)
 
@@ -229,7 +231,7 @@ Narrow screens (<1280px) fall back to unified automatically — split view squee
 - Anchoring precision is the biggest technical risk → §9's loose anchoring + quoted fallback
 - The PAT in localStorage → lose the phone, revoke on GitHub in one click; blast radius = one private repo
 - API quota: 5000 requests/hour once authenticated — no pressure at personal reading volume
-- zhupi itself goes down → fall back to the GitHub web UI, zero data loss
+- menxia itself goes down → fall back to the GitHub web UI, zero data loss
 
 ## §12 Glossary
 

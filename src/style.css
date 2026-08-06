@@ -619,9 +619,9 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 .zongpi-shown .zongpi-shown-body ul, .zongpi-shown .zongpi-shown-body ol { padding-left: 22px; }
 .zongpi-shown .zongpi-shown-body p, .zongpi-shown .zongpi-shown-body li { margin-bottom: 8px; }
 
-/* 折子说明（PR body 的五段）：与「已呈总批」同一套壳，坐在它上面——拍板点比评审历史更该先入眼。
+/* 折子说明（PR body 的五段）：与「已呈判」同一套壳，坐在它上面——拍板点比评审历史更该先入眼。
    issue #13：有「待你拍板」就默认展开，标题用朱砂描一下左缘，让「这折要你决定」在余光里就看得见；
-   没有拍板点时退回墨色安静系，与总批块无异（常态不添噪音）。 */
+   没有拍板点时退回墨色安静系，与判块无异（常态不添噪音）。 */
 .folder-body {
   margin: 0 0 20px var(--art-indent); padding: 10px 16px; max-width: var(--art-w);
   background: var(--paper-raised); border: 1px solid var(--rule);
@@ -660,7 +660,7 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 .stale-banner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .stale-reload { padding: 5px 14px; font-size: 13px; }
 
-/* 清单两栏：待批 / 已画可（归档只读） */
+/* 清单两栏：待审 / 已画可（归档只读） */
 /* 三个 tab 要挤进 240px 的左栏（笔记本档），所以 padding/字号都比两个 tab 时紧一档，
    且 min-width:0 + nowrap + ellipsis 兜底：数字涨到三位数也只是截断，不换行、不撑破。 */
 .list-tabs { display: flex; gap: 4px; padding: 0 4px 10px; }
