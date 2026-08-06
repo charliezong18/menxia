@@ -177,9 +177,11 @@ const failErr = () => Object.assign(new Error(`${FAIL} demo failure`), {
   status: +FAIL, tokenDead: FAIL === '401', rateLimited: FAIL === '403',
 });
 
+const MERGED = new Set();   // 本次会话里画可过的折号（demo 无后端，状态只活在内存）
+
 export const demoApi = {
   verifyToken: async () => ({ repo: {}, canWrite: true, prAccess: true }),
-  listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR, SHELF_PR]; },
+  listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR, SHELF_PR].filter((p) => !MERGED.has(p.number)); },
   listMergedPRs: async () => [{
     ...PR, number: 998, title: '涂归 demo 折 · 已画可（归档样例）',
     merged_at: new Date(Date.now() - 864e5).toISOString(),
@@ -213,7 +215,9 @@ export const demoApi = {
     ZONGPIS.push({ id: 900 + ZONGPIS.length, user: { login: 'charlie' }, created_at: new Date().toISOString(), body });
     return {};
   },
-  mergePR: async (num, sha) => { console.log('[demo] 画可', num, sha); return {}; },
+  // 画可要真把折移出待审清单，否则「画可后跳没跳折」在 demo 里根本不可测：
+  // 清单静态不变 ⇒ 队首永远还是刚合的那折 ⇒ 「跳队首」和「留原地」长得一模一样，断言空转假绿。
+  mergePR: async (num, sha) => { console.log('[demo] 画可', num, sha); MERGED.add(num); return {}; },
   markReady: async () => {},
 };
 
@@ -935,6 +939,22 @@ async function runSmoke(docEl) {
     await sleep(250);
     chk('scroll-end-jumps-to-top', host.scrollTop === 0, `top=${host.scrollTop}`);
   }
+
+  // ── 画可之后不跳折（2026-08-05 报障，放在最后跑：它把当前折变成归档态，后面没法再批）──
+  // 原话：「画可以后别跳下一个没看的可以不……有时候我想复制什么内容回去」。
+  // 病根：qinci() 里 setCur(null) 把 loadPRs 那句 `!R.current.cur` 守卫架空了，于是每次画可
+  // 都自动顶开待批队首——人被拽走，正要复制的正文也没了。画可是「结束一件事」，不是
+  // 「开始下一件事」，中间得有个他自己踩的踏板。四条钉死：折不换、正文还在、就地转只读、
+  // 下一折只做提示不自动跳。
+  window.confirm = () => true;   // headless 默认 dismiss 掉 confirm，不劫持的话画可根本发不出去
+  const beforeNo = document.querySelector('.crumb-no')?.textContent;
+  document.querySelector('.btn-qinci')?.click();
+  await sleep(900);
+  const afterNo = document.querySelector('.crumb-no')?.textContent;
+  chk('merge-stays-on-folder', Boolean(beforeNo) && afterNo === beforeNo, `before=${beforeNo} after=${afterNo}`);
+  chk('merge-doc-still-rendered', Boolean(document.querySelector('.stage-main article h1')));
+  chk('merge-turns-readonly', !document.querySelector('.btn-qinci'));
+  chk('merge-offers-next-not-jumps', Boolean(document.querySelector('.notice-next')));
 
   console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
 }

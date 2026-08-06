@@ -205,6 +205,8 @@ main { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: colum
   background: rgba(195,64,43,.08); border: 1px solid var(--rule); border-radius: 8px;
   color: var(--cinnabar-deep);
 }
+/* 画可后的落地条：折不跳，下一折做成他自己踩的踏板 */
+.notice-next { margin-left: 12px; padding: 3px 12px; font-size: 13px; vertical-align: baseline; }
 
 .work { flex: 1; min-height: 0; overflow-y: auto; padding: 30px var(--work-pad) 60px; }
 /* 版心居中（2026-08-03 反馈：大屏上「很可笑」）——版心宽度是写死的，宽屏下整块一直贴左，

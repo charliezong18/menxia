@@ -47,6 +47,10 @@ list-summary-tldr-and-decisions
 long-doc-scrollable
 margin-cards-ordered
 margin-cards-present
+merge-doc-still-rendered
+merge-offers-next-not-jumps
+merge-stays-on-folder
+merge-turns-readonly
 mouse-drag-holds-float-until-mouseup
 old-rev-body-shorter
 old-rev-cmd-enter-blocked
