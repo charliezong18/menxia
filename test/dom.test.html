@@ -117,6 +117,32 @@ stage.innerHTML = renderMarkdown(MD);
 eq('取该行之前最近的标题', sectionOf(stage, 9), '标题二');
 eq('第一节之内取 h1', sectionOf(stage, 3), '标题一');
 
+// ── 5. 标题 id：页内锚点 `[…](#slug)` 的落点 ──
+// 钉的是「与 GitHub 口径相同」，不是「我们自己算得出一个 id」——同一份 markdown 两处都要能跳。
+stage.innerHTML = renderMarkdown([
+  '# 标题一',
+  '',
+  '## 加长段（冒烟用，别删）',
+  '',
+  '## 带 [外链](https://example.com/x) 的标题',
+  '',
+  '## 小结',
+  '',
+  '## 小结',
+].join('\n'));
+const hIds = [...stage.querySelectorAll('h1[id],h2[id]')].map((h) => h.id);
+eq('标题按 GitHub 口径打 id（CJK 标点全去掉）', hIds.slice(0, 2), ['标题一', '加长段冒烟用别删']);
+eq('标题里的链接只取可见文字，不把 URL 算进 slug', hIds[2], '带-外链-的标题');
+eq('同名标题去重（第二个追加 -1）', hIds.slice(3), ['小结', '小结-1']);
+ok_('id 与 data-line 并存（涂归的锚不能被页内锚顶掉）',
+  stage.querySelector('h1').dataset.line === '1' && stage.querySelector('h1').id === '标题一',
+  `line=${stage.querySelector('h1').dataset.line} id=${stage.querySelector('h1').id}`);
+
+stage.innerHTML = renderMarkdown('见 [[#某节]]，以及 [[别篇#某节]]。');
+const wHrefs = [...stage.querySelectorAll('a.wikilink')].map((a) => a.getAttribute('href'));
+eq('双链只给锚＝本篇内跳转（不拼成 .md#…那种死链）', decodeURIComponent(wHrefs[0] ?? ''), '#某节');
+eq('双链带文件名时仍是「文件 + 锚」', decodeURI(wHrefs[1] ?? ''), '别篇.md#某节');
+
 console.log(`[dom] RESULT pass=${pass} fail=${fail}`);
 </script>
 </body>

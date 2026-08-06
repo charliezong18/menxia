@@ -1,3 +1,9 @@
+anchor-click-flashes-heading
+anchor-click-keeps-url-clean
+anchor-heading-has-github-slug
+anchor-links-rendered
+anchor-loose-frag-matches
+anchor-miss-says-so-not-silent
 archive-body-collapsed-without-decisions
 archive-float-suppressed
 archive-has-items
@@ -45,6 +51,9 @@ old-rev-notice-shown
 old-rev-submit-disabled
 reply-rendered>=1
 rev-switcher-3-opts
+scroll-end-jumps-to-bottom
+scroll-end-jumps-to-top
+scroll-ends-rendered
 search-clear-restores
 search-hits-found
 search-input-exists

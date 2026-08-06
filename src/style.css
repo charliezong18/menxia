@@ -264,6 +264,22 @@ article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px
 }
 .zhupi-float:hover { background: var(--cinnabar-deep); }
 
+/* ── 回到顶部 / 回到底部（PAIN 2026-08-05 #86：189 行的折里前后跳不动）──
+   z-index 20 与大纲栏同档，压在浮批钮(30)之下：读者划到屏幕右下角落批时，
+   抢走那一下点击的必须是「涂归」而不是「回到顶部」。
+   竖排在视口右下角；`.toc` 底边止于 100vh-180px，与这里 22+80px 的高度不相碰。 */
+.scroll-ends {
+  position: fixed; right: 18px; bottom: 22px; z-index: 20;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.scroll-end {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--rule); background: var(--veil);
+  color: var(--ink-soft); font-size: 15px; line-height: 1;
+  box-shadow: 0 2px 10px var(--shadow);
+}
+.scroll-end:hover { color: var(--ink); background: var(--paper-raised); }
+
 .margin-col { position: relative; width: var(--marg-w); flex: none; }
 
 .anno-card {

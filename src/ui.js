@@ -23,7 +23,9 @@ import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-body.js';
 import { assembleCarry } from './carry.js';
 import { Outline, ChapterList, ChapterRail } from './components/outline.js';
+import { ScrollEnds } from './components/scroll-ends.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList } from './toc.js';
+import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
 
 const params = new URLSearchParams(location.search);
@@ -390,11 +392,7 @@ function App() {
             // 找覆盖该行的块：优先 data-line ≤ 目标行的最近块
             let target = null;
             el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= jp.line) target = b; });
-            if (target) {
-              target.scrollIntoView({ block: 'center' });
-              target.classList.add('search-flash');
-              setTimeout(() => target.classList.remove('search-flash'), 1600);
-            }
+            flashTo(target, 'center');
           }, 60);
         }
       } catch (err) {
@@ -638,6 +636,15 @@ function App() {
     if (!a) return;
     const href = a.getAttribute('href');
 
+    // ⓪ 页内锚点 `[…](#slug)`：留在本篇里滚过去。**必须 preventDefault**——
+    //    地址栏是深链的载体（buildDeepLink 的 replaceState 常驻），放浏览器自己去处理
+    //    会往 URL 上挂一截 hash，跟那条 effect 来回打架，拷出去的直达链也变脏。
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      jumpToAnchor(href.slice(1));
+      return;
+    }
+
     // ① 文档内相对链接：同折里有这个文件就换文档（双语互链就靠它），
     //    没有就开 GitHub 上的对应文件——绝不能放它去 Pages 源站撞 404
     const rel = resolveRelativeDocLink(href, docPath);
@@ -761,6 +768,14 @@ function App() {
     setHits(searchIndex(indexRef.current, query));
   }
   function clearSearch() { setQ(''); setHits(null); }
+  // 滚过去 + 闪一下。四个跳转入口（大纲 / 深链 / 搜索命中 / 页内锚点）共用一条落地动作，
+  // 免得「跳到了但没闪」这种半截实现随新入口一个个长出来。
+  function flashTo(el, block = 'start') {
+    if (!el) return;
+    el.scrollIntoView({ block });
+    el.classList.add('search-flash');
+    setTimeout(() => el.classList.remove('search-flash'), 1600);
+  }
   // F14 大纲点标题：跳到当前文档里那一行。复用搜索/深链那条 scroll-to-line + 闪一下的路径
   // （找 data-line ≤ 目标行的最近块），不新造第二套定位逻辑。
   function jumpToLine(line) {
@@ -768,7 +783,21 @@ function App() {
     if (!el) return;
     let hit = null;
     el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
-    if (hit) { hit.scrollIntoView({ block: 'start' }); hit.classList.add('search-flash'); setTimeout(() => hit.classList.remove('search-flash'), 1600); }
+    flashTo(hit);
+  }
+  // 页内锚点 `[…](#slug)`：跳到本篇的那个标题（id 由 render.js 按 GitHub 口径生成）。
+  // 用文档自己的标题集匹配，不用 getElementById——后者是**全文档**作用域，
+  // 一个恰好叫 `doc`/`app`/`margin-col` 的 slug 会把读者送到界面骨架上去。
+  function jumpToAnchor(raw) {
+    const el = docRef.current;
+    if (!el) return;
+    let frag = raw;
+    try { frag = decodeURIComponent(raw); } catch { /* 非法百分号编码：按字面匹配 */ }
+    const heads = [...el.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')]
+      .map((h) => ({ id: h.id, text: h.textContent || '', el: h }));
+    const hit = matchAnchor(heads, frag);
+    if (!hit) return say(S.jump.anchorMissing(frag));
+    flashTo(hit.el);
   }
   // 折间跳转：目标折在哪个栏自动切过去；带 path/line 就落到那一段
   function jumpTo({ prNumber, path, line }) {
@@ -782,7 +811,7 @@ function App() {
       const el = docRef.current;
       let hit = null;
       el?.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
-      if (hit) { hit.scrollIntoView({ block: 'center' }); hit.classList.add('search-flash'); setTimeout(() => hit.classList.remove('search-flash'), 1600); }
+      flashTo(hit, 'center');
       return;
     }
     openPR(target);
@@ -1034,6 +1063,7 @@ function App() {
         </div>
         </div>
       </main>
+      ${cur && html`<${ScrollEnds} tick=${`${docTick}:${docPath}`} />`}
       ${float && html`
         <button class="zhupi-float" style=${{ left: `${Math.min(float.rect.left + 8, window.innerWidth - 76)}px`, top: `${float.rect.top + 6}px` }}
           onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>${S.action.annotate}</button>`}

@@ -30,6 +30,8 @@ ${Array.from({ length: 14 }, (_, i) => `第 ${i + 1} 段填充：读折台的滚
 
 折间链接测试：见 [另一折](https://github.com/demo/repo/pull/998) 与 [本折某行](https://github.com/demo/repo/blob/main/docs/demo.md#L20)；外链 [GitHub](https://github.com/slopus/happy) 不该被拦。
 
+页内锚点测试：[照 GitHub 锚写](#加长段冒烟用别删)、[照标题原文写](#加长段（冒烟用，别删）)、[指不着的锚](#根本没有这一节)。
+
 末行锚点：见此行即已滚到底。
 `;
 
@@ -774,6 +776,47 @@ async function runSmoke(docEl) {
     stuck?.click();
     await sleep(200);
     chk('stale-empty-draft-opens-editor', Boolean(document.querySelector('.anno-input')));
+  }
+
+  // ── 页内锚点 + 顶底悬浮钮（PAIN 2026-08-05 #86：「？？？ 选项呢 原来在下面」）──
+  // **必须放最后**：这一段会把版心滚到底，早跑会掀翻前面那批量位置的断言
+  // （doc-starts-right-below-fold / cards-positioned-during-doc-switch 都读 scrollTop）。
+  const dEl = document.getElementById('doc');
+  const anchors = [...dEl.querySelectorAll('a[href^="#"]')];
+  const head = [...dEl.querySelectorAll('h2[id]')].find((h) => h.id === '加长段冒烟用别删');
+  chk('anchor-heading-has-github-slug', Boolean(head),
+    `ids=${[...dEl.querySelectorAll('[id]')].map((h) => h.id).join('|') || 'NONE'}`);
+  chk('anchor-links-rendered', anchors.length === 3, `n=${anchors.length}`);
+  if (head && anchors.length === 3) {
+    anchors[0].click();
+    await sleep(150);   // 闪现只留 1600ms，虚拟时间下别用长 sleep（同 link-jump-flash）
+    chk('anchor-click-flashes-heading', head.classList.contains('search-flash'));
+    // 地址栏不许挂 hash：它是深链的载体，多一截就把「拷直达链」拷脏了
+    chk('anchor-click-keeps-url-clean', !location.hash, `hash=${location.hash}`);
+
+    head.classList.remove('search-flash');   // 不清就是假绿——上一条留下的 class 还挂着
+    anchors[1].click();
+    await sleep(150);
+    chk('anchor-loose-frag-matches', head.classList.contains('search-flash'));
+
+    anchors[2].click();
+    await sleep(150);
+    const notices = [...document.querySelectorAll('.notice')].map((n) => n.textContent);
+    chk('anchor-miss-says-so-not-silent', notices.some((t) => t.includes('根本没有这一节')),
+      `notices=${notices.join('|') || 'NONE'}`);
+  }
+
+  const ends = () => [...document.querySelectorAll('.scroll-end')];
+  chk('scroll-ends-rendered', ends().length === 2, `n=${ends().length}`);
+  if (ends().length === 2) {
+    const host = document.querySelector('.work');
+    ends()[1].click();                        // ↓ 到底
+    await sleep(250);
+    const max = host.scrollHeight - host.clientHeight;
+    chk('scroll-end-jumps-to-bottom', host.scrollTop >= max - 8, `top=${host.scrollTop} max=${max}`);
+    ends()[0].click();                        // ↑ 回顶
+    await sleep(250);
+    chk('scroll-end-jumps-to-top', host.scrollTop === 0, `top=${host.scrollTop}`);
   }
 
   console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
