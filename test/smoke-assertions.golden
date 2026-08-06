@@ -11,6 +11,8 @@ archive-has-items
 archive-readonly-no-qinci
 archive-readonly-notice
 archive-tab-exists
+bare-hash-link-rendered
+bare-hash-scrolls-to-top
 body-block-in-flow-above-doc
 body-decisions-visible-without-click
 body-expanded-by-default-with-decisions

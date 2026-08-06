@@ -8,9 +8,13 @@
 //   小写 → 去标点与符号（`-` `_` 除外）→ 空格换 `-` → 同名追加 `-1`/`-2`
 // 用 Unicode 属性类 `\p{P}\p{S}` 覆盖那张表：CJK 的 〈〉「」，。（）、 都在 `\p{P}` 里，
 // emoji 在 `\p{S}` 里，取舍与 github-slugger 一致。
+// **不 trim**（2026-08-06 拿 github-slugger@2 实测：带 trim 15 例差 4，去掉后差 0）。
+// github-slugger 压根没有这一步，首尾空格会照直变成连字符——`## 🚀 起步` 的锚是 `-起步`
+// 不是 `起步`，这是 GitHub 上带 emoji 标题的著名形态。图片独占开头的
+// `## ![封面](a.png) 介绍` 同理得 `-介绍`。自作主张 trim 一下看着「更干净」，
+// 代价是这两类标题的锚全部对不上——而它们恰恰是最常见的两类。
 export function slugify(text) {
   return String(text ?? '')
-    .trim()
     .toLowerCase()
     // 先清不可见字符：控制字符（含 TAB）、格式字符（ZWJ / ZWSP / 软连字符）、
     // 以及除半角空格外的所有空白（NBSP、U+3000）。**这一步不是为了对齐 GitHub，是为了 id 合法**：

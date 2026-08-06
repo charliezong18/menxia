@@ -28,6 +28,8 @@ export const pushUsage = debounce(update, DEBOUNCE_MS);
 
 ${Array.from({ length: 14 }, (_, i) => `第 ${i + 1} 段填充：读折台的滚动、批注卡对齐、浮批按钮收纳，都要在超过一屏的文档上才真正受测。`).join('\n\n')}
 
+页内锚点还有个老写法 [回到顶部](#)，点了要真的回顶。
+
 折间链接测试：见 [另一折](https://github.com/demo/repo/pull/998) 与 [本折某行](https://github.com/demo/repo/blob/main/docs/demo.md#L20)；外链 [GitHub](https://github.com/slopus/happy) 不该被拦。
 
 页内锚点测试：[照 GitHub 锚写](#加长段冒烟用别删)、[照标题原文写](#加长段（冒烟用，别删）)、[指不着的锚](#根本没有这一节)。
@@ -782,7 +784,9 @@ async function runSmoke(docEl) {
   // **必须放最后**：这一段会把版心滚到底，早跑会掀翻前面那批量位置的断言
   // （doc-starts-right-below-fold / cards-positioned-during-doc-switch 都读 scrollTop）。
   const dEl = document.getElementById('doc');
-  const anchors = [...dEl.querySelectorAll('a[href^="#"]')];
+  const allHash = [...dEl.querySelectorAll('a[href^="#"]')];
+  const bareHash = allHash.find((a) => a.getAttribute('href') === '#');
+  const anchors = allHash.filter((a) => a.getAttribute('href') !== '#');
   const head = [...dEl.querySelectorAll('h2[id]')].find((h) => h.id === '加长段冒烟用别删');
   chk('anchor-heading-has-github-slug', Boolean(head),
     `ids=${[...dEl.querySelectorAll('[id]')].map((h) => h.id).join('|') || 'NONE'}`);
@@ -817,6 +821,18 @@ async function runSmoke(docEl) {
       chk('anchor-in-folder-body-intercepted',
         head.classList.contains('search-flash') && !location.hash, `hash=${location.hash}`);
     }
+  }
+
+  // 光秃秃一个 `#`＝「回到顶部」的老写法。拦了却不办事就是个按不动的死钮
+  // （双查第二轮抓到，是第一轮修复亲手造的），所以这条钉的是「真的回到了顶」。
+  const host0 = document.querySelector('.work');
+  chk('bare-hash-link-rendered', Boolean(bareHash));
+  if (bareHash) {
+    host0.scrollTo({ top: 800 });
+    await sleep(120);
+    bareHash.click();
+    await sleep(200);
+    chk('bare-hash-scrolls-to-top', host0.scrollTop === 0, `top=${host0.scrollTop}`);
   }
 
   const ends = () => [...document.querySelectorAll('.scroll-end')];

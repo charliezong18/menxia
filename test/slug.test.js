@@ -7,7 +7,16 @@ import { slugify, makeSlugger, matchAnchor } from '../src/slug.js';
 test('slugify: 小写、空格换连字符、去标点，保留 - 与 _', () => {
   assert.equal(slugify('Highline Day Module'), 'highline-day-module');
   assert.equal(slugify('Back-to_Top!'), 'back-to_top');
-  assert.equal(slugify('  Trimmed  '), 'trimmed');
+});
+
+// 2026-08-06 拿 github-slugger@2 差分跑出来的：**不能 trim**。
+// 这条原先断言 `'  Trimmed  '` → `'trimmed'`——那是拿我自己的心智模型验我自己的实现，
+// 两边一起错。GitHub 的真值是 `--trimmed--`，首尾空格照直变连字符。
+test('slugify: 首尾空格不吞，照直变连字符（GitHub 就是这样）', () => {
+  assert.equal(slugify('  Trimmed  '), '--trimmed--');
+  assert.equal(slugify('🚀 起步'), '-起步');        // emoji 被删，它占的那个空格留下 → 前导连字符
+  assert.equal(slugify(' 介绍'), '-介绍');           // `## ![封面](a.png) 介绍` 抽出可见文字后的形态
+  assert.equal(slugify('标题 '), '标题-');
 });
 
 test('slugify: CJK 标点也算标点（〈〉（）、，。「」全去掉）', () => {

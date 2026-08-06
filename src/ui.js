@@ -23,7 +23,7 @@ import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-body.js';
 import { assembleCarry } from './carry.js';
 import { Outline, ChapterList, ChapterRail } from './components/outline.js';
-import { ScrollEnds } from './components/scroll-ends.js';
+import { ScrollEnds, scroller } from './components/scroll-ends.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList } from './toc.js';
 import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
@@ -46,7 +46,10 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
-  'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js'];
+  'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js',
+  'src/slug.js', 'src/components/scroll-ends.js',
+  // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
+  'src/verify.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -670,7 +673,10 @@ function App() {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
     e.preventDefault();
     const frag = a.getAttribute('href').slice(1);
-    if (frag) jumpToAnchor(frag);   // 光秃秃一个 `#` 是「回到顶部」的老写法，拦下但什么都不做
+    // 光秃秃一个 `#` 是「回到顶部」的老写法。拦下却什么都不做＝把它变成按不动的死钮
+    // （2026-08-06 双查第二轮抓到，是上一轮修复亲手造的）——既然拦了，就得把它原本的活干了。
+    if (frag) jumpToAnchor(frag);
+    else scroller().scrollTo({ top: 0 });
   }, [docPath]);
 
   // 「引用此处」：把当前选中处拷成一条 GitHub permalink + 引文，粘进别的涂归即成链接
