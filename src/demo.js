@@ -77,7 +77,7 @@ PR body 的五段结构化正文此前在门下不可见，本折把它渲染到
 // 归档折用它当靶——「认不出五段 ⇒ 不该判成有拍板点 ⇒ 默认收起」这条路径要有真数据走。
 const BODY_FREEFORM = `读物快照。**这两篇是要发到别人仓库去的**，比内部文档更该被你逐句挑。
 
-划句朱批。你说「发」我才发，不说就一直压着。
+划句涂归。你说「发」我才发，不说就一直压着。
 
 <!-- happy-session: cmsdemo0000demo0000demo -->`;
 
@@ -450,14 +450,14 @@ async function runSmoke(docEl) {
     `items=${document.querySelectorAll('.zongpi-shown-item').length}`);
   chk('zongpi-toggle-shows-count-and-gist',
     zpLabel.includes('已呈判 · 5') && zpLabel.includes('最新：v4 定稿'), `label=${zpLabel}`);
-  // 正文起点必须紧贴总批折叠块。量两个盒子之间的距离，而非 viewport 坐标——与当前滚动位置无关。
+  // 正文起点必须紧贴判折叠块。量两个盒子之间的距离，而非 viewport 坐标——与当前滚动位置无关。
   // 阈值不用 window.innerHeight：拿视口高当尺子等于白送 80–130px 松弛；也不用 clientHeight
   // （那是「勉强够一屏」，松 700+px，「默认展开最新一条」这种半吊子回归照样能钻过去）——
   // 验收标准是「折叠块只占一行」，钉死 320。
   //
-  // **起点从 .work 顶改成总批块底（issue #13）**：折子说明块进来之后坐在总批之上，且按设计
+  // **起点从 .work 顶改成判块底（issue #13）**：折子说明块进来之后坐在判之上，且按设计
   // 有拍板点就默认展开，量到 .work 顶会把它的高度算进来，这条断言就变成在管别的事了。
-  // 这条要守的一直是「总批块不许默认摊开挡住正文」，量它自己的底到正文顶最贴题。
+  // 这条要守的一直是「判块不许默认摊开挡住正文」，量它自己的底到正文顶最贴题。
   const workEl = document.querySelector('.work');
   const docBox = document.getElementById('doc');
   const foldBox = document.querySelector('.zongpi-shown');
@@ -489,7 +489,7 @@ async function runSmoke(docEl) {
   const fbH = fbText ? fbText.getBoundingClientRect().height : -1;
   chk('folder-body-height-capped', fbText !== null && fbH <= window.innerHeight * 0.42 + 2,
     `h=${Math.round(fbH)} cap=${Math.round(window.innerHeight * 0.42)}`);
-  // 总批块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
+  // 判块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
   // 判块不许脱离文档流去「假装」不占位（绝对定位/负 margin 能骗过上面那条，但会盖住正文）
   const zpBox = document.querySelector('.zongpi-shown');
   chk('zongpi-in-flow-above-doc',
@@ -543,10 +543,44 @@ async function runSmoke(docEl) {
 
   // 真暴露面：判输入框没有自己的 keydown 处理，⌘Enter 从这里直冲全局监听器
   // （写判写到一半把攒着的 inline 草稿全发出去——第二轮评审点名的第二触发面）
-  [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('判'))?.click();
+  // 先滚到底再按「判」：这是报障的真实姿势——「看到最底下才想给个总判」。
+  // 旧实现在这里用 scrollIntoView 把人拽回卡片所在的开头，读到哪儿全丢了。
+  const zpHost = document.querySelector('.work');
+  zpHost.scrollTo({ top: zpHost.scrollHeight });
   await sleep(200);
+  const zpTopBefore = Math.round(zpHost.scrollTop);
+  [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('判'))?.click();
+  await sleep(400);   // 给足时间：旧实现是 smooth 滚动，短 sleep 会让它假绿
   const zongpiTa = document.querySelector('.zongpi-card .anno-input');
   chk('zongpi-card-open', Boolean(zongpiTa));
+  chk('zongpi-open-keeps-reading-position',
+    Math.abs(Math.round(zpHost.scrollTop) - zpTopBefore) <= 2,
+    `before=${zpTopBefore} after=${Math.round(zpHost.scrollTop)}`);
+  if (zongpiTa) {
+    const card = document.querySelector('.zongpi-card');
+    const cr = card.getBoundingClientRect();
+    const col = document.querySelector('#margin-col').getBoundingClientRect();
+    chk('zongpi-card-aligned-to-margin-col',
+      Math.abs(cr.left - col.left) <= 1 && Math.abs(cr.width - col.width) <= 1,
+      `card=${Math.round(cr.left)}/${Math.round(cr.width)} col=${Math.round(col.left)}/${Math.round(col.width)}`);
+    // **先钉「看得见」，再钉「不动」**：只验后者是假绿——卡被 layoutCards 写的内联 top
+    // 推到视口上方（实测 top=-95）时，它照样「纹丝不动」，断言照样绿，而人什么都看不到。
+    chk('zongpi-card-visible-in-viewport',
+      cr.top >= 0 && cr.bottom <= innerHeight && cr.width > 0,
+      `top=${Math.round(cr.top)} bottom=${Math.round(cr.bottom)} vh=${innerHeight}`);
+    // 钉住不动：往回滚半屏，卡在**视口里**的位置必须纹丝不动
+    const yBefore = Math.round(cr.top);
+    zpHost.scrollTo({ top: Math.max(0, zpHost.scrollTop - 600) });
+    await sleep(250);
+    chk('zongpi-card-stays-put-while-scrolling',
+      Math.abs(Math.round(card.getBoundingClientRect().top) - yBefore) <= 2,
+      `y=${yBefore}→${Math.round(card.getBoundingClientRect().top)}`);
+    // 压着别的卡时要在上层：普通批注卡不许盖住正在写的这张
+    const other = document.querySelector('.anno-card:not(.zongpi-card)');
+    chk('zongpi-card-above-other-cards',
+      !other || +getComputedStyle(card).zIndex > (+getComputedStyle(other).zIndex || 0),
+      `zongpi=${getComputedStyle(card).zIndex} other=${other ? getComputedStyle(other).zIndex : 'none'}`);
+  }
   if (zongpiTa) {
     zongpiTa.focus();
     zongpiTa.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', metaKey: true, bubbles: true }));
@@ -682,15 +716,15 @@ async function runSmoke(docEl) {
     }
     chk('archive-float-suppressed', !document.querySelector('.zhupi-float'));
     // 切回待审继续后面的断言。
-    // 用 data-tab 不用文字：这行原来是 textContent.includes('待批')，2026-08-02 把词表漏网的
-    // 「待批」改成定稿词「待审」时，find 静默返回 undefined —— 没点、没报错，后面 6 条断言
+    // 用 data-tab 不用文字：这行原来是 textContent.includes('待批')（旧词），2026-08-02 把词表漏网的
+    // 「待批」（旧词）改成定稿词「待审」时，find 静默返回 undefined —— 没点、没报错，后面 6 条断言
     //（摘要卡 + 整条 submit 管线）连锁塌掉，看起来像提交管线坏了。裸字符串当跨层契约就是这样：
     // 改了不报错，只是什么都不做。选择器一律锚在不上屏的属性上。
     const openTab = document.querySelector('.list-tab[data-tab="open"]');
     if (!openTab) chk('list-tab-open-selector', false, '找不到 [data-tab="open"]——选择器与渲染脱钩了');
     openTab?.click();
     await sleep(200);
-    // F1（摘要卡）：待批清单里，带五段 body 的折要出摘要行——一句 TLDR gist + 拍板角标，
+    // F1（摘要卡）：待审清单里，带五段 body 的折要出摘要行——一句 TLDR gist + 拍板角标，
     // 不点进去就看得出「这折干了什么、要不要你拍板」。归档折（BODY_FREEFORM 无 TLDR）不出摘要行。
     const openSummary = document.querySelector('#pr-list .pr-item .pr-summary');
     chk('list-summary-tldr-and-decisions',
@@ -837,6 +871,22 @@ async function runSmoke(docEl) {
 
   const ends = () => [...document.querySelectorAll('.scroll-end')];
   chk('scroll-ends-rendered', ends().length === 2, `n=${ends().length}`);
+  // **位置就是这个部件的成败**：上一版摆在视口右下角、离正文 623px，他一百来折都没找着。
+  // 钉死「贴着正文左缘」：右边缘要在正文左边、且不许远过 120px（远了就等于又回到角落里）。
+  if (ends().length === 2) {
+    const rail = document.querySelector('.scroll-ends').getBoundingClientRect();
+    const art = document.getElementById('doc').getBoundingClientRect();
+    const gap = Math.round(art.left - rail.right);
+    chk('scroll-ends-hug-the-text', gap >= 0 && gap <= 60,
+      `箭头右缘=${Math.round(rail.right)} 正文左缘=${Math.round(art.left)} 间距=${gap}`);
+    // 固定在视口里，不随正文滚
+    const yBefore = Math.round(rail.top);
+    document.querySelector('.work').scrollTo({ top: 400 });
+    await sleep(200);
+    chk('scroll-ends-stay-put-while-scrolling',
+      Math.abs(Math.round(document.querySelector('.scroll-ends').getBoundingClientRect().top) - yBefore) <= 2,
+      `y=${yBefore}→${Math.round(document.querySelector('.scroll-ends').getBoundingClientRect().top)}`);
+  }
   if (ends().length === 2) {
     const host = document.querySelector('.work');
     ends()[1].click();                        // ↓ 到底

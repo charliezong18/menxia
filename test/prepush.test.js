@@ -19,9 +19,18 @@ const verdict = (stdin) => execFileSync('.githooks/pre-push', ['origin'], {
   env: { ...process.env, PREPUSH_DRYRUN: '1' },
 }).trim();
 
+// 取「最近一个动过代码的提交」，而不是拿 HEAD 当代码提交用。
+// 2026-08-06 实伤：往 main 推了一个纯文档 commit（PAIN.md）当尖端，下面这条立刻变红——
+// 而 pre-push 对**任何** push 都跑单元层，于是整个仓一次 push 都推不动，红因还与被测逻辑无关。
+// 测试要钉的是「推送范围里有代码 → 判 code」，不是「尖端碰巧是代码提交」，两者别混。
+const CODE_PATHS = ['src/', 'index.html', 'vendor/', 'test/', '.githooks/'];
+const lastCodeCommit = execFileSync(
+  'git', ['log', '-1', '--format=%H', '--', ...CODE_PATHS], { cwd: ROOT, encoding: 'utf8' },
+).trim();
+
 test('推 HEAD:main 时基准取远端 main —— 回归：曾比出空 diff 把 ui.js 放行上线', () => {
-  // 复刻现场：人站在 feature 分支上，把同一个提交推去 main，而远端 main 还停在上一个提交
-  const line = `refs/heads/fix/touch-annotate ${sha('HEAD')} refs/heads/main ${sha('HEAD~1')}\n`;
+  // 复刻现场：人站在 feature 分支上，把同一个提交推去 main，而远端 main 还停在它的父提交
+  const line = `refs/heads/fix/touch-annotate ${sha(lastCodeCommit)} refs/heads/main ${sha(lastCodeCommit + '~1')}\n`;
   assert.equal(verdict(line), 'DRYRUN code');
 });
 

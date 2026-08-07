@@ -14,7 +14,7 @@ Things that are thought through but not scheduled.
 
 **Why**: the biggest friction with a long document isn't that it's hard to read, it's **not knowing whether it's worth reading**. A summary cuts the cost of deciding "do I read this now" down to ten seconds.
 
-**How**: generated agent-side (the review-loop skill writes it when it opens the PR), stored in the PR body or the document's frontmatter. zhupi only renders it as a summary card at the head of the document. **No LLM calls inside the app** (see the architectural boundary below).
+**How**: generated agent-side (the review-loop skill writes it when it opens the PR), stored in the PR body or the document's frontmatter. menxia only renders it as a summary card at the head of the document. **No LLM calls inside the app** (see the architectural boundary below).
 
 **Undecided**: whether the summary should be two parts — "what this says" + "what it needs you to decide" (the latter is really the PR body's *Decisions needed* field, which could just be promoted to a structured field).
 
@@ -30,7 +30,7 @@ Things that are thought through but not scheduled.
 
 **Why**: this is **the one thing Google Docs, GitHub and Notion cannot do**. They can all give you a better comment UI, but none of them can read the document for you before you read it. Your time bottleneck was never "writing comments" — it's "spotting what to comment on."
 
-**How**: when submitting, the agent also runs a background-aware review and posts the results as **ordinary inline comments** on the PR, with a `臣拟` (draft) marker in the body (e.g. a first line of `> 臣拟`). zhupi recognizes the marker on render and shows them on a grey background, one visual tier below a real 朱批. **Still no LLM calls in the app.**
+**How**: when submitting, the agent also runs a background-aware review and posts the results as **ordinary inline comments** on the PR, with a `臣拟` (draft) marker in the body (e.g. a first line of `> 臣拟`). menxia recognizes the marker on render and shows them on a grey background, one visual tier below a real 涂归. **Still no LLM calls in the app.**
 
 **Where the background comes from**: a `background.md` (profession, active projects, technical preferences, what he cares most about in review) that lives in the review repo and the agent reads every time. Most of this already exists in memory and can be exported directly.
 
@@ -42,13 +42,13 @@ Things that are thought through but not scheduled.
 
 ## F3 · One-tap accept / plus-one
 
-**What**: buttons next to each draft comment — **准** (accept, converts it into a real 朱批 and submits it), **加一** (plus-one, adds your own sentence on top of it), **驳** (reject, discards it). No typing.
+**What**: buttons next to each draft comment — **准** (accept, converts it into a real 涂归 and submits it), **加一** (plus-one, adds your own sentence on top of it), **驳** (reject, discards it). No typing.
 
 **Why**: F2's value only materializes when the **cost of adoption is ≈ 0**. If you have to retype it, it didn't help.
 
-**How**: pure frontend + GitHub API — **准** = repost the draft comment's content as a real 朱批 (or add a 👍 reaction to the original comment and mark it adopted); **加一** = open the comment box pre-filled with the quote; **驳** = hide locally and log one negative signal (usable for improving F2's prompt).
+**How**: pure frontend + GitHub API — **准** = repost the draft comment's content as a real 涂归 (or add a 👍 reaction to the original comment and mark it adopted); **加一** = open the comment box pre-filled with the quote; **驳** = hide locally and log one negative signal (usable for improving F2's prompt).
 
-**Undecided**: does **准** become a new comment under your name, or does it stamp an "approved" marker on the draft comment? The former is clearer for the agent (it only recognizes real 朱批), the latter is less work. Leaning toward the former.
+**Undecided**: does **准** become a new comment under your name, or does it stamp an "approved" marker on the draft comment? The former is clearer for the agent (it only recognizes real 涂归), the latter is less work. Leaning toward the former.
 
 **✅ Decided (2026-07-31, reading folder #15 annotations)**: the former — 准 converts the draft into a formal annotation under Charlie's name (the agent keeps recognizing only formal annotations; semantics unchanged). Folded into F2's implementation scope, not scheduled separately.
 
@@ -56,11 +56,11 @@ Things that are thought through but not scheduled.
 
 ## Architectural boundary (a shared premise for F1–F3, settled up front)
 
-SPEC §3's non-goals say "AI integration — the review-loop skill owns the agent side entirely; zhupi doesn't know AI exists." F1–F3 look like a violation of that but don't have to be:
+SPEC §3's non-goals say "AI integration — the review-loop skill owns the agent side entirely; menxia doesn't know AI exists." F1–F3 look like a violation of that but don't have to be:
 
-**All intelligence is computed offline on the agent side and arrives as ordinary GitHub data (PR body / inline comments); zhupi only recognizes markers and renders them appropriately.**
+**All intelligence is computed offline on the agent side and arrives as ordinary GitHub data (PR body / inline comments); menxia only recognizes markers and renders them appropriately.**
 
-That preserves three things: ① zhupi stays a zero-backend static site with no API key in the browser; ② the agent can swap models or prompts without touching the frontend; ③ if zhupi goes down, the draft comments are still visible on GitHub.
+That preserves three things: ① menxia stays a zero-backend static site with no API key in the browser; ② the agent can swap models or prompts without touching the frontend; ③ if menxia goes down, the draft comments are still visible on GitHub.
 
 The cost: no "ask a question halfway through reading" style real-time interaction — that needs LLM calls inside the app, which is a different order of product (either a backend, or users bringing their own API key). When it's genuinely needed, evaluate it against the trigger conditions for option C in SPEC §8.1.
 
@@ -82,19 +82,19 @@ Three tiers, cheapest to most expensive:
 
 ## F5 · Assign a reviewer and sign-off
 
-**What**: assign a document to someone else (a colleague / 惠雪 / larry / a future team) to read and **sign off**, with 钦此 blocked until they have. Grows from a single-person review desk into an accountable review process.
+**What**: assign a document to someone else (a colleague / 惠雪 / larry / a future team) to read and **sign off**, with 画可 blocked until they have. Grows from a single-person review desk into an accountable review process.
 
-**Why record it and not build it**: every design premise in v0 is single-person (朱批 / 总批 / 钦此 are all "your own actions"), and assigning a reviewer touches the identity model, the permission model and the UI semantics at once — it's not a button. But it's the first door from "my tool" to "usable by someone else", which is worth holding a place for.
+**Why record it and not build it**: every design premise in v0 is single-person (涂归 / 判 / 画可 are all "your own actions"), and assigning a reviewer touches the identity model, the permission model and the UI semantics at once — it's not a button. But it's the first door from "my tool" to "usable by someone else", which is worth holding a place for.
 
-**The interesting reversal**: the entire 钦此 button exists because **GitHub won't let an author approve their own PR** (hit on day one of the pilot; first line in PAIN.md). But **other people can approve** — so the moment F5 lands, GitHub's native review approval mechanism becomes available: a sign-off is a review with `event: 'APPROVE'`, and its state is natively queryable (`GET /pulls/{n}/reviews` with state=APPROVED). **No need to invent our own sign-off storage**, which keeps the "state lives in GitHub, zhupi is just a lens" boundary intact.
+**The interesting reversal**: the entire 画可 button exists because **GitHub won't let an author approve their own PR** (hit on day one of the pilot; first line in PAIN.md). But **other people can approve** — so the moment F5 lands, GitHub's native review approval mechanism becomes available: a sign-off is a review with `event: 'APPROVE'`, and its state is natively queryable (`GET /pulls/{n}/reviews` with state=APPROVED). **No need to invent our own sign-off storage**, which keeps the "state lives in GitHub, menxia is just a lens" boundary intact.
 
 **How (draft)**:
 - Assigning: `POST /pulls/{n}/requested_reviewers` (the other person needs read access to the repo — for a private repo, either add them as a collaborator or route collaborative documents through a different repo). UI: a "request review from…" control in the document header.
-- Signing: the assignee reads it in their own zhupi → a 准奏 button = `event: 'APPROVE'`; rejection = `REQUEST_CHANGES`. submitReview already supports both event values; only the UI is missing.
-- Status: the list page shows each document's signature state (awaiting your comments / awaiting so-and-so's signature / approved N/M); **on documents marked "signature required", 钦此 is disabled until signed** (a soft gate, judged locally, not branch protection).
+- Signing: the assignee reads it in their own menxia → a 准奏 button = `event: 'APPROVE'`; rejection = `REQUEST_CHANGES`. submitReview already supports both event values; only the UI is missing.
+- Status: the list page shows each document's signature state (awaiting your comments / awaiting so-and-so's signature / approved N/M); **on documents marked "signature required", 画可 is disabled until signed** (a soft gate, judged locally, not branch protection).
 - Optional hard gate: if you truly want it un-bypassable, turn on GitHub branch protection's required approvals — that's a repo setting, not an app feature, and it needs zero code.
 
-**To decide (only when actually building)**: ① identity — is it enough that someone opens the same zhupi site with their own GitHub token (the app has no user system, so it's natively multi-user), or does it need to know "who is the current user" to decide which buttons to show? (The former is nearly free: `GET /user` for the login is enough.) ② how do outsiders get read access to a private review repo, or do collaborative documents get their own repo? ③ is signing mandatory — default optional, with only documents marked "signature required" gating 钦此.
+**To decide (only when actually building)**: ① identity — is it enough that someone opens the same menxia site with their own GitHub token (the app has no user system, so it's natively multi-user), or does it need to know "who is the current user" to decide which buttons to show? (The former is nearly free: `GET /user` for the login is enough.) ② how do outsiders get read access to a private review repo, or do collaborative documents get their own repo? ③ is signing mandatory — default optional, with only documents marked "signature required" gating 画可.
 
 **Where it sits**: after v1 (mobile + PWA), near the north star (diff documents); not before the single-person flow has been worn smooth by real use.
 
@@ -102,9 +102,9 @@ Three tiers, cheapest to most expensive:
 
 ## F6 · Cross-document links (2026-07-27 ✅ done)
 
-**What was built**: **same-repo GitHub permalinks** inside documents and comments are intercepted by zhupi and turned into in-app navigation (open the document + scroll to that block + flash it); external links open in a new window as usual. A "quote this" control in the top bar copies the current selection as `[「quote」](permalink)`, and pasting it into another comment makes it a link.
+**What was built**: **same-repo GitHub permalinks** inside documents and comments are intercepted by menxia and turned into in-app navigation (open the document + scroll to that block + flash it); external links open in a new window as usual. A "quote this" control in the top bar copies the current selection as `[「quote」](permalink)`, and pasting it into another comment makes it a link.
 
-**Why native GitHub permalinks instead of inventing `[[wikilinks]]`**: a private syntax would render as garbage on GitHub and the agent would have to learn it — which severs the "data lives in GitHub, zhupi is just a lens" root. With permalinks: normal links on GitHub, readable by the agent, and zhupi merely **intercepts** them. The link graph isn't new data, it's an ordinary URL in markdown.
+**Why native GitHub permalinks instead of inventing `[[wikilinks]]`**: a private syntax would render as garbage on GitHub and the agent would have to learn it — which severs the "data lives in GitHub, menxia is just a lens" root. With permalinks: normal links on GitHub, readable by the agent, and menxia merely **intercepts** them. The link graph isn't new data, it's an ordinary URL in markdown.
 
 **Explicitly not built: inline previews** (hover/expand to see the target's content). The risks are recursion (A embeds B, B embeds A) and snapshot staleness (once the target is revised, is the embed the old one or the live one?). Revisit once links are actually being used.
 
@@ -114,20 +114,20 @@ Three tiers, cheapest to most expensive:
 
 ## F7 · External deep links (2026-07-27 ✅ done)
 
-**What**: reach a specific document in one step from **outside** zhupi — `.../zhupi/?pr=13`, narrowing to document and line when needed.
+**What**: reach a specific document in one step from **outside** menxia — `.../menxia/?pr=13`, narrowing to document and line when needed.
 
-**Why**: today an agent that has just submitted a document can only say "go find document 13 in the list" — there's no clickable link to give. Hit in real use on 2026-07-27: the agent finished submitting and handed over a GitHub link, Charlie opened it and found "this isn't zhupi" — **because outside the home list, zhupi had no shareable URL at all**. Once there are more documents, every hand-off means hunting by hand; and every scenario where you arrive from a phone notification / WeChat / email is broken too.
+**Why**: today an agent that has just submitted a document can only say "go find document 13 in the list" — there's no clickable link to give. Hit in real use on 2026-07-27: the agent finished submitting and handed over a GitHub link, Charlie opened it and found "this isn't zhupi" — **because outside the home list, zhupi had no shareable URL at all**. Once there are more documents, every hand-off means hunting by hand; and every scenario where you arrive from a phone notification / WeChat / email is broken too. (朱批/zhupi are legacy terms, changed 7/31)
 
 **Why it's cheap**: F6 already did the hard part — `link.js`'s `parseZhupiLink()` already parses same-repo permalinks into `{prNumber, path, line}`, and `buildRef()` already generates them in reverse. What's missing is just **reading the URL parameters once at startup** and then walking the same navigation path. Two possible shapes (leaning toward taking both):
 
 - `?pr=13`, `?pr=13&path=docs/a.md&line=42` — short, easy to say, easy for the agent to assemble
 - `?ref=<GitHub permalink>` — feed in the three link shapes F6 already recognizes, zero new syntax
 
-**Alongside**: the address bar should update with the current document/position (`history.replaceState`), which makes browser bookmarks and ⌘L "copy current address" work for free; "quote this" in the top bar can offer a "copy zhupi deep link" shape as well.
+**Alongside**: the address bar should update with the current document/position (`history.replaceState`), which makes browser bookmarks and ⌘L "copy current address" work for free; "quote this" in the top bar can offer a "copy menxia deep link" shape as well.
 
 **Undecided**: does a shared link point at "this document" or "this sentence in this document" — the latter means encoding anchor information into the URL, consistent with F6's quoted-fallback philosophy, but the URL gets long. Leaning toward: document by default, line number only when there's a selection.
 
-**What was built (both shapes taken)**: `?pr=13`, `?pr=13&path=docs/a.md&line=42`, and `?ref=<GitHub permalink>` (reusing F6's parser, zero new syntax). It navigates on arrival, and an archived document automatically switches to the "已钦此" (merged) tab; a link pointing at a nonexistent document says so instead of showing a blank page. The address bar follows the current document/file (`replaceState`, so it doesn't pollute the back button), which makes ⌘L and bookmarks work natively. "Quote this" now copies a **zhupi deep link** by default (click it and you land in the app, on that block); hold Alt to copy the GitHub permalink instead.
+**What was built (both shapes taken)**: `?pr=13`, `?pr=13&path=docs/a.md&line=42`, and `?ref=<GitHub permalink>` (reusing F6's parser, zero new syntax). It navigates on arrival, and an archived document automatically switches to the "已画可" (merged) tab; a link pointing at a nonexistent document says so instead of showing a blank page. The address bar follows the current document/file (`replaceState`, so it doesn't pollute the back button), which makes ⌘L and bookmarks work natively. "Quote this" now copies a **menxia deep link** by default (click it and you land in the app, on that block); hold Alt to copy the GitHub permalink instead.
 
 **Scheduling postscript**: the entry originally read "M2/M3 loop comes first, only jump the queue if it really has to" — that sentence was already stale when written (all three v0 milestones finished that same day; there was no queue in front of it). It was built directly as suggested, in about an hour, matching the estimate.
 
@@ -139,11 +139,11 @@ Three tiers, cheapest to most expensive:
 
 **Why**: hit in real use on 2026-07-27 (PR #12 conversation comment, verbatim: "this bilingual thing gives me a headache, can it be like a GitHub readme where I can switch languages"). All of Charlie's project docs are bilingual (English for the outside world, Chinese for himself), but **bilingual serves "two kinds of reader", not "one reader reading it twice"** — when EN and Chinese alternate paragraph by paragraph, the Chinese reader spends the whole document filtering out half of it with their eyes. Pure noise. Filed as bug/friction, not a new feature during the freeze.
 
-**How**: follow the GitHub README multi-language convention — within one document, `foo.md` (English) and `foo.zh-CN.md` (Chinese) are language variants of each other. zhupi already has the full file list for a document, so detection is a single rule: "same basename + `.zh-CN` suffix". On a hit, render a switcher chip in the document header; on a miss, treat it as an ordinary multi-file document. This repo's own `README.md` / `README.zh-CN.md` is a ready-made example.
+**How**: follow the GitHub README multi-language convention — within one document, `foo.md` (English) and `foo.zh-CN.md` (Chinese) are language variants of each other. menxia already has the full file list for a document, so detection is a single rule: "same basename + `.zh-CN` suffix". On a hit, render a switcher chip in the document header; on a miss, treat it as an ordinary multi-file document. This repo's own `README.md` / `README.zh-CN.md` is a ready-made example.
 
-**Why not do "bilingual document language filtering" inside the app**: parsing interleaved bilingual prose means guessing (which paragraph is English, which is Chinese, how headings pair up) — fragile and guaranteed to misfire eventually. Leave the splitting on the **content side** (the agent writes two cross-linked files in the first place, now promoted to the default), and let zhupi do **view switching** only — consistent with the "intelligence lives agent-side, zhupi is just a lens" boundary.
+**Why not do "bilingual document language filtering" inside the app**: parsing interleaved bilingual prose means guessing (which paragraph is English, which is Chinese, how headings pair up) — fragile and guaranteed to misfire eventually. Leave the splitting on the **content side** (the agent writes two cross-linked files in the first place, now promoted to the default), and let menxia do **view switching** only — consistent with the "intelligence lives agent-side, menxia is just a lens" boundary.
 
-**Which file a comment belongs to**: 朱批 anchors on path+line, so a comment made on the Chinese version lands on the Chinese file — which is correct, and comments do not need to sync across languages. But one thing to think through: **will the same point get commented once on each version?** Current judgment is no (he only reads the Chinese version); revisit if it actually happens.
+**Which file a comment belongs to**: 涂归 anchors on path+line, so a comment made on the Chinese version lands on the Chinese file — which is correct, and comments do not need to sync across languages. But one thing to think through: **will the same point get commented once on each version?** Current judgment is no (he only reads the Chinese version); revisit if it actually happens.
 
 **What was built**: detection is exactly one rule — same basename + `.zh-CN` suffix (`foo.md` ↔ `foo.zh-CN.md`). On a hit, a `中 / EN` chip appears in the document header; switching only swaps the language variant and never leaves the document. The preference is stored in localStorage, defaults to Chinese, and picks the first file by preference when the document opens. **Paired files are listed once in the document tabs** (otherwise having both side by side just moves the noise from the body into the tab bar) — the label drops the language suffix, and language is expressed by the chip. Single-language documents behave exactly as before, with no extra controls.
 
@@ -157,11 +157,11 @@ Three tiers, cheapest to most expensive:
 
 **Why**: after commenting you have to go back and tell the agent "read the comments" — and the agent has dozens of sessions. Finding the right one by hand is slow and frequently wrong: comments written, then stuck on "who do I send this to."
 
-**How**: two halves, neither requiring changes to Happy. When submitting, the agent embeds its own Happy session id into the PR body as an HTML comment line, `<!-- happy-session: <id> -->` (the id comes from `~/.claude/skills/review-loop/happy-session-id.sh`: walk up the ppid chain and match against the `hostPid` recorded for each session in `~/.happy/sessions.json`). zhupi's `parseHappySession()` recognizes it in the body and renders a button pointing at `…/happy/session/<id>`. Happy's web deployment has a `404.html` SPA fallback, so the deep link goes straight into the session.
+**How**: two halves, neither requiring changes to Happy. When submitting, the agent embeds its own Happy session id into the PR body as an HTML comment line, `<!-- happy-session: <id> -->` (the id comes from `~/.claude/skills/review-loop/happy-session-id.sh`: walk up the ppid chain and match against the `hostPid` recorded for each session in `~/.happy/sessions.json`). menxia's `parseHappySession()` recognizes it in the body and renders a button pointing at `…/happy/session/<id>`. Happy's web deployment has a `404.html` SPA fallback, so the deep link goes straight into the session.
 
 **Trade-offs**: ① **no auto-jump** — submitting comments doesn't hijack the page, it just leaves the button there (decided 2026-07-27: minimal change, and he often comments on several documents in a row) ② a comment rather than a visible link: takes no space on GitHub, and the agent only has to append one line ③ the marker can also hold a full URL, so anyone forking and self-hosting Happy doesn't need code changes.
 
-**Known gap**: the session may have been reaped or exited long ago, in which case the link is archive-only and the conversation can't be resumed — zhupi has no Happy API and can't tell whether it's alive, so it only says so in the tooltip. A real fix requires Happy to support resume deep links.
+**Known gap**: the session may have been reaped or exited long ago, in which case the link is archive-only and the conversation can't be resumed — menxia has no Happy API and can't tell whether it's alive, so it only says so in the tooltip. A real fix requires Happy to support resume deep links.
 
 ---
 
@@ -193,7 +193,7 @@ Three tiers, cheapest to most expensive:
 
 ## Backend evaluation, 2026-07-28
 
-**Verdict: don't build one.** Full evaluation lives in the review repo at `docs/zhupi-thin-backend-eval.md` (PR #16). Three of the four candidate capabilities are solvable in the pure-static tier: push → F10; cross-device drafts → F11; multi-person sign-off → already analysed in F5 (zhupi has no user system, so it is multi-user by nature; sign-off uses GitHub's native APPROVE; the barrier is repo permissions, not a backend). The only one genuinely needing a hosted secret — in-app live Q&A — is an unvalidated need.
+**Verdict: don't build one.** Full evaluation lives in the review repo at `docs/zhupi-thin-backend-eval.md` (PR #16). Three of the four candidate capabilities are solvable in the pure-static tier: push → F10; cross-device drafts → F11; multi-person sign-off → already analysed in F5 (menxia has no user system, so it is multi-user by nature; sign-off uses GitHub's native APPROVE; the barrier is repo permissions, not a backend). The only one genuinely needing a hosted secret — in-app live Q&A — is an unvalidated need.
 
 Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a backend" is closed by citing that section.
 
@@ -219,7 +219,7 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 
 **Why**: unverified claims are the single most distinctive property of AI-authored text, and the reader currently does nothing with them (#60: "untrustworthiness and volume — both untouched"). The convention already half-exists — the outsourced-research house rules require the marker; the reader just can't see it.
 
-**How**: same pattern as F2's 臣拟 marker — intelligence stays agent-side, zhupi only recognizes a token and renders it. Fits the architectural boundary above.
+**How**: same pattern as F2's 臣拟 marker — intelligence stays agent-side, menxia only recognizes a token and renders it. Fits the architectural boundary above.
 
 **Status**: approved on #60, after F1; build after the 8/8 reckoning. → 2026-07-31 built ahead of schedule and merged (Charlie called it — not waiting for 8/8).
 

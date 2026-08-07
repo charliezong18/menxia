@@ -21,12 +21,21 @@ is_zero() { [[ "$1" =~ ^0+$ ]]; }
 CHANGED=""
 NREF=0
 WIDEN=0
+# 旧词闸门的排除区：这几个文件按设计就该留着旧词——改名脚本的映射表本身是数据，
+# 另外三张是历史表格（账本、已定问题），记的就是当天拍板时的措辞。
+# 本文件自己也要排除：下面那行 LEGACY_RE 的模式定义就是一串旧词，不排除就自己咬自己
+# （2026-08-06 实测撞到：第一次 push 被自己拦住）。
+LEGACY_SKIP=(':(exclude).githooks/pre-push' ':(exclude)tang-rename.py'
+             ':(exclude)MIGRATION-WATCH.zh-CN.md'
+             ':(exclude)OPEN-QUESTIONS.md' ':(exclude)OPEN-QUESTIONS.zh-CN.md')
+ADDED=""
 while read -r _lref lsha _rref rsha; do
   [ -z "${lsha:-}" ] && continue
   is_zero "$lsha" && continue                      # 删远端分支：没内容可测
   NREF=$((NREF + 1))
   if ! is_zero "$rsha" && git cat-file -e "${rsha}^{commit}" 2>/dev/null; then
     CHANGED+="$(git diff --name-only "$rsha" "$lsha")"$'\n'
+    ADDED+="$(git diff "$rsha" "$lsha" -- . "${LEGACY_SKIP[@]}" | grep '^+' || true)"$'\n'
   else
     WIDEN=1                                        # 新建远端分支 / 本地没这个对象：算不出增量
   fi
@@ -45,6 +54,31 @@ if [ -n "${PREPUSH_DRYRUN:-}" ]; then
 fi
 
 echo "── pre-push 闸门 ──"
+
+# 旧词闸门（2026-08-06 立）。病史：7/31 唐制改名把「档案文档」整体排除，规矩写的是
+# 「档案不追改，历史该留着旧称」——被读成整份文档都别动，于是 SPEC/BACKLOG/OPEN-QUESTIONS
+# 带着 134 处旧词在 GitHub 上活了 6 天，直到 Charlie 自己读 PAIN.md 读懵才发现。
+# 当时没有任何东西在拦。这就是那个"任何东西"。
+#
+# 只看本次新增的行：存量已分类清完，剩下的是协议串与历史叙述，反复报只会教人忽略闸门。
+LEGACY_RE='朱批|奏折|钦此|总批|待批|御笔'
+LEGACY_OK='旧词|legacy term|原文存档|original text preserved|存账|存拍板|改成定稿词|已改|changed 7/31|改名时漏改|唐制统一|Tang-dynasty terms'
+if [ "$NREF" -eq 0 ] || [ "$WIDEN" -eq 1 ]; then
+  # 算不出增量就扫全仓（与上面同一条纪律：只许往严的方向倒）
+  echo "  旧词闸门：算不出本次增量，改扫全仓"
+  LEGACY_HITS="$(git grep -nE "$LEGACY_RE" HEAD -- . "${LEGACY_SKIP[@]}" 2>/dev/null | grep -vE "$LEGACY_OK" || true)"
+else
+  LEGACY_HITS="$(printf '%s' "$ADDED" | grep -E "$LEGACY_RE" | grep -vE "$LEGACY_OK" || true)"
+fi
+if [ -n "$LEGACY_HITS" ]; then
+  echo "✖ 新增内容里有 7/31 已废的旧词，push 中止："
+  printf '%s\n' "$LEGACY_HITS" | head -12 | sed 's/^/    /'
+  echo "  现役词：门下 · 敕草 · 涂归 · 判 · 画可 · 待审"
+  echo "  真要记历史（当时屏幕上是哪几个字），同一行写上「旧词」二字即放行。"
+  echo "  确要推：git push --no-verify"
+  exit 1
+fi
+echo "✔ 旧词闸门通过"
 # 量测随每次 push 打脸：账本停摆过 7 个 commit，根因是记账没有触发点。
 # 量 HEAD 不量工作树——这行是 MIGRATION-WATCH 的数据源，脏树上量出来的数会说谎（第七轮评审）。
 # #1 看「最大单文件」而非写死 ui.js：拆出 components/ 后，写死会让下一个养到 800 行的文件永不触发。

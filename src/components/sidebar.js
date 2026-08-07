@@ -1,4 +1,4 @@
-// 侧栏：搜索框 / 搜索结果 / 待批·已画可两栏 / 设置入口。
+// 侧栏：搜索框 / 搜索结果 / 待审·已画可两栏 / 设置入口。
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';

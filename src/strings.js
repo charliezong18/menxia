@@ -168,7 +168,7 @@ export const S = deepFreeze({
     steps: {
       repo: { pre: '填', em: '敕草仓库', mid: '：agent 往哪个仓库开 PR，就填哪个，格式 ', code: 'owner/repo', post: '（建议私有）' },
       token: { pre: '去 ', link: 'GitHub 生成 fine-grained token', post: '（名字随意，Expiration 建议 90 days）' },
-      access: { pre: 'Repository access：默认停在 Public repositories，', em: '必须改成 Only select repositories', mid: ' → 选 ', post: '（不是 zhupi 本身）' },
+      access: { pre: 'Repository access：默认停在 Public repositories，', em: '必须改成 Only select repositories', mid: ' → 选 ', post: '（不是门下本身）' },
       perms: {
         pre: 'Permissions → Repository permissions 加', em1: '两', mid1: '项：', em2: 'Contents: Read and write',
         mid2: ' ＋ ', em3: 'Pull requests: Read and write', mid3: '。Metadata 自动带上不用管；',
@@ -278,6 +278,17 @@ export const S = deepFreeze({
   threadView: {
     aria: '展读涂归',
     line: (n) => `第 ${n} 行`,
+    close: '掩卷',
+    closeTitle: '收起（Esc）',
+  },
+
+  // 展图浮窗（正文图从栏宽里捞出来看原尺寸）
+  imageView: {
+    aria: '展图',
+    untitled: '（无题图）',
+    full: '原尺寸',
+    fit: '合观',
+    zoomTitle: '在「塞进屏幕」与「原尺寸（可滚）」之间切换——点图也行',
     close: '掩卷',
     closeTitle: '收起（Esc）',
   },

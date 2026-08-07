@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><title>zhupi DOM tests</title></head>
+<head><meta charset="utf-8"><title>menxia DOM tests</title></head>
 <body>
 <!-- DOM 层测试：跑在真 Chrome 里（不引 jsdom）。测的是渲染行号规则与锚定几何——
      M2 锚定的全部精度都建立在这两块上，改渲染器最容易在这里悄悄坏掉。
@@ -157,6 +157,42 @@ eq('双链只给锚＝本篇内跳转（不拼成 .md#…那种死链）', decod
 // 本条只钉 href 字符串这一层。补法：rel 命中折内时把片段存进 jumpRef，docTick 就位后调 jumpToAnchor。
 eq('双链带文件名时 href 仍是「文件 + 锚」（点击暂只切篇不落锚）',
   decodeURI(wHrefs[1] ?? ''), '别篇.md#某节');
+
+// ── 展图（PAIN #55）──
+// 委托而非逐图挂 handler，所以这里要钉的正是「委托选中了谁」：
+// 绝对 URL 的图也要认（挂 hydrateRelativeImages 的方案只认相对路径，那是最初的错方案）；
+// 岛屿 innerHTML 整个换掉之后仍然要认（岛屿是 uncontrolled 的，每次换篇都 replaceChildren）。
+const { bindImageZoom } = await import('../src/components/image-view.js');
+let zoomed = null;
+const unbind = bindImageZoom(stage, (v) => { zoomed = v; });
+
+stage.innerHTML = renderMarkdown('![全景架构](assets/wiki-overview.png)');
+stage.querySelector('img').click();
+eq('点正文图 → 开展图窗，带上 src 与 alt', [zoomed?.src?.endsWith('assets/wiki-overview.png'), zoomed?.alt],
+  [true, '全景架构']);
+
+zoomed = null;
+stage.innerHTML = renderMarkdown('![远图](https://example.com/a.png)');
+stage.querySelector('img').click();
+ok_('绝对 URL 的图同样能点开（委托覆盖全部 img，不只相对路径那批）', zoomed !== null);
+
+// 岛屿换过两轮 innerHTML 了，监听器仍在 —— 这是选委托而非逐图绑定的全部理由
+zoomed = null;
+stage.innerHTML = renderMarkdown('![换篇后](assets/x.png)');
+stage.querySelector('img').click();
+ok_('岛屿 innerHTML 换掉后仍认（委托扛得住 replaceChildren）', zoomed !== null);
+
+// 包在链接里的图应当走链接，别劫持成展图 —— 否则外链图永远点不出去
+zoomed = null;
+stage.innerHTML = renderMarkdown('[![带链接的图](assets/y.png)](https://example.com)');
+stage.querySelector('img').click();
+ok_('图外面套着链接时不劫持（让位给链接本身）', zoomed === null);
+
+unbind();
+zoomed = null;
+stage.innerHTML = renderMarkdown('![解绑后](assets/z.png)');
+stage.querySelector('img').click();
+ok_('解绑后不再触发（effect 清理是真的清掉了）', zoomed === null);
 
 console.log(`[dom] RESULT pass=${pass} fail=${fail}`);
 </script>

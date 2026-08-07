@@ -19,6 +19,7 @@ import { Sidebar } from './components/sidebar.js';
 import { Topbar } from './components/topbar.js';
 import { OtherThreads } from './components/other-threads.js';
 import { ThreadView } from './components/thread-view.js';
+import { ImageView, bindImageZoom } from './components/image-view.js';
 import { ZongpiShown } from './components/zongpi-shown.js';
 import { FolderBody, hasDecisions, parseFolderBody } from './components/folder-body.js';
 import { assembleCarry } from './carry.js';
@@ -47,7 +48,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
   'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js',
-  'src/slug.js', 'src/components/scroll-ends.js',
+  'src/slug.js', 'src/components/scroll-ends.js', 'src/components/image-view.js',
   // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
   'src/verify.js'];
 async function detectNewBuild() {
@@ -114,6 +115,7 @@ function App() {
   const [cur, setCur] = useState(null);          // { pr, files, docs }
   const [docPath, setDocPath] = useState(null);
   const [docErr, setDocErr] = useState(null);
+  const [zoomImg, setZoomImg] = useState(null); // 展图浮窗：{src, alt} | null
   const [docTick, setDocTick] = useState(0);     // 文档 DOM 就位的信号（岛屿内容不归 vdom 管）
   const [drafts, setDrafts] = useState([]);
   const [editing, setEditing] = useState(null);
@@ -138,7 +140,7 @@ function App() {
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [readStep, setReadStepState] = useState(getReadStep()); // 正文字号档位，记住上次
   const [stale, setStale] = useState(false);
-  const [tab, setTab] = useState('open');        // open=待批 / done=已画可（归档，只读）
+  const [tab, setTab] = useState('open');        // open=待审 / done=已画可（归档，只读）
   const [donePrs, setDonePrs] = useState([]);
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
   const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中
@@ -159,7 +161,7 @@ function App() {
   const archived = Boolean(cur?.pr?.merged_at);
   const canAnnotate = onHead && !archived;      // 旧版 / 归档折一律只读
   const happyUrl = parseHappySession(cur?.pr?.body);   // 呈折的那次奏对（agent 埋在 PR body 里）
-  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate, viewThread };
+  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate, viewThread, zoomImg };
 
   const say = useCallback((t) => setNotice(t), []);
 
@@ -469,7 +471,11 @@ function App() {
     if (!col || !doc) return;
     const colRect = col.getBoundingClientRect();
     let prevBottom = 0;
-    [...col.children].forEach((card) => {
+    // 判卡跳过：它 2026-08-06 起是**钉在视口里**的 fixed 卡（见 cards.js），不参与右缘堆叠。
+    // 不跳过的话这里会给它写一个内联 `top`——内联样式压过 CSS 的 `top:50%`，再叠上
+    // `translateY(-50%)` 就把它推到视口上方去了（实测 top=-95，整张卡看不见）。
+    // 它也不该计进 prevBottom：那会在普通卡之间凭空顶出一段它自己已经不占的高度。
+    [...col.children].filter((c) => !c.classList.contains('zongpi-card')).forEach((card) => {
       let top = prevBottom + 12;
       const line = +card.dataset.blockLine;
       // 旧版视图下行号系 head 坐标，对旧版 DOM 会系统性挂错块——改静态堆叠（第四轮评审 D）
@@ -502,6 +508,12 @@ function App() {
     ro.observe(docRef.current);
     return () => ro.disconnect();
   }, [docPath, docErr]); // 每次换文档/错误恢复都扎实重挂，不赌 vdom 节点复用（评审：布尔依赖太脆）
+  // 展图：正文岛屿上一个事件委托，覆盖全部 img（含绝对 URL 的），且扛住岛屿 replaceChildren。
+  // **依赖必须跟 ResizeObserver 那条一模一样（docPath 不能省）**：首次挂载时还没开折，
+  // 整个 main 都没渲染，docRef.current 是 null——只写 [docErr] 就等于绑了个空，
+  // 而后来岛屿出现时 effect 不再跑，图永远点不开。2026-08-06 实伤：三层测试全绿
+  // （DOM 层是直接拿真元素调 bindImageZoom，绕过了这个时序），真在 app 里点却毫无反应。
+  useEffect(() => bindImageZoom(docRef.current, setZoomImg), [docPath, docErr]);
   useEffect(() => {
     const onResize = () => layoutCards();
     window.addEventListener('resize', onResize);
@@ -543,6 +555,9 @@ function App() {
     const onKeyDown = (e) => {
       // Esc 收展读浮窗。放在 ⌘Enter 之前、且不排除输入框——浮窗里没有可编辑区，
       // 而「按 Esc 关不掉」是模态窗最招骂的一种坏法。
+      // 展图窗盖在展读窗之上（z 60 > 50），所以 Esc 先收它——否则会从底下那层开始关，
+      // 视觉上「按了没反应」。
+      if (e.key === 'Escape' && R.current.zoomImg) { setZoomImg(null); return; }
       if (e.key === 'Escape' && R.current.viewThread != null) { setViewThread(null); return; }
       if (!(e.metaKey || e.ctrlKey) || e.key !== 'Enter') return;
       // 阻断修复：卡内 ⌘Enter 的同一事件会冒泡到这里——不排除输入框就会把整批当场呈出
@@ -1083,6 +1098,9 @@ function App() {
       ${viewing && html`
         <${ThreadView} key=${'v' + viewing.t.root.id} t=${viewing.t} blockLine=${viewing.blockLine}
           outdated=${viewing.outdated} hydrate=${hydrateComment} onClose=${() => setViewThread(null)} />`}
+      ${zoomImg && html`
+        <${ImageView} key=${'img' + zoomImg.src} src=${zoomImg.src} alt=${zoomImg.alt}
+          onClose=${() => setZoomImg(null)} />`}
     </div>`;
 }
 

@@ -47,8 +47,14 @@ PRECISE = [
      "search fixture 恢复原意（嵌套一次 + 独立一次）"),
 ]
 
-# 活的界面与测试。档案文档（SPEC/BACKLOG/PAIN/OPEN-QUESTIONS/MIGRATION-WATCH）刻意排除：
-# 词表自己定的规矩 —— 档案不追改，历史该留着旧称。
+# 活的界面与测试。档案文档（SPEC/BACKLOG/PAIN/OPEN-QUESTIONS/MIGRATION-WATCH）不在这里改。
+# 规矩 2026-08-06 细化 —— 原文写的是「档案不追改，历史该留着旧称」，实际被读成整份文档都别动，
+# 结果这些文件带着 134 处旧词活到 8/6，Charlie 在 GitHub 上读 PAIN.md 当场看懵。
+# 留旧称的只是**历史叙述**：当时屏幕上是哪几个字、当天拍了什么板、某批 commit 叫什么名。
+# 文档的**自述与现役规格**照样跟新词 —— PAIN 开头那句「这是什么」、SPEC 的词表与 §2、
+# BACKLOG 的方案正文，都是 agent 每次开工要读的活文件，留旧词等于教下一个 agent 说旧话
+# （这正是 PAIN #66 记的病根：agent 的词汇与屏幕上的字不一致）。
+# 该批已于 2026-08-06 手工清过一轮，历史叙述处一律原样保留并加脚注注明「旧词，7/31 已改」。
 INCLUDE_DIRS = ("src", "test")
 INCLUDE_FILES = ("index.html", "README.zh-CN.md", "README.md")
 
