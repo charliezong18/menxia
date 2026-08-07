@@ -716,8 +716,8 @@ async function runSmoke(docEl) {
     }
     chk('archive-float-suppressed', !document.querySelector('.zhupi-float'));
     // 切回待审继续后面的断言。
-    // 用 data-tab 不用文字：这行原来是 textContent.includes('待批')，2026-08-02 把词表漏网的
-    // 「待批」改成定稿词「待审」时，find 静默返回 undefined —— 没点、没报错，后面 6 条断言
+    // 用 data-tab 不用文字：这行原来是 textContent.includes('待批')（旧词），2026-08-02 把词表漏网的
+    // 「待批」（旧词）改成定稿词「待审」时，find 静默返回 undefined —— 没点、没报错，后面 6 条断言
     //（摘要卡 + 整条 submit 管线）连锁塌掉，看起来像提交管线坏了。裸字符串当跨层契约就是这样：
     // 改了不报错，只是什么都不做。选择器一律锚在不上屏的属性上。
     const openTab = document.querySelector('.list-tab[data-tab="open"]');
