@@ -14,6 +14,11 @@
 export const PROJ_PREFIX = 'proj:';
 export const KIND_PREFIX = 'kind:';
 export const WAIT_PREFIX = 'wait:';
+// 签：按主题归堆，**跨状态**（在读的与已画可的同架）。前缀是协议常量，逐字对齐写侧
+// menxia-mcp/src/track.ts，改一头必静默失效。取值全集不硬编码——签集以仓里实际出现的
+// `签:*` label 为准（见 sidebar 的动态并集），初始那七个词（旅行/开发/身份/工作/健康/钱/文史）
+// 只是写侧的种子，读侧一个都不写死。
+export const QIAN_PREFIX = '签:';
 
 const valuesWithPrefix = (pr, prefix) =>
   (pr?.labels || [])
@@ -26,6 +31,9 @@ export const kindOf = (pr) => valuesWithPrefix(pr, KIND_PREFIX)[0] || null;
 
 /** 等谁（你拍/你读/agent/闲）。没标返回 null。 */
 export const waitOf = (pr) => valuesWithPrefix(pr, WAIT_PREFIX)[0] || null;
+
+/** 主题签（一折可多签）。没标返回空数组。 */
+export const qianOf = (pr) => valuesWithPrefix(pr, QIAN_PREFIX);
 
 /**
  * 弘文馆的判据：**`kind:读物`，但等你的不藏**（review #69 批定 2026-08-05）。

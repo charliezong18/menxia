@@ -88,6 +88,9 @@ const PR = {
   draft: false,
   node_id: 'DEMO',
   head: { sha: 'demo0000' },
+  // 多签：验卡面多个 chip 并排。`签:旅行` 同时挂在已画可样例 #998 上（下面 listMergedPRs
+  // 直接 `...PR` 继承），是「按签跨状态同架」那条冒烟断言的命根——一签串起 open + merged。
+  labels: [{ name: 'proj:menxia' }, { name: '签:旅行' }, { name: '签:开发' }],
   body: BODY,
 };
 
@@ -98,7 +101,8 @@ const SHELF_PR = {
   ...PR,
   number: 997,
   title: '读物：弘文馆样例（闲时读，不催）',
-  labels: [{ name: 'proj:menxia' }, { name: 'kind:读物' }, { name: 'wait:闲' }],
+  // 覆盖 PR 的 labels（否则连坐继承 签:旅行）；弘文馆样例也带一个签，验 chip 在书架卡上照样出。
+  labels: [{ name: 'proj:menxia' }, { name: 'kind:读物' }, { name: 'wait:闲' }, { name: '签:开发' }],
   updated_at: new Date(Date.now() - 1728e5).toISOString(),
 };
 
@@ -180,6 +184,8 @@ export const demoApi = {
     ...PR, number: 998, title: '涂归 demo 折 · 已画可（归档样例）',
     merged_at: new Date(Date.now() - 864e5).toISOString(),
     body: BODY_FREEFORM,  // 手开折：无五段结构 → 说明块该默认收起（issue #13 的条件展开）
+    // labels 由 ...PR 继承（签:旅行 / 签:开发）——这份已画可样例与 open 的 #999 共 签:旅行，
+    // 是「按签视图同时列出 open 与 merged」那条断言的 merged 半边。
   }],
   listPRFiles: async () => [
     { filename: 'docs/demo.md', status: 'added', patch: PATCH },
@@ -629,6 +635,38 @@ async function runSmoke(docEl) {
   document.querySelector('.search-clear')?.click();
   await sleep(200);
   chk('search-clear-restores', Boolean(document.querySelector('.list-tabs')));
+
+  // ── 签（按主题归堆，跨状态同架）─────────────────────────────────────
+  // demo 里 #999(open) 与 #998(已画可) 共 签:旅行，#997(弘文馆) 挂 签:开发。
+  // 卡面 chip：待审清单里 #999 挂着 签:旅行/签:开发，meta 上应画出 .qian-chip。
+  const openQianChip = [...document.querySelectorAll('#pr-list .pr-item .qian-chip')]
+    .map((c) => c.textContent.trim());
+  chk('qian-chip-on-card', openQianChip.includes('旅行'),
+    `chips=${openQianChip.join('|') || 'NONE'}`);
+  // chip 条：open+merged 并集里出现过的签，各带计数。签:旅行 跨两状态 → 计数应为 2。
+  const travelFilter = document.querySelector('.qian-filter[data-qian="旅行"]');
+  chk('qian-bar-shows-union-with-count',
+    Boolean(travelFilter) && (travelFilter.textContent || '').includes('2'),
+    `label=${travelFilter?.textContent?.trim() || 'NONE'}`);
+  // 点「旅行」→ 切成按签视图，一屏同列该签下全部折，不分在读/已画可。
+  travelFilter?.click();
+  await sleep(200);
+  const qList = document.querySelector('#pr-list.qian-list');
+  chk('qian-view-replaces-tabs',
+    Boolean(qList) && !document.querySelector('.list-tabs'),
+    `qList=${Boolean(qList)} tabs=${Boolean(document.querySelector('.list-tabs'))}`);
+  // **命根**：这一列必须同时含 open 的 #999 与 merged 的 #998（跨状态同架）。
+  const qItems = [...document.querySelectorAll('#pr-list.qian-list .pr-item')];
+  const qHasOpen = qItems.some((b) => b.textContent.includes('#999') && !b.classList.contains('pr-done'));
+  const qHasMerged = qItems.some((b) => b.textContent.includes('#998') && b.classList.contains('pr-done'));
+  chk('qian-view-lists-open-and-merged-together', qHasOpen && qHasMerged,
+    `n=${qItems.length} open999=${qHasOpen} merged998=${qHasMerged}`);
+  // 清除 → 回到原三 tab 视图。
+  document.querySelector('.qian-clear')?.click();
+  await sleep(200);
+  chk('qian-clear-restores-tabs',
+    Boolean(document.querySelector('.list-tabs')) && !document.querySelector('#pr-list.qian-list'),
+    `tabs=${Boolean(document.querySelector('.list-tabs'))}`);
 
   // F8 语言切页：双语折出中/EN chip，切换只换语言不离开折；tab 里成对的只列一个
   const tabsNow = [...document.querySelectorAll('.doc-tab')].map((b) => b.textContent.trim());

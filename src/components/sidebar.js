@@ -3,7 +3,7 @@
 import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
 import { folderSummary, DECISIONS_TITLE } from './folder-body.js';
-import { splitShelf, kindOf } from '../track.js';
+import { splitShelf, kindOf, qianOf } from '../track.js';
 
 /**
  * 清单卡的摘要行（F1，2026-07-31）：一句 TLDR gist + 「待你拍板 · n 条」角标。
@@ -52,22 +52,43 @@ function verifyBadge(n) {
  */
 function folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf = false }) {
   const kind = shelf ? kindOf(pr) : null;
+  // 签 chip 三处（待审 / 弘文馆 / 已画可）都出，与卡面 meta 同一套视觉语言，小、不抢戏。
+  const qians = qianOf(pr);
   return html`
               <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
                 onClick=${() => onOpenPR(pr)}>
                 <h3>${pr.title}</h3>
                 <div class="meta">#${pr.number} · ${pr.merged_at ? S.folder.mergedAt(timeAgo(pr.merged_at)) : S.folder.submittedAt(timeAgo(pr.updated_at))}${
                   pr.merged_at ? null : checkBadge(checks[pr.number])}${verifyBadge(verifyCounts[pr.number])}${
-                  kind ? html`<span class="kind-chip">${kind}</span>` : null}</div>
+                  kind ? html`<span class="kind-chip">${kind}</span>` : null}${
+                  qians.map((w) => html`<span class="qian-chip" key=${'q' + w}>${w}</span>`)}</div>
                 ${summaryLine(pr)}
               </button>`;
 }
 
+// 签集：open + merged 两份清单里出现过的所有 `签:*` 的并集，各带计数（跨状态归堆的口径）。
+// 不写死那七个初始词——以仓里实际出现的为准；出现序稳定（首见即入，供 chip 条按发现顺序排）。
+function qianCounts(prs, donePrs) {
+  const seen = new Map();
+  for (const pr of [...(prs || []), ...(donePrs || [])]) {
+    for (const w of qianOf(pr)) seen.set(w, (seen.get(w) || 0) + 1);
+  }
+  return [...seen.entries()].map(([word, n]) => ({ word, n }));
+}
+
 export function Sidebar({
   q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {}, verifyCounts = {},
+  qian = null, onQian = () => {},
   onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings,
 }) {
   const match = (p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase());
+  // 签集与「按签」跨状态清单。qian 非空 = 处在「按签」视图：把 open+merged 里挂该签的折
+  // 一屏同列（在读的走朱脊/呈于、已画可的走方印/画可于，状态视觉全由 folderCard 现成表达）。
+  const qCounts = qianCounts(prs, donePrs);
+  const qActive = qian && qCounts.some((c) => c.word === qian);   // 选中的签在仓里真存在才当激活
+  const qianList = qActive
+    ? [...prs, ...donePrs].filter((p) => qianOf(p).includes(qian)).filter(match)
+    : [];
   // 弘文馆只从待审里分（已画可栏是归档，本来就没人催，再分一次纯属噪音）。
   // 2026-08-03：从「待审列表底部的折叠区」升为第三个 tab。原先那版功能正确、数也对，
   // 但折叠区在 #pr-list 的最底下——清单一长，展开出来的卡全在可视区外，点了像没反应。
@@ -100,7 +121,21 @@ export function Sidebar({
                   </button>`)}
               </div>`) : html`<p class="state">${S.search.noResults(q)}</p>`}
           </nav>`}
-        ${!hits && html`
+        ${!hits && qCounts.length ? html`
+        <div class="qian-bar">
+          ${qCounts.map((c) => html`
+            <button class=${'qian-filter' + (qActive && c.word === qian ? ' active' : '')} data-qian=${c.word}
+              key=${'qf' + c.word} onClick=${() => onQian(qActive && c.word === qian ? null : c.word)}>${S.qian.chip(c.word, c.n)}</button>`)}
+          ${qActive && html`<button class="qian-clear" title=${S.qian.clearTitle} onClick=${() => onQian(null)}>${S.qian.clear}</button>`}
+        </div>` : ''}
+        ${!hits && qActive && html`
+        <nav id="pr-list" class="qian-list">
+          <p class="qian-crumb">${S.qian.crumb(qian)}</p>
+          ${qianList.length
+            ? qianList.map((pr) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf: false }))
+            : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : S.qian.empty(qian)}</p>`}
+        </nav>`}
+        ${!hits && !qActive && html`
         <div class="list-tabs">
           <button data-tab="open" class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(counts.desk.length)}</button>
           <button data-tab="done" class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => onTab('done')}>${S.nav.tabDone(donePrs.length)}</button>

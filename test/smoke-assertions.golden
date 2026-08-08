@@ -53,6 +53,11 @@ old-rev-cmd-enter-blocked
 old-rev-float-suppressed
 old-rev-notice-shown
 old-rev-submit-disabled
+qian-bar-shows-union-with-count
+qian-chip-on-card
+qian-clear-restores-tabs
+qian-view-lists-open-and-merged-together
+qian-view-replaces-tabs
 reply-rendered>=1
 rev-switcher-3-opts
 scroll-end-jumps-to-bottom

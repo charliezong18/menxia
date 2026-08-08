@@ -141,6 +141,7 @@ function App() {
   const [readStep, setReadStepState] = useState(getReadStep()); // 正文字号档位，记住上次
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待审 / done=已画可（归档，只读）
+  const [qian, setQianState] = useState(params.get('qian') || null); // 「按签」视图选中的签，null=三栏
   const [donePrs, setDonePrs] = useState([]);
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
   const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中
@@ -796,6 +797,14 @@ function App() {
     setHits(searchIndex(indexRef.current, query));
   }
   function clearSearch() { setQ(''); setHits(null); }
+  // 选/清一个签。顺手把 `?qian=旅行` 映进地址栏（直达 + 可分享），清除则剥掉该参数。
+  // 与 line 649 那处深链同一套 replaceState，不新开导航栈。
+  function setQian(word) {
+    setQianState(word);
+    const url = new URL(location.href);
+    if (word) url.searchParams.set('qian', word); else url.searchParams.delete('qian');
+    if (location.href !== url.href) history.replaceState(null, '', url.href);
+  }
   // 滚过去 + 闪一下。四个跳转入口（大纲 / 深链 / 搜索命中 / 页内锚点）共用一条落地动作，
   // 免得「跳到了但没闪」这种半截实现随新入口一个个长出来。
   function flashTo(el, block = 'start') {
@@ -1018,6 +1027,7 @@ function App() {
     <div id="app" style=${{ '--read-scale': scaleOf(readStep) }}>
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
         tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks} verifyCounts=${verifyCounts}
+        qian=${qian} onQian=${setQian}
         onQuery=${(v) => { setQ(v); if (hits) setHits(null); }}
         onSearch=${runSearch} onClearSearch=${clearSearch} onJumpToHit=${jumpToHit}
         onTab=${setTab} onOpenPR=${openPR}

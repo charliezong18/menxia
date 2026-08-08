@@ -104,6 +104,15 @@ export const S = deepFreeze({
     hint: '闲时读，不催。',
   },
 
+  // 签：按主题归堆的横条 + 「按签」视图。跨状态——点一个签，在读的与已画可的一屏同列。
+  qian: {
+    chip: (word, n) => `${word}${n ? ` ${n}` : ''}`,   // chip 条上：签名 + 计数
+    clear: '清除',
+    clearTitle: '收起「按签」，回到待审 / 已画可 / 弘文馆三栏',
+    crumb: (word) => `签 · ${word}`,                    // 「按签」视图的栏内标题
+    empty: (word) => `没有挂「${word}」签的折。`,
+  },
+
   // 折卡上的时间说明
   folder: {
     mergedAt: (ago) => `画可于 ${ago}`,
