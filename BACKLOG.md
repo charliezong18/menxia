@@ -295,3 +295,15 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 *Destination.* Merging a reading folder means "finished reading": the final text is delivered to the vault under `Hang/读物/` and gets a line in that README's index. 门下 is the **currently-reading surface**, the vault is the **finished library** — any one piece lives in exactly one of them at a time, so there is no double-write and no drift.
 
 **Not done**: zero write-side changes — `kind:读物` and the "reading defaults to `wait:闲`" rule already existed in menxia-mcp, and `trackAudit`'s drift check only ever watched `wait:你拍/你读`, so idle folders were never nagged in the first place. The UI string table is Chinese-only rather than i18n, which retires the design folder's "bilingual `strings.js` UI strings" line automatically.
+
+---
+
+## F18 · Tags v2 — apply/remove tags in the UI + tag management (2026-08-08, from #116; v1 shipped)
+
+**v1 shipped (2026-08-08, 97ab86d)**: a fourth label family `签:`. Card chips (all three lists), the tag chip bar (union across open+merged, with counts), the by-tag view (**open and merged folders on one shelf**, `?qian=` deep link, clear restores the three tabs); smoke 101→106. All 116 existing folders processed: 65 backfilled via the proj→tag mapping, 51 pre-track folders classified by agy from titles alone (its two honest ?s adjudicated locally from bodies) and then labeled — the only untagged folder is #30. The write side (menxia-mcp) merged `track.qian` the same day; **going live is tracked on that repo's own books** (see the "criterion NOT met" row in its MILESTONES).
+
+**v2 wants**: ① apply/remove a tag while reading — one tap on the list card or folder head, without visiting GitHub; ② tag management — rename/merge; an untagged-folder audit rides on `audit_folders`' trackNotes checks.
+
+**Precondition (test before building)**: the current PAT has only Contents + Pull requests ticked (SPEC §5); whether `POST /repos/{o}/{r}/issues/{n}/labels` passes under a fine-grained PAT **needs a live test**. If not, re-issue the PAT with one more box — that touches the phone's localStorage, a "touches your device" change, which is exactly why this sits in v2.
+
+**Boundary**: the app stays zero-backend and never calls an LLM; this is the single write endpoint, and on failure it degrades to a "do it on GitHub" notice — no retries, no queue.

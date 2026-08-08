@@ -295,3 +295,15 @@ SPEC §3 的非目标写着「AI 集成——agent 侧由 review-loop skill 全�
 *归宿。* 读物折画可 ＝ 读毕：终稿交付 vault `Hang/读物/`，并在其 README 目录加一行。门下是**在读面**，vault 是**读毕库**，同一篇任何时刻只活在一处，不双写不漂移。
 
 **没做**：写侧零改动——`kind:读物` 与「读物缺省 `wait:闲`」在 menxia-mcp 早已存在，`trackAudit` 的漂移检查也本来就只盯 `wait:你拍/你读`，闲折天然不被催。界面词表是纯中文、不是 i18n，所以设计折里「`strings.js` 双语 UI 词」那条自动作废。
+
+---
+
+## F18 · 签 v2——UI 里贴/摘签＋签管理（2026-08-08，出自 #116；v1 已建）
+
+**v1 已建（2026-08-08，97ab86d）**：第四类 label `签:`。卡面 chip（三栏都出）、签 chip 条（open＋merged 并集、带计数）、按签视图（**跨状态同列**、`?qian=` 直达、清除回三栏）；smoke 101→106。存量 116 折全处理：65 折按 proj→签 映射回填、51 个无 proj 老折由 agy 按标题归类（两处诚实 ? 本机看正文裁定）后贴签，唯一无签 #30。写入侧 menxia-mcp 同日合入 `track.qian`，**上线挂它自己的账**（见那仓 MILESTONES「判据未满足」行）。
+
+**v2 要什么**：①读折时直接贴/摘签——列表卡或折首点一下，不去 GitHub 网页；②签管理——改名/并签；漏签折巡检挂 `audit_folders` 的 trackNotes 四检那侧。
+
+**前置（动手先验）**：现 PAT 只勾 Contents＋Pull requests（SPEC §5），`POST /repos/{o}/{r}/issues/{n}/labels` 在 fine-grained PAT 下走不走得通**要实测**；不通就重发 PAT 多勾一格——要动手机 localStorage，属于「碰你设备」的变更，所以才押到 v2。
+
+**边界**：app 内照旧零后端、不调 LLM；写入仅此一个端点，失败就降级提示「去 GitHub 网页贴」，不重试不排队。
