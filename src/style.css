@@ -43,11 +43,16 @@
 @media (min-width: 1500px) { :root { --toc-slot: calc(var(--col-gap) + var(--toc-w)); } }
 /* 章栏断点是硬算的，改任一栏宽都要重算：
    左栏 300 + 左右留白 36×2 + 版心（章栏 200 + 间距 34 + 正文摞 1040 + 大纲槽 294）= 1940。
-   低于它就没有「正文左边的空地」，章列表退回正文之上的下拉（.chapters）。二者永不并存。 */
+   低于它就没有「正文左边的空地」，章列表退回正文之上的下拉（.chapters）。二者永不并存。
+
+   ⚠️ 这里只留槽宽变量。**两者的 display 开关不在这儿**，在各自组件规则旁边
+   （搜 `--- 章栏/章下拉 二选一 ---`）。2026-08-09 之前它们写在这个块里，而
+   `.chapter-rail` 的基础规则在 800 行之后又写了一次 `display:none` ——
+   同特异度、媒体查询不加权、后写的赢，于是**章栏从来没显示过**；而 ≥1940 时
+   这里又把兜底的 .chapters 关掉，宽窗口两个入口一起消失（实测 2005px 复现，
+   一本 22 章的书打开只见一篇）。教训：display 开关必须和组件规则同处一地。 */
 @media (min-width: 1940px) {
   :root { --chap-slot: calc(var(--chap-w) + var(--col-gap)); }
-  .chapter-rail { display: flex; }
-  .chapters { display: none; }
 }
 
 /* 紧凑档（1280–1709）：默认几何塞不下，按可让步顺序收紧。
@@ -860,11 +865,11 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 /* ── F14 章下拉（章多时取代 tab 条）—— 与 doc-tabs 同一左缩进，墨色控件 ── */
 /* 章栏（左）。视觉语言照抄大纲栏，镜像到版心左侧；sticky 的前提同样是父级
    .stage-row 的 align-items: flex-start（拉伸满高就没有滑动余量）。
-   默认 display:none，够宽才由上面那条断点打开——与 .toc 同构。 */
+   显示与否见本块下方的「章栏/章下拉 二选一」——与 .toc 同构。 */
 .chapter-rail {
   position: sticky; z-index: 20; top: 10px; width: var(--chap-w);
   flex: none; align-self: flex-start;
-  max-height: calc(100vh - 190px); display: none; flex-direction: column;
+  max-height: calc(100vh - 190px); display: flex; flex-direction: column;
   background: var(--veil); border: 1px solid var(--rule); border-radius: 10px;
   padding: 8px 6px; box-shadow: 0 2px 10px var(--shadow);
 }
@@ -883,7 +888,16 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 .chapter-rail-num { font: 11px var(--mono); opacity: .6; flex: none; }
 .chapter-rail-name { min-width: 0; }
 
+/* --- 章栏/章下拉 二选一 -------------------------------------------------
+   同一份数据的两种版式，按 1940 断点互斥。**两条 display 必须写在这儿**——
+   紧跟各自的基础规则、且在全文件最后，谁也压不到它们。
+   写去文件顶部那个 @media 里就会被后面的基础规则同特异度覆盖（2026-08-09 的
+   原病：章栏一次都没显示过，宽窗口连下拉也没有）。改断点时两条一起改。
+   回归测试：test/css-cascade.test.js */
+@media (max-width: 1939.98px) { .chapter-rail { display: none; } }
+
 .chapters { margin: 0 0 22px var(--art-indent); position: relative; }
+@media (min-width: 1940px) { .chapters { display: none; } }
 .chapters-summary {
   display: inline-flex; align-items: baseline; gap: 10px; cursor: pointer; list-style: none;
   padding: 6px 16px; border-radius: 999px; border: 1px solid var(--rule);
