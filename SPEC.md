@@ -95,7 +95,7 @@ Non-goals (frozen for v0 — not built even if requested): feed ranking / unread
 ## §5 Data and authentication
 
 - One data source: a single review repository (on my machine, `charliezong18/review`, private); the browser talks to `api.github.com` directly (CORS is officially enabled). **As of 2026-07-26 the repo is entered on the settings page and stored in localStorage rather than hardcoded** — otherwise people who fork it would have to edit code, and the README's fork SOP wouldn't hold.
-- Authentication in plain language: generate a key in the GitHub backend that is **valid for the review repo only** (a fine-grained PAT with exactly two permissions ticked, Contents and Pull requests), paste it once the first time you open the app, and it lives in the phone browser's localStorage. The key passes through no server and is sent to nobody; if you lose the phone, revoke it on GitHub in one click.
+- Authentication in plain language: generate a key in the GitHub backend that is **valid for the review repo only** (a fine-grained PAT with three permissions ticked: Contents and Pull requests as Read and write, plus Checks as Read-only so the app can read the house-style check status), paste it once the first time you open the app, and it lives in the phone browser's localStorage. The key passes through no server and is sent to nobody; if you lose the phone, revoke it on GitHub in one click.
 - No backend, no third-party requests, no analytics.
 
 ## §6 Pages and interactions

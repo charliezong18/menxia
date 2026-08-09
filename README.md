@@ -58,10 +58,11 @@ your-review-repo/
 
 **2. Open the app and hand it a key**
 
-Go to [charliezong18.github.io/menxia](https://charliezong18.github.io/menxia) (or your own fork's Pages URL). Fill in `owner/repo`, then paste a [fine-grained PAT](https://github.com/settings/personal-access-tokens/new) scoped to **that one repo** with exactly two permissions:
+Go to [charliezong18.github.io/menxia](https://charliezong18.github.io/menxia) (or your own fork's Pages URL). Fill in `owner/repo`, then paste a [fine-grained PAT](https://github.com/settings/personal-access-tokens/new) scoped to **that one repo** with three permissions:
 
 - **Contents: Read and write**
 - **Pull requests: Read and write** ← the one everyone forgets; without it the list 403s
+- **Checks: Read-only** ← reads the house-style check status; without it the cards stay blank, and the app raises a banner telling you that is "can't see", not "nothing wrong"
 
 ![Setup page](assets/shots/setup.png)
 

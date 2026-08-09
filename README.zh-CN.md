@@ -58,10 +58,11 @@ your-review-repo/
 
 **2. 开 app，给一把钥匙**
 
-打开 [charliezong18.github.io/menxia](https://charliezong18.github.io/menxia)（或你自己 fork 的 Pages 地址）。填 `owner/repo`，然后去生成一把 [fine-grained PAT](https://github.com/settings/personal-access-tokens/new)，只授权**那一个仓库**，权限正好两项：
+打开 [charliezong18.github.io/menxia](https://charliezong18.github.io/menxia)（或你自己 fork 的 Pages 地址）。填 `owner/repo`，然后去生成一把 [fine-grained PAT](https://github.com/settings/personal-access-tokens/new)，只授权**那一个仓库**，权限三项：
 
 - **Contents: Read and write**
 - **Pull requests: Read and write** ← 最容易漏的一项，漏了进清单就 403
+- **Checks: Read-only** ← 读体例检查的红绿；漏了折卡上一直空着，而 app 会出横幅告诉你那是「看不见」不是「没问题」
 
 ![设置页](assets/shots/setup.png)
 
