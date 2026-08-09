@@ -62,7 +62,9 @@ Go to [charliezong18.github.io/menxia](https://charliezong18.github.io/menxia) (
 
 - **Contents: Read and write**
 - **Pull requests: Read and write** ← the one everyone forgets; without it the list 403s
-- **Checks: Read-only** ← reads the house-style check status; without it the cards stay blank, and the app raises a banner telling you that is "can't see", not "nothing wrong"
+- **Actions: Read-only** ← reads the house-style check status; without it the cards stay blank, and the app raises a banner telling you that is "can't see", not "nothing wrong"
+
+> ⚠️ Don't go looking for **Checks** — **fine-grained PATs don't have that permission** (it is absent from all 30 repository permissions; searching `checks` in the picker returns "No items available"). The line "Checks repository permissions (read)" in GitHub's endpoint docs is boilerplate inherited from the GitHub App permission model: Apps have it, PATs don't. So the status is read from workflow runs instead, which needs **Actions**.
 
 ![Setup page](assets/shots/setup.png)
 

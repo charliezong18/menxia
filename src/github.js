@@ -68,14 +68,23 @@ export async function verifyToken() {
     if (err.status === 403 || err.status === 404) prAccess = false;
     else throw err;
   }
-  // 第四层：体例检查（要 Checks: Read）。2026-07-31 加。
-  // 理由与上面那三层一模一样 —— 缺这个权限时 check-runs 返 403，
+  // 第四层：体例检查（要 Actions: Read）。2026-07-31 加，2026-08-09 换端点。
+  // 理由与上面那三层一模一样 —— 缺这个权限时返 403，
   // 而 403 与「这折没跑过检查」在界面上会长成同一个样子（都是「没有」）。
   // 于是你看到一折没红没绿，以为体例查过了，实际是**我们看不见**。
   // 存钥这一刻就说出来，别等进了清单再猜。
+  //
+  // ⚠️ 2026-08-09：原先读 /check-runs，那要 **Checks** 权限——而
+  // **fine-grained PAT 根本没有 Checks 这一项**（30 项仓库权限里没有它；
+  // 端点文档页写的 "Checks repository permissions (read)" 是从 GitHub App
+  // 权限模型抄来的模板，App 有、PAT 没有）。于是这个洞谁也补不上：
+  // 界面让你去加一项加不了的权限，红绿永远空着。
+  // 改读 /actions/runs?head_sha=，要 **Actions: Read**，这一项 PAT 给得了。
+  // 代价：只看得见 GitHub Actions 产出的运行；将来接了非 Actions 的检查 app 读不到。
   let checksAccess = true;
   try {
-    await json(`/repos/${repoSlug()}/commits/${repo.default_branch}/check-runs?per_page=1`);
+    // 探测只问「读不读得到」，不必过滤到某个 sha（head_sha 只吃 SHA，不吃分支名）。
+    await json(`/repos/${repoSlug()}/actions/runs?per_page=1`);
   } catch (err) {
     if (err.status === 403 || err.status === 404) checksAccess = false;
     else throw err;
@@ -94,17 +103,22 @@ export async function verifyToken() {
  *   fail       有失败的（带 url，点得进去看是哪条规则）
  *   running    还在跑
  *   none       这折没有检查（CI 装上之前的老折都是这个）
- *   unreadable 钥匙缺 Checks: Read —— 看不见，不是没有
+ *   unreadable 钥匙缺 Actions: Read —— 看不见，不是没有
+ *
+ * 读的是 **workflow runs**（`/actions/runs?head_sha=`）不是 check runs：
+ * check-runs 要 Checks 权限，而 fine-grained PAT 没有那一项（2026-08-09 查实，
+ * 详见 verifyToken 里那段）。两者的 `status` / `conclusion` / `html_url` / `name`
+ * 字段同名同义，只有数组键不同，所以下面的判据原样成立。
  */
 export async function checkVerdict(sha) {
   let data;
   try {
-    data = await json(`/repos/${repoSlug()}/commits/${sha}/check-runs`);
+    data = await json(`/repos/${repoSlug()}/actions/runs?head_sha=${sha}`);
   } catch (err) {
     if (err.status === 403 || err.status === 404) return { state: 'unreadable' };
     throw err;
   }
-  const runs = data?.check_runs || [];
+  const runs = data?.workflow_runs || [];
   if (!runs.length) return { state: 'none' };
   if (runs.some((r) => r.status !== 'completed')) return { state: 'running' };
   // neutral / skipped 不算失败 —— 它们是「这次没什么可说的」，不是「不合格」。

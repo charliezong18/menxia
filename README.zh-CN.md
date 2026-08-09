@@ -62,7 +62,9 @@ your-review-repo/
 
 - **Contents: Read and write**
 - **Pull requests: Read and write** ← 最容易漏的一项，漏了进清单就 403
-- **Checks: Read-only** ← 读体例检查的红绿；漏了折卡上一直空着，而 app 会出横幅告诉你那是「看不见」不是「没问题」
+- **Actions: Read-only** ← 读体例检查的红绿；漏了折卡上一直空着，而 app 会出横幅告诉你那是「看不见」不是「没问题」
+
+> ⚠️ 别去找 **Checks** ——**fine-grained PAT 没有这一项**（30 项仓库权限里不存在，搜索框搜 `checks` 是 "No items available"）。GitHub 端点文档里那句 "Checks repository permissions (read)" 是从 GitHub App 权限模型抄来的模板，App 有、PAT 没有。所以红绿改读 workflow runs，认 **Actions**。
 
 ![设置页](assets/shots/setup.png)
 

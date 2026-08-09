@@ -223,7 +223,7 @@ function App() {
 
   // 并行取每折的体例检查结论。
   //
-  // `unreadable`（钥匙缺 Checks: Read）**不逐折显示** —— 那会让 19 张卡同时打问号，
+  // `unreadable`（钥匙缺 Actions: Read）**不逐折显示** —— 那会让 19 张卡同时打问号，
   // 是噪音不是信息。它是一次性的配置问题，出一条通知就够了。
   async function loadChecks(list) {
     if (!api.checkVerdict) return;                       // demo 模式没有这个口

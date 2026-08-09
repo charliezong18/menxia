@@ -135,8 +135,8 @@ export const S = deepFreeze({
     runningTitle: '体例检查还在跑',
     passBadge: '✓',
     passTitle: '体例合格',
-    unreadableNotice: '读不到体例检查结果 —— 钥匙缺 Checks: Read 权限。折卡上的红绿会一直空着，'
-      + '那是「看不见」不是「没问题」。去 GitHub 的 token 设置里补上这一项。',
+    unreadableNotice: '读不到体例检查结果 —— 钥匙缺 Actions: Read 权限。折卡上的红绿会一直空着，'
+      + '那是「看不见」不是「没问题」。去 GitHub token 设置 → Add permissions → Actions → Read-only。',
   },
 
   // F13「需核实」标记：agent 标的未验证声明。顶栏计数 + 列表角标 + 正文标记 tooltip。

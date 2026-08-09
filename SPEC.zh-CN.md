@@ -95,7 +95,7 @@
 ## §5 数据与认证
 
 - 唯一数据源：一个 review 仓库（我这台填 `charliezong18/review`，私有），浏览器直连 `api.github.com`（官方开 CORS）。**2026-07-26 起仓库由设置页填、存 localStorage，不写死在代码里**——fork 的人不用改代码，README 的 fork SOP 才成立
-- 认证讲人话：GitHub 后台生成一个**只对 review 这一个仓库有效**的钥匙（fine-grained PAT，权限勾 Contents、Pull requests、Checks 三项——前两项 Read and write，Checks 只要 Read-only，用来读体例检查的红绿），第一次打开 app 粘贴一次，存在手机浏览器本地（localStorage）。钥匙不经过任何服务器、不发给任何人；手机丢了去 GitHub 一键作废即可
+- 认证讲人话：GitHub 后台生成一个**只对 review 这一个仓库有效**的钥匙（fine-grained PAT，权限勾 Contents、Pull requests、Actions 三项——前两项 Read and write，Actions 只要 Read-only，用来读体例检查的红绿。⚠️ 不是 Checks：**fine-grained PAT 没有 Checks 这一项**，端点文档里那句是从 GitHub App 权限模型抄的模板，所以红绿读的是 workflow runs 而非 check runs），第一次打开 app 粘贴一次，存在手机浏览器本地（localStorage）。钥匙不经过任何服务器、不发给任何人；手机丢了去 GitHub 一键作废即可
 - 无后端、无第三方请求、无统计埋点
 
 ## §6 页面与交互
