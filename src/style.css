@@ -975,3 +975,75 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 .chapters-opt:hover { background: var(--hover); color: var(--ink); }
 .chapters-opt.active { color: var(--ink); background: var(--chip); }
 .chapters-num { font: 11px var(--mono); color: var(--ink-soft); flex: none; min-width: 1.6em; }
+@media (max-width: 900px) { .chapters { margin-left: 0; } }
+
+/* ── F16 总览：按项目摊开待审折 ─────────────────────────────
+   配色沿用宣纸/朱砂那套变量，不新引色板；「等谁」四态是唯一新增的语义色，
+   与写入侧词表（menxia-mcp/src/track.ts）的 label 颜色同族，好让门下与 GitHub 看着是一回事。 */
+.wait-dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  flex: none; margin-right: 6px; vertical-align: 1px;
+  background: var(--ink-soft);
+}
+.wait-you-decide { background: #C3402B; }   /* 等你拍 —— 朱砂，最急 */
+.wait-you-read   { background: #D9A404; }   /* 等你读 */
+.wait-agent      { background: #3B7BB5; }   /* 等 agent —— 不用你动 */
+.wait-idle       { background: #B8AE9C; }   /* 闲 */
+.wait-other      { background: #7A7062; }   /* 词表外的新取值：照样显示，不丢 */
+.wait-none       { background: transparent; box-shadow: inset 0 0 0 1px var(--rule); }
+
+.work-hidden { display: none; }
+
+.dash { flex: 1; min-height: 0; overflow-y: auto; padding: 26px 36px 60px; }
+.dash-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.dash-h { font-family: var(--songti); font-size: 20px; font-weight: 700; }
+.dash-tally {
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+  margin: 12px 0 22px; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+  font-size: 13px; color: var(--ink-soft);
+}
+.tally-item { display: inline-flex; align-items: center; }
+.tally-zombie { color: var(--ink-soft); font-style: italic; }
+.tally-empty { font-style: italic; }
+
+.dash-group { margin-bottom: 26px; }
+.dash-proj {
+  display: flex; align-items: baseline; gap: 8px;
+  font-family: var(--songti); font-size: 15px; font-weight: 700; color: var(--ink);
+  padding-bottom: 7px; margin-bottom: 6px; border-bottom: 1px solid var(--rule);
+}
+.dash-proj-n { font: 11px var(--mono); color: var(--ink-soft); }
+
+.dash-row {
+  display: block; width: 100%; text-align: left;
+  padding: 9px 12px; margin-bottom: 3px; border-radius: 8px;
+  border: 1px solid transparent; background: transparent;
+}
+.dash-row:hover { background: var(--hover); }
+.dash-row.active { background: var(--paper-raised); border-color: var(--rule); }
+.dash-row.zombie { opacity: .55; }
+.dash-row.zombie .dash-title { text-decoration: line-through; text-decoration-color: var(--ink-soft); }
+.dash-row-head { display: flex; align-items: baseline; gap: 8px; }
+.dash-num { font: 11.5px var(--mono); color: var(--ink-soft); flex: none; }
+.dash-title {
+  font-family: var(--songti); font-size: 14.5px; line-height: 1.45; color: var(--ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0;
+}
+.dash-ago { font-size: 11.5px; color: var(--ink-soft); flex: none; }
+.kind-chip {
+  font-size: 11px; color: var(--ink-soft); background: var(--chip);
+  padding: 1px 6px; border-radius: 4px; flex: none;
+}
+
+/* 关系条：只在有关系可说时出现，所以这里不留空占位 */
+.rel-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 5px 0 0 21px; }
+.rel-chip {
+  font-size: 11.5px; line-height: 1.6; padding: 0 7px; border-radius: 4px;
+  border: 1px solid var(--rule); background: var(--paper-raised); color: var(--ink-soft);
+}
+button.rel-chip:hover { border-color: var(--ink-soft); color: var(--ink); }
+.rel-covered   { border-color: #C3402B; color: #9C2F1F; }   /* 已被盖 —— 不用读 */
+.rel-blocked   { border-color: #D9A404; color: #8A6A02; }   /* 等谁先定 */
+.rel-unlocked  { border-color: #3B7BB5; color: #2A5B87; }   /* 依赖已画可 */
+
+.list-tab.dash-btn { margin-left: auto; }

@@ -95,6 +95,31 @@ export const S = deepFreeze({
     emptyDone: '还没有画可过的折子。',
     emptyShelf: '馆中暂无闲读。',
     settings: '设置 · 钥匙',
+    dash: '总览',
+    dashTitle: '按项目摊开待审的折，看谁等谁、谁盖了谁',
+  },
+
+  // 总览（F16）：按项目分组 + 等谁 + 折间关系。
+  // 「等谁」的取值来自写入侧词表（`menxia-mcp/src/track.ts`），这边**只认前缀不认取值**，
+  // 所以文案一律拿原值插进去（`等你拍` / `等你读` / …），认不出的新值照样显示不丢。
+  dash: {
+    title: (n) => `总览 · 待审 ${n} 折`,
+    close: '回读折',
+    unlabeled: '未标注',
+    noLabels: '这批折还没贴折务标签',
+    // 「等」不能无脑往前拼：`等 + 闲` = 「等闲」是个词，意思整个反了（实测截图上就是这么出的）。
+    // 这张表只管**怎么念**，认不出的取值走兜底照样显示——与 track.js 的顺序/配色表同一个约定。
+    waitLabel: (wait) => ({ 你拍: '等你拍', 你读: '等你读', agent: '等 agent', 闲: '闲着' }[wait] || `等${wait}`),
+    tally: (wait, n) => `${S.dash.waitLabel(wait)} ${n}`,
+    waitTitle: (wait) => S.dash.waitLabel(wait),
+    waitNone: '没贴「等谁」标签',
+    zombieCount: (n) => `不用读 ${n}`,
+    coveredBy: (n) => `已被 #${n} 盖掉 · 不用读`,
+    blockedBy: (n) => `等 #${n} 先定`,
+    unlocked: (n) => `#${n} 已画可 · 可动手`,
+    willCover: (n) => `将被 #${n} 盖掉`,
+    covers: (n) => `盖掉 #${n}`,
+    unblocks: (what) => `画可后解锁：${what}`,
   },
 
   // 弘文馆：闲读书架（唐制里弘文馆正是门下省下辖的藏书、教授之所）。

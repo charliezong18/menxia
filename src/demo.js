@@ -101,7 +101,12 @@ const PR = {
   head: { sha: 'demo0000' },
   // 多签：验卡面多个 chip 并排。`签:旅行` 同时挂在已画可样例 #998 上（下面 listMergedPRs
   // 直接 `...PR` 继承），是「按签跨状态同架」那条冒烟断言的命根——一签串起 open + merged。
-  labels: [{ name: 'proj:menxia' }, { name: '签:旅行' }, { name: '签:开发' }],
+  // 多签验卡面 chip 并排（`签:旅行` 也挂在已画可 #998，串起 open+merged）；
+  // proj/kind/wait 供 F16 总览分组与「等谁」——主 demo 折也要在总览里现身。
+  labels: [
+    { name: 'proj:menxia' }, { name: 'kind:设计' }, { name: 'wait:你拍' },
+    { name: '签:旅行' }, { name: '签:开发' },
+  ],
   body: BODY,
 };
 
@@ -116,6 +121,28 @@ const SHELF_PR = {
   labels: [{ name: 'proj:menxia' }, { name: 'kind:读物' }, { name: 'wait:闲' }, { name: '签:开发' }],
   updated_at: new Date(Date.now() - 1728e5).toISOString(),
 };
+
+// F16 总览的 demo 数据。**分组、等谁、四种关系各要有一个活样本**——
+// 只放一折的话总览永远只画一行，它到底把「谁等谁、谁盖了谁」画对了没有，冒烟看不出来。
+// 折号刻意用 99x 段，与真仓不撞；**避开 997（弘文馆样例）/998（已画可样例）/999（主 demo 折）**。
+const ago = (h) => new Date(Date.now() - h * 36e5).toISOString();
+const demoPr = (number, title, labels, opts = {}) => ({
+  ...PR, number, title, updated_at: ago(opts.h ?? 5), labels: labels.map((name) => ({ name })),
+  body: BODY + (opts.rel ? `\n\n<!-- menxia-rel: ${opts.rel} -->` : ''),
+});
+
+const EXTRA_OPEN = [
+  demoPr(992, '设计：中枢选型（等 #995 的裁决先落）',
+    ['proj:zhongshumenxia', 'kind:设计', 'wait:agent'], { rel: 'needs=#995', h: 8 }),
+  demoPr(996, '交付：存量补齐（依赖已画可，可动手）',
+    ['proj:menxia', 'kind:交付', 'wait:agent'], { rel: 'needs=#990; unblocks=清完存量就能开 M2', h: 20 }),
+  demoPr(995, '拍板：中枢四问（等你拍）',
+    ['proj:zhongshumenxia', 'kind:拍板', 'wait:你拍'], { h: 2 }),
+  demoPr(994, '选型旧稿（已被 #990 盖掉 · 不用读）',
+    ['proj:zhongshumenxia', 'kind:拍板'], { h: 48 }),
+  demoPr(993, '读物：闲时翻',
+    ['proj:guanzhi', 'kind:读物', 'wait:闲'], { h: 72 }),
+];
 
 // 整份新增文件的 patch：全行可批
 const PATCH = ['@@ -0,0 +1,' + DOC.split('\n').length + ' @@', ...DOC.split('\n').map((l) => '+' + l)].join('\n');
@@ -192,14 +219,24 @@ const MERGED = new Set();   // 本次会话里画可过的折号（demo 无后�
 
 export const demoApi = {
   verifyToken: async () => ({ repo: {}, canWrite: true, prAccess: true }),
-  listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR, SHELF_PR].filter((p) => !MERGED.has(p.number)); },
-  listMergedPRs: async () => [{
-    ...PR, number: 998, title: '涂归 demo 折 · 已画可（归档样例）',
-    merged_at: new Date(Date.now() - 864e5).toISOString(),
-    body: BODY_FREEFORM,  // 手开折：无五段结构 → 说明块该默认收起（issue #13 的条件展开）
-    // labels 由 ...PR 继承（签:旅行 / 签:开发）——这份已画可样例与 open 的 #999 共 签:旅行，
-    // 是「按签视图同时列出 open 与 merged」那条断言的 merged 半边。
-  }],
+  // 待审清单三摊都要有：PR（主 demo 折）、SHELF_PR（弘文馆）、EXTRA_OPEN（总览分组/关系样本）。
+  // MERGED 过滤保留：画可后把折移出清单，「画可后跳没跳折」才可测（no-jump 那条断言的命根）。
+  listOpenPRs: async () => { if (FAIL) throw failErr(); return [PR, SHELF_PR, ...EXTRA_OPEN].filter((p) => !MERGED.has(p.number)); },
+  listMergedPRs: async () => [
+    {
+      ...PR, number: 998, title: '涂归 demo 折 · 已画可（归档样例）',
+      merged_at: new Date(Date.now() - 864e5).toISOString(),
+      body: BODY_FREEFORM,  // 手开折：无五段结构 → 说明块该默认收起（issue #13 的条件展开）
+      // labels 由 ...PR 继承（签:旅行 / 签:开发）——这份已画可样例与 open 的 #999 共 签:旅行，
+      // 是「按签视图同时列出 open 与 merged」那条断言的 merged 半边。
+    },
+    {
+      // 已画可且声明盖掉了 #994 —— 总览据此把 #994 判成僵尸折（真仓 #59 盖 #58 就是这形状）
+      ...demoPr(990, '裁决：选型定案（已画可）', ['proj:zhongshumenxia', 'kind:拍板'],
+        { rel: 'supersedes=#994', h: 30 }),
+      merged_at: ago(30),
+    },
+  ],
   listPRFiles: async () => [
     { filename: 'docs/demo.md', status: 'added', patch: PATCH },
     { filename: 'docs/guide.md', status: 'added', patch: '@@ -0,0 +1,3 @@\n+# Guide\n+\n+English variant for the language switch.' },
@@ -1023,6 +1060,35 @@ async function runSmoke(docEl) {
   chk('mobile-bar-has-zongpi', Boolean(mbar?.querySelector('.mobile-bar-btn')));
   chk('mobile-bar-hidden-on-desktop', Boolean(mbar) && getComputedStyle(mbar).display === 'none',
     `display=${mbar ? getComputedStyle(mbar).display : 'NO-EL'}`);
+
+  // ── F16 总览（review #61 T2）：点「总览」把待审折按项目摊开，画出谁等谁/谁盖了谁 ──
+  // 开→断言→关，别把读折区一直藏着（后面的画可断言要它在）。EXTRA_OPEN 里备了活样本：
+  // 两个项目分组、一条「等你拍」、#994 被已画可的 #990 盖成僵尸、#992 needs=#995 的关系条。
+  const dashBtn = document.querySelector('.dash-btn');
+  chk('dash-button-present', Boolean(dashBtn));
+  if (dashBtn) {
+    dashBtn.click();
+    await sleep(300);
+    const dash = document.querySelector('.dash');
+    chk('dash-opens', Boolean(dash));
+    chk('dash-hides-reading-area', Boolean(document.querySelector('.work.work-hidden')));
+    const groups = document.querySelectorAll('.dash-group');
+    chk('dash-groups-by-project', groups.length >= 2, `groups=${groups.length}`);
+    chk('dash-marks-zombie', Boolean(document.querySelector('.dash-row.zombie')));
+    chk('dash-draws-relations', document.querySelectorAll('.rel-chip').length >= 1,
+      `chips=${document.querySelectorAll('.rel-chip').length}`);
+    // 关掉总览，读折区回来（onClose）
+    document.querySelector('.dash .dash-close, .dash-top button')?.click();
+    await sleep(250);
+    chk('dash-closes-back-to-reading', !document.querySelector('.dash') && !document.querySelector('.work.work-hidden'));
+  } else {
+    chk('dash-opens', false, 'no btn');
+    chk('dash-hides-reading-area', false, 'no btn');
+    chk('dash-groups-by-project', false, 'no btn');
+    chk('dash-marks-zombie', false, 'no btn');
+    chk('dash-draws-relations', false, 'no btn');
+    chk('dash-closes-back-to-reading', false, 'no btn');
+  }
 
   // ── 画可之后不跳折（2026-08-05 报障，放在最后跑：它把当前折变成归档态，后面没法再批）──
   // 原话：「画可以后别跳下一个没看的可以不……有时候我想复制什么内容回去」。

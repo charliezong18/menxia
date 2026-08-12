@@ -307,3 +307,17 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 **Precondition (test before building)**: the current PAT has only Contents + Pull requests ticked (SPEC §5); whether `POST /repos/{o}/{r}/issues/{n}/labels` passes under a fine-grained PAT **needs a live test**. If not, re-issue the PAT with one more box — that touches the phone's localStorage, a "touches your device" change, which is exactly why this sits in v2.
 
 **Boundary**: the app stays zero-backend and never calls an LLM; this is the single write endpoint, and on failure it degrades to a "do it on GitHub" notice — no retries, no queue.
+
+---
+
+## F16 · Overview: folders laid out by project, who waits on whom, what supersedes what (2026-07-31 ✅ done)
+
+**What**: An "overview" view beside the list — open folders grouped by `proj:`, each with a "waiting on" dot (you-decide / you-read / agent / idle), and inter-folder relations drawn as clickable chips: `superseded by #N · skip it`, `waiting on #N`, `#N merged · unblocked`, `will be superseded by #N`, `merging unblocks: …`. (The sidebar's open list also grouping by project was **not** carried over in this port — the list has since grown the tag/弘文馆 view layers that compete with grouping; left for a follow-up.)
+
+**Why**: Charlie, 2026-07-31, verbatim: "A pile of folders waiting for me to read. I don't know which one blocks which, or whether one from two days ago was already covered by something approved later." The list sorts by time, which answers neither question. That day's live case: #58's two pending decisions had already been covered by #59, with no trace on either folder — it sat in the review queue for a full day for nothing.
+
+**How**: All data lives on native GitHub objects — the three label families `proj:/kind:/wait:` plus a trailing `<!-- menxia-rel: needs=…; supersedes=…; unblocks=… -->` in the PR body, welded in by the write side's `open_folder({ track })` (approved in review #61). **Zero added requests on the read side**: labels and body were already in the `listOpenPRs` / `listMergedPRs` responses and were being discarded. Parsing and relation analysis live in `src/track.js` (pure functions, unit-tested); the view is `src/components/dashboard.js`.
+
+**Vocabulary contract**: this side **recognizes prefixes only, never the value set** — when the write side adds a new `kind:` or `wait:` value, this side still displays it, sorted after the known ones, and never silently drops a folder (the rename lesson, review #54: cross-system contracts are bare strings; hard-code both ends and they fail silently).
+
+**Status**: after the F13/F14 batch Charlie waived the 8/8 freeze for this one; built and merged the same day, 2026-07-31. The audit side (zombie candidates / dependencies unlocked / wait drift / merge-ready candidates) lives in `menxia-mcp`'s `audit_folders`, sharing the same source and criteria.
