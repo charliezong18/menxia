@@ -44,12 +44,12 @@ sleep 0.5
 
 # Chrome --headless 截图/加载后不会自己退出，用「产物就绪即杀」的模式跑
 run_page() {
-  local url="$1" log="$2" budget="$3"
+  local url="$1" log="$2" budget="$3" winsize="${4:-1440,1000}"   # 第 4 参可换窗宽，缺省桌面 1440
   local dir; dir="$(mktemp -d)"
   rm -f "$log"
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --enable-logging=stderr --v=0 \
     "${CI_FLAGS[@]+"${CI_FLAGS[@]}"}" \
-    --window-size=1440,1000 --virtual-time-budget="$budget" \
+    --window-size="$winsize" --virtual-time-budget="$budget" \
     --user-data-dir="$dir" --screenshot="$dir/shot.png" "$url" >/dev/null 2>"$log" &
   local pid=$!
   for _ in $(seq 1 60); do
@@ -81,7 +81,8 @@ check_names() { # $1=tag(dom|smoke)  $2=logfile  $3=golden
 
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=35
-SMOKE_EXPECT=110
+SMOKE_EXPECT=113
+MOBILE_EXPECT=4
 
 WHAT="${1:-all}"
 STATUS=0
@@ -139,6 +140,14 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
     EXP=$([ "$mode" = "403" ] && echo 3 || echo 2)
     if [ "$R" = "[smoke] RESULT pass=$EXP fail=0" ]; then echo "  ✔ fail=$mode $R"; else echo "  ✖ fail=$mode $R（期望 pass=$EXP fail=0）"; STATUS=1; fi
   done
+
+  # 手机窄口（M0 · review #121 §5）：390px 窗宽真进 ≤900 分支，验底栏出场且触控目标够大。
+  # 用 [mobile] 独立标签，不进 smoke 的 golden 名单（那份钉在 1440 桌面口跑出来的集合）。
+  echo "── 手机窄口（390px：底栏常驻 + 触控 ≥44px）──"
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&mobile=1" "$LOGDIR/mobile.log" 30000 "390,780"
+  grep -o '\[mobile\] [^"]*' "$LOGDIR/mobile.log" | sed 's/^/  /' || true
+  RMOB=$(grep -o '\[mobile\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/mobile.log" | tail -1)
+  if [ "$RMOB" = "[mobile] RESULT pass=$MOBILE_EXPECT fail=0" ]; then echo "  ✔ $RMOB"; else echo "  ✖ $RMOB（期望 pass=$MOBILE_EXPECT fail=0）"; STATUS=1; fi
 fi
 
 exit $STATUS

@@ -51,6 +51,9 @@ merge-doc-still-rendered
 merge-offers-next-not-jumps
 merge-stays-on-folder
 merge-turns-readonly
+mobile-bar-has-zongpi
+mobile-bar-hidden-on-desktop
+mobile-bar-rendered-in-dom
 mouse-drag-holds-float-until-mouseup
 old-rev-body-shorter
 old-rev-cmd-enter-blocked

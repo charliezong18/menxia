@@ -24,7 +24,9 @@ const CSS = readFileSync(
 );
 
 // 受管选择器：靠断点二选一显示的那些。加新的互斥版式时往这儿添一行。
-const WATCHED = ['.chapter-rail', '.chapters'];
+// .mobile-bar（M0 手机底栏）：裸 display:none（桌面）+ @media≤900 display:flex（手机），
+// 顺序反了就会在手机上消失、或在桌面上冒出来——正是这条守卫要挡的。
+const WATCHED = ['.chapter-rail', '.chapters', '.mobile-bar'];
 
 /**
  * 把 CSS 扫成规则列表：{ selector, inMedia, index, hasDisplay }。

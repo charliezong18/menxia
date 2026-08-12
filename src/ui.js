@@ -1116,6 +1116,19 @@ function App() {
         </div>
       </main>
       ${cur && html`<${ScrollEnds} tick=${`${docTick}:${docPath}`} />`}
+      ${cur && html`
+        <nav class="mobile-bar" aria-label=${S.mobileBar.label}>
+          <button class="mobile-bar-btn" title=${archived ? S.action.zongpiArchivedTitle : ''}
+            onClick=${() => setZongpi((z) => !z)}>${S.action.zongpi}</button>
+          ${drafts.length > 0 && html`
+            <button class="mobile-bar-btn mobile-bar-submit" disabled=${busy || !onHead}
+              title=${onHead ? '' : S.action.submitOldRevTitle} onClick=${submitAll}>
+              ${busy ? S.action.sending : S.action.submit(drafts.length)}
+            </button>`}
+          ${!archived && html`
+            <button class="mobile-bar-btn mobile-bar-qinci" disabled=${busy || !onHead}
+              title=${onHead ? '' : S.action.mergeOldRevTitle} onClick=${qinci}>${S.action.merge}</button>`}
+        </nav>`}
       ${float && html`
         <button class="zhupi-float" style=${{ left: `${Math.min(float.rect.left + 8, window.innerWidth - 76)}px`, top: `${float.rect.top + 6}px` }}
           onMouseDown=${(e) => e.preventDefault()} onClick=${addDraft}>${S.action.annotate}</button>`}
