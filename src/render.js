@@ -4,6 +4,37 @@ import { makeSlugger } from './slug.js';
 
 const md = window.markdownit({ html: false, linkify: true, typographer: false });
 
+// ── ```diff 围栏着色（PAIN 2026-07-30 #46）────────────────────────────
+// review 折常带整段 unified diff（#46 那折 §4 是 ~200 行），不着色时 `+`/`-`/`@@` 全是噪音，
+// 原话「一点渲染没有啊，很难看啊」。给 `+`/`-`/`@@` 行分别上色即达标（hunk 折叠/并排是后话）。
+//
+// **不碰 `html:false`**：这道 XSS 防线承重（#4）。这里不是开原始 HTML，而是我们自己把每行
+// 用 `escapeHtml` 转义后包一层 `<span class>`——内容全程被转义，标签是我们生成的常量，
+// 与放行用户 HTML 是两回事。只对 `info==='diff'` 生效，其它语言原样走默认围栏渲染。
+// 放在 LINE_RULES 之前定义：那个循环会把这只函数当 `orig` 包起来补 `data-line`，
+// 所以着色与行号锚两不误（diff 块整体仍是一个可锚的 fence）。
+function diffFence(tokens, idx) {
+  const token = tokens[idx];
+  const lines = token.content.replace(/\n$/, '').split('\n');
+  const body = lines.map((line) => {
+    const cls = line.startsWith('@@') ? 'diff-hunk'
+      : line.startsWith('+') ? 'diff-add'
+      : line.startsWith('-') ? 'diff-del'
+      : 'diff-ctx';
+    // 空行也要占一行（保持与源码行号一致）；escapeHtml 挡住 `<script>` 之类
+    return `<span class="diff-line ${cls}">${md.utils.escapeHtml(line) || ' '}</span>`;
+  }).join('\n');
+  const attrs = token.attrs ? token.attrs.map(([k, v]) => ` ${k}="${md.utils.escapeHtml(v)}"`).join('') : '';
+  return `<pre${attrs} class="diff-block"><code>${body}</code></pre>`;
+}
+
+const defaultFence = md.renderer.rules.fence;
+md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+  const info = tokens[idx].info.trim().split(/\s+/)[0];
+  if (info === 'diff') return diffFence(tokens, idx);
+  return defaultFence ? defaultFence(tokens, idx, options, env, self) : self.renderToken(tokens, idx, options);
+};
+
 // 打行号的规则。表格行（tr_open）与缩进代码块（code_block）实测带 map，一并覆盖：
 // 少了 tr_open，批表格某一行只能锚到整表首行，而本项目文档重表格。
 const LINE_RULES = [
@@ -103,13 +134,25 @@ export const stripFrontmatter = (text) => {
   return '\n'.repeat((m[0].match(/\n/g) || []).length) + s.slice(m[0].length);
 };
 
+// 裸锚点 HTML（PAIN 2026-08-09 #102）：写侧为了「页内跳转」在正文里插 `<a id="daily"></a>`，
+// 而 `html:false` 不是丢弃 raw HTML 而是**转义成可见文本**，于是正文里冒出一行 `<a id=…>` 乱码。
+// 标题 slug 那条链路已经能跳（heading_open 打 id），这种手写锚现在纯是噪音——剥掉。
+//
+// **只剥「锚点专用、无可见内容」的 `<a>`**：`id`/`name` 属性、标签内没有文字。带可见文字的
+// `<a href>` 一律不碰（那是内容，且 html:false 下本就转义成文本，是写折人自己的选择）。
+// **换等长空白、不删**：同 stripFrontmatter——行号是涂归锚与 diff hunk 的命脉，字节数不能变。
+// 折首说明块另有一条同族剥离（folder-body.js 的 happy-session 注释），这条管正文里的裸锚。
+const BARE_ANCHOR_RE = /<a\s+(?:id|name)\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)\s*>\s*<\/a>|<a\s+(?:id|name)\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)\s*\/?>/gi;
+export const stripBareAnchors = (text) =>
+  String(text ?? '').replace(BARE_ANCHOR_RE, (m) => ' '.repeat(m.length));
+
 // headingIds **默认关**（2026-08-06 双查抓到）：id 是全文档唯一的资源，而这个渲染器同时喂
 // 正文和六个批注面（折首说明 / 判 / 其他串 / 浮窗 / 卡片，全走 comment-body.js 那一个 sink）。
 // 每次 render 各配一只 slugger，跨面就撞不上去重——正文和某条判里各写一个 `## 小结`，
 // DOM 里就有两个 `id="小结"`，而折首在 DOM 序上还排在正文之前，原生 `#小结` 会滚到批注上去。
 // 只有「当前在读的这一篇」才配打锚，所以由 ui.js 显式开，别改成默认开。
 export const renderMarkdown = (text, { headingIds = false } = {}) =>
-  md.render(stripFrontmatter(text), headingIds ? { slugger: makeSlugger() } : {});
+  md.render(stripBareAnchors(stripFrontmatter(text)), headingIds ? { slugger: makeSlugger() } : {});
 
 // 文档内相对图片：私有仓取不到 raw 链接，必须用 token 走 Contents API 换 blob URL。
 // base 用 md 文件自身所在目录（不是写死的 docs/），否则根目录或子目录的文档全解析错。

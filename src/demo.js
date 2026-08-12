@@ -35,6 +35,17 @@ ${Array.from({ length: 14 }, (_, i) => `第 ${i + 1} 段填充：读折台的滚
 页内锚点测试：[照 GitHub 锚写](#加长段冒烟用别删)、[照标题原文写](#加长段（冒烟用，别删）)、[指不着的锚](#根本没有这一节)。
 
 末行锚点：见此行即已滚到底。
+
+<a id="demo-bare-anchor"></a>
+
+## diff 渲染（冒烟用，别删）
+
+\`\`\`diff
+@@ -1,3 +1,3 @@
+ 保持不变的一行
+-被删掉的旧行
++新增进来的行
+\`\`\`
 `;
 
 // 旧版正文：删掉「为什么要有 demo 模式」一节——rev 切换后正文明显变短（冒烟断言据此）
@@ -946,6 +957,32 @@ async function runSmoke(docEl) {
     bareHash.click();
     await sleep(200);
     chk('bare-hash-scrolls-to-top', host0.scrollTop === 0, `top=${host0.scrollTop}`);
+  }
+
+  // ── 裸锚点剥离（PAIN #102）：正文里的 <a id="…"> 不该冒出转义乱码 ──
+  // html:false 会把 raw HTML 转义成可见文本；剥掉后正文里既无这段文字、DOM 里也无该 id。
+  chk('bare-anchor-not-shown-as-text', !dEl.textContent.includes('demo-bare-anchor'),
+    `leaked=${dEl.textContent.includes('demo-bare-anchor')}`);
+  chk('bare-anchor-stripped-from-dom', !dEl.querySelector('#demo-bare-anchor'));
+
+  // ── diff 渲染（PAIN #46）：```diff 围栏里 +/- / @@ 行各自上色 ──
+  const diffBlock = dEl.querySelector('.diff-block');
+  chk('diff-block-rendered', Boolean(diffBlock));
+  if (diffBlock) {
+    chk('diff-add-line-colored', Boolean(diffBlock.querySelector('.diff-add')));
+    chk('diff-del-line-colored', Boolean(diffBlock.querySelector('.diff-del')));
+    chk('diff-hunk-header-marked', Boolean(diffBlock.querySelector('.diff-hunk')));
+    // +/- 行真有可视区分：新增行背景与上下文行背景不同（着色落到了屏幕上，不只是 class）
+    const add = diffBlock.querySelector('.diff-add');
+    const ctx = diffBlock.querySelector('.diff-ctx');
+    const bgDiffer = add && ctx && getComputedStyle(add).backgroundColor !== getComputedStyle(ctx).backgroundColor;
+    chk('diff-add-visually-tinted', Boolean(bgDiffer),
+      `add=${add ? getComputedStyle(add).backgroundColor : 'none'} ctx=${ctx ? getComputedStyle(ctx).backgroundColor : 'none'}`);
+  } else {
+    chk('diff-add-line-colored', false, 'no block');
+    chk('diff-del-line-colored', false, 'no block');
+    chk('diff-hunk-header-marked', false, 'no block');
+    chk('diff-add-visually-tinted', false, 'no block');
   }
 
   const ends = () => [...document.querySelectorAll('.scroll-end')];

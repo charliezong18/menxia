@@ -98,3 +98,50 @@ test('双链不劫持普通链接与脚注式写法', () => {
   assert.match(renderMarkdown('[普通](x.md)'), /href="x\.md"/);
   assert.doesNotMatch(renderMarkdown('[[嵌套[方括号]]]'), /class="wikilink"/);
 });
+
+// ── 裸锚点剥离（PAIN #102）──────────────────────────────────────────
+const { stripBareAnchors: sba } = await import('../src/render.js');
+
+test('裸 <a id> / <a name> 被剥掉，正文里不再冒出转义乱码', () => {
+  const out = renderMarkdown('前文\n\n<a id="daily"></a>\n\n后文');
+  assert.doesNotMatch(out, /&lt;a\s+id/i, '裸锚点转义成可见文本了——#102 没修上');
+  assert.doesNotMatch(out, /daily/, '锚点 id 不该以任何形式露在正文里');
+  assert.match(out, /前文/); assert.match(out, /后文/);
+});
+
+test('裸锚点换等长空白——行号纹丝不动（涂归锚 / diff hunk 全靠它）', () => {
+  const src = '# 标题\n<a name="sec1"></a>\n正文一\n正文二';
+  const out = sba(src);
+  assert.equal(out.split('\n').length, src.split('\n').length, '总行数不变');
+  assert.equal(out.split('\n')[2], '正文一', '第 3 行仍是正文一');
+  assert.doesNotMatch(out, /sec1/);
+});
+
+test('带可见文字的 <a> 不碰（那是内容，不是纯锚点）', () => {
+  // html:false 下它本就转义成文本，是写折人的选择——剥离逻辑不该多手
+  const src = '<a href="x">看得见的链接文字</a>';
+  assert.match(sba(src), /看得见的链接文字/, '有内容的 a 标签被误剥了');
+  assert.equal(sba(src), src, '完全不动');
+});
+
+// ── ```diff 围栏着色（PAIN #46）─────────────────────────────────────
+test('```diff 围栏：+/- / @@ 行分别上色', () => {
+  const out = renderMarkdown('```diff\n@@ -1,2 +1,2 @@\n-旧行\n+新行\n 未变\n```');
+  assert.match(out, /class="diff-block"/, '没走 diff 专用渲染');
+  assert.match(out, /diff-hunk[^>]*>@@/, '@@ 行没标成 hunk');
+  assert.match(out, /diff-del[^>]*>-旧行/, '- 行没标成删除');
+  assert.match(out, /diff-add[^>]*>\+新行/, '+ 行没标成新增');
+  assert.match(out, /diff-ctx[^>]*> 未变/, '上下文行没标成 ctx');
+});
+
+test('diff 块里的内容仍被转义——html:false 防线不因 diff 破洞', () => {
+  const out = renderMarkdown('```diff\n+<script>alert(1)</scr' + 'ipt>\n```');
+  assert.doesNotMatch(out, /<script/i, 'diff 里的 <script> 成活了——防线破了');
+  assert.match(out, /&lt;script/i, '应转义成 &lt;script');
+});
+
+test('非 diff 语言的围栏不受影响（只 diff 走专用路径）', () => {
+  const out = renderMarkdown('```js\nconst a = 1;\n```');
+  assert.doesNotMatch(out, /diff-block/, 'js 围栏被误当 diff 渲染了');
+  assert.match(out, /<pre[^>]*><code/, '普通围栏仍是 pre>code');
+});

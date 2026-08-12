@@ -256,6 +256,15 @@ article pre {
   padding: 14px 16px; overflow-x: auto; margin-bottom: 16px;
 }
 article pre code { background: none; padding: 0; font-size: calc(13px * var(--read-scale)); line-height: 1.7; }
+
+/* ```diff 围栏着色（PAIN #46）：+/- 行整行浅底 + 左缘一道色条，@@ hunk 头灰调分段。
+   色取克制版——绿/红只做背景微染，不是荧光高亮，仍是宣纸墨字的底子。 */
+.diff-block code { display: block; }
+.diff-line { display: block; margin: 0 -16px; padding: 0 16px 0 13px; border-left: 3px solid transparent; white-space: pre-wrap; }
+.diff-add { background: rgba(46,125,50,.10); border-left-color: #2e7d32; }
+.diff-del { background: rgba(200,52,43,.10); border-left-color: #c8342b; }
+.diff-hunk { color: var(--ink-soft); background: var(--chip); }
+.diff-ctx { color: var(--ink); }
 article table { border-collapse: collapse; width: 100%; margin: 6px 0 18px; font-size: calc(14.5px * var(--read-scale)); }
 article th, article td { border: 1px solid var(--rule); padding: 9px 12px; text-align: left; line-height: 1.6; }
 article th { font-family: var(--songti); background: var(--chip); font-weight: 700; }
@@ -578,6 +587,9 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
     var(--paper); }
   .seal { box-shadow: inset 0 0 0 1.5px rgba(251, 247, 238, .35), inset 0 0 6px rgba(0, 0, 0, .45); }
   ::highlight(zhupi-draft) { background-color: rgba(210, 84, 60, .28); }
+  /* diff 着色（PAIN #46）：深底上把染色略提亮，边条换更亮的绿/红，暗色下仍读得清 */
+  .diff-add { background: rgba(70, 160, 70, .16); border-left-color: #5FBF5F; }
+  .diff-del { background: rgba(224, 84, 64, .16); border-left-color: #E0684F; }
 }
 
 /* ── 单列档（≤1279）：放弃右缘眉批栏，正文单列、批注落到正文下方 ──
@@ -811,10 +823,13 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 
 /* 体例检查角标。窄栏里只给一个字的宽度 —— 「✗ 体例」四字已是上限。
    合格只画一个 ✓：绿色的东西不需要解释，红色的才需要。 */
-.chk { margin-left: .5em; font-size: .85em; white-space: nowrap; }
-.chk-bad { color: #c8342b; font-weight: 600; }
-.chk-run { color: #8a8a8a; }
-.chk-ok  { color: #2e7d32; }
+/* PAIN #31：体例检查角标原来 .85em 无衬底，「小到要人主动去找」。放大到近正文字号，
+   套一层浅色药丸底 + 内边距，让绿钩/红叉在折卡上一眼看得见，不必先知道它在那儿。 */
+.chk { margin-left: .5em; font-size: .95em; font-weight: 600; white-space: nowrap;
+  padding: 1px 7px; border-radius: 999px; }
+.chk-bad { color: #c8342b; background: rgba(200,52,43,.12); }
+.chk-run { color: #8a8a8a; background: var(--chip); font-weight: 500; }
+.chk-ok  { color: #2e7d32; background: rgba(46,125,50,.13); }
 
 /* F13「需核实」标记 —— AI 标注的未验证声明。
    正文标记：虚线下划线 + 一个小角标（悬停解释），克制到只提示「这句还没核实」，不喧宾夺主。 */
@@ -929,15 +944,20 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 
 .chapters { margin: 0 0 22px var(--art-indent); position: relative; }
 @media (min-width: 1940px) { .chapters { display: none; } }
+/* PAIN #31：这是「整本书」的入口，不是可有可无的小控件。原来一圈灰边 + 灰字，
+   一本 22 章的书打开只看得见「这一篇」，得先知道那儿能点。加朱砂左缘 + 实底 + 深色书名，
+   让「这里还有整本」在余光里就现出重量（同 folder-body.has-decisions 用朱砂提示的手法）。 */
 .chapters-summary {
   display: inline-flex; align-items: baseline; gap: 10px; cursor: pointer; list-style: none;
-  padding: 6px 16px; border-radius: 999px; border: 1px solid var(--rule);
+  padding: 7px 16px; border-radius: 999px; border: 1px solid var(--rule);
+  border-left: 3px solid var(--cinnabar);
   background: var(--paper-raised); max-width: 100%;
 }
+.chapters-summary:hover { border-color: var(--ink-soft); border-left-color: var(--cinnabar); }
 .chapters-summary::-webkit-details-marker { display: none; }
-.chapters-summary::after { content: "▾"; color: var(--ink-soft); font-size: 11px; }
+.chapters-summary::after { content: "▾"; color: var(--cinnabar); font-size: 12px; font-weight: 700; }
 .chapters[open] .chapters-summary::after { content: "▴"; }
-.chapters-label { font: 12px var(--mono); color: var(--ink-soft); flex: none; }
+.chapters-label { font: 12px var(--mono); color: var(--cinnabar); font-weight: 600; flex: none; }
 .chapters-cur {
   font-family: var(--songti); font-size: 14px; color: var(--ink);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
