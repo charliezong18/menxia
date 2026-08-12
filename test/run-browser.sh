@@ -81,7 +81,7 @@ check_names() { # $1=tag(dom|smoke)  $2=logfile  $3=golden
 
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=35
-SMOKE_EXPECT=106
+SMOKE_EXPECT=110
 
 WHAT="${1:-all}"
 STATUS=0

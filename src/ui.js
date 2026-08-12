@@ -143,6 +143,7 @@ function App() {
   const [tab, setTab] = useState('open');        // open=待审 / done=已画可（归档，只读）
   const [qian, setQianState] = useState(params.get('qian') || null); // 「按签」视图选中的签，null=三栏
   const [donePrs, setDonePrs] = useState([]);
+  const [nextUp, setNextUp] = useState(null);    // 画可后的落地条：下一折是谁——只提示，不自动跳，等他自己踩
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
   const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中
   const [searching, setSearching] = useState('');     // 手上跑的是旧版（见 detectNewBuild）
@@ -270,6 +271,7 @@ function App() {
       }
       if (list.length && !R.current.cur) openPR(list[0]); // 在途中用户已手点开折子就别顶掉他
       flushPending();
+      return list;                                        // 画可后要据此算「下一折是谁」
     } catch (err) {
       if (err.tokenDead) { gh.clearToken(); setPhase('setup'); setSetupMsg(S.setup.tokenDead); return; }
       say(err.rateLimited ? S.list.rateLimited : S.list.failed(err.message));
@@ -300,6 +302,7 @@ function App() {
 
   function openPR(pr) {
     setNotice('');
+    setNextUp(null);      // 换折了，上一折的落地条就不该再挂着
     setFloat(null);
     editElsewhere(null);  // 换折前收掉空草稿：它存进的是**上一折**的 localStorage，回来还会堵在那儿
     setZongpi(false);
@@ -936,11 +939,21 @@ function App() {
         pr.draft = false; // 本地同步：merge 失败重试不再重打 markReady
       }
       await api.mergePR(pr.number, pr.head.sha); // 带 sha：agent 中途推新版则 409，所批即所合
-      say(S.merge.done(pr.number));
-      setCur(null);
-      setDocPath(null);
-      setDocErr(null);
-      await loadPRs();
+      // 画可是「结束一件事」，不是「开始下一件事」：人不动、折不换，就地转只读。
+      // 滚动位置和选中的文字都留着，他要复制什么复制完再自己踩「下一折」。
+      // 本地补 merged_at 让 archived 当场为真（画可按钮、涂归入口随之关掉），不等清单回来；
+      // 折号没变，取文那两个 effect 吃的是 cur.pr.number，不会重拉正文。
+      // 另一半作用：cur 不为 null，loadPRs 里 `!R.current.cur` 那句守卫才真正生效——
+      // 原先 setCur(null) 把它架空了，于是每次画可都自动顶开待审队首，人被拽走，正文也没了。
+      setCur((c) => (c && c.pr.number === pr.number
+        ? { ...c, pr: { ...c.pr, merged_at: new Date().toISOString() } }
+        : c));
+      const rest = await loadPRs();
+      // 刚合的那折偶尔还挂在 open 清单里（GitHub 的清单有延迟），按折号剔掉
+      const next = rest?.find((p) => p.number !== pr.number) || null;
+      setNextUp(next);
+      // loadPRs 开头会 setNotice('')，提示得压在它之后
+      say(S.merge.done(pr.number) + (next ? '' : ` ${S.merge.queueEmpty}`));
     } catch (err) {
       say(S.merge.failed(err.message, pr.draft, pr.number));
     } finally {
@@ -1036,6 +1049,7 @@ function App() {
         <${Topbar} cur=${cur} archived=${archived} onHead=${onHead} busy=${busy}
           draftCount=${drafts.length} verifyN=${verifyN} happyUrl=${happyUrl} stale=${stale} notice=${notice}
           carrying=${carrying}
+          nextUp=${nextUp} onNextUp=${() => { setTab('open'); openPR(nextUp); }}
           readStep=${readStep}
           onReadStep=${(i) => { const c = clampStep(i); setReadStepState(c); setReadStep(c); }}
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}

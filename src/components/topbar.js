@@ -8,6 +8,7 @@ export function Topbar({
   cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice, carrying,
   readStep = 1, onReadStep,
   onRefresh, onCopyRef, onCarry, onZongpi, onSubmit, onQinci,
+  nextUp, onNextUp,
 }) {
   const pct = percentOf(readStep);
   // 多个顶层节点：htm 会返回数组，Preact 直接当 Fragment 渲染（这个 standalone 包没导出 Fragment）
@@ -44,5 +45,7 @@ export function Topbar({
             ${S.stale.banner}
             <button class="btn-ghost stale-reload" onClick=${() => location.reload()}>${S.stale.reload}</button>
           </p>`}
-        ${notice && html`<p class="notice">${notice}</p>`}`;
+        ${notice && html`<p class="notice">${notice}${nextUp && html`
+          <button class="btn-ghost notice-next" title=${S.merge.nextUpTitle}
+            onClick=${onNextUp}>${S.merge.nextUp(nextUp.number, nextUp.title)}</button>`}</p>`}`;
 }
