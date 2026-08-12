@@ -11,6 +11,8 @@ archive-has-items
 archive-readonly-no-qinci
 archive-readonly-notice
 archive-tab-exists
+bare-anchor-not-shown-as-text
+bare-anchor-stripped-from-dom
 bare-hash-link-rendered
 bare-hash-scrolls-to-top
 body-block-in-flow-above-doc
@@ -25,6 +27,11 @@ cmd-enter-in-zongpi-not-submit
 cmd-enter-saves-draft
 comment-relative-image-hydrated
 copy-ref-btn-exists
+diff-add-line-colored
+diff-add-visually-tinted
+diff-block-rendered
+diff-del-line-colored
+diff-hunk-header-marked
 doc-starts-right-below-fold
 doc-within-one-screen-of-top
 draft-cards>=2
