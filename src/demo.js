@@ -267,6 +267,43 @@ if (DEEP === '1' || DEEP === 'miss') {
   }, 1500);
 }
 
+// ?demo=1&mobile=1：手机窄口（run-browser.sh 用 390px 窗宽跑这一支）验 M0 底栏——
+// 桌面冒烟跑在 1440，进不了 ≤900 分支，底栏的真实版式只有在这里才量得到。
+// 四条：底栏真的显示出来（不是 display:none）、贴在视口底缘、三个按钮都在、触控目标 ≥44px。
+const MOBILE = new URLSearchParams(location.search).get('mobile');
+if (MOBILE === '1') {
+  setTimeout(async () => {
+    let pass = 0, fail = 0;
+    const chk = (n, c, d = '') => { c ? pass++ : fail++; console.log(`[mobile] ${c ? 'PASS' : 'FAIL'} ${n}${d ? ` — ${d}` : ''}`); };
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    // 开一折（清单第一张卡 .pr-item）——底栏是读折页的部件，清单页不出
+    document.querySelector('.pr-item')?.click();
+    await sleep(700);
+    const bar = document.querySelector('.mobile-bar');
+    chk('mobile-bar-visible-on-phone', Boolean(bar) && getComputedStyle(bar).display !== 'none',
+      `display=${bar ? getComputedStyle(bar).display : 'NO-EL'}`);
+    if (bar) {
+      const r = bar.getBoundingClientRect();
+      // 贴底缘：底栏底边应落在视口底部附近（fixed bottom:0，容 2px 误差）
+      chk('mobile-bar-pinned-to-bottom', Math.abs(r.bottom - window.innerHeight) <= 2,
+        `bottom=${Math.round(r.bottom)} vh=${window.innerHeight}`);
+      const btns = [...bar.querySelectorAll('.mobile-bar-btn')];
+      // 判＋画可常驻（未归档折）；提交（涂归·n）只在有草稿时出，刚开的折没草稿所以此处是 2。
+      chk('mobile-bar-has-core-actions', btns.length >= 2 && btns[0].textContent.includes('判'),
+        `n=${btns.length} first=${btns[0]?.textContent?.trim()}`);
+      // 触控目标：每个按钮实测高度 ≥44px（Apple HIG 下限；min-height:44 的落地校验）
+      const allBig = btns.length > 0 && btns.every((b) => b.getBoundingClientRect().height >= 44);
+      chk('mobile-bar-touch-targets-44', allBig,
+        `heights=${btns.map((b) => Math.round(b.getBoundingClientRect().height)).join(',')}`);
+    } else {
+      chk('mobile-bar-pinned-to-bottom', false, 'no bar');
+      chk('mobile-bar-has-core-actions', false, 'no bar');
+      chk('mobile-bar-touch-targets-44', false, 'no bar');
+    }
+    console.log(`[mobile] RESULT pass=${pass} fail=${fail}`);
+  }, 1500);
+}
+
 // 自动演示：用真实的 Selection + mouseup + 按钮点击走完「划句 → 存批」两轮
 export async function autoAnnotate(docEl) {
   try { await runSmoke(docEl); } catch (err) {
@@ -939,6 +976,16 @@ async function runSmoke(docEl) {
     await sleep(250);
     chk('scroll-end-jumps-to-top', host.scrollTop === 0, `top=${host.scrollTop}`);
   }
+
+  // ── 手机底栏（M0 · review #121 §5）：读折时 DOM 里常驻，桌面宽度下 display:none ──
+  // 冒烟跑在 1440px（桌面分支），验不了它在手机上的版式，但能钉死两条不变量：
+  // ①读折时它在 DOM 里、带得动「判」这个入口；②桌面上绝不冒出来（≥1940 章栏死区的反面，
+  // 同一类「某宽度区间该显/该隐没做对」的病，用同样手段守）。手机真实版式靠窄口冒烟另跑。
+  const mbar = document.querySelector('.mobile-bar');
+  chk('mobile-bar-rendered-in-dom', Boolean(mbar));
+  chk('mobile-bar-has-zongpi', Boolean(mbar?.querySelector('.mobile-bar-btn')));
+  chk('mobile-bar-hidden-on-desktop', Boolean(mbar) && getComputedStyle(mbar).display === 'none',
+    `display=${mbar ? getComputedStyle(mbar).display : 'NO-EL'}`);
 
   // ── 画可之后不跳折（2026-08-05 报障，放在最后跑：它把当前折变成归档态，后面没法再批）──
   // 原话：「画可以后别跳下一个没看的可以不……有时候我想复制什么内容回去」。

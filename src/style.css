@@ -544,6 +544,13 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 .btn-qinci:hover { opacity: .88; }
 .btn-qinci:disabled { opacity: .55; }
 
+/* 手机底栏（M0 · review #121 §5「判入口底部常驻」）：只在窄屏出，桌面永不显示。
+   顶栏那排动作在单轴滚动下会随正文滚出屏幕，读长折时要发判/画可得先滚回顶——
+   正是 PAIN「控件离正文越远＝越不存在」。把三个读折动作钉在视口底缘解决它。
+   **裸规则 display:none 必须写在下面 @media 的 display:flex 之前**（层叠守卫 css-cascade.test.js：
+   媒体查询不加特异度，裸规则写后面会把它压死）。桌面(2005px)与测试闸门(1440px)都不进 ≤900 分支。 */
+.mobile-bar { display: none; }
+
 /* 字号 A⁻/A⁺：顶栏里最不重要的控件，所以做成一对连体小钮，比 .btn-ghost 更收敛——
    它旁边就是「画可」，那是全站唯一的定稿动作，不能被一个字号钮抢走视线。
    到顶/到底时按钮置灰而不是消失：消失会让另一个钮左右跳位。 */
@@ -635,12 +642,34 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
   .actions { flex-wrap: wrap; }
 
   .notice { margin: 10px 16px 0; }
-  .work { padding: 18px 16px 48px; }
+  /* 底部留空躲开常驻底栏（读折时才有栏；padding 常留也不碍，清单页无正文）。
+     env(safe-area-inset-bottom) 让全面屏手势条下也不吃掉最后一行。 */
+  .work { padding: 18px 16px calc(80px + env(safe-area-inset-bottom)); }
 
-  /* 手机上整体收一档，但仍要乘 --read-scale——漏了乘就是「手机上 A⁺ 点了没反应」 */
+  /* 手机正文版式对齐设计稿③：17px 正文 / 1.8 行高（比桌面松一档，手机阅读更省力）。
+     仍要乘 --read-scale——漏了乘就是「手机上 A⁺ 点了没反应」。 */
   article h1 { font-size: calc(23px * var(--read-scale)); }
-  article p, article ul, article ol { font-size: calc(16px * var(--read-scale)); }
+  article p, article ul, article ol { font-size: calc(17px * var(--read-scale)); line-height: 1.8; }
   article table { font-size: calc(13.5px * var(--read-scale)); display: block; overflow-x: auto; }
+
+  /* 底栏出场：钉视口底缘，横排三钮，触控目标 ≥44px（Apple HIG 下限）。
+     裸规则 .mobile-bar{display:none} 在文件前部、这条之前——层叠守卫要的就是这个顺序。 */
+  .mobile-bar {
+    display: flex; gap: 10px; align-items: stretch;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 28;
+    padding: 8px 14px calc(8px + env(safe-area-inset-bottom));
+    background: var(--paper-raised); border-top: 1px solid var(--rule);
+    box-shadow: 0 -2px 10px var(--shadow);
+  }
+  .mobile-bar-btn {
+    flex: 1; min-height: 44px; border-radius: 999px;
+    border: 1.5px solid var(--rule); background: var(--paper);
+    font-family: var(--songti); font-size: 15px; letter-spacing: .12em; color: var(--ink);
+  }
+  .mobile-bar-btn:disabled { opacity: .5; }
+  /* 提交＝朱砂（批注动作那一族），画可＝墨底（全站唯一定稿动作），与桌面同色语义。 */
+  .mobile-bar-submit { border-color: var(--cinnabar); color: var(--cinnabar); }
+  .mobile-bar-qinci { background: var(--ink); border-color: var(--ink); color: var(--paper-raised); font-weight: 700; }
 }
 
 /* 已呈判：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。
