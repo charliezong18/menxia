@@ -32,6 +32,8 @@ ${Array.from({ length: 14 }, (_, i) => `第 ${i + 1} 段填充：读折台的滚
 
 折间链接测试：见 [另一折](https://github.com/demo/repo/pull/998) 与 [本折某行](https://github.com/demo/repo/blob/main/docs/demo.md#L20)；外链 [GitHub](https://github.com/slopus/happy) 不该被拦。
 
+跨篇锚点测试（PAIN #86）：[跳到别篇的落位节](guide.zh-CN.md#落位节) —— 切篇后要落到那一节，不是页首。
+
 页内锚点测试：[照 GitHub 锚写](#加长段冒烟用别删)、[照标题原文写](#加长段（冒烟用，别删）)、[指不着的锚](#根本没有这一节)。
 
 末行锚点：见此行即已滚到底。
@@ -244,8 +246,8 @@ export const demoApi = {
   ],
   // ref 落在旧 rev（非 head sha）时返回删节版，模拟版本间正文差异
   getFileText: async (path, ref) => {
-    if (path === 'docs/guide.md') return '# Guide\n\nEnglish variant for the language switch.';
-    if (path === 'docs/guide.zh-CN.md') return '# 指南\n\n中文版，用来验语言切页。';
+    if (path === 'docs/guide.md') return '# Guide\n\nEnglish variant for the language switch.\n\n## Landing\n\nCross-doc anchor target.';
+    if (path === 'docs/guide.zh-CN.md') return '# 指南\n\n中文版，用来验语言切页。\n\n## 落位节\n\n跨篇锚点的目标节。';
     return ref && ref !== 'demo0000' ? DOC_OLD : DOC;
   },
   // 换 blob URL 的桩：回一张 1×1 gif 的 data URL。原本是 throw（demo 文档里没图，从没被调用过），
@@ -810,6 +812,22 @@ async function runSmoke(docEl) {
     outer.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
     await sleep(150);
     chk('external-link-not-hijacked', appPrevented === false, `appPrevented=${appPrevented}`);
+  }
+  // 跨篇锚点（PAIN #86 残账）：点 `别篇.md#节` 切篇后，目标节要闪（＝落到那一节，不是页首）。
+  // 换的是真·另一篇（guide.zh-CN.md），落点 h2「落位节」在新篇渲染完那一拍由 jumpRef 滚到。
+  // 放在 inner/outer 都消费完之后：这段会切走 #doc 岛屿，早跑会让上面捕获的链接节点脱离文档。
+  const crossDoc = [...document.querySelectorAll('#doc a[href]')]
+    .find((a) => a.getAttribute('href').includes('guide.zh-CN.md#'));
+  if (crossDoc) {
+    crossDoc.click();
+    await sleep(400);   // 等新篇取文+渲染，再等 jumpRef 那 60ms 定时器把锚滚到位
+    const target = [...document.querySelectorAll('#doc h2[id]')].find((h) => (h.textContent || '').includes('落位节'));
+    chk('cross-doc-anchor-lands-on-section',
+      Boolean(target) && target.classList.contains('search-flash'),
+      `switched=${document.querySelector('#doc h1')?.textContent || '-'} target=${target ? target.id : 'MISSING'} flashed=${target ? target.classList.contains('search-flash') : false}`);
+    // 复原到 demo 篇，别扰动后面按 demo 正文写的断言
+    [...document.querySelectorAll('.doc-tab')].find((b) => b.textContent.includes('demo'))?.click();
+    await sleep(400);
   }
   // 引用此处：拷出的 markdown 能被自己解析回来
   const refBtn = [...document.querySelectorAll('.btn-ghost')].find((b) => b.textContent.includes('引用此处'));

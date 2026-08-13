@@ -402,7 +402,9 @@ function App() {
         if (jp && jp.prNumber === cur.pr.number && (!jp.path || jp.path === docPath)) {
           jumpRef.current = null;
           setTimeout(() => {
-            // 找覆盖该行的块：优先 data-line ≤ 目标行的最近块
+            // 跨篇锚点：带 frag 的走标题 slug 匹配（jumpToAnchor 自带「找不到就出声」）；
+            // 其余仍走 data-line ≤ 目标行的最近块，两条落点共用 flashTo。
+            if (jp.frag) { jumpToAnchor(jp.frag); return; }
             let target = null;
             el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= jp.line) target = b; });
             flashTo(target, 'center');
@@ -668,7 +670,16 @@ function App() {
     if (rel) {
       e.preventDefault();
       const inFolder = cur?.docs?.some((f) => f.filename === rel);
-      if (inFolder) { setDocPath(rel); return; }
+      if (inFolder) {
+        // 跨篇锚点（PAIN #86 残账）：`[[别篇#某节]]` 切篇后要落到目标节，不是页首。
+        // resolveRelativeDocLink 只回文件路径（`#片段` 被它剥了），片段得从原始 href 现取；
+        // 存进 jumpRef 让新篇渲染完那一拍再滚（异步时序照搬 #102 那条 scroll-to-line 的落点）。
+        const hash = href.indexOf('#');
+        const frag = hash < 0 ? '' : href.slice(hash + 1);
+        if (frag && cur?.pr) jumpRef.current = { prNumber: cur.pr.number, path: rel, frag };
+        setDocPath(rel);
+        return;
+      }
       const slug = gh.getRepoSlug();
       const ref = cur?.pr?.head?.sha;
       if (slug && ref) window.open(`https://github.com/${slug}/blob/${ref}/${rel}`, '_blank', 'noopener');
