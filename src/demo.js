@@ -1069,6 +1069,47 @@ async function runSmoke(docEl) {
     chk('scroll-end-jumps-to-top', host.scrollTop === 0, `top=${host.scrollTop}`);
   }
 
+  // ── 通读（连续读整本，PAIN #31②）：多章折一次拼全书，只读，切回分章能复原 ──
+  // demo 折有 2 篇可见章（demo.md + guide 双语合并），够验通读四条不变量。放在末尾：
+  // 通读会切走 #doc 岛屿，早跑会扰动上面按单篇写的断言。
+  const rtToggle = document.querySelector('.read-through-toggle');
+  chk('read-through-toggle-present', Boolean(rtToggle),
+    `chapters-visible=${[...document.querySelectorAll('.doc-tab')].length}`);
+  if (rtToggle) {
+    const wantN = 2;   // demo.md + guide（zh 默认，成对只算一章）
+    rtToggle.click();               // 进通读：把全书各章顺序拼进 #doc
+    await sleep(700);               // 各章并行取文 + 逐段渲染
+    const secs = [...document.querySelectorAll('#doc .chapter-section')];
+    chk('read-through-renders-all-chapters',
+      secs.length === wantN && secs.every((s) => (s.querySelector('.chapter-body')?.textContent || '').trim().length > 0),
+      `sections=${secs.length} want=${wantN} bodies=${secs.map((s) => (s.querySelector('.chapter-body')?.textContent || '').trim().length).join('|')}`);
+    chk('read-through-has-chapter-dividers',
+      document.querySelectorAll('#doc .chapter-divider').length === wantN,
+      `dividers=${document.querySelectorAll('#doc .chapter-divider').length} want=${wantN}`);
+    chk('read-through-shows-readonly-hint', Boolean(document.querySelector('.read-through-hint')));
+    // 只读闸：通读态选字不许冒浮批钮（涂归锚在单篇行号上，拼本后会错段）
+    const rtRange = rangeFor('迁移到 Preact 之后');   // 该句在 demo.md 段里，通读态仍在 #doc 中
+    if (rtRange) {
+      document.dispatchEvent(new Event('touchstart', { bubbles: true }));
+      getSelection().removeAllRanges();
+      getSelection().addRange(rtRange);
+      await sleep(450);   // 过 250ms 防抖窗口，分章态本会出钮
+      chk('read-through-blocks-annotation', !document.querySelector('.zhupi-float'),
+        `float=${Boolean(document.querySelector('.zhupi-float'))}`);
+      getSelection().removeAllRanges();
+      await sleep(100);
+    } else {
+      chk('read-through-blocks-annotation', false, 'probe-range-missing');
+    }
+    // 切回分章：#doc 回到单篇，通读的 section 全清（涂归可用性随之恢复）
+    document.querySelector('.read-through-toggle')?.click();
+    await sleep(700);
+    chk('read-through-off-restores-single-view',
+      document.querySelectorAll('#doc .chapter-section').length === 0
+        && (document.querySelector('#doc')?.textContent || '').trim().length > 0,
+      `sections=${document.querySelectorAll('#doc .chapter-section').length} docLen=${(document.querySelector('#doc')?.textContent || '').trim().length}`);
+  }
+
   // ── 手机底栏（M0 · review #121 §5）：读折时 DOM 里常驻，桌面宽度下 display:none ──
   // 冒烟跑在 1440px（桌面分支），验不了它在手机上的版式，但能钉死两条不变量：
   // ①读折时它在 DOM 里、带得动「判」这个入口；②桌面上绝不冒出来（≥1940 章栏死区的反面，

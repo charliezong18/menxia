@@ -232,6 +232,16 @@ article { flex: none; width: var(--art-w); margin-left: var(--art-indent); min-w
 .doc-tab:hover { color: var(--ink); }
 .doc-tab.active { border-color: var(--ink-soft); color: var(--ink); }
 
+/* ── 通读开关（连续读整本，PAIN #31②）── */
+.read-through-bar { display: flex; align-items: center; gap: 12px; margin: 0 0 18px var(--art-indent); flex-wrap: wrap; }
+.read-through-toggle {
+  padding: 6px 16px; border-radius: 999px; border: 1.5px solid var(--rule);
+  background: var(--paper-raised); font: 13px var(--mono); color: var(--ink-soft); cursor: pointer;
+}
+.read-through-toggle:hover { color: var(--ink); }
+.read-through-toggle.on { background: var(--cinnabar); border-color: var(--cinnabar); color: var(--paper-raised); }
+.read-through-hint { font-size: 12.5px; color: var(--ink-soft); }
+
 /* ── 文档渲染排版 ──
    每个 font-size 都乘 --read-scale（顶栏 A⁻/A⁺ 调，默认 1 = 原样）。写成 calc 而不是
    把 article 设成基准再让子元素用 em，是因为这套数值是逐个调出来的、彼此不成整齐比例，
@@ -246,6 +256,16 @@ article ul, article ol { margin: 0 0 15px 22px; font-size: calc(16.5px * var(--r
 article li { margin-bottom: 4px; }
 article a { color: var(--cinnabar-deep); }
 article hr { border: 0; border-top: 1px solid var(--rule); margin: 24px 0; }
+
+/* ── 通读态：章分段与章标题分割线（PAIN #31②）──
+   每章一个 .chapter-section，段首一条分割线 + 「第 i/n 章 · 名」标题条，读者一眼知道跨章了。
+   .chapter-divider 是 h2，字号沿用 article h2（已乘 --read-scale），这里只加分隔与配色，不覆盖字号。 */
+.chapter-section + .chapter-section { border-top: 2px solid var(--rule); margin-top: 40px; padding-top: 8px; }
+.chapter-divider {
+  color: var(--cinnabar-deep); font-family: var(--songti);
+  letter-spacing: .01em; margin: 18px 0 18px;
+}
+.chapter-section:first-child .chapter-divider { margin-top: 4px; }
 article blockquote {
   border-left: 3px solid var(--rule); padding-left: 14px; margin: 0 0 15px;
   color: var(--ink-soft);

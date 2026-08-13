@@ -80,6 +80,12 @@ qian-chip-on-card
 qian-clear-restores-tabs
 qian-view-lists-open-and-merged-together
 qian-view-replaces-tabs
+read-through-blocks-annotation
+read-through-has-chapter-dividers
+read-through-off-restores-single-view
+read-through-renders-all-chapters
+read-through-shows-readonly-hint
+read-through-toggle-present
 reply-rendered>=1
 rev-switcher-3-opts
 scroll-end-jumps-to-bottom

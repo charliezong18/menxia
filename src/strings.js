@@ -294,6 +294,16 @@ export const S = deepFreeze({
     chapterAria: '本折章列表',
   },
 
+  // 通读（连续读整本）——PAIN #31 残账②：多章折顺着读完全书，不用逐章点。
+  readThrough: {
+    on: '通读全书',            // 分章态 → 点它进通读
+    off: '分章读',            // 通读态 → 点它回单章（才能划句涂归）
+    onTitle: '把全书各章顺序拼在一起，一路滚到底',
+    offTitle: '回到单章视图（通读态下不能划句涂归）',
+    readonlyHint: '通读态只读：划句涂归请切回「分章读」；判不受影响',
+    chapterDivider: (i, n, name) => `第 ${i} / ${n} 章 · ${name}`,
+  },
+
   // 批注卡
   card: {
     quote: (text) => `「${text}」`,
