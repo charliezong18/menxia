@@ -26,7 +26,7 @@ import { assembleCarry } from './carry.js';
 import { Outline, ChapterList, ChapterRail } from './components/outline.js';
 import { ScrollEnds, scroller } from './components/scroll-ends.js';
 import { Dashboard } from './components/dashboard.js';
-import { extractOutline, hasOutline, chapterList, shouldUseChapterList } from './toc.js';
+import { extractOutline, hasOutline, chapterList, shouldUseChapterList, chapterName } from './toc.js';
 import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
 
@@ -119,6 +119,7 @@ function App() {
   const [docErr, setDocErr] = useState(null);
   const [zoomImg, setZoomImg] = useState(null); // 展图浮窗：{src, alt} | null
   const [docTick, setDocTick] = useState(0);     // 文档 DOM 就位的信号（岛屿内容不归 vdom 管）
+  const [readThrough, setReadThrough] = useState(false); // 通读（连续读整本，PAIN #31②）：只读，拼全书
   const [drafts, setDrafts] = useState([]);
   const [editing, setEditing] = useState(null);
   const [zongpi, setZongpi] = useState(false);
@@ -164,7 +165,7 @@ function App() {
   const headSha = cur?.pr?.head?.sha || null;
   const onHead = !viewed || viewed === headSha;
   const archived = Boolean(cur?.pr?.merged_at);
-  const canAnnotate = onHead && !archived;      // 旧版 / 归档折一律只读
+  const canAnnotate = onHead && !archived && !readThrough; // 旧版 / 归档 / 通读一律只读（通读拼全书，行号跨章会撞）
   const happyUrl = parseHappySession(cur?.pr?.body);   // 呈折的那次奏对（agent 埋在 PR body 里）
   R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate, viewThread, zoomImg };
 
@@ -312,6 +313,7 @@ function App() {
     setDocErr(null);
     setDocPath(null);
     setDocTick(0);
+    setReadThrough(false); // 通读是「这折的临时读法」，换折回默认分章（否则单章折也顶着通读态）
     setViewed(null);      // 每次开折先回 head：docPath 置 null 期间就位，与岛屿 effect 的 null→值中转契约不冲突
     setCommits([]);
     setComments([]);
@@ -389,6 +391,44 @@ function App() {
     el.appendChild(p);
     (async () => {
       try {
+        // ── 通读（连续读整本，PAIN #31②）──
+        // 把全书各章按目录顺序一次拼进 #doc，一路滚到底，不用逐章点。
+        // **只读**：涂归锚在单篇的 data-line 上，跨章拼接后行号会撞（第 1 章第 5 行 vs 第 3 章第 5 行），
+        // 故 canAnnotate 已在通读态关掉划句（判不受影响）。每章各是一个 <section>，
+        // 保留自己的 data-line、配一个章标题分割线；渲染不开 headingIds（跨章 id 会重、且通读不做页内锚跳）。
+        const chapters = readThrough ? visibleDocs((cur.docs || []).map((f) => f.filename), getLang()) : null;
+        if (readThrough && chapters && chapters.length > 1) {
+          const texts = await Promise.all(chapters.map(async (path) => {
+            try { return { path, text: await api.getFileText(path, ref) }; }
+            catch { return { path, text: null }; }   // 单章取不到不拖垮整本
+          }));
+          if (dead) return;
+          el.replaceChildren();
+          texts.forEach(({ path, text }, i) => {
+            const sec = document.createElement('section');
+            sec.className = 'chapter-section';
+            sec.dataset.chapter = path;
+            const h = document.createElement('h2');
+            h.className = 'chapter-divider';
+            h.textContent = S.readThrough.chapterDivider(i + 1, chapters.length, chapterName(path));
+            sec.appendChild(h);
+            const body = document.createElement('div');
+            body.className = 'chapter-body';
+            // 与单篇同一条 XSS 安全渲染路径（markdown-it html:false）；不开 headingIds（跨章去重会分家）
+            body.innerHTML = text == null ? '' : renderMarkdown(text, { headingIds: false });
+            if (text == null) { body.className += ' state err'; body.textContent = S.doc.loadFailed(chapterName(path)); }
+            sec.appendChild(body);
+            el.appendChild(sec);
+          });
+          // 需核实标记：整本一起点；图片按各章自己的目录 base 逐段换（同一 ref）
+          setVerifyN(decorateVerifyMarkers(el, S.verify.markerTip));
+          await Promise.all([...el.querySelectorAll('.chapter-section')].map((sec) =>
+            hydrateRelativeImages(sec, { docPath: sec.dataset.chapter, ref, fetchBlobUrl: api.getFileBlobUrl })));
+          if (dead) return;
+          setDocTick((t) => t + 1);
+          return;   // 通读态到此为止：不跑 jumpRef（那是单篇锚点的活）
+        }
+
         const text = await api.getFileText(docPath, ref);
         if (dead) return;
         // 只有正文开 headingIds：页内锚的 id 全文档唯一，批注面不能跟着打（见 render.js 那段）
@@ -420,7 +460,7 @@ function App() {
       }
     })();
     return () => { dead = true; };
-  }, [cur?.pr?.number, docPath, viewed]);
+  }, [cur?.pr?.number, docPath, viewed, readThrough]);
 
   // demo 自动划批（真实事件路径的冒烟）
   useEffect(() => {
@@ -432,7 +472,7 @@ function App() {
     if (!('highlights' in CSS)) return;
     const doc = docRef.current;
     const hl = new Highlight();
-    if (doc && docTick > 0 && onHead) {
+    if (doc && docTick > 0 && onHead && !readThrough) {   // 通读态拼了全书，草稿行号跨章会撞，不画
       drafts.filter((d) => d.path === docPath).forEach((d) => {
         const r = A.rangeForDraft(doc, d);
         if (r) hl.add(r);
@@ -440,7 +480,7 @@ function App() {
     }
     CSS.highlights.set('zhupi-draft', hl);
     return () => CSS.highlights.delete('zhupi-draft');
-  }, [drafts, docTick, docPath, onHead]);
+  }, [drafts, docTick, docPath, onHead, readThrough]);
 
   // ── 批注卡对齐（图片/字体异步加载改块高 → ResizeObserver 重排）──
   // 退化对齐（评审取舍）：草稿卡的 blockLine 精确命中某个 [data-line]；已呈批注串的
@@ -853,6 +893,16 @@ function App() {
     if (!hit) return say(S.jump.anchorMissing(frag));
     flashTo(hit.el);
   }
+  // 章栏点某章：通读态滚到该章的 <section>（不换文档，整本还摊着）；分章态照旧切文档。
+  function openChapter(path) {
+    if (readThrough) {
+      const sec = docRef.current?.querySelector(`.chapter-section[data-chapter="${(window.CSS?.escape ? CSS.escape(path) : path)}"]`);
+      if (sec) flashTo(sec, 'start');
+      return;
+    }
+    setViewed(null);
+    setDocPath(path);
+  }
   // 折间跳转：目标折在哪个栏自动切过去；带 path/line 就落到那一段
   function jumpTo({ prNumber, path, line }) {
     const all = [...prs, ...donePrs];
@@ -1013,7 +1063,9 @@ function App() {
 
   // 草稿卡与已呈串必须合并排序再渲染：layoutCards 是单调下压式堆叠，
   // 两组各自有序会把串卡整体压到全部草稿之下、离锚点任意远（第四轮评审 A）
-  const marginItems = [
+  // 通读态右缘不摆涂归卡：草稿本就画不出（只读），已呈串锚在单章行号上、拼本后会对错段，
+  // 一律不渲染最诚实（切回分章视图它们原样回来）。判走的是另一条（顶栏 / 判折叠块），不受影响。
+  const marginItems = readThrough ? [] : [
     ...docDrafts.map((d) => ({
       blockLine: d.blockLine,
       el: html`<${DraftCard} key=${d.id} d=${d} doc=${docRef.current} editing=${editing === d.id}
@@ -1048,6 +1100,8 @@ function App() {
   const docNames = cur?.docs ? cur.docs.map((f) => f.filename) : [];
   const useChapterList = shouldUseChapterList(docNames, curLangOf);
   const chapters = useChapterList ? chapterList(docNames, docPath, curLangOf) : [];
+  // 通读入口：折里有 >1 篇（双语已合并）就给「通读全书」开关，不必等到 >7 章
+  const multiChapter = cur?.docs ? visibleDocs(docNames, curLangOf).length > 1 : false;
   const showOutline = hasOutline(outlineItems);
 
   return html`
@@ -1086,13 +1140,21 @@ function App() {
         <div class=${'work' + (dash ? ' work-hidden' : '')} onClick=${onAnchorClick}>
         <div class="stage-row">
           ${cur?.docs?.length > 1 && useChapterList && html`
-            <${ChapterRail} chapters=${chapters}
-              onOpenChapter=${(path) => { setViewed(null); setDocPath(path); }} />`}
+            <${ChapterRail} chapters=${chapters} onOpenChapter=${openChapter} />`}
         <div class="stage-main">
 
+          ${multiChapter && html`
+            <div class="read-through-bar">
+              <button class=${'read-through-toggle' + (readThrough ? ' on' : '')}
+                aria-pressed=${readThrough}
+                title=${readThrough ? S.readThrough.offTitle : S.readThrough.onTitle}
+                onClick=${() => { setViewed(null); setReadThrough((v) => !v); }}>
+                ${readThrough ? S.readThrough.off : S.readThrough.on}
+              </button>
+              ${readThrough && html`<span class="read-through-hint">${S.readThrough.readonlyHint}</span>`}
+            </div>`}
           ${cur?.docs?.length > 1 && useChapterList && html`
-            <${ChapterList} chapters=${chapters}
-              onOpenChapter=${(path) => { setViewed(null); setDocPath(path); }} />`}
+            <${ChapterList} chapters=${chapters} onOpenChapter=${openChapter} />`}
           ${cur?.docs?.length > 1 && !useChapterList && html`
             <div class="doc-tabs">
               ${cur.docs.filter((f) => visibleDocs(cur.docs.map((x) => x.filename), curLangOf).includes(f.filename)).map((f) => html`
@@ -1139,7 +1201,7 @@ function App() {
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
             onToggle=${() => setOtherOpen((o) => !o)} hydrate=${hydrateComment} />
         </div>
-        ${cur && !docErr && showOutline && html`
+        ${cur && !docErr && showOutline && !readThrough && html`
           <${Outline} items=${outlineItems} docRef=${docRef} onJump=${jumpToLine} />`}
         </div>
         </div>
