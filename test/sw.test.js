@@ -54,11 +54,12 @@ test('kill-switch 常量两处逐字一致（sw.js 内联 vs sw-register-const.j
   assert.equal(KILL_SWITCH_URL, REGISTER_KILL_URL);
 });
 
-test('sw.js 是 classic worker：源码里不得含顶层 import（否则注册即抛）', () => {
-  const src = readFileSync(join(ROOT, 'sw.js'), 'utf8');
-  // 允许注释里出现 "import" 字样，但不允许真正的 `import … from`。
-  const hasRealImport = /^\s*import\s.+\sfrom\s/m.test(src.replace(/\/\/.*$/gm, ''));
-  assert.equal(hasRealImport, false, 'sw.js 作为 classic worker 注册，不能有顶层 import');
+test('sw.js 作为模块 worker 注册：sw-register.js 必须带 type:\'module\'（否则 export 会 script eval failed）', () => {
+  // 2026-08-13 在线实测：classic worker 里 sw.js 的 export → "ServiceWorker script evaluation failed"。
+  // 修法是 type:'module'。这条钉死它，防有人把 { type:'module' } 删了退回 classic。
+  const reg = readFileSync(join(ROOT, 'src/sw-register.js'), 'utf8');
+  assert.ok(/register\(\s*['"]\.\/sw\.js['"]\s*,\s*\{\s*type:\s*['"]module['"]\s*\}/.test(reg),
+    "sw-register.js 必须以 { type: 'module' } 注册 sw.js");
 });
 
 test('sw.js 承诺 network-first（红线）：源码含 networkFirst，且没有 cache-first 地把壳先给缓存', () => {

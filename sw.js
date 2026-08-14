@@ -30,9 +30,10 @@ export const cacheName = (version = SW_VERSION) => `menxia-shell-${version}`;
 // 内容含 `"kill": true` 就触发自毁。放在 Pages 上、push 即改，无需动 SW 代码。
 // 相对 './' 跟随部署路径（/menxia/）。
 //
-// ⚠️ 这里**内联**常量、不 import：SW 作为 classic worker 注册（见 sw-register.js），
-// classic worker 里 import 会直接抛。壳侧那份在 src/sw-register-const.js，改动要两处同步——
-// 有 test/sw.test.js 的一条断言钉死两处一致，改漏了测试会红。
+// ⚠️ 本文件作为**模块 worker** 注册（sw-register.js 里 type:'module'）：只有这样 export
+// 才合法——classic worker 里出现 export 会「script evaluation failed」（2026-08-13 在线实测）。
+// export 是为了让 test/sw.test.js 在 node 里直接测下面这些纯策略函数。
+// 与壳侧常量 src/sw-register-const.js 逐字同步，有一条测试钉死两处一致。
 export const KILL_SWITCH_URL = './menxia-sw-kill.json';
 
 // 只处理「本站同源 + GET + 不是 API」的请求。其余（api.github.com、POST/PATCH、跨源）一律放行不拦，

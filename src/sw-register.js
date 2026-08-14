@@ -41,7 +41,10 @@ export async function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return null;
   if (await killSwitchOn()) { await unregisterAll(); return null; }
   try {
-    return await navigator.serviceWorker.register('./sw.js');
+    // 模块 worker：sw.js 用 export 暴露纯策略函数给 test/sw.test.js 单测——classic worker 里 export
+    // 会「script evaluation failed」（2026-08-13 在线实测栽过），必须 type:'module'。
+    // 模块 SW：Chrome 91+ / Safari 16.4+（含现代 WKWebView，iOS 壳指向线上站即可用）。
+    return await navigator.serviceWorker.register('./sw.js', { type: 'module' });
   } catch (err) {
     console.warn('[menxia] SW 注册失败（不影响在线使用）：', err && err.message);
     return null;
