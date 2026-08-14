@@ -146,6 +146,18 @@ gh api -X POST repos/<owner>/<repo>/pulls/<n>/comments/<id>/replies -f body="...
 
 人在 app 里按「画可」（或你跑 `gh pr merge <n> --squash --delete-branch`）。merge = 定稿 = 按 PR body 声明的目的地交付。
 
+## 离线包（进山没信号也能读、能批）
+
+一个 Service Worker（`sw.js`）+ IndexedDB（`src/offline.js`）把「读」和「发判」都做成断网可用：
+
+- **离线读**：应用壳（HTML/JS/CSS）走 SW，**一律 network-first**——有网永远是最新代码，没网才落缓存。正文数据（折/文档/批注/判）进 IndexedDB，按「PR 号 + 文档路径 + sha」失效；断网时从库渲染，顶部显示「离线副本 · 截至 …」。**PAT 与任何带凭据的响应绝不进缓存**（token 只在 localStorage，正文是解过的数据）。
+- **待发判 outbox**：断网发判落 IndexedDB 队列，顶部显示「待发 N 条」；联网（`online` 事件 + 每次启动）自动补发，逐条带本地 uuid 幂等，发成功才出队。
+- **跨设备续读**：读到哪存在**那折 PR 下的一条状态 comment**里（`<!-- menxia-readstate {…} -->`，PATCH 编辑同一条、零 commit）。打开折时若远端比本地新且落点不同，给一个「跳到上次位置」提示条——**点了才跳，绝不自动拽走**。这条状态 comment 会从判列表里滤掉（阅读器与 menxia-mcp 两侧同判据）。
+
+### kill-switch（应急拔闸）
+
+「push 即部署」是这个站的命根子，SW 绝不能把活站钉死。三道保险：① 壳一律 network-first；② `sw.js` 里 `SW_VERSION` 常量，改壳就 +1，activate 时清掉旧 cache；③ **kill-switch**：把仓根 `menxia-sw-kill.json` 的 `"kill"` 改成 `true` 并 push main——所有客户端下次打开时会 `unregister()` SW + 清壳缓存，整站退回无 SW 的裸状态。恢复后改回 `false`。
+
 ## 已知边界
 
 老实列一遍，让你知道自己 fork 的是什么：

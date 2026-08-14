@@ -1,0 +1,4 @@
+{
+  "kill": false,
+  "_": "门下离线包 kill-switch。把 kill 改成 true 并 push main，即可让所有客户端下次打开时注销 Service Worker + 清壳缓存，整站退回无 SW 的裸状态（应急拔闸）。恢复后改回 false。详见 README「离线包 · kill-switch」。"
+}

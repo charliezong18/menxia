@@ -233,6 +233,20 @@ article { flex: none; width: var(--art-w); margin-left: var(--art-indent); min-w
 .doc-tab.active { border-color: var(--ink-soft); color: var(--ink); }
 
 /* ── 通读开关（连续读整本，PAIN #31②）── */
+/* M2 离线包提示条：只在离线/待发/续读时出现，默认不占位 */
+.offline-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin: 0 0 14px var(--art-indent); padding: 6px 14px; border-radius: 8px;
+  font: 12px var(--mono); color: var(--ink-soft); background: var(--paper-raised);
+  border: 1px solid var(--rule);
+}
+.offline-outbox, .offline-copy { color: var(--ink-soft); }
+.offline-jump-go, .offline-jump-no {
+  padding: 4px 12px; border-radius: 999px; border: 1.5px solid var(--rule);
+  background: var(--paper); font: 12px var(--mono); color: var(--ink); cursor: pointer;
+}
+.offline-jump-no { color: var(--ink-soft); border-color: transparent; }
+
 .read-through-bar { display: flex; align-items: center; gap: 12px; margin: 0 0 18px var(--art-indent); flex-wrap: wrap; }
 .read-through-toggle {
   padding: 6px 16px; border-radius: 999px; border: 1.5px solid var(--rule);

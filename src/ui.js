@@ -29,11 +29,24 @@ import { Dashboard } from './components/dashboard.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList, chapterName } from './toc.js';
 import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
+import { registerServiceWorker } from './sw-register.js';
+import {
+  isReadStateComment, parseReadState, shouldPromptJump,
+  makeOutboxItem, enqueue, listOutbox, flushOutbox, putMeta, getMeta,
+  cachedFetch, cacheKey,
+} from './offline.js';
 
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
 const AUTO = params.get('auto') === '1';
 const api = DEMO ? demoApi : gh;
+
+// 本设备名：用于续读标记里区分「上次在哪台读的」。记在 localStorage，缺省给个短随机名。
+function deviceName() {
+  let n = localStorage.getItem('menxia.device');
+  if (!n) { n = `dev-${Math.random().toString(36).slice(2, 6)}`; localStorage.setItem('menxia.device', n); }
+  return n;
+}
 
 // Pages 发 max-age=600 且模块 URL 无版本号 → 手机上可能跑着 10 分钟前的旧代码，
 // 而用户无从判断新旧。启动时强制回源取一遍源码算指纹，与上次记录比：变了就提示刷新。
@@ -52,7 +65,10 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/slug.js', 'src/components/scroll-ends.js', 'src/components/image-view.js',
   'src/components/dashboard.js',
   // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
-  'src/verify.js'];
+  'src/verify.js',
+  // M2 离线包新增源文件（sw.js 在仓根、不在 src/ 下，故不进这张只管 src/ 的清单；
+  // 它自身带 SW_VERSION 版本号 + activate 清旧 cache，失效链路独立于 detectNewBuild）
+  'src/offline.js', 'src/sw-register.js', 'src/sw-register-const.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -152,6 +168,11 @@ function App() {
   const [hits, setHits] = useState(null);        // null=没在搜；[]=搜了没命中
   const [searching, setSearching] = useState('');     // 手上跑的是旧版（见 detectNewBuild）
   const [carrying, setCarrying] = useState(false);    // F12 携卷：正在取全文拼装（大折要一会儿）
+  // ── M2 离线包 ──
+  const [offlineAt, setOfflineAt] = useState(null);   // 非 null=正在读离线副本，值是缓存时间（显示「离线副本 · 截至 …」）
+  const [outboxN, setOutboxN] = useState(0);          // 判 outbox 待发条数（>0 时 UI 显示「待发 N 条」）
+  const [resumeBar, setResumeBar] = useState(null);   // 续读提示：{docPath, anchor} | null。点了才跳，绝不自动
+  const readStateId = useRef(null);                   // 本折续读 comment 的 id（记住 → 下次直接 PATCH）
 
   const docRef = useRef(null);
   const autoRan = useRef(false); // 冒烟只跑一次（切折会让 docTick 回到 1）
@@ -192,6 +213,28 @@ function App() {
   }, []);
 
   useEffect(() => { if (!DEMO) detectNewBuild().then(setStale); }, []);
+
+  // ── M2 离线包：装 SW + 开机/联网时 flush 判 outbox ──
+  // DEMO 一律跳过（冒烟测试不该注册 SW、不该碰 IndexedDB）。
+  const refreshOutboxN = useCallback(async () => { setOutboxN((await listOutbox()).length); }, []);
+  const flushOut = useCallback(async () => {
+    // 逐条把待发判发出去；成功即出队。sender 抛错的留队可重试（见 offline.flushOutbox）。
+    await flushOutbox(async (it) => { await gh.createIssueComment(it.pr, it.body); });
+    await refreshOutboxN();
+    // 刚 flush 完，若当前正看着那折，重拉一次让新判显示。
+    const c = R.current.cur;
+    if (c) loadComments(c.pr.number);
+  }, [refreshOutboxN]);
+
+  useEffect(() => {
+    if (DEMO) return undefined;
+    registerServiceWorker();
+    refreshOutboxN();
+    flushOut();                                   // 开机先试着把上次没发出去的补发
+    const onOnline = () => flushOut();
+    window.addEventListener('online', onOnline);
+    return () => window.removeEventListener('online', onOnline);
+  }, [flushOut, refreshOutboxN]);
 
   // 深链自带的仓 vs 本地配的仓（#7）。病根：以前深链是拿**收链人**配的仓去解析**发链人**给的折号——
   // 发给协审人的 ?pr=30 会落到他自己那个仓的第 30 折上（串台），?ref= 形态则被仓名比对直接判死（静默）。
@@ -361,6 +404,7 @@ function App() {
       } catch { /* rev 拉不到就只读 head，不报错打断 */ }
     })();
     loadComments(pr.number);
+    loadReadState(pr.number);   // M2：读远端续读位置，决定要不要给「跳到上次位置?」提示条
   }
 
   // 已呈批注串：开折拉一次、提交涂归成功后重拉一次（让刚呈的立即可见）。不轮询。
@@ -370,8 +414,73 @@ function App() {
         api.listPRComments(prNumber),
         api.listIssueComments ? api.listIssueComments(prNumber) : Promise.resolve([]),
       ]);
-      if (R.current.cur?.pr.number === prNumber) { setComments(cs); setZongpis(zs); }
+      // 续读标记不是判：从会话区里滤掉，否则那条自动维护的 comment 会当成一条判显示（和 mcp 侧同判据）。
+      const visibleZ = zs.filter((c) => !isReadStateComment(c.body));
+      if (R.current.cur?.pr.number === prNumber) { setComments(cs); setZongpis(visibleZ); }
     } catch { /* 批注串拉失败不打断读折 */ }
+  }
+
+  // 打开折时读远端续读位置：比本地新且落点不同才给「跳到上次位置?」提示条（点了才跳，绝不自动）。
+  async function loadReadState(prNumber) {
+    if (DEMO || !gh.getReadState) return;
+    try {
+      const rs = await gh.getReadState(prNumber);
+      readStateId.current = rs?.id ?? null;
+      const localTime = (await getMeta(`readtime::${prNumber}`)) || '';
+      if (rs?.state && shouldPromptJump(rs.state, { localTime, current: { docPath: R.current.docPath, anchor: '' } })) {
+        setResumeBar({ docPath: rs.state.docPath, anchor: rs.state.anchor });
+      } else {
+        setResumeBar(null);
+      }
+    } catch { /* 读续读失败不打断读折 */ }
+  }
+
+  // 当前视口顶部所在的源文件行号：取「盒顶已越过视口顶」的最后一个 [data-line]。
+  // 复用既有 data-line 语义，不新造定位逻辑；拿不到返回 null（通读/无文档时）。
+  function topVisibleLine() {
+    const el = docRef.current;
+    if (!el) return null;
+    let line = null;
+    for (const b of el.querySelectorAll('[data-line]')) {
+      if (b.getBoundingClientRect().top <= 80) line = +b.dataset.line;  // 80 ≈ 顶栏高度
+      else break;
+    }
+    return line;
+  }
+
+  // 续读位置**写侧**：滚动到哪记到哪。节流（≥4s 且行号变了才写），网络 best-effort（PATCH 同一条），
+  // 本地 meta 时间无条件更新（跨设备 last-write-wins 的本地基准）。断网时本地照存，联网后自然被下次滚动覆盖。
+  const lastRS = useRef({ line: null, at: 0 });
+  function recordReadState() {
+    if (DEMO || !gh.putReadState) return;
+    const c = R.current.cur;
+    const path = R.current.docPath;
+    if (!c || !path) return;
+    const line = topVisibleLine();
+    if (line == null) return;
+    const now = Date.now();
+    if (line === lastRS.current.line || now - lastRS.current.at < 4000) return;  // 节流
+    lastRS.current = { line, at: now };
+    const time = new Date().toISOString();
+    const state = { device: deviceName(), docPath: path, anchor: `L${line}`, time };
+    putMeta(`readtime::${c.pr.number}`, time);
+    gh.putReadState(c.pr.number, state, readStateId.current)
+      .then((id) => { if (id != null) readStateId.current = id; })
+      .catch(() => { /* 断网/失败：本地已记 time，联网后下次滚动补写 */ });
+  }
+
+  // 「跳到上次位置?」被点击：把 anchor（L<行号>）解析回行号，复用既有「data-line ≤ 行号的最近块」跳转。
+  function jumpToReadState() {
+    const target = resumeBar;
+    setResumeBar(null);
+    if (!target) return;
+    const m = /^L(\d+)$/.exec(target.anchor || '');
+    const el = docRef.current;
+    if (!m || !el) return;
+    const line = +m[1];
+    let hit = null;
+    el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
+    if (hit) hit.scrollIntoView({ block: 'start' });
   }
 
   // ── 文档岛屿：内容不归 vdom 管，effect 负责取文与注入；cleanup 即世代守卫 ──
@@ -429,7 +538,17 @@ function App() {
           return;   // 通读态到此为止：不跑 jumpRef（那是单篇锚点的活）
         }
 
-        const text = await api.getFileText(docPath, ref);
+        // M2 离线：正文走缓存包装——在线取到顺手写库并清「离线副本」标；
+        // 断网取不到就回退缓存并标出缓存时间。DEMO 直连（不碰 IndexedDB）。
+        let text;
+        if (DEMO) {
+          text = await api.getFileText(docPath, ref);
+        } else {
+          const r = await cachedFetch(cacheKey('doc', { pr: cur.pr.number, path: `${ref}:${docPath}` }),
+            () => api.getFileText(docPath, ref));
+          text = r.data;
+          setOfflineAt(r.offline ? r.cachedAt : null);
+        }
         if (dead) return;
         // 只有正文开 headingIds：页内锚的 id 全文档唯一，批注面不能跟着打（见 render.js 那段）
         el.innerHTML = renderMarkdown(text, { headingIds: true });
@@ -614,7 +733,10 @@ function App() {
       const { editing, drafts, busy } = R.current;
       if (!editing && drafts.length && !busy) submitRef.current?.();
     };
-    const onScroll = () => { if (R.current.float) setFloat(null); }; // 内滚不派发 mousedown，浮钮会残留
+    const onScroll = () => {
+      if (R.current.float) setFloat(null); // 内滚不派发 mousedown，浮钮会残留
+      recordReadState();                   // M2：滚动到哪、续读位置记到哪（内部节流，best-effort）
+    };
     document.addEventListener('mouseup', onMouseUp);
     document.addEventListener('touchstart', onTouchStart, { passive: true });
     document.addEventListener('mousedown', onMouseDown);
@@ -981,7 +1103,16 @@ function App() {
       setZongpiOpen(true);       // 折叠组默认收起，自己刚发的那条必须展开给他看见——否则回到「只能发不能看」
       say(S.zongpi.sent);
     } catch (err) {
-      say(S.zongpi.failed(err.message));
+      // 断网（fetch 直接 reject，无 .status）→ 落 outbox 待发，别当发送失败丢掉他打的字。
+      // 真错误（403/422 等有 .status）→ 照旧报错，那不是网络问题，排队也发不出去。
+      const offline = !DEMO && typeof err?.status !== 'number' && (await enqueue(makeOutboxItem({ pr: c.pr.number, body: v, repo: gh.repoSlug?.() || '' })));
+      if (offline) {
+        setZongpi(false);
+        await refreshOutboxN();
+        say(S.zongpi.queued);
+      } else {
+        say(S.zongpi.failed(err.message));
+      }
     } finally {
       setBusy(false);
     }
@@ -1142,6 +1273,18 @@ function App() {
           ${cur?.docs?.length > 1 && useChapterList && html`
             <${ChapterRail} chapters=${chapters} onOpenChapter=${openChapter} />`}
         <div class="stage-main">
+
+          ${/* M2 离线包：三条不占常驻空间的提示，状态为空时一律不渲染（默认态不影响任何既有断言）。 */ ''}
+          ${outboxN > 0 && html`
+            <div class="offline-bar offline-outbox">${S.offline.outbox(outboxN)}</div>`}
+          ${offlineAt && html`
+            <div class="offline-bar offline-copy">${S.offline.copy(timeAgo(offlineAt))}</div>`}
+          ${resumeBar && html`
+            <div class="offline-bar offline-jump">
+              <span>${S.offline.jumpAsk}</span>
+              <button class="offline-jump-go" onClick=${jumpToReadState}>${S.offline.jumpGo}</button>
+              <button class="offline-jump-no" onClick=${() => setResumeBar(null)}>${S.offline.jumpDismiss}</button>
+            </div>`}
 
           ${multiChapter && html`
             <div class="read-through-bar">

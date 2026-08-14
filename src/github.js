@@ -217,6 +217,41 @@ export const createIssueComment = (num, body) =>
     body: JSON.stringify({ body }),
   }).then((r) => r.json());
 
+// 编辑既有会话区 comment（PATCH）——续读位置就靠它「改同一条、零 commit」。
+export const updateIssueComment = (commentId, body) =>
+  request(`/repos/${repoSlug()}/issues/comments/${commentId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ body }),
+  }).then((r) => r.json());
+
+// ── 续读位置（M2 跨设备续读）──
+// 每折一条带 `<!-- menxia-readstate … -->` 标记的会话区 comment。读=扫会话区找那条；
+// 写=有就 PATCH 同一条、没有才 POST 新建（保证永远只有一条，不越攒越多）。
+import { parseReadState, buildReadStateBody, isReadStateComment } from './offline.js';
+
+/** 读远端续读位置：返回 { id, state } 或 null（没有）。id 供写侧决定 PATCH 还是 POST。 */
+export async function getReadState(num) {
+  const all = await listIssueComments(num);
+  const hit = all.find((c) => isReadStateComment(c.body));
+  return hit ? { id: hit.id, state: parseReadState(hit.body) } : null;
+}
+
+/**
+ * 写续读位置：existingId 有就 PATCH，没有就先扫一遍（防并发下重复建）再 POST。
+ * 返回落地的 comment id，供本地记住、下次直接 PATCH。
+ */
+export async function putReadState(num, state, existingId) {
+  const body = buildReadStateBody(state);
+  let id = existingId;
+  if (id == null) {
+    const cur = await getReadState(num);   // 双检：别的设备刚建过就复用，不叠第二条
+    id = cur?.id;
+  }
+  const res = id != null ? await updateIssueComment(id, body) : await createIssueComment(num, body);
+  return res?.id ?? id;
+}
+
 // 私有仓的 raw.githubusercontent 不带凭证取不到（实测 404），图片必须走 API 拿 blob
 export const getFileBlobUrl = (path, ref) =>
   request(`/repos/${repoSlug()}/contents/${encodePath(path)}?ref=${encodeURIComponent(ref)}`,

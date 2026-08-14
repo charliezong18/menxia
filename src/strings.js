@@ -380,7 +380,17 @@ export const S = deepFreeze({
   // 呈判
   zongpi: {
     sent: '判已呈——回 Happy 说「读批注」。',
+    queued: '离线，判已存入待发——联网后自动补发。',
     failed: (msg) => `判呈递失败：${msg}`,
+  },
+
+  // M2 离线包
+  offline: {
+    outbox: (n) => `待发 ${n} 条判 · 联网自动补发`,
+    copy: (ago) => `离线副本 · 截至 ${ago}`,
+    jumpAsk: '上次读到别处',
+    jumpGo: '跳到上次位置',
+    jumpDismiss: '不用',
   },
 
   // 画可

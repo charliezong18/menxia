@@ -146,6 +146,18 @@ gh api -X POST repos/<owner>/<repo>/pulls/<n>/comments/<id>/replies -f body="...
 
 The human presses 画可 in the app (or you run `gh pr merge <n> --squash --delete-branch`). Merge = final = ship it to wherever the PR body said.
 
+## Offline package (read and annotate with no signal)
+
+A Service Worker (`sw.js`) plus IndexedDB (`src/offline.js`) make both reading and posting 判 work offline:
+
+- **Offline read**: the app shell (HTML/JS/CSS) goes through the SW **network-first** — with a connection you always get the newest code; only offline does it fall back to cache. Body data (folders/docs/annotations/判) lives in IndexedDB, keyed by PR# + doc path + sha; offline it renders from the store with a "离线副本 · 截至 …" (offline copy · as of …) banner. **The PAT and any credentialed response never touch the cache** (the token stays in localStorage; the body is already-parsed data).
+- **Outbox for 判**: a 判 posted while offline lands in an IndexedDB queue with a "待发 N 条" (N pending) banner; on reconnect (`online` event + every startup) it flushes automatically, each item carrying a local uuid for idempotency, dequeued only on success.
+- **Cross-device resume**: your read position is stored in **one status comment under that PR** (`<!-- menxia-readstate {…} -->`, edited in place via PATCH, zero commits). On open, if the remote is newer than local and points elsewhere, a "jump to last position" bar appears — **it only jumps when you click; it never yanks you automatically**. That status comment is filtered out of the 判 list (same rule on the reader and in menxia-mcp).
+
+### kill-switch (emergency)
+
+"Push is deploy" is this site's lifeblood, so the SW must never pin a live site. Three safeguards: (1) the shell is always network-first; (2) `sw.js` carries a `SW_VERSION` constant — bump it on any shell change and old caches are cleared on activate; (3) **kill-switch**: set `"kill"` to `true` in the repo-root `menxia-sw-kill.json` and push main — every client on next open will `unregister()` the SW and clear the shell cache, dropping the site back to a no-SW bare state. Set it back to `false` to recover.
+
 ## Known limits
 
 Honest list, so you know what you're forking:
