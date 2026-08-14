@@ -1081,3 +1081,5 @@ button.rel-chip:hover { border-color: var(--ink-soft); color: var(--ink); }
 .rel-unlocked  { border-color: #3B7BB5; color: #2A5B87; }   /* 依赖已画可 */
 
 .list-tab.dash-btn { margin-left: auto; }
+
+/* m2-netfirst-probe-1786666104 */
