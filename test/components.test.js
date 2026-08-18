@@ -84,6 +84,25 @@ test('顶栏：旧版下提交按钮禁用；归档折不出画可但保留判',
   assert.ok(zongpi, '归档折仍要能留判（GitHub 允许在 merged PR 上评论）');
 });
 
+// 面包屑根词要跟折的实际归属走（2026-08-18：#88 是读物折，面包屑却写「待审」，
+// 人去待审清单里找不到它）。判据与侧栏分流同一套：archived → 已画可；isShelved → 弘文馆。
+test('顶栏：面包屑根词跟折的归属走——读物折显弘文馆、画可折显已画可、等你的读物仍显待审', () => {
+  const base = {
+    busy: false, draftCount: 0, happyUrl: null, stale: false, notice: '',
+    onRefresh: () => {}, onCopyRef: () => {}, onZongpi: () => {}, onSubmit: () => {}, onQinci: () => {},
+  };
+  const rootOf = (v) => find(v, byClass('crumb')).props.children.flat(9).filter((c) => typeof c === 'string').join('');
+  const pr = (labels) => ({ number: 88, title: 'x', labels });
+
+  assert.match(rootOf(Topbar({ ...base, archived: false, onHead: true, cur: { pr: pr(['kind:读物', 'wait:闲']) } })), /^弘文馆/);
+  assert.match(rootOf(Topbar({ ...base, archived: true, onHead: true, cur: { pr: pr(['kind:读物', 'wait:闲']) } })), /^已画可/);
+  assert.match(rootOf(Topbar({ ...base, archived: false, onHead: true, cur: { pr: pr(['kind:参考', 'wait:你读']) } })), /^待审/);
+  // 等你的读物不藏进书架（track.js 的 NEEDS_YOU 阀），面包屑也要一致
+  assert.match(rootOf(Topbar({ ...base, archived: false, onHead: true, cur: { pr: pr(['kind:读物', 'wait:你读']) } })), /^待审/);
+  // 没选折时保持原样
+  assert.match(rootOf(Topbar({ ...base, archived: false, onHead: false, cur: null })), /^待审/);
+});
+
 // issue #1：已呈判全展开挡在正文前（PR #30 实测 9 条 / 8,132 字 ≈ 2–3 屏）
 const ZS = [
   { id: 1, created_at: '2026-07-20T00:00:00Z', user: { login: 'a' }, body: '最旧的一条' },

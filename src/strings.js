@@ -70,6 +70,8 @@ export const S = deepFreeze({
   // 顶栏
   topbar: {
     crumbRoot: '待审',
+    crumbShelf: '弘文馆',
+    crumbDone: '已画可',
   },
 
   // 新版横幅（detectNewBuild）

@@ -2,6 +2,7 @@
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
+import { isShelved } from '../track.js';
 import { READ_STEPS, percentOf } from '../readsize.js';
 
 export function Topbar({
@@ -11,10 +12,16 @@ export function Topbar({
   nextUp, onNextUp,
 }) {
   const pct = percentOf(readStep);
+  // 面包屑根词跟折的实际归属走：读物折在弘文馆、画可折在已画可。写死「待审」会让人
+  // 去待审清单里找一个根本不在那儿的折（2026-08-18 #88 实测就这么误导了一回）。
+  const crumbRoot = !cur ? S.topbar.crumbRoot
+    : archived ? S.topbar.crumbDone
+    : isShelved(cur.pr) ? S.topbar.crumbShelf
+    : S.topbar.crumbRoot;
   // 多个顶层节点：htm 会返回数组，Preact 直接当 Fragment 渲染（这个 standalone 包没导出 Fragment）
   return html`
         <div class="mainbar">
-          <span class="crumb">${S.topbar.crumbRoot} ${cur ? html`/ <span class="crumb-no">#${cur.pr.number}</span> <b>${cur.pr.title}</b>` : ''}${
+          <span class="crumb">${crumbRoot} ${cur ? html`/ <span class="crumb-no">#${cur.pr.number}</span> <b>${cur.pr.title}</b>` : ''}${
             cur && verifyN > 0 ? html`<span class="verify-count" title=${S.verify.countTitle}>${S.verify.count(verifyN)}</span>` : ''}</span>
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { onRefresh(); }}>${S.action.refresh}</button>
