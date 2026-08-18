@@ -1,7 +1,7 @@
 // 设置页：填敕草仓库 + 粘钥匙；已有钥匙时可返回，也可显式清除。
 // 从 ui.js 拆出（2026-07-28 还账：ui.js 破 800 行触发指标 #1）。纯展示，只吃 props。
 import { html, useState, useRef } from '../../vendor/preact-standalone.mjs';
-import * as gh from '../github.js';
+import * as gh from '../store.js';
 import { S } from '../strings.js';
 
 export function Setup({ msg, onSave, canCancel, onCancel, onForget }) {
