@@ -176,6 +176,24 @@ Re-evaluate adding a backend only when **any one** of these fires (full evaluati
 
 If that day comes, the shape is decided in advance: a stateless Worker (Cloudflare first choice), **never touching the GitHub token** (the user's PAT stays in the browser, always), no user system (identity is always GitHub), graceful degradation to pure-static when the function is down, and a separate repo and deployment so the static site can always survive alone.
 
+### §8.3 Leave-GitHub gates (M1–M3) (review #129 → #145 approved, folded in 2026-08-18)
+
+§8.1 governs the view layer, §8.2 governs adding a layer; this section governs **replacing the root**. GitHub currently does six jobs (frontend hosting / document storage via git / folders & annotations via PR·comments / identity via PAT / permissions via collaborators / free + zero maintenance); this section governs when the first five get replaced. **Migration is ordered by gates, not version numbers** (#145 D2): with only our own people using it, the current stack runs for ten years; the day strangers use it, it changes on day one — no gradient in between.
+
+| Gate | Trigger | What counts as evidence | Tier it opens |
+|---|---|---|---|
+| **M1** | Universal Links fail on `github.io` | iOS M1 measurement: AASA in place yet developer-mode direct fetch fails, or production-mode Apple CDN rejects `application/octet-stream` | V2 (own domain — nameplate only) |
+| **M2** | ≥1 non-GitHub user appears who must **read and write** folders | A real person needs to read and annotate, and has no GitHub account or can't be granted private-repo access. Not "someday someone might" | V3 (storage abstraction — zero data moved) |
+| **M3** | Productization verdict = serve strangers | An explicit product decision, not a technical signal. This gate is live (productization restarted 2026-08) | V4 (own infra — **a living dependency from then on**, deliberately trading §8.2's opening property for "others can use it") |
+
+Three riders (also settled in #145):
+
+1. **V3 (storage abstraction) does not wait for M2 — do it early** (D3): the Adapter pays for itself (tests can run on fake data), is reversible and moves no data, and downgrades V4 from "rewrite" to "add a driver." **Abstract only the hosting/identity/permission layers; never git storage or the PR/comment model** — abstraction tax for a day that most likely never comes.
+2. **M1's fallback is the `menxia://` custom scheme first** (D4) — works in a day, but only for links emitted by our own agents; the own domain waits until truly needed (it is V2's nameplate, not an M1 prerequisite).
+3. While no gate rings, any "should we migrate" discussion **cites this section and closes** (same convention as §8.2). Criteria must be falsifiable; "it's annoying" doesn't count.
+
+The `MIGRATION-WATCH` measurement table is **not extended** — M1–M3 are event gates, not measurement gates; there is no "measure after every dev session" here.
+
 ## §9 Open question ④: comment anchoring (in plain language)
 
 First, an extension of §8: **can A (zero-build) do sentence-level annotation?** It can — every capability sentence annotation needs (selecting text, getting the selection's position, injecting a highlight, positioning the rail cards) comes from the browser's **native** Selection API and DOM operations; a framework doesn't provide that layer. Hypothesis, the benchmark product, implements its annotation layer with native DOM injection. What a framework helps with is "automatic view refresh under complex state", and menxia's state is one list of drafts. The genuinely hard part is the anchoring algorithm below — and that code is word-for-word identical under A or B.
