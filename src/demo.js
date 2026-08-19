@@ -494,20 +494,45 @@ async function runSmoke(docEl) {
     }
     return r;
   };
+  // 等条件成立，最多 ms 毫秒。拿到真值就返回，超时返回 null。
+  // 2026-08-19 加：pick() 原先靠**固定 120ms**等浮批钮和编辑器挂载，机器一忙就等不到，
+  // 而 `if (ta)` 是静默跳过——于是这一轮的批注压根没写进去，红的却是**下游**那条断言
+  // （实测 empty-draft-starts-editing 五次里红一次，它本身没毛病，是被上游拖红的）。
+  // 换成轮询：正常情况反而更快（~25ms 就返回，不再无条件睡满 360ms），慢的时候等得起。
+  const waitFor = async (fn, ms = 1500) => {
+    const deadline = Date.now() + ms;
+    for (;;) {
+      const v = fn();
+      if (v) return v;
+      if (Date.now() >= deadline) return null;
+      await sleep(25);
+    }
+  };
   const pick = async (text, note, save) => {
     const r = rangeFor(text);
-    if (!r) return;
+    // 三处「等不到」以前全是静默 return/跳过，失败现场离报错点隔着好几条断言。
+    // 现在各自出一句诊断——**不带 PASS/FAIL 前缀**，所以不进 smoke 的 golden 名单，
+    // 只在日志里现身，指着真正的病灶说话。
+    if (!r) { console.log(`[smoke] pick 找不到靶文：${text.slice(0, 16)}`); return; }
     const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
     docEl.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    // ⚠️ 这三处 sleep(120) **必须留着**。它不只是「等元素出现」，更是「让上一轮落定」的节拍：
+    // 上一颗浮批钮／上一个编辑器可能还挂在屏幕上，直接轮询「有没有 .zhupi-float」会**立刻**
+    // 拿到旧的那一颗，点下去等于给上一句重建草稿。第一版就这么写的，四并发跑出来稳定
+    // 131/1（empty-draft-dropped-on-switch 读到 left=[]），比原来的偶发更糟。
+    // 所以补等是**追加**的：快的时候行为与从前逐字节相同，只有到点还没出现才多等一会。
     await sleep(120);
-    document.querySelector('.zhupi-float')?.click();
+    const float = document.querySelector('.zhupi-float')
+      || await waitFor(() => document.querySelector('.zhupi-float'));
+    if (!float) { console.log(`[smoke] pick 等不到浮批钮：${text.slice(0, 16)}`); return; }
+    float.click();
     await sleep(120);
-    const ta = document.querySelector('.anno-input');
-    if (ta) {
-      ta.value = note;
-      ta.dispatchEvent(new Event('input', { bubbles: true }));
-      if (save) [...document.querySelectorAll('.anno-save')].pop()?.click();
-    }
+    const ta = document.querySelector('.anno-input')
+      || await waitFor(() => document.querySelector('.anno-input'));
+    if (!ta) { console.log(`[smoke] pick 等不到编辑器：${text.slice(0, 16)}`); return; }
+    ta.value = note;
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+    if (save) [...document.querySelectorAll('.anno-save')].pop()?.click();
     await sleep(120);
   };
   // ── 断言机制：不再是 console.log 打印真假值（那样断言变 false 也照样"绿"）。
