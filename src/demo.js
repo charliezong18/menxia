@@ -317,20 +317,29 @@ if (DEEP === '1' || DEEP === 'miss') {
   }, 1500);
 }
 
-// ?demo=1&mobile=1：手机窄口（run-browser.sh 用 390px 窗宽跑这一支）验 M0 底栏——
-// 桌面冒烟跑在 1440，进不了 ≤900 分支，底栏的真实版式只有在这里才量得到。
-// 四条：底栏真的显示出来（不是 display:none）、贴在视口底缘、三个按钮都在、触控目标 ≥44px。
+// ?demo=1&mobile=1：手机窄口（run-browser.sh 用 390px 窗宽跑这一支）验 M0 底栏 + 二级菜单——
+// 桌面冒烟跑在 1440，进不了 ≤900 分支，这两样的真实版式只有在这里才量得到。
+//
+// 走的是真实动线，顺序不能改：demo 载入即自动开着 #999 那折，所以**进来就是阅读页**
+//   阅读页（清单退场／底栏四项）→ 点「‹ 目录」→ 清单页（清单整条摊开）→ 点卡片 → 回阅读页
+// 头一版把「量清单」写在最前面，量到的其实是一个 display:none 的 aside，`0 ≤ 0` 恒真，
+// 八条全绿而版式根本没修好——顺序错了，断言本身再严也没用。
 const MOBILE = new URLSearchParams(location.search).get('mobile');
 if (MOBILE === '1') {
   setTimeout(async () => {
     let pass = 0, fail = 0;
     const chk = (n, c, d = '') => { c ? pass++ : fail++; console.log(`[mobile] ${c ? 'PASS' : 'FAIL'} ${n}${d ? ` — ${d}` : ''}`); };
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-    // 开一折（清单第一张卡 .pr-item）——底栏是读折页的部件，清单页不出
-    document.querySelector('.pr-item')?.click();
-    await sleep(700);
+    const shown = (el) => Boolean(el) && getComputedStyle(el).display !== 'none';
+
+    // ── 阅读页 ──────────────────────────────────────────────
+    // ① 二级菜单的一半：读折时清单整块退场，正文独占一屏
+    const asideRead = document.querySelector('aside');
+    chk('reader-hides-list', Boolean(asideRead) && !shown(asideRead),
+      `display=${asideRead ? getComputedStyle(asideRead).display : 'NO-EL'}`);
+
     const bar = document.querySelector('.mobile-bar');
-    chk('mobile-bar-visible-on-phone', Boolean(bar) && getComputedStyle(bar).display !== 'none',
+    chk('mobile-bar-visible-on-phone', shown(bar),
       `display=${bar ? getComputedStyle(bar).display : 'NO-EL'}`);
     if (bar) {
       const r = bar.getBoundingClientRect();
@@ -338,18 +347,62 @@ if (MOBILE === '1') {
       chk('mobile-bar-pinned-to-bottom', Math.abs(r.bottom - window.innerHeight) <= 2,
         `bottom=${Math.round(r.bottom)} vh=${window.innerHeight}`);
       const btns = [...bar.querySelectorAll('.mobile-bar-btn')];
-      // 判＋画可常驻（未归档折）；提交（涂归·n）只在有草稿时出，刚开的折没草稿所以此处是 2。
-      chk('mobile-bar-has-core-actions', btns.length >= 2 && btns[0].textContent.includes('判'),
-        `n=${btns.length} first=${btns[0]?.textContent?.trim()}`);
+      // 判＋画可常驻（未归档折）；提交（涂归·n）只在有草稿时出，刚开的折没草稿。
+      // 认「判在不在」而不是「判是不是第一个」：返回钮进底栏后首位就归它了，
+      // 而这条断言要守的一直是「核心动作没被挤掉」，位置是当年的偶然不是意图。
+      chk('mobile-bar-has-core-actions', btns.length >= 3 && btns.some((b) => b.textContent.includes('判')),
+        `n=${btns.length} texts=${btns.map((b) => b.textContent.trim()).join('|')}`);
       // 触控目标：每个按钮实测高度 ≥44px（Apple HIG 下限；min-height:44 的落地校验）
       const allBig = btns.length > 0 && btns.every((b) => b.getBoundingClientRect().height >= 44);
       chk('mobile-bar-touch-targets-44', allBig,
         `heights=${btns.map((b) => Math.round(b.getBoundingClientRect().height)).join(',')}`);
+      // ② 返回钮：底栏是 fixed 的，读到第几屏都够得着——这正是它待在底栏而不是顶栏的理由
+      const back = bar.querySelector('.mobile-bar-back');
+      chk('mobile-bar-has-back', Boolean(back), `text=${back ? back.textContent.trim() : 'NO-EL'}`);
+      back?.click();
+      await sleep(400);
     } else {
       chk('mobile-bar-pinned-to-bottom', false, 'no bar');
       chk('mobile-bar-has-core-actions', false, 'no bar');
       chk('mobile-bar-touch-targets-44', false, 'no bar');
+      chk('mobile-bar-has-back', false, 'no bar');
     }
+
+    // ── 清单页（返回之后）────────────────────────────────────
+    // ③ 回得来：清单重新露面，底栏（读折页的部件）随之消失
+    const asideList = document.querySelector('aside');
+    const barGone = !document.querySelector('.mobile-bar');
+    chk('back-returns-to-list', shown(asideList) && barGone,
+      `asideDisplay=${asideList ? getComputedStyle(asideList).display : 'NO-EL'} barGone=${barGone}`);
+
+    // ④ 折清单必须整条摊开随页滚，不许再是个内滚小框。
+    //    原病（2026-08-19 反馈「吞目录」）就量在这一行：aside 被 max-height:38vh 压住，
+    //    390×780 的机器上 #pr-list clientHeight=71 而 scrollHeight=755——一屏一张卡都不满。
+    //    ⚠️ 三个条件缺一不可，少任何一条都会 fail open：
+    //      · clientHeight>0 —— 盒子塌成 0 高（flex:1 在 height:auto 的列容器里就会塌）时
+    //        `0 ≤ 0` 恒真，而卡片全溢在盒外照样看得见，肉眼与截图都发现不了。
+    //      · 末卡落在 aside 盒内 —— 要守的性质是「盒子长到装得下」，不是「盒子自己前后一致」；
+    //        溢出可见时后者真而前者假。
+    const list = document.querySelector('#pr-list');
+    const cards = [...document.querySelectorAll('.pr-item')];
+    const asideBox = asideList?.getBoundingClientRect();
+    const lastCard = cards.length ? cards[cards.length - 1].getBoundingClientRect() : null;
+    chk('list-page-not-inner-scrolled',
+      Boolean(list) && list.clientHeight > 0
+      && list.scrollHeight <= list.clientHeight + 1
+      && Boolean(lastCard) && Boolean(asideBox) && lastCard.bottom <= asideBox.bottom + 1,
+      `client=${list ? list.clientHeight : 'NO-EL'} scroll=${list ? list.scrollHeight : 'NO-EL'}`
+      + ` cards=${cards.length} lastCardBottom=${lastCard ? Math.round(lastCard.bottom) : 'NO-EL'}`
+      + ` asideBottom=${asideBox ? Math.round(asideBox.bottom) : 'NO-EL'}`);
+
+    // ── 再进阅读页 ──────────────────────────────────────────
+    // ⑤ 前进那一边：从清单点一张卡要真能进阅读页（他要的「一级菜单选折 → 点进去阅读」）
+    cards[0]?.click();
+    await sleep(700);
+    chk('card-opens-reader',
+      !shown(document.querySelector('aside')) && shown(document.querySelector('.mobile-bar')),
+      `asideShown=${shown(document.querySelector('aside'))} barShown=${shown(document.querySelector('.mobile-bar'))}`);
+
     console.log(`[mobile] RESULT pass=${pass} fail=${fail}`);
   }, 1500);
 }

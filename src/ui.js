@@ -1235,8 +1235,14 @@ function App() {
   const multiChapter = cur?.docs ? visibleDocs(docNames, curLangOf).length > 1 : false;
   const showOutline = hasOutline(outlineItems);
 
+  // 回折清单（手机二级菜单的返回边）。与 onRefresh 的清空同一套，只是不重拉列表。
+  const backToList = () => { setCur(null); setDocPath(null); setDash(false); };
+
   return html`
-    <div id="app" style=${{ '--read-scale': scaleOf(readStep) }}>
+    ${/* `reading` 只喂 ≤900 的手机档：那一档把清单页与阅读页做成二选一（见 style.css
+         「手机二级菜单」那段），桌面完全不读这个 class。总览(dash)也算「进去了」——
+         它渲在 main 里，不跟着切的话点开总览会被清单顶到屏幕外。 */ ''}
+    <div id="app" class=${cur || dash ? 'reading' : ''} style=${{ '--read-scale': scaleOf(readStep) }}>
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
         tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks} verifyCounts=${verifyCounts}
         qian=${qian} onQian=${setQian}
@@ -1352,6 +1358,10 @@ function App() {
       ${cur && html`<${ScrollEnds} tick=${`${docTick}:${docPath}`} />`}
       ${cur && html`
         <nav class="mobile-bar" aria-label=${S.mobileBar.label}>
+          ${/* 返回钮待在底栏而不是顶栏：顶栏随正文滚走，读到第五屏想换折就得先滚回顶
+               ——正是 PAIN 那条「控件离正文越远＝越不存在」。底栏是 fixed，永远够得着。 */ ''}
+          <button class="mobile-bar-btn mobile-bar-back" title=${S.mobileBar.backTitle}
+            onClick=${backToList}>${S.mobileBar.back}</button>
           <button class="mobile-bar-btn" title=${archived ? S.action.zongpiArchivedTitle : ''}
             onClick=${() => setZongpi((z) => !z)}>${S.action.zongpi}</button>
           ${drafts.length > 0 && html`

@@ -676,12 +676,38 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
   main { height: auto; }
   .work { flex: none; overflow: visible; }
 
+  /* ── 手机二级菜单（2026-08-19 反馈「吞目录」）───────────────────────────
+     原版式把清单与正文塞进同一页：aside 压 38vh、里面 #pr-list 再自己内滚。
+     390×780 的机器上实测清单可视区只剩 **71px**，而内容 755px——一屏一张卡都不满，
+     19 个待审折要在这条缝里翻；往下读正文后清单整块滚出屏幕，换折得把三千多像素的
+     长页滚回最顶再在缝里找。他原话：「它中间还是会吞目录」。
+     改成清单页 ⇄ 阅读页二选一（`#app.reading` 由 ui.js 按 cur||dash 挂）：
+     清单页清单占满自然高度随页滚，读折时清单整块退场，回来走底栏的「‹ 目录」。
+     没选抽屉是因为这一档**故意**让 html/body `overflow:visible`（上面那段注释：
+     iOS Safari 工具栏才收得起来），而抽屉必须锁 body 滚动，正好打架；
+     且 fixed 层已经排到 z30（判卡 26 / 底栏 28 / 浮批钮 30），再塞一层只会更脆。 */
   aside {
-    width: 100%; height: auto; max-height: 38vh; flex: none;
+    width: 100%; height: auto; flex: none;
     border-right: 0; border-bottom: 1px solid var(--rule);
     padding: 16px 14px 10px;
   }
   aside .brand-row { padding-bottom: 12px; }
+  /* 内滚框拆掉。aside 没了高度上限之后 #pr-list 不会再被裁，但 `overflow-y:auto`
+     仍立着一个滚动上下文，iOS 上照样会吃掉落在清单上的那一划。显式还给页面。 */
+  #pr-list { overflow: visible; }
+  /* 阅读页：清单退场。特异度 (0,2,1) 压过基础 `aside`，不依赖书写顺序。 */
+  #app.reading aside { display: none; }
+  /* 清单页：正文区整块收起。cur 为空时它只是一段空版心，但带着 18px+80px 的上下留白，
+     夹在顶栏与清单之间就是一条凭空的百来像素裂缝。`display:none` 不卸载 #doc 那个
+     ref 岛屿（与 .work-hidden 同一手法），回折时正文还在，不重取不重渲。 */
+  #app:not(.reading) .work { display: none; }
+  /* 顶栏排到清单上方：清单放开高度后能到两千像素，刷新／新版横幅／画可后的「下一折」
+     排在它后面等于不存在。order 不改 DOM 次序，读屏与 Tab 序照旧。 */
+  main { order: -1; }
+  /* 但清单页别摆两层页头：面包屑此时只剩一个根词（待审／弘文馆／已画可），而它下面
+     十几像素处就是同名的那颗 tab，念两遍还把「门下」挤到第二行。留动作与横幅，去掉词。
+     读折页不动——那里面包屑带着 #号与折名，是「我在哪」的唯一交代。 */
+  #app:not(.reading) .crumb { display: none; }
 
   .mainbar { flex-wrap: wrap; gap: 10px; padding: 12px 16px 10px; }
   .crumb { flex: 1 1 100%; }
@@ -713,6 +739,9 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
     font-family: var(--songti); font-size: 15px; letter-spacing: .12em; color: var(--ink);
   }
   .mobile-bar-btn:disabled { opacity: .5; }
+  /* 「‹ 目录」是导航不是动作：不参与等分，只占自己那点宽度，余量全留给判/呈/画可；
+     压成灰边灰字，免得跟旁边那三个抢视线。min-height 仍从 .mobile-bar-btn 继承 44px。 */
+  .mobile-bar-back { flex: 0 0 auto; padding: 0 14px; color: var(--ink-soft); letter-spacing: .06em; }
   /* 提交＝朱砂（批注动作那一族），画可＝墨底（全站唯一定稿动作），与桌面同色语义。 */
   .mobile-bar-submit { border-color: var(--cinnabar); color: var(--cinnabar); }
   .mobile-bar-qinci { background: var(--ink); border-color: var(--ink); color: var(--paper-raised); font-weight: 700; }
