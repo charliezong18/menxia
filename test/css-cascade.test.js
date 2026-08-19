@@ -26,7 +26,9 @@ const CSS = readFileSync(
 // 受管选择器：靠断点二选一显示的那些。加新的互斥版式时往这儿添一行。
 // .mobile-bar（M0 手机底栏）：裸 display:none（桌面）+ @media≤900 display:flex（手机），
 // 顺序反了就会在手机上消失、或在桌面上冒出来——正是这条守卫要挡的。
-const WATCHED = ['.chapter-rail', '.chapters', '.mobile-bar'];
+// .nav-page（手机目录页）与 .doc-tabs（篇切换胶囊）2026-08-19 加入：前者裸 none + ≤900 block，
+// 后者裸 flex + ≤900 none——两条都是「靠断点二选一」的新成员，正是这张表要罩的形状。
+const WATCHED = ['.chapter-rail', '.chapters', '.mobile-bar', '.nav-page', '.doc-tabs'];
 
 /**
  * 把 CSS 扫成规则列表：{ selector, inMedia, index, hasDisplay }。
@@ -58,7 +60,7 @@ function parseRules(css) {
         selector: prelude,
         inMedia: stack.includes('media'),
         index: i,
-        hasDisplay: /(^|[;{\s])display\s*:/.test(src.slice(i + 1, j - 1)),
+        body: src.slice(i + 1, j - 1),
       });
       i = j;
       continue;
@@ -72,14 +74,30 @@ function parseRules(css) {
 
 const RULES = parseRules(CSS);
 
+// 某条属性写没写。`font` 简写也算声明了 font-size —— 2026-08-19 栽在这上面：
+// `.search-input` 的基础规则用 `font: 13.5px var(--sans)` 简写，排在 ≤900 媒体查询之后，
+// 把媒体查询里的 `font-size:16px` 整条压掉，iOS 聚焦放大的修复静默失效。
+// 只认长写就抓不到那一桩，所以简写必须一并计入。
+const SHORTHANDS = { 'font-size': ['font'] };
+const declares = (body, prop) => {
+  const names = [prop, ...(SHORTHANDS[prop] || [])];
+  return names.some((n) => new RegExp(`(^|[;{\\s])${n}\\s*:`).test(body));
+};
+
 // 选择器整体相等才算（`.chapters` 不该匹配到 `.chapters-summary`）
-const declaringDisplay = (sel) => RULES.filter(
-  (r) => r.hasDisplay && r.selector.split(',').map((s) => s.trim()).includes(sel),
+const declaring = (sel, prop) => RULES.filter(
+  (r) => declares(r.body, prop) && r.selector.split(',').map((s) => s.trim()).includes(sel),
 );
+
+// 受管的 (选择器, 属性) 对。display 之外还盯 font-size，理由见上面 SHORTHANDS 那段。
+const WATCHED_PROPS = [
+  ['.search-input', 'font-size'],
+  ['.anno-input', 'font-size'],
+];
 
 for (const sel of WATCHED) {
   test(`层叠守卫：${sel} 的媒体查询 display 不被裸规则覆盖`, () => {
-    const hits = declaringDisplay(sel);
+    const hits = declaring(sel, 'display');
     assert.ok(hits.length > 0, `${sel} 一条 display 都没有——受管清单过期了？`);
 
     const bare = hits.filter((r) => !r.inMedia);
@@ -95,6 +113,30 @@ for (const sel of WATCHED) {
       `${sel}: 裸规则的 display（第 ${lineOf(lastBare)} 行）写在媒体查询的 display`
       + `（第 ${lineOf(firstMedia)} 行）之后。同特异度后来居上，媒体查询会失效——`
       + `把 display 开关挪到组件规则之后（见 style.css 里「章栏/章下拉 二选一」那段）。`,
+    );
+  });
+}
+
+// 同一条判据，换成别的属性。display 那一族管「哪个版式出场」，这一族管「出场之后长什么样」，
+// 失效方式一模一样：媒体查询不加特异度，后写的裸规则（含简写）照样压死它。
+for (const [sel, prop] of WATCHED_PROPS) {
+  test(`层叠守卫：${sel} 的媒体查询 ${prop} 不被裸规则覆盖`, () => {
+    const hits = declaring(sel, prop);
+    assert.ok(hits.length > 0, `${sel} 一条 ${prop} 都没有——受管清单过期了？`);
+
+    const bare = hits.filter((r) => !r.inMedia);
+    const inMedia = hits.filter((r) => r.inMedia);
+    if (!bare.length || !inMedia.length) return;
+
+    const lastBare = Math.max(...bare.map((r) => r.index));
+    const firstMedia = Math.min(...inMedia.map((r) => r.index));
+    const lineOf = (idx) => CSS.slice(0, idx).split('\n').length;
+
+    assert.ok(
+      lastBare < firstMedia,
+      `${sel}: 裸规则的 ${prop}（第 ${lineOf(lastBare)} 行，注意 \`font:\` 简写也算）写在`
+      + `媒体查询的 ${prop}（第 ${lineOf(firstMedia)} 行）之后，媒体查询会静默失效——`
+      + `把媒体查询那段挪到基础规则之后（见 style.css 末尾「输入框 16px（≤900）」那段）。`,
     );
   });
 }
