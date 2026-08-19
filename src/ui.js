@@ -26,6 +26,7 @@ import { assembleCarry } from './carry.js';
 import { Outline, ChapterList, ChapterRail } from './components/outline.js';
 import { ScrollEnds, scroller } from './components/scroll-ends.js';
 import { Dashboard } from './components/dashboard.js';
+import { NavPage } from './components/nav-page.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList, chapterName } from './toc.js';
 import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
@@ -63,7 +64,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
   'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js',
   'src/slug.js', 'src/components/scroll-ends.js', 'src/components/image-view.js',
-  'src/components/dashboard.js',
+  'src/components/dashboard.js', 'src/components/nav-page.js',
   // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
   'src/verify.js',
   // M2 离线包新增源文件（sw.js 在仓根、不在 src/ 下，故不进这张只管 src/ 的清单；
@@ -162,6 +163,11 @@ function App() {
   const [tab, setTab] = useState('open');        // open=待审 / done=已画可（归档，只读）
   const [qian, setQianState] = useState(params.get('qian') || null); // 「按签」视图选中的签，null=三栏
   const [dash, setDash] = useState(false);       // F16 总览：按项目摊开待审折，看谁等谁、谁盖了谁
+  // 手机目录页（三层导航的第二层：折清单 → 这里 → 正文）。只有 ≤900 的底栏能把它拨开，
+  // 桌面读不到那颗钮，所以这个 state 在宽屏上恒 false；显隐规则也整套关在 ≤900 里，
+  // 万一从窄屏拉宽（iPad 转屏），正文照常回来，不会卡在一个桌面上没入口的页面里。
+  const [navOpen, setNavOpen] = useState(false);
+  const [pendingJump, setPendingJump] = useState(null);   // 目录页点的那一节，等正文回来再跳
   const [donePrs, setDonePrs] = useState([]);
   const [nextUp, setNextUp] = useState(null);    // 画可后的落地条：下一折是谁——只提示，不自动跳，等他自己踩
   const [q, setQ] = useState('');                // 搜索词：即输即filter标题；回车全折全文
@@ -1001,6 +1007,14 @@ function App() {
     el.querySelectorAll('[data-line]').forEach((b) => { if (+b.dataset.line <= line) hit = b; });
     flashTo(hit);
   }
+  // 目录页点节之后的落地跳转。挂在 effect 里而不是点击回调里：点的那一刻正文还是
+  // display:none（目录页占着版面），scrollIntoView 量到的几何全是 0，跳会静默丢失。
+  // effect 在提交之后跑，那时 .work 已经回到版面上——顺序由 Preact 保证，不靠 rAF 赌。
+  useEffect(() => {
+    if (pendingJump == null || navOpen) return;
+    jumpToLine(pendingJump);
+    setPendingJump(null);
+  }, [pendingJump, navOpen]);
   // 页内锚点 `[…](#slug)`：跳到本篇的那个标题（id 由 render.js 按 GitHub 口径生成）。
   // 用文档自己的标题集匹配，不用 getElementById——后者是**全文档**作用域，
   // 一个恰好叫 `doc`/`app`/`margin-col` 的 slug 会把读者送到界面骨架上去。
@@ -1234,15 +1248,28 @@ function App() {
   // 通读入口：折里有 >1 篇（双语已合并）就给「通读全书」开关，不必等到 >7 章
   const multiChapter = cur?.docs ? visibleDocs(docNames, curLangOf).length > 1 : false;
   const showOutline = hasOutline(outlineItems);
+  // 目录页的「篇」栏：**不看 CHAPTER_LIST_THRESHOLD**。那个阈值(>7)是给桌面决定
+  // 「章列表还是 doc-tab 胶囊」用的版式判断；目录页要的是「这折有哪几篇」，两篇也得列。
+  const navChapters = cur?.docs ? chapterList(docNames, docPath, curLangOf) : [];
 
-  // 回折清单（手机二级菜单的返回边）。与 onRefresh 的清空同一套，只是不重拉列表。
-  const backToList = () => { setCur(null); setDocPath(null); setDash(false); };
+  // 回折清单（手机三层导航的最上一层）。与 onRefresh 的清空同一套，只是不重拉列表。
+  const backToList = () => { setNavOpen(false); setCur(null); setDocPath(null); setDash(false); };
+  // 这折里没有篇也没有节时，目录页只剩一行「‹ 全部折子」——那是个死胡同页，
+  // 不如让「‹ 目录」直接回清单。规则讲得通：目录给你看这层里面有什么，里面空的就退回上一层。
+  const hasNav = navChapters.length > 1 || showOutline;
+  const onNavBtn = () => (hasNav ? setNavOpen(true) : backToList());
+  // 点一节：先关目录页，等正文真的回到版面上再滚。
+  // flashTo 靠 scrollIntoView 定位，而正文在目录页开着时是 display:none —— 几何全是 0，
+  // 滚不动也闪不出来。**不能用 requestAnimationFrame 兜**：实测那一帧里 DOM 还没换完，
+  // 跳整个静默丢失（scrollY 0→0、.search-flash 没挂上）。改成把行号存进 state，
+  // 由 useEffect 在提交之后跑——那时 .work 已经回来了，是 Preact 保证的顺序，不是赌时序。
+  const jumpFromNav = (line) => { setNavOpen(false); setPendingJump(line); };
 
   return html`
     ${/* `reading` 只喂 ≤900 的手机档：那一档把清单页与阅读页做成二选一（见 style.css
          「手机二级菜单」那段），桌面完全不读这个 class。总览(dash)也算「进去了」——
          它渲在 main 里，不跟着切的话点开总览会被清单顶到屏幕外。 */ ''}
-    <div id="app" class=${cur || dash ? 'reading' : ''} style=${{ '--read-scale': scaleOf(readStep) }}>
+    <div id="app" class=${(cur || dash ? 'reading' : '') + (navOpen ? ' navpage' : '')} style=${{ '--read-scale': scaleOf(readStep) }}>
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
         tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks} verifyCounts=${verifyCounts}
         qian=${qian} onQian=${setQian}
@@ -1272,6 +1299,11 @@ function App() {
               openPR(target);
             }}
             onClose=${() => setDash(false)} />`}
+        ${navOpen && cur && html`
+          <${NavPage} chapters=${navChapters} outline=${outlineItems}
+            onFolders=${backToList}
+            onChapter=${(p) => { setViewed(null); setDocPath(p); }}
+            onSection=${jumpFromNav} />`}
         ${/* 总览开着时**藏**读折区而不是卸载它：#doc 是 ref 挂的岛屿，
              卸载会连同已渲染的正文与批注锚点一起丢，回来要整篇重取重渲。 */ ''}
         <div class=${'work' + (dash ? ' work-hidden' : '')} onClick=${onAnchorClick}>
@@ -1358,10 +1390,16 @@ function App() {
       ${cur && html`<${ScrollEnds} tick=${`${docTick}:${docPath}`} />`}
       ${cur && html`
         <nav class="mobile-bar" aria-label=${S.mobileBar.label}>
+          ${/* 目录页上只留「‹ 正文」一颗：判/涂归/画可 是对着正文的动作，浏览目录时按不着，
+               留在那儿只会占宽度。也不能把「回正文」和「回折清单」并排——两个反方向的返回
+               挤一条栏必然认错一个，所以「‹ 全部折子」放在目录页自己的顶上。 */ ''}
+          ${navOpen ? html`
+            <button class="mobile-bar-btn mobile-bar-back" title=${S.mobileBar.backToDocTitle}
+              onClick=${() => setNavOpen(false)}>${S.mobileBar.backToDoc}</button>` : html`
           ${/* 返回钮待在底栏而不是顶栏：顶栏随正文滚走，读到第五屏想换折就得先滚回顶
                ——正是 PAIN 那条「控件离正文越远＝越不存在」。底栏是 fixed，永远够得着。 */ ''}
           <button class="mobile-bar-btn mobile-bar-back" title=${S.mobileBar.backTitle}
-            onClick=${backToList}>${S.mobileBar.back}</button>
+            onClick=${onNavBtn}>${S.mobileBar.back}</button>
           <button class="mobile-bar-btn" title=${archived ? S.action.zongpiArchivedTitle : ''}
             onClick=${() => setZongpi((z) => !z)}>${S.action.zongpi}</button>
           ${drafts.length > 0 && html`
@@ -1371,7 +1409,7 @@ function App() {
             </button>`}
           ${!archived && html`
             <button class="mobile-bar-btn mobile-bar-qinci" disabled=${busy || !onHead}
-              title=${onHead ? '' : S.action.mergeOldRevTitle} onClick=${qinci}>${S.action.merge}</button>`}
+              title=${onHead ? '' : S.action.mergeOldRevTitle} onClick=${qinci}>${S.action.merge}</button>`}`}
         </nav>`}
       ${float && html`
         <button class="zhupi-float" style=${{ left: `${Math.min(float.rect.left + 8, window.innerWidth - 76)}px`, top: `${float.rect.top + 6}px` }}

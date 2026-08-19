@@ -321,7 +321,8 @@ if (DEEP === '1' || DEEP === 'miss') {
 // 桌面冒烟跑在 1440，进不了 ≤900 分支，这两样的真实版式只有在这里才量得到。
 //
 // 走的是真实动线，顺序不能改：demo 载入即自动开着 #999 那折，所以**进来就是阅读页**
-//   阅读页（清单退场／底栏四项）→ 点「‹ 目录」→ 清单页（清单整条摊开）→ 点卡片 → 回阅读页
+//   阅读页 →「‹ 目录」→ 目录页（篇 / 节）→ 点节 → 回阅读页并滚到位
+//                        └→「‹ 全部折子」→ 清单页 → 点卡 → 回阅读页
 // 头一版把「量清单」写在最前面，量到的其实是一个 display:none 的 aside，`0 ≤ 0` 恒真，
 // 八条全绿而版式根本没修好——顺序错了，断言本身再严也没用。
 const MOBILE = new URLSearchParams(location.search).get('mobile');
@@ -367,6 +368,64 @@ if (MOBILE === '1') {
       chk('mobile-bar-touch-targets-44', false, 'no bar');
       chk('mobile-bar-has-back', false, 'no bar');
     }
+
+    // ── 目录页（第二层：篇 / 节）────────────────────────────
+    const navPage = document.querySelector('.nav-page');
+    chk('nav-page-opens', shown(navPage) && !shown(document.querySelector('.work')),
+      `nav=${navPage ? getComputedStyle(navPage).display : 'NO-EL'} work=${document.querySelector('.work') ? getComputedStyle(document.querySelector('.work')).display : 'NO-EL'}`);
+
+    // 篇：demo #999 有 demo.md / guide.md 两篇，当前那篇要标出来（.active）
+    const chapters = [...document.querySelectorAll('.nav-chapter')];
+    chk('nav-lists-chapters', chapters.length >= 2 && chapters.some((c) => c.classList.contains('active')),
+      `n=${chapters.length} active=${chapters.filter((c) => c.classList.contains('active')).length}`);
+
+    // 节：本篇标题 ≥3 条（hasOutline 的门槛）。排除篇那一栏，只数节。
+    const sections = [...document.querySelectorAll('.nav-item')].filter((b) => !b.classList.contains('nav-chapter'));
+    chk('nav-lists-sections', sections.length >= 3, `n=${sections.length}`);
+
+    // 目录页的底栏只留「‹ 正文」一颗：判/涂归/画可 对着正文，浏览目录时按不着
+    const navBtns = [...document.querySelectorAll('.mobile-bar .mobile-bar-btn')];
+    chk('nav-bar-only-back-to-doc',
+      navBtns.length === 1 && navBtns[0].textContent.includes('正文'),
+      `n=${navBtns.length} texts=${navBtns.map((b) => b.textContent.trim()).join('|')}`);
+
+    // 顶栏那排动作同理要收起。头一版只藏了 .work，顶栏照旧摆着「判 / 画可 / 刷新」——
+    // 底栏刚以「按不着」为由清空，顶栏又原样放着，自相矛盾。截图看出来的，断言当时没盖到。
+    const navActions = document.querySelector('.actions');
+    chk('nav-page-hides-doc-actions', !shown(navActions),
+      `display=${navActions ? getComputedStyle(navActions).display : 'NO-EL'}`);
+
+    // 点最后一节（文档最深处）→ 目录页关掉、正文回来、**真滚过去了**。
+    // scrollY>0 与 .search-flash 两条一起验：只看「页面关了」会把「跳没跳中」放过去，
+    // 而 flashTo 只在真找到目标块时才挂 .search-flash（1600ms 内有效）。
+    const lastSection = sections[sections.length - 1];
+    const beforeY = Math.round(window.scrollY);
+    lastSection?.click();
+    await sleep(500);
+    const flashed = Boolean(document.querySelector('.search-flash'));
+    const afterY = Math.round(window.scrollY);
+    chk('nav-section-jumps-to-reader',
+      !shown(document.querySelector('.nav-page')) && shown(document.querySelector('.work'))
+      && flashed && afterY > beforeY,
+      `flashed=${flashed} scrollY ${beforeY}→${afterY}`);
+
+    // 篇的旧入口撤了：正文顶上不该再有 doc-tab 胶囊（同一件事别两处露出）
+    const docTabs = document.querySelector('.doc-tabs');
+    chk('doc-tabs-hidden-on-phone', !shown(docTabs),
+      `display=${docTabs ? getComputedStyle(docTabs).display : 'NO-EL(单篇折本来就不渲染)'}`);
+
+    // 输入框 ≥16px：<16px 时 iOS Safari 聚焦会把整页放大且不缩回。
+    // ⚠️ 这里只能验字号这个**确定门槛**——Chrome headless 不跑 WebKit 的自动放大，
+    // 「他 iPhone 上到底还跳不跳」这一步本测试证明不了，别把绿灯当成真机通过。
+    const searchInput = document.querySelector('.search-input');
+    const fs = searchInput ? parseFloat(getComputedStyle(searchInput).fontSize) : 0;
+    chk('inputs-16px-no-ios-zoom', fs >= 16, `search-input=${fs}px`);
+
+    // 回目录页，走「‹ 全部折子」那条边
+    document.querySelector('.mobile-bar-back')?.click();
+    await sleep(400);
+    document.querySelector('.nav-up')?.click();
+    await sleep(400);
 
     // ── 清单页（返回之后）────────────────────────────────────
     // ③ 回得来：清单重新露面，底栏（读折页的部件）随之消失

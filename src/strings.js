@@ -137,7 +137,19 @@ export const S = deepFreeze({
   mobileBar: {
     label: '读折动作',
     back: '‹ 目录',
-    backTitle: '回折子清单',
+    backTitle: '本折的篇与节',
+    backToDoc: '‹ 正文',
+    backToDocTitle: '回到正文',
+  },
+
+  // 目录页（手机三层导航的第二层：折清单 → 这里 → 正文）。
+  // 「篇」「节」沿用 outline/chapter 那套已有口径，不新造词。
+  navPage: {
+    aria: '本折目录',
+    upToFolders: '‹ 全部折子',
+    chapters: '篇',
+    sections: '节',
+    sectionsOfCurrent: '节 · 当前篇',
   },
 
   // 签：按主题归堆的横条 + 「按签」视图。跨状态——点一个签，在读的与已画可的一屏同列。

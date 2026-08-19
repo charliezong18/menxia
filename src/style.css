@@ -594,6 +594,42 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
    媒体查询不加特异度，裸规则写后面会把它压死）。桌面(2005px)与测试闸门(1440px)都不进 ≤900 分支。 */
 .mobile-bar { display: none; }
 
+/* ── 目录页（手机三层导航的第二层：折清单 → 这里 → 正文）──────────────
+   与 .mobile-bar 同一套开关写法：**裸 display:none 必须写在下面 @media 的 display:block
+   之前**（层叠守卫 css-cascade.test.js 的 WATCHED 盯着这一条）。
+   桌面永不显示——它唯一的入口是底栏那颗「‹ 目录」，而底栏本身就是 ≤900 才有的。 */
+.nav-page { display: none; padding: 8px 16px calc(80px + env(safe-area-inset-bottom)); }
+.nav-up {
+  display: block; width: 100%; text-align: left;
+  padding: 14px 4px; min-height: 44px;
+  font-family: var(--songti); font-size: 15px; color: var(--ink-soft);
+  border-bottom: 1px solid var(--rule);
+}
+.nav-up:hover { color: var(--ink); }
+.nav-sec { margin-top: 18px; }
+.nav-sec-h {
+  font-family: var(--songti); font-size: 13px; font-weight: 400;
+  letter-spacing: .18em; text-indent: .18em; color: var(--ink-soft);
+  margin: 0 0 6px; padding: 0 4px;
+}
+.nav-list { list-style: none; margin: 0; padding: 0; }
+.nav-item {
+  display: block; width: 100%; text-align: left;
+  padding: 12px 4px; min-height: 44px;        /* 触控下限，与底栏同一口径 */
+  font-size: 15px; line-height: 1.5; color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+/* 篇：当前那篇用朱砂左缘 + 加重标出来，不用一行灰色小注——PAIN #31 的教训正是
+   「信息在，但视觉重量配不上它的重要性」，灰色小字等于没有。 */
+.nav-chapter { font-family: var(--songti); }
+.nav-chapter.active {
+  border-left: 3px solid var(--cinnabar); padding-left: 10px;
+  color: var(--ink); font-weight: 700;
+}
+/* 节：按层级缩进，沿用桌面右栏 .toc-l2 / .toc-l3 那套缩进语言 */
+.nav-l2 { padding-left: 20px; color: var(--ink-soft); }
+.nav-l3 { padding-left: 36px; color: var(--ink-soft); font-size: 14px; }
+
 /* 字号 A⁻/A⁺：顶栏里最不重要的控件，所以做成一对连体小钮，比 .btn-ghost 更收敛——
    它旁边就是「画可」，那是全站唯一的定稿动作，不能被一个字号钮抢走视线。
    到顶/到底时按钮置灰而不是消失：消失会让另一个钮左右跳位。 */
@@ -708,6 +744,23 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
      十几像素处就是同名的那颗 tab，念两遍还把「门下」挤到第二行。留动作与横幅，去掉词。
      读折页不动——那里面包屑带着 #号与折名，是「我在哪」的唯一交代。 */
   #app:not(.reading) .crumb { display: none; }
+
+  /* ── 目录页开门 + 正文让位 ──
+     整套显隐只关在这一档里：从窄屏拉宽时（iPad 转屏）正文自动回来，
+     不会卡在一个桌面上根本没有入口的页面上。 */
+  #app.navpage .nav-page { display: block; }
+  #app.navpage .work { display: none; }
+  /* 顶栏那排动作（刷新/引用此处/回奏/携卷/判/字号/画可）在目录页上一并收起——
+     与底栏只留「‹ 正文」是同一条理由：它们都是对着正文的动作，浏览目录时按不着，
+     摆在那儿只会让人以为这一页也能判、也能画可。面包屑留着，它交代「在哪一折」。
+     特异度 (1,1,1) 压过基础 `.actions`，不依赖书写顺序。 */
+  #app.navpage .actions { display: none; }
+  /* 篇的切换搬进目录页了，正文顶上这两个旧入口在手机上撤掉——同一件事别两处露出。
+     `.chapters` 没有裸 display 规则（只在 ≥1940 的 @media 里关过一次），这里加不碰层叠守卫。 */
+  .doc-tabs, .chapters { display: none; }
+
+  /* 输入框的 16px 不在这里——`.search-input` 的 `font:` 简写排在本块之后，
+     写这儿会被静默压掉。见文件末尾「输入框 16px（≤900）」那段。 */
 
   .mainbar { flex-wrap: wrap; gap: 10px; padding: 12px 16px 10px; }
   .crumb { flex: 1 1 100%; }
@@ -1039,6 +1092,19 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 .chapters-opt.active { color: var(--ink); background: var(--chip); }
 .chapters-num { font: 11px var(--mono); color: var(--ink-soft); flex: none; min-width: 1.6em; }
 @media (max-width: 900px) { .chapters { margin-left: 0; } }
+
+/* ── 输入框 16px（≤900）——必须写在这里，不能写进文件前部那个 ≤900 块 ──────
+   iOS Safari 对 font-size <16px 的输入框，聚焦时会把整页自动放大，而且不会自己缩回。
+   不能靠 viewport 的 maximum-scale 去挡：那会连图片灯箱的捏合缩放一起杀掉。
+   ⚠️ 位置是有讲究的：`.search-input` 的基础规则在第 904 行用了 `font:` **简写**，
+   而简写会重置 font-size。媒体查询不加特异度，写在 702 行那个 ≤900 块里会被后面的
+   简写整条压掉——实测就是这么静默失效的（断言量到仍是 13.5px）。所以这一段必须排在
+   所有相关基础规则之后。同 .chapter-rail 那桩层叠事故，只是属性从 display 换成了 font-size。
+   .anno-input 仍乘 --read-scale（A⁺ 要能把批注框一起放大），只是基数从 13.5 抬到 16。 */
+@media (max-width: 900px) {
+  .search-input { font-size: 16px; }
+  .anno-input { font-size: calc(16px * var(--read-scale)); }
+}
 
 /* ── F16 总览：按项目摊开待审折 ─────────────────────────────
    配色沿用宣纸/朱砂那套变量，不新引色板；「等谁」四态是唯一新增的语义色，

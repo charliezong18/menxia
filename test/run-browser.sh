@@ -82,7 +82,7 @@ check_names() { # $1=tag(dom|smoke)  $2=logfile  $3=golden
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=35
 SMOKE_EXPECT=134
-MOBILE_EXPECT=9
+MOBILE_EXPECT=17
 
 WHAT="${1:-all}"
 STATUS=0
@@ -141,9 +141,10 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
     if [ "$R" = "[smoke] RESULT pass=$EXP fail=0" ]; then echo "  ✔ fail=$mode $R"; else echo "  ✖ fail=$mode $R（期望 pass=$EXP fail=0）"; STATUS=1; fi
   done
 
-  # 手机窄口（M0 · review #121 §5）：390px 窗宽真进 ≤900 分支，验底栏出场且触控目标够大。
+  # 手机窄口（M0 · review #121 §5）：390px 窗宽真进 ≤900 分支。走完整条三层动线——
+  # 阅读页 →「‹ 目录」→ 目录页（篇/节）→ 点节滚回正文 →「‹ 全部折子」→ 清单页 → 点卡。
   # 用 [mobile] 独立标签，不进 smoke 的 golden 名单（那份钉在 1440 桌面口跑出来的集合）。
-  echo "── 手机窄口（390px：底栏常驻 + 触控 ≥44px）──"
+  echo "── 手机窄口（390px：三层导航 + 底栏常驻 + 触控 ≥44px）──"
   run_page "http://127.0.0.1:$PORT/index.html?demo=1&mobile=1" "$LOGDIR/mobile.log" 30000 "390,780"
   grep -o '\[mobile\] [^"]*' "$LOGDIR/mobile.log" | sed 's/^/  /' || true
   RMOB=$(grep -o '\[mobile\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/mobile.log" | tail -1)
