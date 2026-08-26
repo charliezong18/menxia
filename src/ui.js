@@ -150,6 +150,8 @@ function App() {
   const [float, setFloat] = useState(null);      // pendingAnchor
   const [commits, setCommits] = useState([]);    // rev 序列 v1..vN（vN=head）
   const [comments, setComments] = useState([]);  // 已呈 inline review comments（扁平）
+  // 批注是异步拉的。眉批栏要不要塌掉只能等它拉完再判，否则每开一折都先塌后弹，版式跳一下。
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
   const [zongpis, setZongpis] = useState([]);    // 已呈判（会话区），否则判只能发不能看
   const [viewed, setViewed] = useState(null);    // 正在读的 rev sha；null=head
   const [viewThread, setViewThread] = useState(null); // 展读浮窗：存 root comment id，不存对象——
@@ -375,6 +377,7 @@ function App() {
     setViewed(null);      // 每次开折先回 head：docPath 置 null 期间就位，与岛屿 effect 的 null→值中转契约不冲突
     setCommits([]);
     setComments([]);
+    setCommentsLoaded(false);
     setZongpis([]);
     setZongpiOpen(false);   // 每开一折都从收起态起：否则上一折展开过，下一折又被历史挡住正文
     // 「折子说明」相反：**这折有拍板点就默认摊开**（issue #13）——它不是历史，是这折要他决定的事，
@@ -433,6 +436,8 @@ function App() {
       const visibleZ = zs.filter((c) => !isReadStateComment(c.body));
       if (R.current.cur?.pr.number === prNumber) { setComments(cs); setZongpis(visibleZ); }
     } catch { /* 批注串拉失败不打断读折 */ }
+    // 成功或失败都置位：失败时按「这折没有批注」处理，总比眉批栏一直吊着 300px 强
+    if (R.current.cur?.pr.number === prNumber) setCommentsLoaded(true);
   }
 
   // 打开折时读远端续读位置：比本地新且落点不同才给「跳到上次位置?」提示条（点了才跳，绝不自动）。
@@ -1386,13 +1391,26 @@ function App() {
   //
   // 写到 :root 就让整条派生链在同一处重新求值，不用把 style.css 的断点算术复制第二份。
   // --rail-w 与 --read-scale 不参与派生链（左栏在版心之外），留在 #app 上不受影响。
+  // 眉批栏空着就塌掉，把 300px 让给正文与大纲（2026-08-26 Charlie：「它周围明明有那么多空白？」）。
+  // 判据要三个条件同时成立，少一个都会跳：
+  //   · commentsLoaded —— 批注是异步拉的，没拉完就判等于每开一折先塌后弹
+  //   · 栏里确实没有东西 —— 涂归卡 / 草稿卡 / 「其他文档还有 N 条」那行 / 判卡
+  //   · 有折打开 —— 没开折时这栏压根不渲染，写不写都一样，但别留下脏变量
+  // 通读态本来就不摆涂归卡（marginItems 恒为 []），所以它自然也会塌，这是对的。
+  const margEmpty = Boolean(cur) && commentsLoaded && !zongpi
+    && marginItems.length === 0 && others === 0;
+
   useLayoutEffect(() => {
     const st = document.documentElement.style;
     if (appliedArt == null) st.removeProperty('--art-w');
     else st.setProperty('--art-w', `${appliedArt}px`);
     if (appliedToc == null) st.removeProperty('--toc-w');
     else st.setProperty('--toc-w', `${appliedToc}px`);
-  }, [appliedArt, appliedToc]);
+    // 与上面两个同理，必须写在 :root：--marg-w 也在 --main-w 的算式里，
+    // 写在 #app 上的话版心不会跟着缩，让出来的 300px 不会变成可用空隙。
+    if (margEmpty) st.setProperty('--marg-w', '0px');
+    else st.removeProperty('--marg-w');
+  }, [appliedArt, appliedToc, margEmpty]);
 
   const onGripDown = makeGrip({
     ceilOf: () => (isResizable(window.innerWidth) ? railCeil : null),
