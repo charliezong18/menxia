@@ -148,6 +148,41 @@ aside {
   width: var(--rail-w); height: 100%; flex: none; padding: 26px 18px;
   border-right: 1px solid var(--rule); background: var(--veil);
   display: flex; flex-direction: column;
+  /* 拖宽手柄贴着右边框绝对定位，锚点在这儿 */
+  position: relative;
+}
+
+/* ── 拖宽手柄（2026-08-26）──
+   骑在右边框上，比边框宽一点点好抓（7px，Fitts 律：1px 的边框鼠标够不着）。
+   平时完全透明——侧栏的全部意义是安静地列折子，一条常驻的竖杠是噪音；hover/拖动时
+   才把那条线染成 --ink-soft，告诉你抓住了。
+   `--rail-w` 由 ui.js 写在 #app 行内（同 --read-scale 的先例），这里只管长相。 */
+.rail-grip {
+  display: block;
+  position: absolute; top: 0; right: -3px; width: 7px; height: 100%;
+  padding: 0; border: 0; background: transparent; cursor: col-resize;
+  /* 压在清单之上才抓得到，但要低于弹层 */
+  z-index: 5;
+  -webkit-appearance: none; appearance: none;
+}
+/* 拿 ::before 画那条 1px 的线，而不是给按钮自身上色：按钮有 7px 宽，整块染色会糊成一条
+   粗带子，视觉上比原来的边框重得多。 */
+.rail-grip::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 3px; width: 1px;
+  background: transparent; transition: background-color .12s ease;
+}
+.rail-grip:hover::before, .rail-grip.dragging::before { background: var(--ink-soft); }
+/* 拖动中给整页换光标，否则鼠标滑出那 7px 就变回箭头，像是脱手了 */
+#app.rail-dragging, #app.rail-dragging * { cursor: col-resize !important; user-select: none; }
+
+/* 版心几何探针：宽度写成 CSS 自己的算式，由 rail.js 的调用方量 offsetWidth 拿到
+   「版心 + 左右最小留白」的实际像素。**这是为了让 JS 不复制那套算术**——style.css
+   顶上写着「改任一栏宽都要重算」，探针让那句话只对 CSS 成立。
+   不能用 display:none（那样 offsetWidth 恒为 0），所以移出屏外 + 零高度。 */
+.geom-probe {
+  position: fixed; top: -9999px; left: 0; height: 0;
+  width: calc(var(--stage) + var(--work-pad) * 2);
+  pointer-events: none; visibility: hidden;
 }
 aside .brand-row { padding: 0 6px 22px; }
 .sec-label { font-family: var(--songti); font-size: 13.5px; letter-spacing: .1em; color: var(--ink-soft); padding: 0 6px 10px; }
@@ -687,6 +722,12 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
    ⚠️ 手机外壳（侧栏挪到顶、整页滚、缩字号）不在这一档，见下面的 ≤900。 */
 @media (max-width: 1279px) {
   :root { --rail-w: 240px; --work-pad: 28px; --main-w: var(--art-w); }
+
+  /* 这一档 --rail-w 由响应式压到 240 走单列版式，没有富余可拖——手柄整个撤掉。
+     ⚠️ 裸 `display:block` 必须写在这条之前（层叠守卫 css-cascade.test.js：媒体查询不加
+     特异度，同选择器后写的赢）。`.rail-grip` 已登记进那张受管表。
+     ui.js 那边同时**不施加**存量宽度，两处一致；界只在这一个地方判，JS 不重复写死 1280。 */
+  .rail-grip { display: none; }
 
   .stage-row { flex-direction: column; gap: 0; }
   .stage-main { width: 100%; }

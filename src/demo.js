@@ -1304,3 +1304,71 @@ async function runSmoke(docEl) {
 
   console.log(`[smoke] RESULT pass=${pass} fail=${fail}`);
 }
+
+// ?demo=1&rail=1：左栏拖宽（run-browser.sh 用 1920px 窗宽跑这一支）。
+//
+// 为什么必须在真浏览器里验、单元测试不够：夹逼的上限来自 CSS 自己的版心算式（--stage
+// + 2×--work-pad，见 rail.js 文件头），rail.js 只收一个量好的数字。**那个数量得对不对，
+// 只有让浏览器真去解析 calc() 才知道**——JS 侧把式子抄错了，纯逻辑测试照样全绿。
+//
+// 顺序照手机档的教训：先确认手柄真的可见，再拖。对着一个 display:none 的元素派发
+// pointer 事件不会报错，只会静默什么都不发生，于是断言可以全绿而功能根本没上。
+const RAIL = new URLSearchParams(location.search).get('rail');
+if (RAIL === '1') {
+  setTimeout(async () => {
+    let pass = 0, fail = 0;
+    const chk = (n, c, d = '') => { c ? pass++ : fail++; console.log(`[rail] ${c ? 'PASS' : 'FAIL'} ${n}${d ? ` — ${d}` : ''}`); };
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const railW = () => Math.round(document.querySelector('aside').getBoundingClientRect().width);
+    // 一次完整的拖：按下 → 移动 → 松手。事件派发在 window 上，与 ui.js 的装配一致。
+    const drag = async (dx) => {
+      const grip = document.querySelector('.rail-grip');
+      const x0 = grip.getBoundingClientRect().left + 3;
+      grip.dispatchEvent(new PointerEvent('pointerdown', { clientX: x0, pointerId: 1, bubbles: true, cancelable: true }));
+      window.dispatchEvent(new PointerEvent('pointermove', { clientX: x0 + dx, pointerId: 1, bubbles: true }));
+      await sleep(60);   // 移动是按帧节流提交的，等一帧
+      window.dispatchEvent(new PointerEvent('pointerup', { clientX: x0 + dx, pointerId: 1, bubbles: true }));
+      await sleep(60);
+    };
+
+    try { localStorage.removeItem('zhupi.railWidth'); } catch { /* 无痕模式 */ }
+
+    const grip = document.querySelector('.rail-grip');
+    chk('grip-visible-on-desktop', Boolean(grip) && getComputedStyle(grip).display !== 'none',
+      `display=${grip ? getComputedStyle(grip).display : 'NO-EL'}`);
+
+    // 上限由浏览器解析 CSS 算式得出，这里复算一遍喂断言——与 ui.js 走同一个探针，
+    // 所以这条也顺带守住「探针还在、还是那个宽度」。
+    const probe = document.querySelector('.geom-probe');
+    const ceil = probe ? window.innerWidth - probe.offsetWidth : NaN;
+    chk('probe-measures-stage-box', Number.isFinite(ceil) && ceil > 300,
+      `innerWidth=${window.innerWidth} probe=${probe ? probe.offsetWidth : 'NO-EL'} ceil=${ceil}`);
+
+    const before = railW();
+    await drag(120);
+    chk('drag-widens', railW() > before, `${before} → ${railW()}`);
+
+    await drag(2000);
+    const wide = railW();
+    chk('drag-stops-at-ceiling', Math.abs(wide - ceil) <= 2, `width=${wide} ceil=${ceil}`);
+    // 真正要守的东西：拖到极限也不许把版式挤到横向溢出（style.css 记过 1660–1709 那次实伤）
+    chk('no-horizontal-overflow', document.documentElement.scrollWidth <= window.innerWidth + 1,
+      `scrollWidth=${document.documentElement.scrollWidth} innerWidth=${window.innerWidth}`);
+
+    await drag(-4000);
+    chk('drag-stops-at-min', railW() === 240, `width=${railW()}`);
+
+    let stored = null;
+    try { stored = localStorage.getItem('zhupi.railWidth'); } catch { /* 无痕模式 */ }
+    chk('persists-on-release', stored === '240', `stored=${stored}`);
+
+    // 双击归位：存量值删掉，宽度交还 CSS 的响应式默认（这一档是 300）
+    document.querySelector('.rail-grip').dispatchEvent(new MouseEvent('dblclick', { bubbles: true }));
+    await sleep(60);
+    let cleared = 'x';
+    try { cleared = localStorage.getItem('zhupi.railWidth'); } catch { /* 无痕模式 */ }
+    chk('dblclick-resets', cleared === null && railW() === 300, `stored=${cleared} width=${railW()}`);
+
+    console.log(`[rail] RESULT pass=${pass} fail=${fail}`);
+  }, 1200);
+}

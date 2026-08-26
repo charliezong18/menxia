@@ -13,6 +13,7 @@ import { decorateVerifyMarkers, countVerifyMarkers } from './verify.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
 import { siblingFor, visibleDocs, getLang, setLang, variantOf } from './lang.js';
 import { getReadStep, setReadStep, scaleOf, clampStep } from './readsize.js';
+import { getRailWidth, setRailWidth, clearRailWidth, clampRail, railMax, isResizable } from './rail.js';
 import { Setup } from './components/setup.js';
 import { DraftCard, ShownThread, ZongpiCard } from './components/cards.js';
 import { Sidebar } from './components/sidebar.js';
@@ -62,7 +63,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/cards.js', 'src/components/setup.js', 'src/components/sidebar.js',
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
-  'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js',
+  'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js', 'src/rail.js',
   'src/slug.js', 'src/components/scroll-ends.js', 'src/components/image-view.js',
   'src/components/dashboard.js', 'src/components/nav-page.js',
   // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
@@ -159,6 +160,9 @@ function App() {
   const [verifyCounts, setVerifyCounts] = useState({});
   const [lang, setLangState] = useState(getLang()); // F8：中/EN 偏好，记住上次
   const [readStep, setReadStepState] = useState(getReadStep()); // 正文字号档位，记住上次
+  // 左栏宽度。null = 从没拖过，别管它，让 CSS 的响应式默认说了算（宽窗 300 / 笔记本档 240）。
+  const [railW, setRailW] = useState(getRailWidth());
+  const probeRef = useRef(null);   // 版心几何探针，见 style.css 的 .geom-probe
   const [stale, setStale] = useState(false);
   const [tab, setTab] = useState('open');        // open=待审 / done=已画可（归档，只读）
   const [qian, setQianState] = useState(params.get('qian') || null); // 「按签」视图选中的签，null=三栏
@@ -1265,11 +1269,80 @@ function App() {
   // 由 useEffect 在提交之后跑——那时 .work 已经回来了，是 Preact 保证的顺序，不是赌时序。
   const jumpFromNav = (line) => { setNavOpen(false); setPendingJump(line); };
 
+  // ── 左栏拖宽（2026-08-26）──
+  //
+  // 存的是**他想要的宽度**，不是最终生效的宽度。两者分开是为了「窗口临时变窄再变回来」
+  // 这个常见动作：若把夹逼后的值写回 state，缩一次窗口就把他的偏好永久削掉了，拉回去也
+  // 回不来。所以 railW 原样留着，生效值每次渲染现夹（appliedRail）。
+  //
+  // 几何不在 JS 里算，量 .geom-probe 的 offsetWidth 拿——理由见 rail.js 文件头。
+  const [stageBox, setStageBox] = useState(null);
+  const [winW, setWinW] = useState(() => (typeof window === 'undefined' ? 0 : window.innerWidth));
+  useLayoutEffect(() => {
+    const measure = () => {
+      setStageBox(probeRef.current ? probeRef.current.offsetWidth : null);
+      setWinW(window.innerWidth);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  // 量不到探针（老浏览器 / 还没挂上）就一律退回 CSS 默认：宁可没这个功能，也不要拿一个
+  // 猜出来的上限把版式拖到横向溢出。
+  const railCeil = stageBox == null ? null : railMax(winW, stageBox);
+  const appliedRail = (railW != null && isResizable(winW) && railCeil != null)
+    ? clampRail(railW, railCeil) : null;
+
+  const onGripDown = (e) => {
+    if (!isResizable(window.innerWidth) || railCeil == null) return;
+    e.preventDefault();
+    const grip = e.currentTarget;
+    const startX = e.clientX;
+    const startW = grip.parentElement.getBoundingClientRect().width;
+    grip.classList.add('dragging');
+    document.getElementById('app')?.classList.add('rail-dragging');
+    // 拖动中就地夹逼（而不是只夹显示值）：不夹的话越过上限还能继续拖，往回拉时会先走过
+    // 一段没有任何反应的死区，手感像卡住了。
+    let raf = 0;
+    let want = startW;
+    const move = (ev) => {
+      want = clampRail(startW + (ev.clientX - startX), railCeil) ?? startW;
+      // 每帧最多提交一次：拖宽会让版心重新居中，整页重排，不节流就是逐事件重排。
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = 0; setRailW(want); });
+    };
+    const up = () => {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      setRailW(want);
+      setRailWidth(want);            // 松手才落盘，拖动途中不写 localStorage
+      grip.classList.remove('dragging');
+      document.getElementById('app')?.classList.remove('rail-dragging');
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    // 触控板两指切页、系统手势打断时会来 pointercancel 而不是 pointerup；不收这个事件
+    // 监听器就留在 window 上，下次点哪儿都在拖。
+    window.addEventListener('pointercancel', up);
+  };
+
+  // 双击归位：删存量值，交还给 CSS 的响应式默认。
+  const onGripReset = () => { setRailW(null); clearRailWidth(); };
+
   return html`
     ${/* `reading` 只喂 ≤900 的手机档：那一档把清单页与阅读页做成二选一（见 style.css
          「手机二级菜单」那段），桌面完全不读这个 class。总览(dash)也算「进去了」——
          它渲在 main 里，不跟着切的话点开总览会被清单顶到屏幕外。 */ ''}
-    <div id="app" class=${(cur || dash ? 'reading' : '') + (navOpen ? ' navpage' : '')} style=${{ '--read-scale': scaleOf(readStep) }}>
+    <div id="app" class=${(cur || dash ? 'reading' : '') + (navOpen ? ' navpage' : '')}
+      style=${appliedRail == null
+        ? { '--read-scale': scaleOf(readStep) }
+        : { '--read-scale': scaleOf(readStep), '--rail-w': `${appliedRail}px` }}>
+      ${/* 版心几何探针：宽度由 CSS 自己算，JS 只量。见 style.css 的 .geom-probe。
+           position:fixed，不占 #app 这行 flex 的位子。 */ ''}
+      <div class="geom-probe" ref=${probeRef} aria-hidden="true"></div>
       <${Sidebar} q=${q} hits=${hits} searching=${searching} prs=${prs} donePrs=${donePrs}
         tab=${tab} cur=${cur} demo=${DEMO} timeAgo=${timeAgo} checks=${checks} verifyCounts=${verifyCounts}
         qian=${qian} onQian=${setQian}
@@ -1277,7 +1350,8 @@ function App() {
         onSearch=${runSearch} onClearSearch=${clearSearch} onJumpToHit=${jumpToHit}
         onTab=${(t) => { setTab(t); setDash(false); }} onOpenPR=${(pr) => { setDash(false); openPR(pr); }}
         onDash=${() => setDash((d) => !d)}
-        onSettings=${() => { setPhase('setup'); setSetupMsg(''); }} />
+        onSettings=${() => { setPhase('setup'); setSetupMsg(''); }}
+        onGripDown=${onGripDown} onGripReset=${onGripReset} />
       <main>
         <${Topbar} cur=${cur} archived=${archived} onHead=${onHead} busy=${busy}
           draftCount=${drafts.length} verifyN=${verifyN} happyUrl=${happyUrl} stale=${stale} notice=${notice}

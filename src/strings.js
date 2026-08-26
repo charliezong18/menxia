@@ -99,6 +99,7 @@ export const S = deepFreeze({
     settings: '设置 · 钥匙',
     dash: '总览',
     dashTitle: '按项目摊开待审的折，看谁等谁、谁盖了谁',
+    railGrip: '拖动调整清单栏宽度，双击复位',
   },
 
   // 总览（F16）：按项目分组 + 等谁 + 折间关系。

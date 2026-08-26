@@ -28,7 +28,9 @@ const CSS = readFileSync(
 // 顺序反了就会在手机上消失、或在桌面上冒出来——正是这条守卫要挡的。
 // .nav-page（手机目录页）与 .doc-tabs（篇切换胶囊）2026-08-19 加入：前者裸 none + ≤900 block，
 // 后者裸 flex + ≤900 none——两条都是「靠断点二选一」的新成员，正是这张表要罩的形状。
-const WATCHED = ['.chapter-rail', '.chapters', '.mobile-bar', '.nav-page', '.doc-tabs'];
+// .rail-grip（左栏拖宽手柄）2026-08-26 加入：裸 display:block（桌面）+ @media≤1279 none
+// （那一档 --rail-w 由响应式压到 240，没富余可拖）——又一个「靠断点二选一」的成员。
+const WATCHED = ['.chapter-rail', '.chapters', '.mobile-bar', '.nav-page', '.doc-tabs', '.rail-grip'];
 
 /**
  * 把 CSS 扫成规则列表：{ selector, inMedia, index, hasDisplay }。
