@@ -1529,14 +1529,18 @@ function App() {
               ${marginItems.map((m) => m.el)}
               ${others > 0 && html`<p class="margin-note">${S.margin.otherDocs(others)}</p>`}
             </div>
-            ${/* ⚠️ 手柄必须**排在末尾且带 key**：#doc 是 keyed 岛（由非 preact 代码填内容），
-                 往它前面插一个无 key 的兄弟会让 preact 复用错节点、把选区废掉——而涂归
-                 全靠选区。它是 absolute 定位，排在末尾不影响它落在正文右缘。 */ ''}
-            <button key="art-grip" class="art-grip" aria-hidden="true" tabindex="-1"
-              onPointerDown=${onArtGripDown} onDblClick=${onArtGripReset}></button>
           </div>
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
             onToggle=${() => setOtherOpen((o) => !o)} hydrate=${hydrateComment} />
+          ${/* 正文列的拖宽手柄。挂在 .stage-main 而不是 .read-row 上：正文之上还摞着
+               折子说明 / tab 条 / 判 / 语言钮，那一摞在 .read-row 之外——手柄只跟着
+               .read-row 的话，顶部会有一整段（实测 680px）抓不到，而**打开一折默认
+               就停在顶部**，等于多数时候没有手柄（2026-08-26 Charlie 报「最上面的
+               总结方块拖不动」，根因就是这个）。
+               ⚠️ 仍排在末尾且带 key：这一列里有 #doc 那个 keyed 岛，无 key 的兄弟插在
+               keyed 子节点前面会让 preact 复用错节点、废掉选区。 */ ''}
+          <button key="art-grip" class="art-grip" aria-hidden="true" tabindex="-1"
+            onPointerDown=${onArtGripDown} onDblClick=${onArtGripReset}></button>
         </div>
         ${cur && !docErr && showOutline && !readThrough && html`
           <${Outline} items=${outlineItems} docRef=${docRef} onJump=${jumpToLine}
