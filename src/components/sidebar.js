@@ -80,6 +80,7 @@ export function Sidebar({
   q, hits, searching, prs, donePrs, tab, cur, demo, timeAgo, checks = {}, verifyCounts = {},
   qian = null, onQian = () => {},
   onQuery, onSearch, onClearSearch, onJumpToHit, onTab, onOpenPR, onSettings, onDash,
+  onGripDown = null, onGripReset = null,
 }) {
   const match = (p) => !q.trim() || p.title.toLowerCase().includes(q.trim().toLowerCase());
   // 签集与「按签」跨状态清单。qian 非空 = 处在「按签」视图：把 open+merged 里挂该签的折
@@ -149,5 +150,11 @@ export function Sidebar({
             : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : emptyMsg}</p>`}
         </nav>`}
         ${!demo && html`<button class="settings" onClick=${onSettings}>${S.nav.settings}</button>`}
+        ${/* 拖宽手柄。**逻辑一点都不在这儿**——本组件是纯展示只吃 props（文件头的约定），
+             夹逼与持久化在 rail.js，事件装配在 ui.js。这里只负责「有把手可以抓」。
+             窄窗由 CSS 关掉（style.css 的 max-width:1279 那档），不在 JS 里判断宽度：
+             同一个界写两处必然失同步。 */ ''}
+        ${onGripDown && html`<button class="rail-grip" title=${S.nav.railGrip} aria-label=${S.nav.railGrip}
+          onPointerDown=${onGripDown} onDblClick=${onGripReset}></button>`}
       </aside>`;
 }

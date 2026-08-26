@@ -83,6 +83,7 @@ check_names() { # $1=tag(dom|smoke)  $2=logfile  $3=golden
 DOM_EXPECT=35
 SMOKE_EXPECT=134
 MOBILE_EXPECT=17
+RAIL_EXPECT=8
 
 WHAT="${1:-all}"
 STATUS=0
@@ -149,6 +150,15 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   grep -o '\[mobile\] [^"]*' "$LOGDIR/mobile.log" | sed 's/^/  /' || true
   RMOB=$(grep -o '\[mobile\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/mobile.log" | tail -1)
   if [ "$RMOB" = "[mobile] RESULT pass=$MOBILE_EXPECT fail=0" ]; then echo "  ✔ $RMOB"; else echo "  ✖ $RMOB（期望 pass=$MOBILE_EXPECT fail=0）"; STATUS=1; fi
+
+  # 左栏拖宽（2026-08-26）：1920px 才有富余可拖——1440 的桌面口在这一档几何下上限离默认
+  # 太近，量不出「拖到极限停住」。夹逼的上限来自 CSS 的 calc()，只有真浏览器解析得了，
+  # 所以这条不能退化成纯逻辑测试（rail.test.js 管的是式子本身，这里管那个数量得对不对）。
+  echo "── 左栏拖宽（1920px：夹逼上限 / 不溢出 / 落盘 / 双击归位）──"
+  run_page "http://127.0.0.1:$PORT/index.html?demo=1&rail=1" "$LOGDIR/rail.log" 8000 "1920,1000"
+  grep -o '\[rail\] [^"]*' "$LOGDIR/rail.log" | sed 's/^/  /' || true
+  RRAIL=$(grep -o '\[rail\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/rail.log" | tail -1)
+  if [ "$RRAIL" = "[rail] RESULT pass=$RAIL_EXPECT fail=0" ]; then echo "  ✔ $RRAIL"; else echo "  ✖ $RRAIL（期望 pass=$RAIL_EXPECT fail=0）"; STATUS=1; fi
 fi
 
 exit $STATUS
