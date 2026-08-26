@@ -175,6 +175,39 @@ aside {
 /* 拖动中给整页换光标，否则鼠标滑出那 7px 就变回箭头，像是脱手了 */
 #app.rail-dragging, #app.rail-dragging * { cursor: col-resize !important; user-select: none; }
 
+/* ── 正文列与大纲栏的拖宽手柄（2026-08-26）──
+   长相与 .rail-grip 完全一致（7px 抓取区 + ::before 画那条 1px 的线），只是挂的位置不同。
+   刻意不抽公共类：三个手柄的定位各不相同（右缘 / 正文右缘 / 左缘），抽出来之后每处
+   还要再覆盖一遍定位，读的人反而要在两个地方拼。 */
+.art-grip, .toc-grip {
+  display: block; position: absolute; top: 0; width: 7px; height: 100%;
+  padding: 0; border: 0; background: transparent; cursor: col-resize;
+  z-index: 5; -webkit-appearance: none; appearance: none;
+}
+.art-grip::before, .toc-grip::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 3px; width: 1px;
+  background: transparent; transition: background-color .12s ease;
+}
+.art-grip:hover::before, .art-grip.dragging::before,
+.toc-grip:hover::before, .toc-grip.dragging::before { background: var(--ink-soft); }
+
+/* 正文列右缘。.read-row 是 flex 行、article 排头一个，所以手柄的 left 就是
+   「正文左缩进 + 正文宽」——两个都是变量，拖动时自己跟着走，不用 JS 定位。 */
+.read-row { position: relative; }
+.art-grip { left: calc(var(--art-indent) + var(--art-w) - 3px); }
+
+/* 大纲栏左缘。与 .rail-grip 的 right:-3px 镜像。
+   .toc 本身是 position:sticky，已经是定位上下文，不用再加 relative。 */
+.toc-grip { left: -3px; }
+
+/* ── 窄窗不给拖，手柄要跟着消失 ──
+   判据必须与 cols.js 的 ART_MIN_WINDOW / TOC_MIN_WINDOW 同源，否则会出现
+   「看得见抓得住但拖不动」——比没有手柄更难受。
+   ≤1279 是单列档：那一档 article 是 width:100%，行内 --art-w 根本不生效。 */
+@media (max-width: 1279px) { .art-grip { display: none; } }
+/* .toc 自己在 <1500 时就不渲染，这条是防它哪天改成 CSS 隐藏时手柄还留着 */
+@media (max-width: 1499px) { .toc-grip { display: none; } }
+
 /* 版心几何探针：宽度写成 CSS 自己的算式，由 rail.js 的调用方量 offsetWidth 拿到
    「版心 + 左右最小留白」的实际像素。**这是为了让 JS 不复制那套算术**——style.css
    顶上写着「改任一栏宽都要重算」，探针让那句话只对 CSS 成立。

@@ -13,7 +13,7 @@ import { decorateVerifyMarkers, countVerifyMarkers } from './verify.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
 import { siblingFor, visibleDocs, getLang, setLang, variantOf } from './lang.js';
 import { getReadStep, setReadStep, scaleOf, clampStep } from './readsize.js';
-import { getRailWidth, setRailWidth, clearRailWidth, clampRail, railMax, isResizable } from './rail.js';
+import { getRailWidth, setRailWidth, clearRailWidth, clampRail, railMax, isResizable, RAIL_MIN } from './rail.js';
 import { Setup } from './components/setup.js';
 import { DraftCard, ShownThread, ZongpiCard } from './components/cards.js';
 import { Sidebar } from './components/sidebar.js';
@@ -29,6 +29,10 @@ import { ScrollEnds, scroller } from './components/scroll-ends.js';
 import { Dashboard } from './components/dashboard.js';
 import { NavPage } from './components/nav-page.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList, chapterName } from './toc.js';
+import {
+  ART_MIN, TOC_MIN, ART_MIN_WINDOW, TOC_MIN_WINDOW, ART_KEY, TOC_KEY,
+  isColResizable, colSlack, clampCol, getColWidth, setColWidth, clearColWidth,
+} from './cols.js';
 import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
 import { registerServiceWorker } from './sw-register.js';
@@ -64,6 +68,7 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   'src/components/topbar.js', 'src/components/other-threads.js', 'src/components/zongpi-shown.js',
   'src/components/comment-body.js', 'src/components/folder-body.js', 'src/components/thread-view.js',
   'src/toc.js', 'src/components/outline.js', 'src/track.js', 'src/readsize.js', 'src/rail.js',
+  'src/cols.js',
   'src/slug.js', 'src/components/scroll-ends.js', 'src/components/image-view.js',
   'src/components/dashboard.js', 'src/components/nav-page.js',
   // verify.js 是**存量漏网**（F13 那次就没登记，不是本次改动带来的），由 build-files.test.js 揪出来
@@ -1277,11 +1282,19 @@ function App() {
   //
   // 几何不在 JS 里算，量 .geom-probe 的 offsetWidth 拿——理由见 rail.js 文件头。
   const [stageBox, setStageBox] = useState(null);
+  // 版心内两栏同样只存「想要的宽度」，生效值每次渲染现夹——理由同 railW，见上一段。
+  const [artW, setArtW] = useState(() => getColWidth(ART_KEY));
+  const [tocW, setTocW] = useState(() => getColWidth(TOC_KEY));
+  const [railBox, setRailBox] = useState(null);
   const [winW, setWinW] = useState(() => (typeof window === 'undefined' ? 0 : window.innerWidth));
   useLayoutEffect(() => {
     const measure = () => {
       setStageBox(probeRef.current ? probeRef.current.offsetWidth : null);
       setWinW(window.innerWidth);
+      // 左栏实宽只能量，不能从 railW 推：它没拖过时是 CSS 的响应式默认（300 / 240），
+      // 而那个默认值写在 style.css 的媒体查询里，JS 这边复制一份必然失同步。
+      const aside = document.querySelector('#app > aside');
+      setRailBox(aside ? aside.offsetWidth : null);
     };
     measure();
     window.addEventListener('resize', measure);
@@ -1294,28 +1307,53 @@ function App() {
   const appliedRail = (railW != null && isResizable(winW) && railCeil != null)
     ? clampRail(railW, railCeil) : null;
 
-  const onGripDown = (e) => {
-    if (!isResizable(window.innerWidth) || railCeil == null) return;
+  // 版心内两栏的生效值。存量偏好可能来自一台更宽的显示器，直接套上去就是横向溢出
+  // （style.css 记过 1660–1709 那次实伤）。这里的收法有一处要讲清楚：
+  //
+  // `slack` 是**带着当前生效值量出来的**——探针的宽度算式里就含 --art-w / --toc-w。
+  // 所以 slack < 0 就等于「这一帧已经溢出了这么多」，把它加到想要的宽度上正好是能容下的
+  // 上限；下一帧重量时 slack 回到 ≈0，值就稳住了。单调递减且有 min 兜底，不会来回跳。
+  // ⚠️ 收窄的结果**绝不写回 artW / tocW**：那是他想要的宽度，缩一次窗口就削掉的话，
+  // 拉回宽屏也回不来了（railW 立过同一条规矩）。
+  const slack = colSlack(winW, railBox, stageBox);
+  const appliedArt = (artW != null && isColResizable(winW, ART_MIN_WINDOW) && slack != null)
+    ? clampCol(artW, ART_MIN, artW + slack) : null;
+  // 正文让出来的宽度归大纲用，否则两栏各按同一份 slack 收，会重复扣一次。
+  const tocSlack = slack == null ? null : slack + (appliedArt == null ? 0 : artW - appliedArt);
+  const appliedToc = (tocW != null && isColResizable(winW, TOC_MIN_WINDOW) && tocSlack != null)
+    ? clampCol(tocW, TOC_MIN, tocW + tocSlack) : null;
+
+  // ── 三栏共用一套指针处理（2026-08-26 扩到正文与大纲）──
+  //
+  // rAF 节流、拖动中就地夹逼、收 pointercancel —— 这三件对三栏是同一件事，所以做成工厂。
+  // 差别只有四处，全部做成入参：上限怎么算、往哪个 state 写、落哪个 key、以及**方向**。
+  // 方向那条容易漏：左栏与正文的手柄在右缘，往右拖＝变宽（sign +1）；大纲的手柄在**左缘**，
+  // 往左拖才是变宽（sign −1）。三个都写 +1 的话，大纲会往反方向跑。
+  const makeGrip = ({ ceilOf, min, sign, target, setW, persist }) => (e) => {
+    const ceil = ceilOf();
+    if (ceil == null) return;
     e.preventDefault();
     const grip = e.currentTarget;
     const startX = e.clientX;
-    const startW = grip.parentElement.getBoundingClientRect().width;
+    const el = target(grip);
+    if (!el) return;
+    const startW = el.getBoundingClientRect().width;
     grip.classList.add('dragging');
     document.getElementById('app')?.classList.add('rail-dragging');
-    // 拖动中就地夹逼（而不是只夹显示值）：不夹的话越过上限还能继续拖，往回拉时会先走过
-    // 一段没有任何反应的死区，手感像卡住了。
     let raf = 0;
     let want = startW;
     const move = (ev) => {
-      want = clampRail(startW + (ev.clientX - startX), railCeil) ?? startW;
-      // 每帧最多提交一次：拖宽会让版心重新居中，整页重排，不节流就是逐事件重排。
+      // 拖动中就地夹逼（而不是只夹显示值）：不夹的话越过上限还能继续拖，往回拉时会先走过
+      // 一段没有任何反应的死区，手感像卡住了。
+      want = clampCol(startW + sign * (ev.clientX - startX), min, ceil) ?? startW;
+      // 每帧最多提交一次：改栏宽会让版心重新居中、整页重排，不节流就是逐事件重排。
       if (raf) return;
-      raf = requestAnimationFrame(() => { raf = 0; setRailW(want); });
+      raf = requestAnimationFrame(() => { raf = 0; setW(want); });
     };
     const up = () => {
       if (raf) { cancelAnimationFrame(raf); raf = 0; }
-      setRailW(want);
-      setRailWidth(want);            // 松手才落盘，拖动途中不写 localStorage
+      setW(want);
+      persist(want);                 // 松手才落盘，拖动途中不写 localStorage
       grip.classList.remove('dragging');
       document.getElementById('app')?.classList.remove('rail-dragging');
       window.removeEventListener('pointermove', move);
@@ -1329,17 +1367,56 @@ function App() {
     window.addEventListener('pointercancel', up);
   };
 
+  const onGripDown = makeGrip({
+    ceilOf: () => (isResizable(window.innerWidth) ? railCeil : null),
+    min: RAIL_MIN, sign: +1,
+    target: (grip) => grip.parentElement,
+    setW: setRailW, persist: setRailWidth,
+  });
+
+  // 版心内两栏的上限＝这一栏当前实宽 + 版心之外还剩的空隙，与 rail 那条不是一回事
+  // （理由见 cols.js 文件头）。三个数在按下的那一刻现量：拖动全程上限不变，正好等于
+  // 「你最多还能再撑开这么多」。
+  const innerCeil = (el, min, minWindow) => {
+    if (!isColResizable(window.innerWidth, minWindow) || !el) return null;
+    const slack = colSlack(window.innerWidth, railBox,
+      probeRef.current ? probeRef.current.offsetWidth : null);
+    if (slack == null) return null;
+    return Math.max(min, el.getBoundingClientRect().width + slack);
+  };
+
+  const onArtGripDown = makeGrip({
+    ceilOf: () => innerCeil(document.getElementById('doc'), ART_MIN, ART_MIN_WINDOW),
+    min: ART_MIN, sign: +1,
+    target: () => document.getElementById('doc'),
+    setW: setArtW, persist: (px) => setColWidth(ART_KEY, px),
+  });
+
+  const onTocGripDown = makeGrip({
+    ceilOf: () => innerCeil(document.querySelector('.toc'), TOC_MIN, TOC_MIN_WINDOW),
+    min: TOC_MIN, sign: -1,
+    target: () => document.querySelector('.toc'),
+    setW: setTocW, persist: (px) => setColWidth(TOC_KEY, px),
+  });
+
   // 双击归位：删存量值，交还给 CSS 的响应式默认。
   const onGripReset = () => { setRailW(null); clearRailWidth(); };
+  const onArtGripReset = () => { setArtW(null); clearColWidth(ART_KEY); };
+  const onTocGripReset = () => { setTocW(null); clearColWidth(TOC_KEY); };
 
   return html`
     ${/* `reading` 只喂 ≤900 的手机档：那一档把清单页与阅读页做成二选一（见 style.css
          「手机二级菜单」那段），桌面完全不读这个 class。总览(dash)也算「进去了」——
          它渲在 main 里，不跟着切的话点开总览会被清单顶到屏幕外。 */ ''}
     <div id="app" class=${(cur || dash ? 'reading' : '') + (navOpen ? ' navpage' : '')}
-      style=${appliedRail == null
-        ? { '--read-scale': scaleOf(readStep) }
-        : { '--read-scale': scaleOf(readStep), '--rail-w': `${appliedRail}px` }}>
+      ${/* 三栏宽度都以 CSS 变量写在这里（同 --read-scale 的先例）：JS 不碰具体样式，
+           改版式时只动 style.css。null＝没拖过，那一栏交还给 CSS 的响应式默认。 */ ''}
+      style=${{
+        '--read-scale': scaleOf(readStep),
+        ...(appliedRail == null ? {} : { '--rail-w': `${appliedRail}px` }),
+        ...(appliedArt == null ? {} : { '--art-w': `${appliedArt}px` }),
+        ...(appliedToc == null ? {} : { '--toc-w': `${appliedToc}px` }),
+      }}>
       ${/* 版心几何探针：宽度由 CSS 自己算，JS 只量。见 style.css 的 .geom-probe。
            position:fixed，不占 #app 这行 flex 的位子。 */ ''}
       <div class="geom-probe" ref=${probeRef} aria-hidden="true"></div>
@@ -1452,12 +1529,18 @@ function App() {
               ${marginItems.map((m) => m.el)}
               ${others > 0 && html`<p class="margin-note">${S.margin.otherDocs(others)}</p>`}
             </div>
+            ${/* ⚠️ 手柄必须**排在末尾且带 key**：#doc 是 keyed 岛（由非 preact 代码填内容），
+                 往它前面插一个无 key 的兄弟会让 preact 复用错节点、把选区废掉——而涂归
+                 全靠选区。它是 absolute 定位，排在末尾不影响它落在正文右缘。 */ ''}
+            <button key="art-grip" class="art-grip" aria-hidden="true" tabindex="-1"
+              onPointerDown=${onArtGripDown} onDblClick=${onArtGripReset}></button>
           </div>
           <${OtherThreads} threads=${otherThreads} open=${otherOpen}
             onToggle=${() => setOtherOpen((o) => !o)} hydrate=${hydrateComment} />
         </div>
         ${cur && !docErr && showOutline && !readThrough && html`
-          <${Outline} items=${outlineItems} docRef=${docRef} onJump=${jumpToLine} />`}
+          <${Outline} items=${outlineItems} docRef=${docRef} onJump=${jumpToLine}
+            onGripDown=${onTocGripDown} onGripReset=${onTocGripReset} />`}
         </div>
         </div>
       </main>

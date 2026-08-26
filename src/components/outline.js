@@ -16,7 +16,9 @@ const scrollHost = () => document.querySelector('.work');
 // items：extractOutline 的产物（[{ line, level, text, id }]）。空/太短由调用方拦（hasOutline），这里不判。
 // docRef：正文 article 元素，用来实时量各标题位置做 scroll spy。
 // onJump(line)：跳到该行（ui.js 提供，复用 search-flash 那条 scroll-to-line）。
-export function Outline({ items, docRef, onJump }) {
+// onGripDown / onGripReset：左缘的拖宽手柄（2026-08-26）。逻辑全在 ui.js，这里只挂事件——
+// 与 .rail-grip 同一套写法。手柄在**左缘**，所以往左拖才是变宽（方向在 ui.js 里以 sign 处理）。
+export function Outline({ items, docRef, onJump, onGripDown, onGripReset }) {
   const [active, setActive] = useState(items[0]?.line ?? null);
   // 折叠态：宽屏默认展开；用户可收起（长文档大纲本身也会很长）。收起只留一个标题条。
   const [open, setOpen] = useState(true);
@@ -49,6 +51,8 @@ export function Outline({ items, docRef, onJump }) {
 
   return html`
     <nav class=${'toc' + (open ? '' : ' toc-collapsed')} aria-label=${S.outline.aria}>
+      ${onGripDown && html`<button class="toc-grip" aria-hidden="true" tabindex="-1"
+        onPointerDown=${onGripDown} onDblClick=${onGripReset}></button>`}
       <button class="toc-head" aria-expanded=${open} onClick=${() => setOpen((o) => !o)}>
         ${open ? '▾' : '▸'} ${S.outline.title}
       </button>
