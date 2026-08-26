@@ -1367,6 +1367,27 @@ function App() {
     window.addEventListener('pointercancel', up);
   };
 
+  // ⚠️ --art-w 与 --toc-w **必须写在 :root（documentElement）上，不能写在 #app 行内**。
+  //
+  // 自定义属性里的 calc 在**定义它的那个元素**上就求完值了，后代只继承结果。而
+  // --main-w / --toc-slot / --stage 三条派生式全定义在 :root：
+  //     --main-w: calc(--art-indent + --art-w + --col-gap + --marg-w)
+  //     --stage:  calc(--chap-slot + --main-w + --toc-slot)
+  // 覆盖写在 #app 上时，只有直接读 --art-w / --toc-w 的 article 与 .toc 变宽，**版心算式
+  // 完全不动**——于是几何探针量到的是过时的 stage，上限偏大，栏能拉出窗口。
+  // 实测（2026-08-26）：--toc-w 覆盖成 320px 后，#app 上的 --toc-slot 仍是 calc(26px + 200px)，
+  // 大纲右缘 1634 > 窗宽 1600，被**静默裁掉** 34px —— scrollWidth 仍是 1600，查不出来。
+  //
+  // 写到 :root 就让整条派生链在同一处重新求值，不用把 style.css 的断点算术复制第二份。
+  // --rail-w 与 --read-scale 不参与派生链（左栏在版心之外），留在 #app 上不受影响。
+  useLayoutEffect(() => {
+    const st = document.documentElement.style;
+    if (appliedArt == null) st.removeProperty('--art-w');
+    else st.setProperty('--art-w', `${appliedArt}px`);
+    if (appliedToc == null) st.removeProperty('--toc-w');
+    else st.setProperty('--toc-w', `${appliedToc}px`);
+  }, [appliedArt, appliedToc]);
+
   const onGripDown = makeGrip({
     ceilOf: () => (isResizable(window.innerWidth) ? railCeil : null),
     min: RAIL_MIN, sign: +1,
@@ -1411,12 +1432,9 @@ function App() {
     <div id="app" class=${(cur || dash ? 'reading' : '') + (navOpen ? ' navpage' : '')}
       ${/* 三栏宽度都以 CSS 变量写在这里（同 --read-scale 的先例）：JS 不碰具体样式，
            改版式时只动 style.css。null＝没拖过，那一栏交还给 CSS 的响应式默认。 */ ''}
-      style=${{
-        '--read-scale': scaleOf(readStep),
-        ...(appliedRail == null ? {} : { '--rail-w': `${appliedRail}px` }),
-        ...(appliedArt == null ? {} : { '--art-w': `${appliedArt}px` }),
-        ...(appliedToc == null ? {} : { '--toc-w': `${appliedToc}px` }),
-      }}>
+      style=${appliedRail == null
+        ? { '--read-scale': scaleOf(readStep) }
+        : { '--read-scale': scaleOf(readStep), '--rail-w': `${appliedRail}px` }}>
       ${/* 版心几何探针：宽度由 CSS 自己算，JS 只量。见 style.css 的 .geom-probe。
            position:fixed，不占 #app 这行 flex 的位子。 */ ''}
       <div class="geom-probe" ref=${probeRef} aria-hidden="true"></div>

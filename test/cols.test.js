@@ -87,3 +87,26 @@ test('两栏的 storage key 不能撞（撞了就是拉正文连大纲一起动�
   assert.match(ART_KEY, /^zhupi\./);
   assert.match(TOC_KEY, /^zhupi\./);
 });
+
+// ── 回归闸门：覆盖值必须写在 :root 上，不能写回 #app 行内 ──
+//
+// 2026-08-26 栽过一次：--art-w / --toc-w 写在 #app 行内时，:root 上的 --main-w /
+// --toc-slot / --stage 三条派生式**已经把旧值算死了**（自定义属性的 calc 在定义它的元素上
+// 求值，后代只继承结果）。于是几何探针量到过时的 stage、上限偏大，大纲能拉到窗外——
+// 而且是静默裁切，scrollWidth 查不出来。
+//
+// 这条只能靠读源码守：它是「写在哪个元素上」的问题，纯逻辑层测不到，而真浏览器测又
+// 恰好会被「看起来宽度变了」骗过去（当时就是这么漏的）。
+test('--art-w / --toc-w 必须写在 documentElement 上', () => {
+  const UI = readFileSync(
+    join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'ui.js'), 'utf8',
+  );
+  for (const v of ['--art-w', '--toc-w']) {
+    assert.match(UI, new RegExp(`setProperty\\('${v}'`),
+      `${v} 应当用 documentElement.style.setProperty 写`);
+    assert.doesNotMatch(UI, new RegExp(`'${v}':\\s*\``),
+      `${v} 不能写回 #app 的行内 style 对象——那样版心算式不会跟着变`);
+  }
+  // --rail-w 不参与派生链（左栏在版心之外），仍留在 #app 行内，别被这条误伤
+  assert.match(UI, /'--rail-w':\s*`/);
+});
