@@ -11,8 +11,19 @@
   --hover: rgba(251, 247, 238, .75);  /* 悬停底 */
   --chip: rgba(228, 218, 198, .40);   /* 行内码、表头、分段控件的底 */
   --shadow: rgba(38, 33, 26, .10);
-  --songti: "Songti SC", "STSongti-SC", serif;
-  --sans: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+  /* ── 字体栈：**只含拉丁的字体必须排在中文字体之前**（门下 #154）──
+     字体栈是逐字符回退的。PingFang 与 Songti SC 都自带完整拉丁字形（实测两者的 cmap
+     对 AZaz0189 均 8/8 命中），所以把它们排在最前，后面的拉丁字体永远轮不到——改之前
+     整站的英文都是被中文字体渲染的，字面偏窄、字重与 SF 不匹配。
+     打头的 Helvetica Neue / Iowan Old Style 都**不含 CJK**，中文必然穿过它们落到后面
+     的中文字体，所以这个顺序不会伤到中文。⚠️ 别把中文字体挪回前面「修」它。
+     ⛔ **别在 --sans 里把 -apple-system / BlinkMacSystemFont / system-ui 挪到 PingFang 之前**：
+     它们在 macOS 上**自带 CJK**，排在前面会把中文一起截走（真 Chrome 截图逐像素实证：
+     中文指纹从 PingFang 的 2affd50f 变成 f711bf31）。system-ui 只能垫在 PingFang 之后，
+     给没有 Helvetica Neue 也没有 PingFang 的平台兜底。
+     全部系统自带：index.html 零外链字体，加了网络依赖会伤到 sw.js 的离线阅读。 */
+  --songti: "Iowan Old Style", Charter, Georgia, "Songti SC", "STSongti-SC", serif;
+  --sans: "Helvetica Neue", "PingFang SC", system-ui, sans-serif;
   --mono: "SF Mono", Menlo, monospace;
 
   /* ── 版心几何（2026-08-03）──
@@ -173,8 +184,8 @@ aside .brand-row { padding: 0 6px 22px; }
   content: ""; position: absolute; left: -1px; top: 10px; bottom: 10px;
   width: 3.5px; background: var(--cinnabar); border-radius: 2px;
 }
-.pr-item h3 { font-family: var(--songti); font-size: 15.5px; font-weight: 700; line-height: 1.45; }
-.pr-item .meta { margin-top: 5px; font-size: 12.5px; color: var(--ink-soft); }
+.pr-item h3 { font-family: var(--songti); font-size: 15.5px; font-weight: 700; line-height: 1.45; text-wrap: balance; }
+.pr-item .meta { margin-top: 5px; font-size: 12.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 /* 清单摘要（F1）：TLDR gist 两行截断 + 拍板角标。常态压得住，别把扫读的清单撑成读物。 */
 .pr-summary { margin-top: 6px; }
 .pr-tldr {
@@ -262,10 +273,12 @@ article { flex: none; width: var(--art-w); margin-left: var(--art-indent); min-w
    换算成 em 会引入一堆 1.212em 这种读不懂的数，且改任一处都要重算别处。
    行高全是无单位倍数，自动跟着字号走，不用管。
    ⚠️ 新增带 font-size 的 article 规则记得一起乘，漏了就是「放大后这一块不跟着动」。 */
-article h1 { font-family: var(--songti); font-size: calc(27px * var(--read-scale)); line-height: 1.4; margin-bottom: 4px; }
-article h2 { font-family: var(--songti); font-size: calc(20px * var(--read-scale)); margin: 30px 0 12px; }
-article h3 { font-family: var(--songti); font-size: calc(17px * var(--read-scale)); margin: 24px 0 10px; }
-article p { font-size: calc(16.5px * var(--read-scale)); line-height: 1.9; margin-bottom: 15px; }
+article h1 { font-family: var(--songti); font-size: calc(27px * var(--read-scale)); line-height: 1.4; margin-bottom: 4px; text-wrap: balance; }
+article h2 { font-family: var(--songti); font-size: calc(20px * var(--read-scale)); margin: 30px 0 12px; text-wrap: balance; }
+article h3 { font-family: var(--songti); font-size: calc(17px * var(--read-scale)); margin: 24px 0 10px; text-wrap: balance; }
+/* 标题用 balance（拉平各行）、正文用 pretty（只治段末孤字）。别对调：Chromium 只对
+   ≤6 行的块做 balance，长段落用它是空转；WebKit 不设上限但 pretty 才是长文该用的。 */
+article p { font-size: calc(16.5px * var(--read-scale)); line-height: 1.9; margin-bottom: 15px; text-wrap: pretty; }
 article ul, article ol { margin: 0 0 15px 22px; font-size: calc(16.5px * var(--read-scale)); line-height: 1.9; }
 article li { margin-bottom: 4px; }
 article a { color: var(--cinnabar-deep); }
@@ -300,7 +313,9 @@ article pre code { background: none; padding: 0; font-size: calc(13px * var(--re
 .diff-hunk { color: var(--ink-soft); background: var(--chip); }
 .diff-ctx { color: var(--ink); }
 article table { border-collapse: collapse; width: 100%; margin: 6px 0 18px; font-size: calc(14.5px * var(--read-scale)); }
-article th, article td { border: 1px solid var(--rule); padding: 9px 12px; text-align: left; line-height: 1.6; }
+/* tabular-nums 只加在「需要竖向对齐」的地方（表格、折清单的折号），不往 :root 加——
+   正文散文里的数字用比例字形更自然，`2026` 在句中不该被撑开。 */
+article th, article td { border: 1px solid var(--rule); padding: 9px 12px; text-align: left; line-height: 1.6; font-variant-numeric: tabular-nums; }
 article th { font-family: var(--songti); background: var(--chip); font-weight: 700; }
 /* cursor: zoom-in 是这个功能唯一的自发现入口——图能点开这件事没有别的地方写着 */
 article img { max-width: 100%; border: 1px solid var(--rule); border-radius: 9px; cursor: zoom-in; }
