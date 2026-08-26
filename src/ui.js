@@ -31,6 +31,7 @@ import { NavPage } from './components/nav-page.js';
 import { extractOutline, hasOutline, chapterList, shouldUseChapterList, chapterName } from './toc.js';
 import {
   ART_MIN, TOC_MIN, ART_MIN_WINDOW, TOC_MIN_WINDOW, ART_KEY, TOC_KEY,
+  INDENT_MIN, INDENT_MIN_WINDOW, INDENT_KEY,
   isColResizable, colSlack, clampCol, getColWidth, setColWidth, clearColWidth,
 } from './cols.js';
 import { matchAnchor } from './slug.js';
@@ -1290,6 +1291,7 @@ function App() {
   // 版心内两栏同样只存「想要的宽度」，生效值每次渲染现夹——理由同 railW，见上一段。
   const [artW, setArtW] = useState(() => getColWidth(ART_KEY));
   const [tocW, setTocW] = useState(() => getColWidth(TOC_KEY));
+  const [indentW, setIndentW] = useState(() => getColWidth(INDENT_KEY));
   const [railBox, setRailBox] = useState(null);
   const [winW, setWinW] = useState(() => (typeof window === 'undefined' ? 0 : window.innerWidth));
   useLayoutEffect(() => {
@@ -1327,6 +1329,8 @@ function App() {
   const tocSlack = slack == null ? null : slack + (appliedArt == null ? 0 : artW - appliedArt);
   const appliedToc = (tocW != null && isColResizable(winW, TOC_MIN_WINDOW) && tocSlack != null)
     ? clampCol(tocW, TOC_MIN, tocW + tocSlack) : null;
+  const appliedIndent = (indentW != null && isColResizable(winW, INDENT_MIN_WINDOW) && slack != null)
+    ? clampCol(indentW, INDENT_MIN, indentW + slack) : null;
 
   // ── 三栏共用一套指针处理（2026-08-26 扩到正文与大纲）──
   //
@@ -1410,7 +1414,10 @@ function App() {
     // 写在 #app 上的话版心不会跟着缩，让出来的 300px 不会变成可用空隙。
     if (margEmpty) st.setProperty('--marg-w', '0px');
     else st.removeProperty('--marg-w');
-  }, [appliedArt, appliedToc, margEmpty]);
+    // --art-indent 同样在 --main-w 的算式里，理由同上
+    if (appliedIndent == null) st.removeProperty('--art-indent');
+    else st.setProperty('--art-indent', `${appliedIndent}px`);
+  }, [appliedArt, appliedToc, appliedIndent, margEmpty]);
 
   const onGripDown = makeGrip({
     ceilOf: () => (isResizable(window.innerWidth) ? railCeil : null),
@@ -1485,10 +1492,46 @@ function App() {
     persistNeighbor: (px) => setColWidth(ART_KEY, px),
   });
 
+  // 正文左缩进。手柄在正文**左缘**，但方向是 +1：往右拖＝缝变宽（缩进变大），
+  // 手柄本身也跟着往右走，光标始终压在它上面。
+  // 空隙吃完之后向**正文自己**借——于是右缘钉住不动，左缘跟着光标，
+  // 这正是「拖一个盒子的左边」该有的手感。
+  const onIndentGripDown = makeGrip({
+    ceilOf: () => {
+      if (!isColResizable(window.innerWidth, INDENT_MIN_WINDOW)) return null;
+      const g = geomNow();
+      if (g.slack == null) return null;
+      const cur = document.getElementById('doc');
+      if (!cur) return null;
+      const indent = parseFloat(getComputedStyle(document.documentElement)
+        .getPropertyValue('--art-indent')) || 0;
+      return Math.max(INDENT_MIN, indent + g.slack + lendable(g.art, ART_MIN));
+    },
+    min: INDENT_MIN, sign: +1,
+    // 量的是缩进本身，不是某个元素的盒子——用 article 的左缘减去 .stage-main 的左缘
+    target: () => {
+      const a = document.getElementById('doc'); const sm = document.querySelector('.stage-main');
+      if (!a || !sm) return null;
+      const w = a.getBoundingClientRect().left - sm.getBoundingClientRect().left;
+      return { getBoundingClientRect: () => ({ width: w }) };
+    },
+    setW: setIndentW, persist: (px) => setColWidth(INDENT_KEY, px),
+    onStart: (startW) => { const g = geomNow(); return { free: startW + (g.slack ?? 0), art: g.art }; },
+    onWant: (want, ctx) => {
+      if (ctx.art == null) return null;
+      const over = Math.max(0, want - ctx.free);
+      const next = Math.max(ART_MIN, Math.round(ctx.art - over));
+      setArtW(next);
+      return next;
+    },
+    persistNeighbor: (px) => setColWidth(ART_KEY, px),
+  });
+
   // 双击归位：删存量值，交还给 CSS 的响应式默认。
   const onGripReset = () => { setRailW(null); clearRailWidth(); };
   const onArtGripReset = () => { setArtW(null); clearColWidth(ART_KEY); };
   const onTocGripReset = () => { setTocW(null); clearColWidth(TOC_KEY); };
+  const onIndentGripReset = () => { setIndentW(null); clearColWidth(INDENT_KEY); };
 
   return html`
     ${/* `reading` 只喂 ≤900 的手机档：那一档把清单页与阅读页做成二选一（见 style.css
@@ -1622,6 +1665,8 @@ function App() {
                总结方块拖不动」，根因就是这个）。
                ⚠️ 仍排在末尾且带 key：这一列里有 #doc 那个 keyed 岛，无 key 的兄弟插在
                keyed 子节点前面会让 preact 复用错节点、废掉选区。 */ ''}
+          <button key="indent-grip" class="indent-grip" aria-hidden="true" tabindex="-1"
+            onPointerDown=${onIndentGripDown} onDblClick=${onIndentGripReset}></button>
           <button key="art-grip" class="art-grip" aria-hidden="true" tabindex="-1"
             onPointerDown=${onArtGripDown} onDblClick=${onArtGripReset}></button>
         </div>

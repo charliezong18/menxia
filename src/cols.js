@@ -44,8 +44,18 @@ export const ART_MIN_WINDOW = 1280;
 // 大纲：与 style.css 的 `@media (min-width: 1500px)` 同一个界——低于它 .toc 压根不渲染。
 export const TOC_MIN_WINDOW = 1500;
 
+// 正文列的左缩进（2026-08-26 Charlie：「正文左边和目录右边贴得太近了」）。
+// 它不是一条「栏」，但受同一套约束：--art-indent 也在 --main-w 的算式里，撑大它同样等于
+// 撑大版心。min 给 0 是有意的——他要的是能调，不是换一个我拍脑袋定的死值。
+// ⚠️ 默认值随断点变（:root 26 / 笔记本档 16），所以这里的 DEFAULT 只对 :root 那档成立，
+// 双击归位是删存量值交还给 CSS，不是写回这个常数。
+export const INDENT_MIN = 0;
+export const INDENT_DEFAULT = 26;
+export const INDENT_MIN_WINDOW = 1280;
+
 export const ART_KEY = 'zhupi.artWidth';
 export const TOC_KEY = 'zhupi.tocWidth';
+export const INDENT_KEY = 'zhupi.artIndent';
 
 export const isColResizable = (windowWidth, minWindow) =>
   Number.isFinite(windowWidth) && Number.isFinite(minWindow) && windowWidth >= minWindow;
