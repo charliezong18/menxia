@@ -321,3 +321,19 @@ Triggers S1–S4 are recorded in SPEC §8.2; from here on, "should we add a back
 **Vocabulary contract**: this side **recognizes prefixes only, never the value set** — when the write side adds a new `kind:` or `wait:` value, this side still displays it, sorted after the known ones, and never silently drops a folder (the rename lesson, review #54: cross-system contracts are bare strings; hard-code both ends and they fail silently).
 
 **Status**: after the F13/F14 batch Charlie waived the 8/8 freeze for this one; built and merged the same day, 2026-07-31. The audit side (zombie candidates / dependencies unlocked / wait drift / merge-ready candidates) lives in `menxia-mcp`'s `audit_folders`, sharing the same source and criteria.
+
+---
+
+## F19 · Fix hook ordering in ui.js: early returns sit above the hooks (2026-08-26, hit in practice)
+
+**The problem**: two early returns in `ui.js` — `if (phase === 'boot') return null;` (line 1187) and the `phase === 'setup'` branch right after it — sit *above* a block of hooks: the five `useState` calls backing the three-column resize (`stageBox` / `artW` / `tocW` / `railBox` / `winW`) and two `useLayoutEffect`s all live below line 1284. This violates the rules of hooks.
+
+**How it got here**: not in one bad commit. The draggable left rail (`05e555c`) introduced the first batch; the article and outline columns each added another effect in later rounds, every time appending below what was already there.
+
+**Why it doesn't blow up today**: Preact indexes hooks by call order from 0 on each render. An early return simply *skips a suffix* — on the next full render the indices still line up, so nothing gets crossed. Which means it works by implementation detail, not by being written correctly.
+
+**Actual consequences** (all currently harmless, all real): while the user is in setup via "Settings · Key", the effects below line 1284 neither run nor clean up — `--art-w` / `--toc-w` / `--marg-w` stay pinned on `:root` with the previous folder's values, and the `window` resize listener is not reattached.
+
+**The fix**: lift those five state hooks and two `useLayoutEffect`s above line 1187. The difficulty is not the logic but the dependency — `margEmpty` reads `marginItems` (line 1222, also computed after the early returns), so either lift that too or compute it inside the effect.
+
+**Acceptance**: cycle `phase` through boot / setup / app and confirm the three `:root` variables and the resize listener behave unchanged; full `run.sh` green; re-run the three-column resize matrix (drag to limit without overflow, borrowing between neighbours, narrow-window disable, double-click reset, preference preserved across window shrink).
