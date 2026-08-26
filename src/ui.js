@@ -1329,7 +1329,7 @@ function App() {
   // 差别只有四处，全部做成入参：上限怎么算、往哪个 state 写、落哪个 key、以及**方向**。
   // 方向那条容易漏：左栏与正文的手柄在右缘，往右拖＝变宽（sign +1）；大纲的手柄在**左缘**，
   // 往左拖才是变宽（sign −1）。三个都写 +1 的话，大纲会往反方向跑。
-  const makeGrip = ({ ceilOf, min, sign, target, setW, persist }) => (e) => {
+  const makeGrip = ({ ceilOf, min, sign, target, setW, persist, onStart, onWant, persistNeighbor }) => (e) => {
     const ceil = ceilOf();
     if (ceil == null) return;
     e.preventDefault();
@@ -1338,6 +1338,10 @@ function App() {
     const el = target(grip);
     if (!el) return;
     const startW = el.getBoundingClientRect().width;
+    // 按下的那一刻把几何定格：拖动全程都拿它算「该向邻栏借多少」。
+    // 不能每帧现量——量到的是上一帧已经被自己改过的值，会自激。
+    const ctx = onStart ? onStart(startW) : null;
+    let neighbor = null;
     grip.classList.add('dragging');
     document.getElementById('app')?.classList.add('rail-dragging');
     let raf = 0;
@@ -1346,6 +1350,7 @@ function App() {
       // 拖动中就地夹逼（而不是只夹显示值）：不夹的话越过上限还能继续拖，往回拉时会先走过
       // 一段没有任何反应的死区，手感像卡住了。
       want = clampCol(startW + sign * (ev.clientX - startX), min, ceil) ?? startW;
+      neighbor = onWant ? onWant(want, ctx) : null;
       // 每帧最多提交一次：改栏宽会让版心重新居中、整页重排，不节流就是逐事件重排。
       if (raf) return;
       raf = requestAnimationFrame(() => { raf = 0; setW(want); });
@@ -1354,6 +1359,7 @@ function App() {
       if (raf) { cancelAnimationFrame(raf); raf = 0; }
       setW(want);
       persist(want);                 // 松手才落盘，拖动途中不写 localStorage
+      if (neighbor != null && persistNeighbor) persistNeighbor(neighbor);
       grip.classList.remove('dragging');
       document.getElementById('app')?.classList.remove('rail-dragging');
       window.removeEventListener('pointermove', move);
@@ -1398,26 +1404,67 @@ function App() {
   // 版心内两栏的上限＝这一栏当前实宽 + 版心之外还剩的空隙，与 rail 那条不是一回事
   // （理由见 cols.js 文件头）。三个数在按下的那一刻现量：拖动全程上限不变，正好等于
   // 「你最多还能再撑开这么多」。
-  const innerCeil = (el, min, minWindow) => {
-    if (!isColResizable(window.innerWidth, minWindow) || !el) return null;
-    const slack = colSlack(window.innerWidth, railBox,
-      probeRef.current ? probeRef.current.offsetWidth : null);
-    if (slack == null) return null;
-    return Math.max(min, el.getBoundingClientRect().width + slack);
+  // ── 版心内两栏：先吃空隙，吃完了**向邻栏借**（2026-08-26 改）──
+  //
+  // 上一版把空隙当成「一池公共余量，谁先拖谁吃光」，于是另一栏直接冻死：大纲拖到 320
+  // 之后正文纹丝不动，而屏幕上明明还有一大片空白（Charlie：「它周围明明有那么多空白？」）。
+  // 那个模型不对——用户看到的是三条并排的栏，把一条拉宽，宽度理应从**邻栏**来。
+  //
+  // 所以上限 = 本栏实宽 + 空隙 + 邻栏能让出来的（邻栏实宽 − 邻栏 min）。
+  // 超出「本栏 + 空隙」的那一段，同步把邻栏收窄同样多。这样只要邻栏还在 min 之上，
+  // 就永远不会出现「拖不动」。
+  const geomNow = () => {
+    const artEl = document.getElementById('doc');
+    const tocEl = document.querySelector('.toc');
+    return {
+      art: artEl ? artEl.getBoundingClientRect().width : null,
+      toc: tocEl ? tocEl.getBoundingClientRect().width : null,
+      slack: colSlack(window.innerWidth, railBox,
+        probeRef.current ? probeRef.current.offsetWidth : null),
+    };
   };
+  const lendable = (cur, min) => (cur == null ? 0 : Math.max(0, cur - min));
 
   const onArtGripDown = makeGrip({
-    ceilOf: () => innerCeil(document.getElementById('doc'), ART_MIN, ART_MIN_WINDOW),
+    ceilOf: () => {
+      if (!isColResizable(window.innerWidth, ART_MIN_WINDOW)) return null;
+      const g = geomNow();
+      if (g.art == null || g.slack == null) return null;
+      return Math.max(ART_MIN, g.art + g.slack + lendable(g.toc, TOC_MIN));
+    },
     min: ART_MIN, sign: +1,
     target: () => document.getElementById('doc'),
     setW: setArtW, persist: (px) => setColWidth(ART_KEY, px),
+    onStart: (startW) => { const g = geomNow(); return { free: startW + (g.slack ?? 0), toc: g.toc }; },
+    onWant: (want, ctx) => {
+      if (ctx.toc == null) return null;
+      const over = Math.max(0, want - ctx.free);
+      const next = Math.max(TOC_MIN, Math.round(ctx.toc - over));
+      setTocW(next);
+      return next;
+    },
+    persistNeighbor: (px) => setColWidth(TOC_KEY, px),
   });
 
   const onTocGripDown = makeGrip({
-    ceilOf: () => innerCeil(document.querySelector('.toc'), TOC_MIN, TOC_MIN_WINDOW),
+    ceilOf: () => {
+      if (!isColResizable(window.innerWidth, TOC_MIN_WINDOW)) return null;
+      const g = geomNow();
+      if (g.toc == null || g.slack == null) return null;
+      return Math.max(TOC_MIN, g.toc + g.slack + lendable(g.art, ART_MIN));
+    },
     min: TOC_MIN, sign: -1,
     target: () => document.querySelector('.toc'),
     setW: setTocW, persist: (px) => setColWidth(TOC_KEY, px),
+    onStart: (startW) => { const g = geomNow(); return { free: startW + (g.slack ?? 0), art: g.art }; },
+    onWant: (want, ctx) => {
+      if (ctx.art == null) return null;
+      const over = Math.max(0, want - ctx.free);
+      const next = Math.max(ART_MIN, Math.round(ctx.art - over));
+      setArtW(next);
+      return next;
+    },
+    persistNeighbor: (px) => setColWidth(ART_KEY, px),
   });
 
   // 双击归位：删存量值，交还给 CSS 的响应式默认。
