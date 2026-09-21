@@ -70,7 +70,7 @@ export const S = deepFreeze({
   // 顶栏
   topbar: {
     crumbRoot: '待审',
-    crumbShelf: '弘文馆',
+    crumbShelf: '读毕书架',
     crumbDone: '已画可',
   },
 
@@ -92,10 +92,10 @@ export const S = deepFreeze({
   nav: {
     tabOpen: (n) => `待审 ${n}`,
     tabDone: (n) => `已画可 ${n}`,
-    tabShelf: (n) => `弘文馆 ${n}`,
+    tabShelf: (n) => `读毕书架 ${n}`,
     emptyOpen: '此刻无折可批。',
     emptyDone: '还没有画可过的折子。',
-    emptyShelf: '馆中暂无闲读。',
+    emptyShelf: '还没有读毕的书。',
     settings: '设置 · 钥匙',
     dash: '总览',
     dashTitle: '按项目摊开待审的折，看谁等谁、谁盖了谁',
@@ -125,11 +125,14 @@ export const S = deepFreeze({
     unblocks: (what) => `画可后解锁：${what}`,
   },
 
-  // 弘文馆：闲读书架（唐制里弘文馆正是门下省下辖的藏书、教授之所）。
-  // 「不催办」是它的全部意义，所以这几句里一个催促词都不许有。
+  // 读毕书架（2026-09-21 由「弘文馆」改）：架上是已画可的读物——读过、点过头的才上架。
+  // 存量的 open 闲折单独成「未画可」一组，带角标，读完画可即归位；仍不催办。
   // title 已并入 nav.tabShelf（2026-08-03 从底部折叠区升为第三个 tab）。
   shelf: {
-    hint: '闲时读，不催。',
+    unreadGroup: (n) => `未画可 · ${n}`,
+    unreadHint: '弘文馆遗留，还没看过；读完画可即归位。',
+    unreadChip: '未画可',
+    doneGroup: (n) => `读毕 · ${n}`,
   },
 
   // 手机底栏：窄屏读折时把「判 / 提交 / 画可」钉在视口底缘，随手可点（顶栏那几个钮会随正文滚走）。
@@ -157,7 +160,7 @@ export const S = deepFreeze({
   qian: {
     chip: (word, n) => `${word}${n ? ` ${n}` : ''}`,   // chip 条上：签名 + 计数
     clear: '清除',
-    clearTitle: '收起「按签」，回到待审 / 已画可 / 弘文馆三栏',
+    clearTitle: '收起「按签」，回到待审 / 已画可 / 读毕书架三栏',
     crumb: (word) => `签 · ${word}`,                    // 「按签」视图的栏内标题
     empty: (word) => `没有挂「${word}」签的折。`,
   },

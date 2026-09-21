@@ -85,8 +85,8 @@ test('顶栏：旧版下提交按钮禁用；归档折不出画可但保留判',
 });
 
 // 面包屑根词要跟折的实际归属走（2026-08-18：#88 是读物折，面包屑却写「待审」，
-// 人去待审清单里找不到它）。判据与侧栏分流同一套：archived → 已画可；isShelved → 弘文馆。
-test('顶栏：面包屑根词跟折的归属走——读物折显弘文馆、画可折显已画可、等你的读物仍显待审', () => {
+// 人去待审清单里找不到它）。判据与侧栏分流同一套：archived → 已画可；isShelved → 读毕书架。
+test('顶栏：面包屑根词跟折的归属走——读物折显读毕书架、画可折显已画可、等你的读物仍显待审', () => {
   const base = {
     busy: false, draftCount: 0, happyUrl: null, stale: false, notice: '',
     onRefresh: () => {}, onCopyRef: () => {}, onZongpi: () => {}, onSubmit: () => {}, onQinci: () => {},
@@ -94,7 +94,7 @@ test('顶栏：面包屑根词跟折的归属走——读物折显弘文馆、�
   const rootOf = (v) => find(v, byClass('crumb')).props.children.flat(9).filter((c) => typeof c === 'string').join('');
   const pr = (labels) => ({ number: 88, title: 'x', labels });
 
-  assert.match(rootOf(Topbar({ ...base, archived: false, onHead: true, cur: { pr: pr(['kind:读物', 'wait:闲']) } })), /^弘文馆/);
+  assert.match(rootOf(Topbar({ ...base, archived: false, onHead: true, cur: { pr: pr(['kind:读物', 'wait:闲']) } })), /^读毕书架/);
   assert.match(rootOf(Topbar({ ...base, archived: true, onHead: true, cur: { pr: pr(['kind:读物', 'wait:闲']) } })), /^已画可/);
   assert.match(rootOf(Topbar({ ...base, archived: false, onHead: true, cur: { pr: pr(['kind:参考', 'wait:你读']) } })), /^待审/);
   // 等你的读物不藏进书架（track.js 的 NEEDS_YOU 阀），面包屑也要一致
@@ -483,7 +483,7 @@ test('splitShelf：kind 不是读物就不上架，哪怕标了 wait:闲', () =>
   assert.equal(isShelved(idleRef), false, '书架按「这是什么」分，不按「等谁」分');
 });
 
-test('侧栏：书架折不进待审计数，待审栏里不画书架折卡', () => {
+test('侧栏：遗留闲折不进待审计数，待审栏里不画书架折卡；在书架里带「未画可」角标', () => {
   const props = {
     q: '', hits: null, searching: '', cur: null, demo: false,
     prs: [labeled(1, 'kind:读物', 'wait:闲'), labeled(2, 'kind:设计', 'wait:你拍')],
@@ -492,15 +492,18 @@ test('侧栏：书架折不进待审计数，待审栏里不画书架折卡', ()
     onTab() {}, onOpenPR() {}, onSettings() {},
   };
   const open = JSON.stringify(Sidebar({ ...props, tab: 'open' }));
-  assert.match(open, /待审 1/, '弘文馆的折不计进待审');
-  assert.match(open, /弘文馆 1/, '第三个 tab 带自己的计数');
+  assert.match(open, /待审 1/, '遗留的闲折不计进待审（历史遗留，读完画可即归位）');
+  assert.match(open, /读毕书架 1/, '第三个 tab 带自己的计数，遗留闲折也计入');
   assert.doesNotMatch(open, /"t1"/, '待审栏里不该出现书架里的折');
 
   const shelf = JSON.stringify(Sidebar({ ...props, tab: 'shelf' }));
-  assert.match(shelf, /"t1"/, '切到弘文馆才画书架折卡');
-  assert.doesNotMatch(shelf, /"t2"/, '弘文馆里不该混进待审的折');
+  assert.match(shelf, /"t1"/, '切到书架才画书架折卡');
+  assert.doesNotMatch(shelf, /"t2"/, '书架里不该混进待审的折');
   assert.match(shelf, /kind-chip/, '书架折卡带分类角标');
   assert.match(shelf, /读物/);
+  assert.match(shelf, /unread-chip/, '未画可的遗留折要有明显角标');
+  assert.match(shelf, /未画可 · 1/, '遗留折单独成组、带计数');
+  assert.doesNotMatch(shelf, /读毕 · /, '没有读毕的折就不画读毕组');
 });
 
 // 2026-08-03：这条断言从「没有闲折就整块不画」翻了面。
@@ -508,7 +511,7 @@ test('侧栏：书架折不进待审计数，待审栏里不画书架折卡', ()
 // 升成第三个 tab 后判据变了：tab 是**导航**不是装饰，而会忽隐忽现的入口正是这次报障的
 // 病根（「左下角是有个弘文馆，但点开之后里面都没有」）。已画可为 0 时也照样在，三个
 // tab 一视同仁。克制改由别处承担：不进待审计数、tab 与折卡都压着透明度。
-test('侧栏：没有闲折时弘文馆 tab 仍在，只是计数为 0', () => {
+test('侧栏：书架空着时 tab 仍在，只是计数为 0', () => {
   const props = {
     q: '', hits: null, searching: '', cur: null, demo: false,
     prs: [labeled(2, 'kind:设计', 'wait:你拍')], donePrs: [], timeAgo: () => '',
@@ -516,8 +519,93 @@ test('侧栏：没有闲折时弘文馆 tab 仍在，只是计数为 0', () => {
     onTab() {}, onOpenPR() {}, onSettings() {},
   };
   const flat = JSON.stringify(Sidebar({ ...props, tab: 'open' }));
-  assert.match(flat, /弘文馆 0/, '入口常驻，不随存量忽隐忽现');
+  assert.match(flat, /读毕书架 0/, '入口常驻，不随存量忽隐忽现');
 
   const empty = JSON.stringify(Sidebar({ ...props, tab: 'shelf' }));
-  assert.match(empty, /馆中暂无闲读/, '空馆给一句话，不是一片空白');
+  assert.match(empty, /还没有读毕的书/, '空架给一句话，不是一片空白');
+});
+
+// ── 读毕书架（2026-09-21 拍板）──────────────────────────────────
+// 弘文馆原是「open 且 wait:闲 的读物」，agent 能直接把东西标 wait:闲 塞进去、他永远看不到。
+// 改成读毕书架：架上是**已画可**的读物（读过、点过头的才上架）；遗留的 open 闲折仍显示，
+// 但单独成组、带「未画可」角标，与读毕的分开——读完画可即归位。
+const { isReadDone, shelfOf } = await import('../src/track.js');
+const merged = (number, ...names) => ({ ...labeled(number, ...names), merged_at: '2026-09-20T00:00:00Z' });
+
+test('isReadDone：已画可且 kind:读物 才算读毕；open 读物、已画可的非读物都不算', () => {
+  assert.equal(isReadDone(merged(1, 'kind:读物')), true);
+  assert.equal(isReadDone(merged(2, 'kind:读物', 'wait:闲')), true, '画可后 wait 值无所谓');
+  assert.equal(isReadDone(merged(3, 'kind:拍板')), false, '已画可的拍板折不是书');
+  assert.equal(isReadDone(labeled(4, 'kind:读物', 'wait:闲')), false, '还开着的读物不算读毕');
+  assert.equal(isReadDone({ number: 5, merged_at: 'x' }), false, '没标 kind 的归档折不上架');
+});
+
+test('shelfOf：读毕来自已画可清单、未画可来自待审清单，两摊分开', () => {
+  const prs = [labeled(1, 'kind:读物', 'wait:闲'), labeled(2, 'kind:设计', 'wait:你拍')];
+  const donePrs = [merged(3, 'kind:读物'), merged(4, 'kind:拍板')];
+  const { unread, done } = shelfOf(prs, donePrs);
+  assert.deepEqual(unread.map((p) => p.number), [1]);
+  assert.deepEqual(done.map((p) => p.number), [3]);
+  assert.deepEqual(shelfOf(undefined, undefined), { unread: [], done: [] }, '空输入不炸');
+});
+
+test('侧栏：读毕书架列出已画可的读物；已画可栏照旧全列；tab 计数 = 读毕 + 未画可', () => {
+  const props = {
+    q: '', hits: null, searching: '', cur: null, demo: false,
+    prs: [labeled(1, 'kind:读物', 'wait:闲'), labeled(2, 'kind:设计', 'wait:你拍')],
+    donePrs: [merged(3, 'kind:读物'), merged(4, 'kind:拍板')],
+    timeAgo: () => '刚刚',
+    onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
+    onTab() {}, onOpenPR() {}, onSettings() {},
+  };
+  const shelf = JSON.stringify(Sidebar({ ...props, tab: 'shelf' }));
+  assert.match(shelf, /读毕书架 2/, '计数 = 读毕 1 + 未画可 1');
+  assert.match(shelf, /已画可 2/, '已画可栏计数不因书架而变');
+  assert.match(shelf, /"t3"/, '已画可的读物上架');
+  assert.doesNotMatch(shelf, /"t4"/, '已画可的拍板折不上架');
+  assert.match(shelf, /读毕 · 1/, '读毕组带计数');
+  assert.match(shelf, /未画可 · 1/, '遗留组带计数');
+  assert.ok(shelf.indexOf('未画可 · 1') < shelf.indexOf('读毕 · 1'), '遗留的未画可排在读毕之前——它才是还没看的');
+  assert.ok(shelf.indexOf('"t1"') < shelf.indexOf('"t3"'), '卡的顺序与分组一致');
+
+  // 读毕卡走 merged_at 那条时间线（画可于），不带未画可角标；角标只挂在遗留折上
+  const tree = Sidebar({ ...props, tab: 'shelf' });
+  const cardOf = (t) => find(tree, (v) => v.props?.children?.some?.((c) => c?.type === 'h3' && c.props?.children === t));
+  assert.ok(find(cardOf('t1'), byClass('unread-chip')), '遗留折带未画可角标');
+  assert.equal(find(cardOf('t3'), byClass('unread-chip')), null, '读毕折不带未画可角标');
+  assert.match(JSON.stringify(cardOf('t3')), /画可于/, '读毕折显示画可时间');
+
+  const done = JSON.stringify(Sidebar({ ...props, tab: 'done' }));
+  assert.match(done, /"t3"/, '已画可栏仍是全量归档，读物不从中抽走');
+  assert.match(done, /"t4"/);
+  assert.doesNotMatch(done, /unread-chip/, '已画可栏不画未画可角标');
+});
+
+test('侧栏：只有读毕、没有遗留闲折时不画未画可组', () => {
+  const props = {
+    q: '', hits: null, searching: '', cur: null, demo: false,
+    prs: [], donePrs: [merged(3, 'kind:读物')], timeAgo: () => '',
+    onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
+    onTab() {}, onOpenPR() {}, onSettings() {},
+  };
+  const shelf = JSON.stringify(Sidebar({ ...props, tab: 'shelf' }));
+  assert.doesNotMatch(shelf, /未画可/, '没有遗留就不提未画可');
+  assert.match(shelf, /读毕 · 1/);
+  assert.match(shelf, /"t3"/);
+});
+
+test('侧栏：搜索词同时过滤书架的两组', () => {
+  const props = {
+    q: 'zzz', hits: null, searching: '', cur: null, demo: false,
+    prs: [{ ...labeled(1, 'kind:读物', 'wait:闲'), title: 'zzz 遗留' }],
+    donePrs: [merged(3, 'kind:读物'), { ...merged(5, 'kind:读物'), title: 'zzz 读毕' }],
+    timeAgo: () => '',
+    onQuery() {}, onSearch() {}, onClearSearch() {}, onJumpToHit() {},
+    onTab() {}, onOpenPR() {}, onSettings() {},
+  };
+  const shelf = JSON.stringify(Sidebar({ ...props, tab: 'shelf' }));
+  assert.match(shelf, /zzz 遗留/);
+  assert.match(shelf, /zzz 读毕/);
+  assert.doesNotMatch(shelf, /"t3"/, '不匹配的读毕折被过滤掉');
+  assert.match(shelf, /读毕书架 3/, 'tab 计数不受搜索词影响');
 });

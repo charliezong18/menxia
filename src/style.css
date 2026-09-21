@@ -228,14 +228,23 @@ aside .brand-row { padding: 0 6px 22px; }
 .settings { margin-top: 16px; padding: 6px; font-size: 13px; color: var(--ink-soft); text-align: left; }
 .settings:hover { color: var(--ink); }
 
-/* 弘文馆：闲读书架。**整块都是安静的**——灰、细。
+/* 读毕书架（2026-09-21 由弘文馆改）：架上是已画可的读物。**整块都是安静的**——灰、细。
    朱砂在这儿一点都不许出现：那是批注动作的颜色，而书架的全部意义是「没人等你」。
    2026-08-03 由「待审列表底部的折叠区」升为第三个 tab：原先那版在 #pr-list 最底下，
    清单一长，展开出来的卡全落在可视区外，点了像没反应。安静≠藏起来，所以给它一个
-   固定入口，但仍不进「待审 n」的计数、卡也仍压着透明度，不与待审争注意力。 */
+   固定入口，但仍不进「待审 n」的计数、卡也仍压着透明度，不与待审争注意力。
+   例外是「未画可」那一组：弘文馆遗留的 open 闲折，还没看过——分组标题与角标要能一眼认出，
+   所以不压透明度、角标走墨色实边；但仍不用朱砂，它不催办。 */
 .shelf-hint { font-size: 12px; color: var(--ink-soft); opacity: .75; padding: 2px 6px 8px; margin: 0; }
+.shelf-group { font-family: var(--songti); font-size: 12.5px; letter-spacing: .08em; color: var(--ink-soft); padding: 8px 6px 4px; margin: 0; }
+.shelf-group-unread { color: var(--ink); }
+.shelf-group + .shelf-group, .pr-item + .shelf-group { margin-top: 10px; border-top: 1px solid var(--rule); padding-top: 12px; }
 .shelf-list .pr-item { opacity: .82; }
-.shelf-list .pr-item:hover, .shelf-list .pr-item.active { opacity: 1; }
+.shelf-list .pr-item:hover, .shelf-list .pr-item.active, .shelf-list .pr-item.pr-unread { opacity: 1; }
+.unread-chip {
+  margin-left: 8px; padding: 1px 7px; border-radius: 999px;
+  border: 1px solid var(--ink-soft); font-size: 11.5px; color: var(--ink);
+}
 .kind-chip {
   margin-left: 8px; padding: 1px 7px; border-radius: 999px;
   border: 1px solid var(--rule); font-size: 11.5px; color: var(--ink-soft);

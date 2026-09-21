@@ -112,13 +112,14 @@ const PR = {
   body: BODY,
 };
 
-// 弘文馆的样例折（review #69）。demo 里没有它的话，第三个 tab 点开永远是空的——
-// 而「点开里面什么都没有」正是这个功能上一轮报障的原话，demo 不该再复现一次。
-// 带 labels 是全部要点：弘文馆的判据只看 `kind:读物`（见 track.js）。
+// 书架「未画可」遗留的样例折（review #69 时是弘文馆样例；2026-09-21 书架改为读毕后，
+// 它成了「open 且 wait:闲、还没画可」那一组的样本）。demo 里没有它的话，第三个 tab
+// 点开永远只有读毕——而「点开里面什么都没有」正是这个功能上一轮报障的原话。
+// 带 labels 是全部要点：遗留分流的判据只看 `kind:读物`（见 track.js isShelved）。
 const SHELF_PR = {
   ...PR,
   number: 997,
-  title: '读物：弘文馆样例（闲时读，不催）',
+  title: '读物：弘文馆遗留样例（未画可）',
   // 覆盖 PR 的 labels（否则连坐继承 签:旅行）；弘文馆样例也带一个签，验 chip 在书架卡上照样出。
   labels: [{ name: 'proj:menxia' }, { name: 'kind:读物' }, { name: 'wait:闲' }, { name: '签:开发' }],
   updated_at: new Date(Date.now() - 1728e5).toISOString(),
@@ -237,6 +238,12 @@ export const demoApi = {
       ...demoPr(990, '裁决：选型定案（已画可）', ['proj:zhongshumenxia', 'kind:拍板'],
         { rel: 'supersedes=#994', h: 30 }),
       merged_at: ago(30),
+    },
+    {
+      // 读毕书架的样例（2026-09-21）：已画可的 kind:读物 才上架。没有它，第三个 tab 的「读毕」组
+      // 在 demo 里永远是空的——只剩 #997 那条「未画可」遗留，看不出两组是怎么分开的。
+      ...demoPr(989, '读物：读毕样例（已画可，回看用）', ['proj:menxia', 'kind:读物'], { h: 96 }),
+      merged_at: ago(96),
     },
   ],
   listPRFiles: async () => [

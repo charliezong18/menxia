@@ -1,6 +1,6 @@
 // 折务追踪的**读侧**（词表由 review #61 批定 2026-07-31，写侧在 menxia-mcp/src/track.ts）：
 // 从折上已有的 labels 与 body 解析出项目归属、等谁、主题签、折间关系，供总览、清单分组与
-// 弘文馆分流用。
+// 读毕书架分流用。
 //
 // **零新增请求**：`labels` 与 `body` 本来就在 `listOpenPRs` / `listMergedPRs` 的响应里
 // （此前一直被扔掉）。这一层是纯函数，不碰 fetch、不碰 DOM。
@@ -10,8 +10,8 @@
 // 改名的教训（review #54）：跨系统契约是裸字符串，两头都写死一份取值表，
 // 写入侧加一个新 kind、这边就静默把那折漏掉，而且不报错。
 // 所以：认不出的取值一律**照常显示、排到已知值后面**，绝不丢弃。
-// 下面几张已知表只用来定**顺序与颜色**，不用来判「算不算数」；唯一自觉的例外是弘文馆
-// 分流那三个字符串（见 isShelved），分组总得有个判据。
+// 下面几张已知表只用来定**顺序与颜色**，不用来判「算不算数」；唯一自觉的例外是书架
+// 分流那三个字符串（见 isShelved / isReadDone），分组总得有个判据。
 
 export const PROJ_PREFIX = 'proj:';
 export const KIND_PREFIX = 'kind:';
@@ -52,7 +52,8 @@ export const waitRank = (w) => {
 export const waitClass = (w) => (w ? `wait-${WAIT_CLASS[w] || 'other'}` : '');
 
 /**
- * 弘文馆的判据：**`kind:读物`，但等你的不藏**（review #69 批定 2026-08-05）。
+ * 「未画可」遗留闲折的判据（原弘文馆判据）：**`kind:读物`，但等你的不藏**（review #69 批定 2026-08-05）。
+ * 2026-09-21 起书架主体改为读毕（见 isReadDone / shelfOf）；这条只剩存量分流之用。
  *
  * 呈折时提的推荐是 `wait:闲`，他选了 `kind:读物`——书架是按「这是什么」分的，
  * 不是按「等谁」。当时 20 折里两个判据 100% 重合，换过来零行为差异。
@@ -71,7 +72,7 @@ const NEEDS_YOU = new Set(['你拍', '你读']);
 export const isShelved = (pr) => kindOf(pr) === READING && !NEEDS_YOU.has(waitOf(pr));
 
 /**
- * 把清单劈成「待审」与「弘文馆」两摊。
+ * 把待审清单劈成「待审」与「未画可的遗留闲折」两摊。
  *
  * **没标 label 的折一律留在待审**（`waitOf` 返 null ≠ 闲）：漏标一次就把折藏进书架
  * 是这个功能唯一的危险动作——藏起来的东西没人会想起去找。宁可多催，不可静默隐藏。
@@ -81,6 +82,28 @@ export function splitShelf(prs) {
   const desk = [], shelf = [];
   for (const pr of prs || []) (isShelved(pr) ? shelf : desk).push(pr);
   return { desk, shelf };
+}
+
+/**
+ * 读毕书架（2026-09-21 拍板，取代「弘文馆 = open 且不等你的读物」）。
+ *
+ * 弘文馆的漏洞：agent 把东西标 `wait:闲` 直接塞进去，不进待审、不催办，他永远看不到。
+ * 所以书架改按**画可**分：架上是已画可的 `kind:读物`——读过、点过头的才算读毕。
+ * 写侧同步改了默认（读物默认 `wait:你读`，进待审），`wait:闲` 只在他明说「放着不催」时才用。
+ *
+ * 存量的 open 闲折（`isShelved`）不丢也不混：仍在书架显示、仍不进待审计数，但单独成
+ * 「未画可」一组带角标，读完画可即归位到读毕。分两摊而不是一摊，就是为了让「还没看」的
+ * 一眼能认出来。
+ *
+ * 零新增请求：merged 清单（`listMergedPRs`）本来就带 labels。
+ */
+export const isReadDone = (pr) => Boolean(pr?.merged_at) && kindOf(pr) === READING;
+
+export function shelfOf(prs, donePrs) {
+  return {
+    unread: splitShelf(prs).shelf,
+    done: (donePrs || []).filter(isReadDone),
+  };
 }
 
 // ── 关系标记 `<!-- menxia-rel: needs=#49; supersedes=#48,#50; unblocks=… -->` ──

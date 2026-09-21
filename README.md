@@ -42,7 +42,7 @@ your agent ──opens PR──▶  review repo (private)  ◀──comments─�
                                 └── merge = final = ship it
 ```
 
-**Not every folder is nagging you.** Folders labelled `kind:读物` land in the third sidebar tab, **弘文馆** — finished research, study material, long-form writing all live there: out of the review count, never nagged, while rendering, inline comments, conversation comments and merge keep working exactly as before. Read them when you feel like it. Anything gated on your sign-off (`wait:你拍` / `wait:你读`) stays in the queue instead, and **unlabelled folders always stay in the queue** — better to over-nag than to hide something silently.
+**What you have read gets a shelf.** The third sidebar tab, **读毕书架** (the read-done shelf), lists **merged** folders labelled `kind:读物` — finished research, study material, long-form writing: once you have read it and pressed 画可 it lands here, with rendering, inline comments, conversation comments and threads all available to look back on. Getting on the shelf is gated by the merge, not by a label: a reading folder your agent submits goes into the queue by default (`wait:你读`) and only counts as read once you have signed off, and **unlabelled folders always stay in the queue** — better to over-nag than to hide something silently. Leftover folders that were parked in the old 弘文馆 via `wait:闲` and never merged still show in this tab, as a separate **未画可** (not yet merged) group with a badge, out of the review count; read and merge them and they move over.
 
 ## Quick start
 

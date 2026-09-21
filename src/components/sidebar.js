@@ -3,7 +3,7 @@
 import { html } from '../../vendor/preact-standalone.mjs';
 import { S } from '../strings.js';
 import { folderSummary, DECISIONS_TITLE } from './folder-body.js';
-import { splitShelf, kindOf, qianOf } from '../track.js';
+import { splitShelf, shelfOf, kindOf, qianOf } from '../track.js';
 
 /**
  * 清单卡的摘要行（F1，2026-07-31）：一句 TLDR gist + 「待你拍板 · n 条」角标。
@@ -43,23 +43,26 @@ function verifyBadge(n) {
 }
 
 /**
- * 一张折卡。从内联的 map 里提出来，好让待审与弘文馆两条路共用同一张卡
+ * 一张折卡。从内联的 map 里提出来，好让待审与书架两条路共用同一张卡
  * ——两份卡渲染迟早分叉，而「清单里少个角标」这种分叉极难发现。
  *
  * **是普通函数、直接调用，不是 `<${FolderCard}>` 组件**：`components.test.js` 靠静态遍历
  * vdom 找 `.pr-summary` / `.chk` 这些类名断言角标画没画，而组件 vnode 要跑过才有子树
  * ——写成组件会让那两条断言看见空树。
+ *
+ * `unread`：书架里的遗留闲折（open、未画可）。角标只在书架栏挂——已画可栏与待审栏都不该出现它。
  */
-function folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf = false }) {
+function folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf = false, unread = false }) {
   const kind = shelf ? kindOf(pr) : null;
-  // 签 chip 三处（待审 / 弘文馆 / 已画可）都出，与卡面 meta 同一套视觉语言，小、不抢戏。
+  // 签 chip 三处（待审 / 读毕书架 / 已画可）都出，与卡面 meta 同一套视觉语言，小、不抢戏。
   const qians = qianOf(pr);
   return html`
-              <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '')}
+              <button key=${pr.number} class=${'pr-item' + (cur?.pr.number === pr.number ? ' active' : '') + (pr.merged_at ? ' pr-done' : '') + (unread ? ' pr-unread' : '')}
                 onClick=${() => onOpenPR(pr)}>
                 <h3>${pr.title}</h3>
                 <div class="meta">#${pr.number} · ${pr.merged_at ? S.folder.mergedAt(timeAgo(pr.merged_at)) : S.folder.submittedAt(timeAgo(pr.updated_at))}${
                   pr.merged_at ? null : checkBadge(checks[pr.number])}${verifyBadge(verifyCounts[pr.number])}${
+                  unread ? html`<span class="unread-chip">${S.shelf.unreadChip}</span>` : null}${
                   kind ? html`<span class="kind-chip">${kind}</span>` : null}${
                   qians.map((w) => html`<span class="qian-chip" key=${'q' + w}>${w}</span>`)}</div>
                 ${summaryLine(pr)}
@@ -90,14 +93,19 @@ export function Sidebar({
   const qianList = qActive
     ? [...prs, ...donePrs].filter((p) => qianOf(p).includes(qian)).filter(match)
     : [];
-  // 弘文馆只从待审里分（已画可栏是归档，本来就没人催，再分一次纯属噪音）。
+  // 第三个 tab 是读毕书架（2026-09-21 由弘文馆改）：架上是已画可的读物（从 donePrs 里挑，
+  // 已画可栏本身照旧全列——书架是它的一个切面，不从归档里抽走）；存量的 open 闲折仍从待审里
+  // 分出来、不进待审计数，但单独成「未画可」一组带角标，排在读毕之前——它才是还没看的。
   // 2026-08-03：从「待审列表底部的折叠区」升为第三个 tab。原先那版功能正确、数也对，
   // 但折叠区在 #pr-list 的最底下——清单一长，展开出来的卡全在可视区外，点了像没反应。
   // 反馈原话：「左下角是有个弘文馆，但点开之后里面都没有」。位置错了，不是逻辑错了。
   const split = splitShelf(prs.filter(match));   // 受搜索词过滤，喂列表
   const counts = splitShelf(prs);                // 不受过滤，喂 tab 上的数字
-  const list = tab === 'done' ? donePrs.filter(match) : tab === 'shelf' ? split.shelf : split.desk;
+  const shelf = shelfOf(prs.filter(match), donePrs.filter(match));
+  const shelfCount = counts.shelf.length + shelfOf(prs, donePrs).done.length;
+  const list = tab === 'done' ? donePrs.filter(match) : tab === 'shelf' ? [...shelf.unread, ...shelf.done] : split.desk;
   const emptyMsg = tab === 'done' ? S.nav.emptyDone : tab === 'shelf' ? S.nav.emptyShelf : S.nav.emptyOpen;
+  const card = (pr, extra = {}) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, ...extra });
   return html`
       <aside>
         <div class="brand-row"><span class="seal">${S.brand.seal}</span><span class="brand">${S.brand.name}</span></div>
@@ -140,14 +148,20 @@ export function Sidebar({
         <div class="list-tabs">
           <button data-tab="open" class=${'list-tab' + (tab === 'open' ? ' active' : '')} onClick=${() => onTab('open')}>${S.nav.tabOpen(counts.desk.length)}</button>
           <button data-tab="done" class=${'list-tab' + (tab === 'done' ? ' active' : '')} onClick=${() => onTab('done')}>${S.nav.tabDone(donePrs.length)}</button>
-          <button data-tab="shelf" class=${'list-tab list-tab-shelf' + (tab === 'shelf' ? ' active' : '')} onClick=${() => onTab('shelf')}>${S.nav.tabShelf(counts.shelf.length)}</button>
+          <button data-tab="shelf" class=${'list-tab list-tab-shelf' + (tab === 'shelf' ? ' active' : '')} onClick=${() => onTab('shelf')}>${S.nav.tabShelf(shelfCount)}</button>
           ${onDash && html`<button class="list-tab dash-btn" title=${S.nav.dashTitle} onClick=${onDash}>${S.nav.dash}</button>`}
         </div>
         <nav id="pr-list" class=${tab === 'shelf' ? 'shelf-list' : ''}>
-          ${tab === 'shelf' && list.length ? html`<p class="shelf-hint">${S.shelf.hint}</p>` : ''}
-          ${list.length
-            ? list.map((pr) => folderCard({ pr, cur, timeAgo, checks, verifyCounts, onOpenPR, shelf: tab === 'shelf' }))
-            : html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : emptyMsg}</p>`}
+          ${!list.length ? html`<p class="state">${q.trim() ? S.search.noTitleMatch(q.trim()) : emptyMsg}</p>`
+            : tab !== 'shelf' ? list.map((pr) => card(pr))
+            : html`
+              ${shelf.unread.length ? html`
+                <p class="shelf-group shelf-group-unread">${S.shelf.unreadGroup(shelf.unread.length)}</p>
+                <p class="shelf-hint">${S.shelf.unreadHint}</p>
+                ${shelf.unread.map((pr) => card(pr, { shelf: true, unread: true }))}` : ''}
+              ${shelf.done.length ? html`
+                <p class="shelf-group">${S.shelf.doneGroup(shelf.done.length)}</p>
+                ${shelf.done.map((pr) => card(pr, { shelf: true }))}` : ''}`}
         </nav>`}
         ${!demo && html`<button class="settings" onClick=${onSettings}>${S.nav.settings}</button>`}
         ${/* 拖宽手柄。**逻辑一点都不在这儿**——本组件是纯展示只吃 props（文件头的约定），

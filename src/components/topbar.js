@@ -12,8 +12,9 @@ export function Topbar({
   nextUp, onNextUp,
 }) {
   const pct = percentOf(readStep);
-  // 面包屑根词跟折的实际归属走：读物折在弘文馆、画可折在已画可。写死「待审」会让人
-  // 去待审清单里找一个根本不在那儿的折（2026-08-18 #88 实测就这么误导了一回）。
+  // 面包屑根词跟折的实际归属走：遗留闲读折在读毕书架（未画可组）、画可折在已画可。写死「待审」
+  // 会让人去待审清单里找一个根本不在那儿的折（2026-08-18 #88 实测就这么误导了一回）。
+  // 已画可的读物两栏都在（已画可是全量归档，书架是切面），面包屑沿用「已画可」。
   const crumbRoot = !cur ? S.topbar.crumbRoot
     : archived ? S.topbar.crumbDone
     : isShelved(cur.pr) ? S.topbar.crumbShelf
