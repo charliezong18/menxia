@@ -18,5 +18,5 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "browser" ]; then
   ./test/run-browser.sh || STATUS=1
 fi
 
-[ $STATUS -eq 0 ] && echo "全部通过。" || echo "有测试失败（退出码 $STATUS）。"
+[ $STATUS -eq 0 ] && echo "全部通过。" || echo "有测试失败（退出码 ${STATUS}）。"
 exit $STATUS

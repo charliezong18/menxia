@@ -70,7 +70,7 @@ while :; do
   st="$(printf '%s' "$json" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("status") or "?")' 2>/dev/null)"
   if [ "$cur" = "$SHA" ] && [ "$st" != "building" ]; then break; fi
   if [ "$(date +%s)" -ge "$deadline" ]; then
-    echo "✖ 等超时（${TIMEOUT}s）：latest build 仍是 ${cur:0:7}/$st，不是 $SHORT"
+    echo "✖ 等超时（${TIMEOUT}s）：latest build 仍是 ${cur:0:7}/${st}，不是 $SHORT"
     echo "  Actions 拿不到 runner 时就长这样（job 零步骤被取消、runner_id=0）。"
     github_incidents
     echo "  构建队列：https://github.com/$REPO/actions"
@@ -95,7 +95,7 @@ if [ "$st" != "built" ]; then
   echo "  想踢一脚重建：gh api -X POST repos/$REPO/pages/builds"
   exit 1
 fi
-echo "✔ 构建 built（$SHORT）"
+echo "✔ 构建 built（${SHORT}）"
 
 # ② 光看 built 不够：真去站点抓字节，跟本地这个 sha 的同名文件逐一比。
 #    只比这次**真改过**的文件——拿没变的文件比 md5 相同，证明不了部署过。
@@ -132,4 +132,4 @@ if [ "$bad" -gt 0 ]; then
   echo "  先排 CDN 缓存（Pages 发 max-age=600），过 10 分钟再跑一次；仍不对就踢重建。"
   exit 2
 fi
-echo "✔ 线上字节 = $SHORT，真上线了"
+echo "✔ 线上字节 = ${SHORT}，真上线了"
