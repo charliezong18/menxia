@@ -397,6 +397,15 @@ test('F1 摘要：gist 抽成纯文本——去 markdown 记号、压多行为�
   assert.match(s.tldr, /要点.*把.*链接.*里的 code.*换行接着写/);
 });
 
+test('P0 摘要：TLDR 里的表格 / 分隔线 / 围栏不漏进 gist（清单与折首常显行无 | # 原文）', () => {
+  const md = '## TLDR\n\n先说结论。\n\n| 段 | 之前 | 之后 |\n|---|---|---|\n| 待你拍板 | 看不见 | 折首默认展开 |\n\n---\n\n```js\nconst a = 1;\n```\n\n### 小标题 尾句。';
+  const s = folderSummary(md);
+  assert.ok(!/[|#`]|---/.test(s.tldr), `gist 不该带表格/标题/围栏原文：${s.tldr}`);
+  assert.match(s.tldr, /先说结论。.*小标题 尾句。/);
+  const tldrLine = find(FolderBody({ body: md, open: false, onToggle: () => {} }), byClass('folder-body-tldr'));
+  assert.ok(!/[|#`]/.test(tldrLine.props.children), `折首常显行同样要干净：${tldrLine.props.children}`);
+});
+
 test('F1 摘要：折首块把 TLDR 那句常显（收起态也在），不必展开就看得见', () => {
   const collapsed = FolderBody({ body: FIVE_SECTION_BODY, open: false, onToggle: () => {} });
   const tldrLine = find(collapsed, byClass('folder-body-tldr'));
