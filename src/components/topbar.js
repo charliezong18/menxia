@@ -7,7 +7,7 @@ import { READ_STEPS, percentOf } from '../readsize.js';
 
 export function Topbar({
   cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice, carrying,
-  readStep = 1, onReadStep, moreOpen = false, onMore,
+  readStep = 1, onReadStep, moreOpen = false, onMore, onUpdate, updating = false,
   onRefresh, onCopyRef, onCarry, onZongpi, onSubmit, onQinci,
   nextUp, onNextUp,
 }) {
@@ -49,12 +49,15 @@ export function Topbar({
             ${/* P0：手机档把桌面/agent 向的动作收进「⋯」；桌面 .more-btn 不显示、.more-item 照常排在原位。 */ ''}
             ${cur && onMore && html`<button class="btn-ghost more-btn" aria-expanded=${moreOpen}
               title=${S.action.moreTitle} onClick=${onMore}>${S.action.more}</button>`}
+            ${/* 「更新到最新版」只住在手机「⋯」里：.more-only 让桌面不显示（桌面布局不变）。 */ ''}
+            ${cur && onMore && onUpdate && html`<button class="btn-ghost more-item more-only update-app"
+              title=${S.stale.updateTitle} disabled=${updating} onClick=${onUpdate}>${updating ? S.stale.updating : S.stale.update}</button>`}
           </span>
         </div>
         ${stale && html`
           <p class="notice stale-banner">
             ${S.stale.banner}
-            <button class="btn-ghost stale-reload" onClick=${() => location.reload()}>${S.stale.reload}</button>
+            <button class="btn-ghost stale-reload" onClick=${() => (onUpdate ? onUpdate() : location.reload())}>${S.stale.reload}</button>
           </p>`}
         ${notice && html`<p class="notice">${notice}${nextUp && html`
           <button class="btn-ghost notice-next" title=${S.merge.nextUpTitle}

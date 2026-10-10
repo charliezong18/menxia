@@ -373,9 +373,16 @@ if (MOBILE === '1') {
     const moreBtn = document.querySelector('.more-btn');
     const moreShown = () => [...document.querySelectorAll('.more-item')].filter(shown).length;
     const hiddenBefore = moreShown() === 0;
+    const updBefore = shown(document.querySelector('.update-app'));
     moreBtn?.click();
     await sleep(200);
     const shownAfter = moreShown();
+    // 「更新到最新版」住在「⋯」里：默认藏、点开露、触控 ≥44×44（真点它会拆 SW 重载，冒烟不点）
+    const upd = document.querySelector('.update-app');
+    const updR = upd?.getBoundingClientRect();
+    chk('update-button-in-more-menu',
+      !updBefore && shown(upd) && upd.textContent.includes('更新到最新版') && updR.width >= 44 && updR.height >= 44,
+      `before=${updBefore} shown=${shown(upd)} text=${upd?.textContent.trim()} size=${updR ? `${Math.round(updR.width)}x${Math.round(updR.height)}` : 'NO-EL'}`);
     moreBtn?.click();
     await sleep(200);
     chk('p0-more-menu-folds-desktop-actions', shown(moreBtn) && hiddenBefore && shownAfter >= 3 && moreShown() === 0,
@@ -783,6 +790,10 @@ async function runSmoke(docEl) {
     `text=${vMark?.textContent}`);
   chk('verify-count-in-topbar', (document.querySelector('.verify-count')?.textContent || '').includes('需核实'),
     `count=${document.querySelector('.verify-count')?.textContent}`);
+  // 「更新到最新版」只在手机「⋯」里：桌面顶栏不摆它（桌面布局不变）
+  const updDesk = document.querySelector('.update-app');
+  chk('update-button-hidden-on-desktop', Boolean(updDesk) && getComputedStyle(updDesk).display === 'none',
+    `display=${updDesk ? getComputedStyle(updDesk).display : 'NO-EL'}`);
   // 封顶必须真的生效：展开态的说明块正文不许超过 42vh（+2px 取整余量）。没有这条，
   // 上面那条累计预算能被一个「刚好这次 fixture 不长」蒙混过去，长 body 上线才炸。
   const fbText = document.querySelector('.folder-body .folder-body-text');

@@ -114,6 +114,7 @@ thread-view-opens-on-expand
 thread-view-wider-than-margin-card
 touch-probe-range-built
 touch-selection-shows-float
+update-button-hidden-on-desktop
 verify-count-in-topbar
 verify-marker-rendered
 zongpi-auto-opens-after-send

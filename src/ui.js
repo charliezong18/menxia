@@ -36,7 +36,7 @@ import {
 } from './cols.js';
 import { matchAnchor } from './slug.js';
 import { S } from './strings.js';
-import { registerServiceWorker } from './sw-register.js';
+import { registerServiceWorker, hardUpdate } from './sw-register.js';
 import {
   isReadStateComment, parseReadState, shouldPromptJump,
   makeOutboxItem, enqueue, listOutbox, flushOutbox, putMeta, getMeta,
@@ -79,6 +79,8 @@ const BUILD_FILES = ['index.html', 'src/style.css', 'src/ui.js', 'src/github.js'
   // M2 离线包新增源文件（sw.js 在仓根、不在 src/ 下，故不进这张只管 src/ 的清单；
   // 它自身带 SW_VERSION 版本号 + activate 清旧 cache，失效链路独立于 detectNewBuild）
   'src/offline.js', 'src/sw-register.js', 'src/sw-register-const.js'];
+// 「更新到最新版」顺带回源的第三方依赖（不进指纹：它们几乎不变，算进去只会拖慢每次开机检测）
+const VENDOR_FILES = ['vendor/preact-standalone.mjs', 'vendor/markdown-it.min.js'];
 async function detectNewBuild() {
   try {
     const texts = await Promise.all(BUILD_FILES.map((f) => fetch(`./${f}`, { cache: 'reload' }).then((r) => r.text())));
@@ -182,6 +184,7 @@ function App() {
   // 万一从窄屏拉宽（iPad 转屏），正文照常回来，不会卡在一个桌面上没入口的页面里。
   const [navOpen, setNavOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);       // P0：手机顶栏「⋯」展开态（桌面无此钮，恒 false）
+  const [updating, setUpdating] = useState(false);       // 「更新到最新版」进行中（页面随即重载）
   const [pendingJump, setPendingJump] = useState(null);   // 目录页点的那一节，等正文回来再跳
   const [donePrs, setDonePrs] = useState([]);
   const [nextUp, setNextUp] = useState(null);    // 画可后的落地条：下一折是谁——只提示，不自动跳，等他自己踩
@@ -1615,6 +1618,8 @@ function App() {
           carrying=${carrying}
           nextUp=${nextUp} onNextUp=${() => { setTab('open'); openPR(nextUp); }}
           readStep=${readStep} moreOpen=${moreOpen} onMore=${() => setMoreOpen((o) => !o)}
+          updating=${updating}
+          onUpdate=${() => { setUpdating(true); say(S.stale.updating); hardUpdate([...BUILD_FILES, ...VENDOR_FILES]); }}
           onReadStep=${(i) => { const c = clampStep(i); setReadStepState(c); setReadStep(c); }}
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
           onCopyRef=${copyRef} onCarry=${carryOut} onZongpi=${() => setZongpi((z) => !z)}

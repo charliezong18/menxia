@@ -81,8 +81,8 @@ check_names() { # $1=tag(dom|smoke)  $2=logfile  $3=golden
 
 # 期望断言条数：钉死总数，断言被删/被跳过也要红
 DOM_EXPECT=35
-SMOKE_EXPECT=134
-MOBILE_EXPECT=27
+SMOKE_EXPECT=135
+MOBILE_EXPECT=28
 RAIL_EXPECT=8
 
 WHAT="${1:-all}"
@@ -99,7 +99,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "dom" ]; then
   elif [ "$RESULT" = "[dom] RESULT pass=$DOM_EXPECT fail=0" ]; then
     echo "  ✔ $RESULT"
   else
-    echo "  ✖ $RESULT（期望 pass=$DOM_EXPECT fail=0——条数对不上也算红，防断言被悄悄删掉）"
+    echo "  ✖ ${RESULT}（期望 pass=$DOM_EXPECT fail=0——条数对不上也算红，防断言被悄悄删掉）"
     STATUS=1
   fi
   check_names dom "$LOGDIR/dom.log" test/dom-assertions.golden || STATUS=1
@@ -116,7 +116,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   elif [ "$RESULT" = "[smoke] RESULT pass=$SMOKE_EXPECT fail=0" ]; then
     echo "  ✔ $RESULT"
   else
-    echo "  ✖ $RESULT（期望 pass=$SMOKE_EXPECT fail=0）"
+    echo "  ✖ ${RESULT}（期望 pass=$SMOKE_EXPECT fail=0）"
     STATUS=1
   fi
   check_names smoke "$LOGDIR/smoke.log" test/smoke-assertions.golden || STATUS=1
@@ -125,13 +125,13 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=1&pr=998" "$LOGDIR/deep.log" 5000
   grep -o '\[smoke\] [^"]*' "$LOGDIR/deep.log" | sed 's/^/  /' || true
   RD=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/deep.log" | tail -1)
-  if [ "$RD" = "[smoke] RESULT pass=3 fail=0" ]; then echo "  ✔ deep $RD"; else echo "  ✖ deep $RD（期望 pass=3 fail=0）"; STATUS=1; fi
+  if [ "$RD" = "[smoke] RESULT pass=3 fail=0" ]; then echo "  ✔ deep $RD"; else echo "  ✖ deep ${RD}（期望 pass=3 fail=0）"; STATUS=1; fi
 
   # 直达链接指向不存在的折：必须出提示，不许静默（pendingNotice 曾经只写不读）
   run_page "http://127.0.0.1:$PORT/index.html?demo=1&deep=miss&pr=9999" "$LOGDIR/deepmiss.log" 5000
   grep -o '\[smoke\] [^"]*' "$LOGDIR/deepmiss.log" | sed 's/^/  /' || true
   RM=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/deepmiss.log" | tail -1)
-  if [ "$RM" = "[smoke] RESULT pass=1 fail=0" ]; then echo "  ✔ deep-miss $RM"; else echo "  ✖ deep-miss $RM（期望 pass=1 fail=0）"; STATUS=1; fi
+  if [ "$RM" = "[smoke] RESULT pass=1 fail=0" ]; then echo "  ✔ deep-miss $RM"; else echo "  ✖ deep-miss ${RM}（期望 pass=1 fail=0）"; STATUS=1; fi
 
   # 故障注入两场：403 限流不得清 token（历史上误删过），401 才回设置页
   for mode in 403 401; do
@@ -139,7 +139,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
     grep -o "\[smoke\] [^\"]*" "$LOGDIR/fail$mode.log" | sed 's/^/  /' || true
     R=$(grep -o '\[smoke\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/fail$mode.log" | tail -1)
     EXP=$([ "$mode" = "403" ] && echo 3 || echo 2)
-    if [ "$R" = "[smoke] RESULT pass=$EXP fail=0" ]; then echo "  ✔ fail=$mode $R"; else echo "  ✖ fail=$mode $R（期望 pass=$EXP fail=0）"; STATUS=1; fi
+    if [ "$R" = "[smoke] RESULT pass=$EXP fail=0" ]; then echo "  ✔ fail=$mode $R"; else echo "  ✖ fail=$mode ${R}（期望 pass=$EXP fail=0）"; STATUS=1; fi
   done
 
   # 手机窄口（M0 · review #121 §5）：390px 窗宽真进 ≤900 分支。走完整条三层动线——
@@ -149,7 +149,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   run_page "http://127.0.0.1:$PORT/index.html?demo=1&mobile=1" "$LOGDIR/mobile.log" 30000 "390,780"
   grep -o '\[mobile\] [^"]*' "$LOGDIR/mobile.log" | sed 's/^/  /' || true
   RMOB=$(grep -o '\[mobile\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/mobile.log" | tail -1)
-  if [ "$RMOB" = "[mobile] RESULT pass=$MOBILE_EXPECT fail=0" ]; then echo "  ✔ $RMOB"; else echo "  ✖ $RMOB（期望 pass=$MOBILE_EXPECT fail=0）"; STATUS=1; fi
+  if [ "$RMOB" = "[mobile] RESULT pass=$MOBILE_EXPECT fail=0" ]; then echo "  ✔ $RMOB"; else echo "  ✖ ${RMOB}（期望 pass=$MOBILE_EXPECT fail=0）"; STATUS=1; fi
 
   # 左栏拖宽（2026-08-26）：1920px 才有富余可拖——1440 的桌面口在这一档几何下上限离默认
   # 太近，量不出「拖到极限停住」。夹逼的上限来自 CSS 的 calc()，只有真浏览器解析得了，
@@ -158,7 +158,7 @@ if [ "$WHAT" = "all" ] || [ "$WHAT" = "smoke" ]; then
   run_page "http://127.0.0.1:$PORT/index.html?demo=1&rail=1" "$LOGDIR/rail.log" 8000 "1920,1000"
   grep -o '\[rail\] [^"]*' "$LOGDIR/rail.log" | sed 's/^/  /' || true
   RRAIL=$(grep -o '\[rail\] RESULT pass=[0-9]* fail=[0-9]*' "$LOGDIR/rail.log" | tail -1)
-  if [ "$RRAIL" = "[rail] RESULT pass=$RAIL_EXPECT fail=0" ]; then echo "  ✔ $RRAIL"; else echo "  ✖ $RRAIL（期望 pass=$RAIL_EXPECT fail=0）"; STATUS=1; fi
+  if [ "$RRAIL" = "[rail] RESULT pass=$RAIL_EXPECT fail=0" ]; then echo "  ✔ $RRAIL"; else echo "  ✖ ${RRAIL}（期望 pass=$RAIL_EXPECT fail=0）"; STATUS=1; fi
 fi
 
 exit $STATUS

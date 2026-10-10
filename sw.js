@@ -21,7 +21,7 @@
 // 版本号：**改任何应用壳文件后，把这里 +1**。它决定 cache 名，换名即让旧缓存在 activate 被清。
 // 与 ui.js 的 detectNewBuild 是两套独立机制（那个提示「有新版，点刷新」；这个管离线壳的失效），
 // 故意不耦合：detectNewBuild 依赖网络回源，SW 版本管的恰恰是没网时给谁。
-export const SW_VERSION = 'v4';
+export const SW_VERSION = 'v5';
 
 // cache 名带版本。同源多部署（GitHub Pages 只有一个源）下够用；换名 = 旧缓存 activate 即弃。
 export const cacheName = (version = SW_VERSION) => `menxia-shell-${version}`;
@@ -55,6 +55,11 @@ export function isAppShell(request) {
   const path = (() => { try { return new URL(request.url).pathname; } catch { return ''; } })();
   return /\.(html?|m?js|css)$/i.test(path) || path.endsWith('/') || path === '';
 }
+
+// network-first 的「network」必须真回源：裸 fetch(request) 走默认缓存模式，Pages 发 max-age=600、
+// 模块 URL 又无版本号 → 部署后 10 分钟内 SW 拿到的「网络」其实是 HTTP 缓存里的旧壳（2026-10-09 真机
+// 「没啥变化」）。一律 no-cache：带 ETag 回源校验，没变只回 304，不多花流量。页面自己要 reload 的照旧。
+export const networkCacheMode = (request) => (request.cache === 'reload' ? 'reload' : 'no-cache');
 
 // —— 以下是事件装配。只在真正的 SW 全局（有 self.addEventListener）里运行；
 //    node 测试 import 本文件时，typeof self 为 'undefined'，整段跳过。——
@@ -92,7 +97,7 @@ if (typeof self !== 'undefined' && typeof self.addEventListener === 'function' &
   async function networkFirst(request) {
     const cache = await caches.open(cacheName());
     try {
-      const fresh = await fetch(request);
+      const fresh = await fetch(request, { cache: networkCacheMode(request) });
       // 只缓存成功的完整响应（opaque/206 不缓存，避免存半截或存不了的）。
       if (fresh && fresh.ok && fresh.type === 'basic') cache.put(request, fresh.clone());
       return fresh;

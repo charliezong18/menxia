@@ -31,6 +31,25 @@ export async function unregisterAll() {
   } catch { /* 拆不动就算了，下次再来 */ }
 }
 
+/** 「更新到最新版」重载用的地址：原地址（折号/篇/锚都在里面）只加一个时间戳参数，让入口 HTML 绕过缓存。 */
+export function updateUrl(href, now = Date.now()) {
+  const u = new URL(href);
+  u.searchParams.set('_v', String(now));
+  return u.href;
+}
+
+/**
+ * 手动「更新到最新版」：拆 SW + 清 menxia-shell-* → 把应用壳源文件逐个 cache:'reload' 回源一遍
+ * （模块 URL 无版本号，只换入口 HTML 的地址不够：子模块仍会从 HTTP 缓存里拿旧的）→ 带时间戳重载。
+ * 只动 SW 与 Cache Storage + HTTP 缓存；IndexedDB 离线正文库、localStorage 凭据/设置一概不碰。
+ * 重载后（非 demo）registerServiceWorker 照常装回新 SW。
+ */
+export async function hardUpdate(files = []) {
+  await unregisterAll();
+  await Promise.all(files.map((f) => fetch(`./${f}`, { cache: 'reload' }).catch(() => null)));
+  location.replace(updateUrl(location.href));
+}
+
 /**
  * 注册入口。返回 registration 或 null。
  * 步骤：① 不支持 SW（老浏览器/非安全上下文）→ 直接返回，一切照旧网络请求；

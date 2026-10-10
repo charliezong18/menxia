@@ -692,6 +692,8 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
 .mobile-bar { display: none; }
 /* P0 顶栏「⋯」：只在手机档出（见下方 ≤900 块），桌面永不显示；同上，裸规则须写在 @media 之前。 */
 .more-btn { display: none; }
+/* 只住在「⋯」里的项（「更新到最新版」）：桌面不摆，手机档由 .mainbar.more-open .more-item 摊开 */
+.more-only { display: none; }
 
 /* ── 目录页（手机三层导航的第二层：折清单 → 这里 → 正文）──────────────
    与 .mobile-bar 同一套开关写法：**裸 display:none 必须写在下面 @media 的 display:block
