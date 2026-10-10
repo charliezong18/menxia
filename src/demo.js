@@ -346,6 +346,45 @@ if (MOBILE === '1') {
     chk('reader-hides-list', Boolean(asideRead) && !shown(asideRead),
       `display=${asideRead ? getComputedStyle(asideRead).display : 'NO-EL'}`);
 
+    // ── P0 手机档修（门下 iOS 重设计 #180 第一期）──────────────
+    // 可见的可点控件里不足 44×44 的。正文里的行内链接不算（行内例外），aria-hidden 的拖宽手柄不算。
+    const smallTargets = () => [...document.querySelectorAll('button, a[href], [role=button]')]
+      .filter((e) => {
+        const r = e.getBoundingClientRect();
+        return r.width > 0 && r.height > 0 && !e.closest('[aria-hidden="true"], article')
+          && (r.width < 44 || r.height < 44);
+      })
+      .map((e) => `${e.className || e.tagName}:${e.textContent.trim().slice(0, 6)}:${Math.round(e.getBoundingClientRect().width)}x${Math.round(e.getBoundingClientRect().height)}`);
+    // 首屏见正文：走查原病是 h1 在 844px、首屏零正文。标题与首段都得在视口内（底栏之上）。
+    const h1 = document.querySelector('article h1');
+    const p1 = document.querySelector('article p');
+    const barTop = document.querySelector('.mobile-bar')?.getBoundingClientRect().top ?? window.innerHeight;
+    chk('p0-first-screen-shows-body',
+      Boolean(h1 && p1) && h1.getBoundingClientRect().top < barTop && p1.getBoundingClientRect().bottom < barTop,
+      `h1Top=${h1 ? Math.round(h1.getBoundingClientRect().top) : 'NO-EL'} p1Bottom=${p1 ? Math.round(p1.getBoundingClientRect().bottom) : 'NO-EL'} barTop=${Math.round(barTop)}`);
+    // 折子说明默认收成一行药丸，拍板条数在标题上常显
+    const fb = document.querySelector('.folder-body');
+    const fbToggle = fb?.querySelector('.folder-body-toggle');
+    chk('p0-folder-body-pill-collapsed',
+      Boolean(fb) && !fb.classList.contains('open') && !shown(fb.querySelector('.folder-body-tldr'))
+      && /\d+\s*条/.test(fbToggle?.textContent || ''),
+      `open=${fb?.classList.contains('open')} toggle=${fbToggle?.textContent.trim()}`);
+    // 引用此处 / 携卷 / 回奏 / A± 收进「⋯」：默认藏，点开才露
+    const moreBtn = document.querySelector('.more-btn');
+    const moreShown = () => [...document.querySelectorAll('.more-item')].filter(shown).length;
+    const hiddenBefore = moreShown() === 0;
+    moreBtn?.click();
+    await sleep(200);
+    const shownAfter = moreShown();
+    moreBtn?.click();
+    await sleep(200);
+    chk('p0-more-menu-folds-desktop-actions', shown(moreBtn) && hiddenBefore && shownAfter >= 3 && moreShown() === 0,
+      `moreBtn=${shown(moreBtn)} hiddenBefore=${hiddenBefore} shownAfter=${shownAfter}`);
+    chk('p0-touch-targets-44-reader', smallTargets().length === 0, smallTargets().join(' | ') || 'none');
+    chk('p0-scroll-ends-hidden-on-phone', !shown(document.querySelector('.scroll-ends')),
+      `display=${document.querySelector('.scroll-ends') ? getComputedStyle(document.querySelector('.scroll-ends')).display : 'NO-EL'}`);
+    chk('p0-open-folder-pushed-history', history.state?.menxia === 'folder', `state=${JSON.stringify(history.state)}`);
+
     const bar = document.querySelector('.mobile-bar');
     chk('mobile-bar-visible-on-phone', shown(bar),
       `display=${bar ? getComputedStyle(bar).display : 'NO-EL'}`);
@@ -461,13 +500,33 @@ if (MOBILE === '1') {
       + ` cards=${cards.length} lastCardBottom=${lastCard ? Math.round(lastCard.bottom) : 'NO-EL'}`
       + ` asideBottom=${asideBox ? Math.round(asideBox.bottom) : 'NO-EL'}`);
 
+    // P0：「‹ 全部折子」走的是 history.back()——落到清单那一格，栈不漂
+    chk('p0-back-lands-on-list-entry', history.state?.menxia === 'list', `state=${JSON.stringify(history.state)}`);
+    chk('p0-touch-targets-44-list', smallTargets().length === 0, smallTargets().join(' | ') || 'none');
+    const gistDirty = [...document.querySelectorAll('.pr-summary')].map((e) => e.textContent).filter((t) => /[|`]|(^|\s)#{1,6}\s|---/.test(t));
+    chk('p0-list-summary-no-markdown', gistDirty.length === 0, gistDirty.map((t) => t.slice(0, 30)).join(' | ') || 'clean');
+
     // ── 再进阅读页 ──────────────────────────────────────────
     // ⑤ 前进那一边：从清单点一张卡要真能进阅读页（他要的「一级菜单选折 → 点进去阅读」）
+    // 先把清单滚下去一段，留给后面「返回后回到原位」那条断言量
+    window.scrollTo(0, 120);
+    await sleep(100);
+    const listY = Math.round(window.scrollY);
     cards[0]?.click();
     await sleep(700);
     chk('card-opens-reader',
       !shown(document.querySelector('aside')) && shown(document.querySelector('.mobile-bar')),
       `asideShown=${shown(document.querySelector('aside'))} barShown=${shown(document.querySelector('.mobile-bar'))}`);
+
+    // P0：系统返回（Safari 返回键 / WKWebView 侧滑）＝ history.back()：回清单，且停在进折前的位置
+    window.scrollTo(0, 600);
+    await sleep(100);
+    history.back();
+    await sleep(600);
+    chk('p0-history-back-restores-list',
+      shown(document.querySelector('aside')) && !document.querySelector('.mobile-bar') && listY > 0
+      && Math.abs(Math.round(window.scrollY) - listY) <= 2,
+      `asideShown=${shown(document.querySelector('aside'))} listY=${listY} scrollY=${Math.round(window.scrollY)}`);
 
     console.log(`[mobile] RESULT pass=${pass} fail=${fail}`);
   }, 1500);
