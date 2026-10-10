@@ -690,6 +690,8 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
    **裸规则 display:none 必须写在下面 @media 的 display:flex 之前**（层叠守卫 css-cascade.test.js：
    媒体查询不加特异度，裸规则写后面会把它压死）。桌面(2005px)与测试闸门(1440px)都不进 ≤900 分支。 */
 .mobile-bar { display: none; }
+/* P0 顶栏「⋯」：只在手机档出（见下方 ≤900 块），桌面永不显示；同上，裸规则须写在 @media 之前。 */
+.more-btn { display: none; }
 
 /* ── 目录页（手机三层导航的第二层：折清单 → 这里 → 正文）──────────────
    与 .mobile-bar 同一套开关写法：**裸 display:none 必须写在下面 @media 的 display:block
@@ -901,6 +903,41 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
   /* 提交＝朱砂（批注动作那一族），画可＝墨底（全站唯一定稿动作），与桌面同色语义。 */
   .mobile-bar-submit { border-color: var(--cinnabar); color: var(--cinnabar); }
   .mobile-bar-qinci { background: var(--ink); border-color: var(--ink); color: var(--paper-raised); font-weight: 700; }
+
+  /* ── P0 手机档修（2026-10-09，门下 iOS 重设计 #180 第一期）─────────────────────
+     走查实测：打开一折首屏零正文（h1 在 844px）、顶栏 8 钮两行、触控目标 26–36px、
+     到顶/到底浮钮压字。以下五条只在本档生效，桌面一条不碰。 */
+
+  /* ① 顶栏：引用此处 / 回奏 / 携卷 / A± 是桌面或 agent 向的动作，收进「⋯」，点开才在同一行后面摊出。
+     顶栏于是只剩 面包屑一行 + 刷新/判/画可/⋯ 一行。 */
+  .more-item { display: none; }
+  .mainbar.more-open .more-item { display: inline-flex; align-items: center; justify-content: center; }
+  .more-btn { display: inline-flex; align-items: center; justify-content: center; font-size: 18px; letter-spacing: 0; }
+
+  /* ② 触控目标 ≥44×44（Apple HIG 下限）。一条兜底压过各处 26–36px 的桌面尺寸：
+     特异度 (1,0,1) 高于后文所有按钮类规则，不依赖书写顺序。拖宽手柄是 aria-hidden 的装饰件，排除。
+     正文里的行内链接不在此列（行内文字链接按行高排版，WCAG 2.5.8 的行内例外）。 */
+  #app button:not([aria-hidden="true"]), #app [role="button"] { min-height: 44px; min-width: 44px; }
+  .read-size-btn { display: inline-flex; align-items: center; justify-content: center; }
+
+  /* ③ 折子说明收成一行药丸：默认收起（ui.js 开折时手机档不摊开），拍板条数在药丸标题上常显。
+     收起时连 TLDR 常显行也收——首屏让给正文；点开照旧全文。 */
+  /* 折首块的基础规则写在本档之后，同特异度会被它压回去——一律挂 #app 抬高特异度。 */
+  #app .folder-body { padding: 0 14px; border-radius: 999px; }
+  #app .folder-body.open { border-radius: 9px; padding-bottom: 10px; }
+  #app .folder-body:not(.open) .folder-body-tldr { display: none; }
+  #app .folder-body-toggle {
+    display: flex; align-items: center; gap: 6px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13.5px;
+  }
+  /* 已呈判同理：它本来就默认收起，只把标题行垫到 44 高、并成同款药丸 */
+  #app .zongpi-shown { padding: 0 14px; border-radius: 999px; }
+  #app .zongpi-shown:has(.zongpi-shown-list) { border-radius: 9px; padding-bottom: 10px; }
+  #app .zongpi-shown-toggle { display: flex; align-items: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13.5px; }
+
+  /* ④ 到顶/到底浮钮在手机上撤掉：left 4px 压在正文（left 16px）上盖字；
+     手机有系统级的点状态栏回顶，底栏也常驻，用不着这对钮。 */
+  .scroll-ends { display: none; }
 }
 
 /* 已呈判：整折级，落在折首（不锚任何行）。墨色安静系，朱砂仍只属于批注动作。

@@ -145,7 +145,7 @@ export function FolderBody({ body, open, onToggle, hydrate }) {
   // F1：TLDR 那句常显（收起态也在），别把「这折说了什么」埋进要点一下才展开的正文里。
   const tldr = gistText(parsed.tldr);
   return html`
-            <div class=${'folder-body' + (parsed.decisions ? ' has-decisions' : '')}>
+            <div class=${'folder-body' + (parsed.decisions ? ' has-decisions' : '') + (open ? ' open' : '')}>
               <button class=${'folder-body-toggle' + (parsed.decisions ? ' has-decisions' : '')}
                 aria-expanded=${open} onClick=${() => onToggle()}>
                 ${open ? '▾' : '▸'} ${S.folderBody.toggle(badge)}

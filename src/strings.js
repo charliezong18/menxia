@@ -45,6 +45,8 @@ export const S = deepFreeze({
   // 动作（按钮 / 按钮 title / 进行态）
   action: {
     refresh: '刷新',
+    more: '⋯',
+    moreTitle: '更多：引用此处 / 回奏 / 携卷 / 字号',
     copyRef: '引用此处',
     copyRefTitle: '拷涂归直达链（按住 Alt 拷 GitHub 链接）',
     happy: '回奏',

@@ -7,7 +7,7 @@ import { READ_STEPS, percentOf } from '../readsize.js';
 
 export function Topbar({
   cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice, carrying,
-  readStep = 1, onReadStep,
+  readStep = 1, onReadStep, moreOpen = false, onMore,
   onRefresh, onCopyRef, onCarry, onZongpi, onSubmit, onQinci,
   nextUp, onNextUp,
 }) {
@@ -21,19 +21,19 @@ export function Topbar({
     : S.topbar.crumbRoot;
   // 多个顶层节点：htm 会返回数组，Preact 直接当 Fragment 渲染（这个 standalone 包没导出 Fragment）
   return html`
-        <div class="mainbar">
+        <div class=${'mainbar' + (moreOpen ? ' more-open' : '')}>
           <span class="crumb">${crumbRoot} ${cur ? html`/ <span class="crumb-no">#${cur.pr.number}</span> <b>${cur.pr.title}</b>` : ''}${
             cur && verifyN > 0 ? html`<span class="verify-count" title=${S.verify.countTitle}>${S.verify.count(verifyN)}</span>` : ''}</span>
           <span class="actions">
             <button class="btn-ghost" onClick=${() => { onRefresh(); }}>${S.action.refresh}</button>
-            ${cur && html`<button class="btn-ghost" title=${S.action.copyRefTitle} onClick=${onCopyRef}>${S.action.copyRef}</button>`}
-            ${happyUrl && html`<button class="btn-ghost" title=${S.action.happyTitle}
+            ${cur && html`<button class="btn-ghost more-item" title=${S.action.copyRefTitle} onClick=${onCopyRef}>${S.action.copyRef}</button>`}
+            ${happyUrl && html`<button class="btn-ghost more-item" title=${S.action.happyTitle}
               onClick=${() => { const w = window.open(happyUrl, '_blank'); if (w) w.opener = null; }}>${S.action.happy}</button>`}
-            ${cur && html`<button class="btn-ghost" title=${S.action.carryTitle} disabled=${carrying}
+            ${cur && html`<button class="btn-ghost more-item" title=${S.action.carryTitle} disabled=${carrying}
               onClick=${onCarry}>${carrying ? S.action.carrying : S.action.carry}</button>`}
             ${cur && html`<button class="btn-ghost" title=${archived ? S.action.zongpiArchivedTitle : ''} onClick=${onZongpi}>${S.action.zongpi}</button>`}
             ${cur && onReadStep && html`
-              <span class="read-size">
+              <span class="read-size more-item">
                 <button class="read-size-btn" disabled=${readStep <= 0}
                   title=${S.readSize.smallerTitle(pct)} onClick=${() => onReadStep(readStep - 1)}>${S.readSize.smaller}</button>
                 <button class="read-size-btn" disabled=${readStep >= READ_STEPS.length - 1}
@@ -46,6 +46,9 @@ export function Topbar({
               </button>`}
             ${cur && !archived && html`<button class="btn-qinci" disabled=${busy || !onHead}
               title=${onHead ? '' : S.action.mergeOldRevTitle} onClick=${onQinci}>${S.action.merge}</button>`}
+            ${/* P0：手机档把桌面/agent 向的动作收进「⋯」；桌面 .more-btn 不显示、.more-item 照常排在原位。 */ ''}
+            ${cur && onMore && html`<button class="btn-ghost more-btn" aria-expanded=${moreOpen}
+              title=${S.action.moreTitle} onClick=${onMore}>${S.action.more}</button>`}
           </span>
         </div>
         ${stale && html`

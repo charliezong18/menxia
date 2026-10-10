@@ -46,6 +46,8 @@ import {
 const params = new URLSearchParams(location.search);
 const DEMO = params.get('demo') === '1';
 const AUTO = params.get('auto') === '1';
+// 手机档判定，与 style.css 的 `@media (max-width: 900px)` 同一条线（JS 只在少数行为分叉处读它）
+const isPhone = () => typeof matchMedia === 'function' && matchMedia('(max-width: 900px)').matches;
 const api = DEMO ? demoApi : gh;
 
 // 本设备名：用于续读标记里区分「上次在哪台读的」。记在 localStorage，缺省给个短随机名。
@@ -179,6 +181,7 @@ function App() {
   // 桌面读不到那颗钮，所以这个 state 在宽屏上恒 false；显隐规则也整套关在 ≤900 里，
   // 万一从窄屏拉宽（iPad 转屏），正文照常回来，不会卡在一个桌面上没入口的页面里。
   const [navOpen, setNavOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);       // P0：手机顶栏「⋯」展开态（桌面无此钮，恒 false）
   const [pendingJump, setPendingJump] = useState(null);   // 目录页点的那一节，等正文回来再跳
   const [donePrs, setDonePrs] = useState([]);
   const [nextUp, setNextUp] = useState(null);    // 画可后的落地条：下一折是谁——只提示，不自动跳，等他自己踩
@@ -206,7 +209,11 @@ function App() {
   const archived = Boolean(cur?.pr?.merged_at);
   const canAnnotate = onHead && !archived && !readThrough; // 旧版 / 归档 / 通读一律只读（通读拼全书，行号跨章会撞）
   const happyUrl = parseHappySession(cur?.pr?.body);   // 呈折的那次奏对（agent 埋在 PR body 里）
-  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate, viewThread, zoomImg };
+  R.current = { cur, drafts, editing, busy, float, docPath, viewed, headSha, onHead, archived, canAnnotate, viewThread, zoomImg, prs, donePrs, dash };
+  // P0 导航栈：清单 → 折 这一步进历史（手机档），popstate 回清单原位。见下方「地址栏」那段。
+  const histRef = useRef({ prev: null, popping: false, listY: 0 });
+  const openRef = useRef(null);
+  openRef.current = openPR;   // popstate 监听只绑一次，开折走这面镜子拿最新的 openPR
 
   const say = useCallback((t) => setNotice(t), []);
 
@@ -366,6 +373,8 @@ function App() {
   }
 
   function openPR(pr) {
+    if (!R.current.cur) histRef.current.listY = window.scrollY; // 从清单进折：记下清单滚到哪，回来还原
+    setMoreOpen(false);
     setNotice('');
     setNextUp(null);      // 换折了，上一折的落地条就不该再挂着
     setFloat(null);
@@ -384,7 +393,9 @@ function App() {
     // 「折子说明」相反：**这折有拍板点就默认摊开**（issue #13）——它不是历史，是这折要他决定的事，
     // 收起来就等于回到「拍板点静默消失」。没拍板点才收起，把常态成本压回一行标题。
     // 逐折重算（不是沿用上一折的状态）：展开与否是这折的属性，不是用户的偏好。
-    setBodyOpen(hasDecisions(pr.body));
+    // P0 手机档例外：折首一屏只容得下一行药丸，摊开就把正文推出首屏（走查实测 h1 在 844px）。
+    // 拍板条数在药丸上常显，「有事要你决定」仍在余光里；桌面照旧按拍板点默认摊开。
+    setBodyOpen(hasDecisions(pr.body) && !isPhone());
     setCur({ pr, files: null, docs: null });
     setDrafts(A.loadDrafts(pr.number));
     // 立刻清岛屿并示 loading：否则 listPRFiles 整个往返期间旧折正文挂着，
@@ -831,15 +842,54 @@ function App() {
     setEditing(next);
   }
 
-  // 地址栏跟着当前折/文档走（replaceState 不进历史，免得返回键变成翻折）
+  // 地址栏跟着当前折/文档走。换篇、折→折、页内锚仍是 replaceState，免得返回键变成翻折。
+  // P0 例外（手机档）：**清单 → 折**这一步 pushState 一次，返回键 / Safari 与 WKWebView 的
+  // 侧滑返回就落回清单（popstate 见下一段）。只在手机档压栈：桌面清单常驻左栏，没有「清单页」
+  // 可回，压了反倒让浏览器后退键把折关掉——桌面行为不变。
+  // replaceState 一律带上 history.state，不能再传 null：那会把压栈时记的 {menxia} 标抹掉。
   useEffect(() => {
+    const n = cur?.pr?.number ?? null;
+    const h = histRef.current;
+    const prev = h.prev;
+    h.prev = n;
+    if (h.popping) h.popping = false;          // popstate 引起的切换：栈已经在位，只同步地址
+    else if (n != null && prev == null && isPhone()) {
+      const listUrl = DEMO ? location.href : location.origin + location.pathname;
+      history.replaceState({ ...(history.state || {}), menxia: 'list' }, '', listUrl);
+      history.scrollRestoration = 'manual';   // 清单位置由我们按 listY 还原；交给浏览器会在清单渲出来之前就滚，落点不对
+      history.pushState({ menxia: 'folder', pr: n }, '', listUrl);
+    } else if (n != null && history.state?.menxia === 'folder') {
+      history.replaceState({ ...history.state, pr: n }, '');  // 折里换折：顶掉栈顶，不叠
+    }
     if (DEMO) return;
     const url = cur?.pr
       ? buildDeepLink(location.origin + location.pathname,
         { repo: gh.getRepoSlug(), prNumber: cur.pr.number, path: docPath })
       : location.origin + location.pathname;
-    if (location.href !== url) history.replaceState(null, '', url);
+    if (location.href !== url) history.replaceState(history.state, '', url);
   }, [cur?.pr?.number, docPath]);
+
+  // 返回键 / 侧滑：落到清单项 → 回清单并还原滚动；落到折项（前进）→ 重开那一折。
+  useEffect(() => {
+    const onPop = (e) => {
+      const st = e.state;
+      const h = histRef.current;
+      const { cur: c, prs: open, donePrs: done, dash: d } = R.current;
+      if (st?.menxia === 'folder') {
+        if (c?.pr.number === st.pr) return;
+        const pr = [...open, ...done].find((p) => p.number === st.pr);
+        if (pr) { if (!c) h.popping = true; openRef.current(pr); }
+        return;
+      }
+      if (!c && !d) return;
+      if (c) h.popping = true;
+      setNavOpen(false); setMoreOpen(false); setCur(null); setDocPath(null); setDash(false);
+      // Preact 的重渲在微任务里提交，setTimeout 0 时清单已经回到版面上、有高度可滚
+      setTimeout(() => window.scrollTo(0, h.listY), 0);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
   // 文档/批注里的本仓 GitHub 链接 → app 内跳转（外链不拦，照常新窗口打开）
   const onDocClick = useCallback((e) => {
@@ -1003,7 +1053,7 @@ function App() {
     setQianState(word);
     const url = new URL(location.href);
     if (word) url.searchParams.set('qian', word); else url.searchParams.delete('qian');
-    if (location.href !== url.href) history.replaceState(null, '', url.href);
+    if (location.href !== url.href) history.replaceState(history.state, '', url.href);
   }
   // 滚过去 + 闪一下。四个跳转入口（大纲 / 深链 / 搜索命中 / 页内锚点）共用一条落地动作，
   // 免得「跳到了但没闪」这种半截实现随新入口一个个长出来。
@@ -1268,7 +1318,11 @@ function App() {
   const navChapters = cur?.docs ? chapterList(docNames, docPath, curLangOf) : [];
 
   // 回折清单（手机三层导航的最上一层）。与 onRefresh 的清空同一套，只是不重拉列表。
-  const backToList = () => { setNavOpen(false); setCur(null); setDocPath(null); setDash(false); };
+  // P0：进折时压过栈（手机档）就走 history.back()，与侧滑返回同一条路——栈不漂、清单回原位。
+  const backToList = () => {
+    if (history.state?.menxia === 'folder') { history.back(); return; }
+    setNavOpen(false); setCur(null); setDocPath(null); setDash(false);
+  };
   // 这折里没有篇也没有节时，目录页只剩一行「‹ 全部折子」——那是个死胡同页，
   // 不如让「‹ 目录」直接回清单。规则讲得通：目录给你看这层里面有什么，里面空的就退回上一层。
   const hasNav = navChapters.length > 1 || showOutline;
@@ -1560,7 +1614,7 @@ function App() {
           draftCount=${drafts.length} verifyN=${verifyN} happyUrl=${happyUrl} stale=${stale} notice=${notice}
           carrying=${carrying}
           nextUp=${nextUp} onNextUp=${() => { setTab('open'); openPR(nextUp); }}
-          readStep=${readStep}
+          readStep=${readStep} moreOpen=${moreOpen} onMore=${() => setMoreOpen((o) => !o)}
           onReadStep=${(i) => { const c = clampStep(i); setReadStepState(c); setReadStep(c); }}
           onRefresh=${() => { setCur(null); setDocPath(null); loadPRs(); }}
           onCopyRef=${copyRef} onCarry=${carryOut} onZongpi=${() => setZongpi((z) => !z)}
