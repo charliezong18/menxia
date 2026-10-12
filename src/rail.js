@@ -46,6 +46,38 @@ export const railMax = (windowWidth, stageBox) => {
   return windowWidth - stageBox;
 };
 
+// ── 版心让位（2026-10-11）──
+//
+// Charlie：「门下的左边栏，浏览器里不能拉诶」。上面那条上限式子没错，错在把版心当成
+// 不可压缩的：几个断点（1254 / 1500 / 1706 / 1940）刚过时版心正好塞满整窗，上限 ≈ 当前
+// 默认宽度，手柄有光标、能按下，就是一寸都拉不出去（实测 1280 窗宽上限 266、1500 窗宽 260）。
+// 正文 / 大纲那两条手柄早就会「空隙吃完向邻栏借」（ui.js makeGrip 那段），左栏照同一个
+// 模型：超出空隙的部分先从正文借（压到 artMin），不够再从大纲借（压到 tocMin）。
+// 借多少版心就窄多少，所以上面那条 railW ≤ 窗宽 − 版心盒 在松手后的新版心下仍然成立。
+
+const lendable = (cur, min) => (Number.isFinite(cur) && Number.isFinite(min) ? Math.max(0, cur - min) : 0);
+
+/**
+ * 能借时左栏的上限。`free` = 按下那一刻的 railMax；`art` / `toc` 是两栏当时的实宽，
+ * 不能借（量不到 / 窗宽不够那一档 / 栏没显示）的传 null 或 0。
+ */
+export const railCeilLending = (free, { art, artMin, toc, tocMin } = {}) =>
+  free + lendable(art, artMin) + lendable(toc, tocMin);
+
+/**
+ * 想拉到 `want` 时两栏各该收成多宽。没向某栏借的返回 null＝「保持他原来的偏好」——
+ * 往回拖到 free 以内时调用方据此把那栏还原，而不是钉死一个它从没要过的宽度。
+ */
+export const railLend = (want, free, { art, artMin, toc, tocMin } = {}) => {
+  const over = Math.max(0, want - free);
+  const fromArt = Math.min(over, lendable(art, artMin));
+  const fromToc = Math.min(over - fromArt, lendable(toc, tocMin));
+  return {
+    art: fromArt > 0 ? Math.round(art - fromArt) : null,
+    toc: fromToc > 0 ? Math.round(toc - fromToc) : null,
+  };
+};
+
 /**
  * 夹到 `[RAIL_MIN, max]`。
  *

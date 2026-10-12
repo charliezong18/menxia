@@ -1417,9 +1417,14 @@ if (RAIL === '1') {
     // 上限由浏览器解析 CSS 算式得出，这里复算一遍喂断言——与 ui.js 走同一个探针，
     // 所以这条也顺带守住「探针还在、还是那个宽度」。
     const probe = document.querySelector('.geom-probe');
-    const ceil = probe ? window.innerWidth - probe.offsetWidth : NaN;
-    chk('probe-measures-stage-box', Number.isFinite(ceil) && ceil > 300,
-      `innerWidth=${window.innerWidth} probe=${probe ? probe.offsetWidth : 'NO-EL'} ceil=${ceil}`);
+    const free = probe ? window.innerWidth - probe.offsetWidth : NaN;
+    chk('probe-measures-stage-box', Number.isFinite(free) && free > 300,
+      `innerWidth=${window.innerWidth} probe=${probe ? probe.offsetWidth : 'NO-EL'} free=${free}`);
+    // 2026-10-11 起空隙吃完向版心借：正文压到 480、大纲压到 200（cols.js 的两个 min）
+    const artEl = document.getElementById('doc'); const tocEl = document.querySelector('.toc');
+    const art0 = artEl ? artEl.getBoundingClientRect().width : 0;
+    const toc0 = tocEl ? tocEl.getBoundingClientRect().width : 0;
+    const ceil = Math.round(free + Math.max(0, art0 - 480) + Math.max(0, toc0 - 200));
 
     const before = railW();
     await drag(120);
@@ -1427,7 +1432,11 @@ if (RAIL === '1') {
 
     await drag(2000);
     const wide = railW();
-    chk('drag-stops-at-ceiling', Math.abs(wide - ceil) <= 2, `width=${wide} ceil=${ceil}`);
+    chk('drag-stops-at-ceiling', Math.abs(wide - ceil) <= 2, `width=${wide} ceil=${ceil} free=${free}`);
+    // 回归（「左边栏不能拉」）：上限必须能越过「窗宽 − 版心盒」，版心让位而不是冻住左栏
+    chk('drag-past-free-space', wide > free + 100, `width=${wide} free=${free}`);
+    chk('stage-yields-to-rail', artEl && Math.round(artEl.getBoundingClientRect().width) === 480,
+      `art=${artEl ? artEl.getBoundingClientRect().width : 'NO-EL'}`);
     // 真正要守的东西：拖到极限也不许把版式挤到横向溢出（style.css 记过 1660–1709 那次实伤）
     chk('no-horizontal-overflow', document.documentElement.scrollWidth <= window.innerWidth + 1,
       `scrollWidth=${document.documentElement.scrollWidth} innerWidth=${window.innerWidth}`);
@@ -1445,6 +1454,7 @@ if (RAIL === '1') {
     let cleared = 'x';
     try { cleared = localStorage.getItem('zhupi.railWidth'); } catch { /* 无痕模式 */ }
     chk('dblclick-resets', cleared === null && railW() === 300, `stored=${cleared} width=${railW()}`);
+    try { localStorage.removeItem('zhupi.artWidth'); localStorage.removeItem('zhupi.tocWidth'); } catch { /* 无痕模式 */ }
 
     console.log(`[rail] RESULT pass=${pass} fail=${fail}`);
   }, 1200);

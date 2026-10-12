@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   RAIL_MIN, RAIL_DEFAULT, RESIZABLE_MIN_WINDOW,
-  isResizable, railMax, clampRail,
+  isResizable, railMax, clampRail, railCeilLending, railLend,
 } from '../src/rail.js';
 
 test('窄窗不给拖：与 style.css 的 max-width:1279 同一个界', () => {
@@ -62,6 +62,41 @@ test('空值不许被当成 0 宽（Number(null)===0 那个坑）', () => {
 test('返回整数像素', () => {
   assert.equal(clampRail(387.6, 920), 388);
   assert.equal(Number.isInteger(clampRail(300.4, 920)), true);
+});
+
+// 2026-10-11 回归：「左边栏浏览器里不能拉」。断点刚过时版心塞满整窗，railMax ≈ 当前宽度。
+test('断点刚过时：不借宽就几乎拉不动（复现原 bug 的形状）', () => {
+  // 1280 窗宽、笔记本档、<1500 无大纲槽：版心盒 962 + 26×2 = 1014，实测线上上限 266
+  assert.equal(railMax(1280, 1014), 266);
+  // 1500 窗宽：大纲槽 26+200 加进来，版心盒 1240，上限 260——比 1499 时的 485 还小
+  assert.equal(railMax(1500, 1240), 260);
+});
+
+test('版心让位：上限把正文与大纲能让出的都算进来', () => {
+  const opts = { art: 620, artMin: 480, toc: 200, tocMin: 200 };
+  // 1280：266 + 正文让 140 = 406
+  assert.equal(railCeilLending(railMax(1280, 1014), opts), 406);
+  // 1500：260 + 140（大纲已在 min，借不到）
+  assert.equal(railCeilLending(railMax(1500, 1240), opts), 400);
+  // 量不到 / 不显示的栏不借
+  assert.equal(railCeilLending(300, { art: null, artMin: 480, toc: 0, tocMin: 200 }), 300);
+  assert.equal(railCeilLending(300), 300);
+});
+
+test('借宽：先吃空隙，再借正文，正文到底再借大纲；借多少版心窄多少', () => {
+  const opts = { art: 680, artMin: 480, toc: 260, tocMin: 200 };
+  const free = 300;
+  assert.deepEqual(railLend(280, free, opts), { art: null, toc: null }, '空隙内不动邻栏');
+  assert.deepEqual(railLend(300, free, opts), { art: null, toc: null });
+  assert.deepEqual(railLend(450, free, opts), { art: 530, toc: null });
+  assert.deepEqual(railLend(520, free, opts), { art: 480, toc: 240 });
+  assert.deepEqual(railLend(9999, free, opts), { art: 480, toc: 200 }, '两栏都到 min 就停');
+  // 守住 rail.js 头注释的式子：左栏增量 == 版心减量（在上限内）
+  for (const want of [320, 400, 500, 560]) {
+    const lent = railLend(want, free, opts);
+    const shrink = (opts.art - (lent.art ?? opts.art)) + (opts.toc - (lent.toc ?? opts.toc));
+    assert.equal(want - free, shrink, `want=${want}`);
+  }
 });
 
 test('默认值就是 style.css :root 里那个 300', () => {

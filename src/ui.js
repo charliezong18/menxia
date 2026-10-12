@@ -13,7 +13,7 @@ import { decorateVerifyMarkers, countVerifyMarkers } from './verify.js';
 import { parseZhupiLink, buildRef, parseDeepLink, buildDeepLink, parseHappySession, resolveRelativeDocLink } from './link.js';
 import { siblingFor, visibleDocs, getLang, setLang, variantOf } from './lang.js';
 import { getReadStep, setReadStep, scaleOf, clampStep } from './readsize.js';
-import { getRailWidth, setRailWidth, clearRailWidth, clampRail, railMax, isResizable, RAIL_MIN } from './rail.js';
+import { getRailWidth, setRailWidth, clearRailWidth, clampRail, railMax, isResizable, RAIL_MIN, railCeilLending, railLend } from './rail.js';
 import { Setup } from './components/setup.js';
 import { DraftCard, ShownThread, ZongpiCard } from './components/cards.js';
 import { Sidebar } from './components/sidebar.js';
@@ -1351,15 +1351,15 @@ function App() {
   const [indentW, setIndentW] = useState(() => getColWidth(INDENT_KEY));
   const [railBox, setRailBox] = useState(null);
   const [winW, setWinW] = useState(() => (typeof window === 'undefined' ? 0 : window.innerWidth));
+  const measureGeom = () => {
+    setStageBox(probeRef.current ? probeRef.current.offsetWidth : null);
+    // 左栏实宽只能量，不能从 railW 推：它没拖过时是 CSS 的响应式默认（300 / 240），
+    // 而那个默认值写在 style.css 的媒体查询里，JS 这边复制一份必然失同步。
+    const aside = document.querySelector('#app > aside');
+    setRailBox(aside ? aside.offsetWidth : null);
+  };
   useLayoutEffect(() => {
-    const measure = () => {
-      setStageBox(probeRef.current ? probeRef.current.offsetWidth : null);
-      setWinW(window.innerWidth);
-      // 左栏实宽只能量，不能从 railW 推：它没拖过时是 CSS 的响应式默认（300 / 240），
-      // 而那个默认值写在 style.css 的媒体查询里，JS 这边复制一份必然失同步。
-      const aside = document.querySelector('#app > aside');
-      setRailBox(aside ? aside.offsetWidth : null);
-    };
+    const measure = () => { measureGeom(); setWinW(window.innerWidth); };
     measure();
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
@@ -1476,11 +1476,43 @@ function App() {
     else st.setProperty('--art-indent', `${appliedIndent}px`);
   }, [appliedArt, appliedToc, appliedIndent, margEmpty]);
 
+  // 版心一变就重量探针（2026-10-11）。原先只在挂载和 resize 时量：拖正文 / 大纲、眉批栏
+  // 塌掉、左栏向版心借宽之后 stageBox 都是过时的，appliedRail 会被旧版心夹回去——左栏借到
+  // 了宽度却显示不出来。必须写在上面那个 effect **之后**：同一次提交里 effect 按声明顺序跑，
+  // 写在前面量到的是 :root 变量改之前的版心。
+  useLayoutEffect(measureGeom, [appliedArt, appliedToc, appliedIndent, margEmpty, appliedRail, Boolean(cur)]);
+
+  // 左栏的上限＝空隙 + 正文与大纲各自能让出来的（理由见 rail.js「版心让位」）。
+  // 现量探针而不用 stageBox：按下这一刻的版心才是借宽的基准。
+  const railLendOpts = (g) => ({
+    art: isColResizable(window.innerWidth, ART_MIN_WINDOW) ? g.art : null, artMin: ART_MIN,
+    toc: isColResizable(window.innerWidth, TOC_MIN_WINDOW) ? g.toc : null, tocMin: TOC_MIN,
+  });
+  const railFreeNow = () => {
+    const box = probeRef.current ? probeRef.current.offsetWidth : null;
+    return box == null ? null : railMax(window.innerWidth, box);
+  };
   const onGripDown = makeGrip({
-    ceilOf: () => (isResizable(window.innerWidth) ? railCeil : null),
+    ceilOf: () => {
+      if (!isResizable(window.innerWidth)) return null;
+      const free = railFreeNow();
+      return free == null ? null : railCeilLending(free, railLendOpts(geomNow()));
+    },
     min: RAIL_MIN, sign: +1,
     target: (grip) => grip.parentElement,
     setW: setRailW, persist: setRailWidth,
+    // 按下时记下两栏原来的偏好（可能是 null＝CSS 默认）：往回拖到不用借时原样还回去。
+    onStart: () => ({ free: railFreeNow() ?? 0, opts: railLendOpts(geomNow()), art0: artW, toc0: tocW }),
+    onWant: (want, ctx) => {
+      const lent = railLend(want, ctx.free, ctx.opts);
+      setArtW(lent.art ?? ctx.art0);
+      setTocW(lent.toc ?? ctx.toc0);
+      return lent;
+    },
+    persistNeighbor: (lent) => {
+      if (lent.art != null) setColWidth(ART_KEY, lent.art);
+      if (lent.toc != null) setColWidth(TOC_KEY, lent.toc);
+    },
   });
 
   // 版心内两栏的上限＝这一栏当前实宽 + 版心之外还剩的空隙，与 rail 那条不是一回事
