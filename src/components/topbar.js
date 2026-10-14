@@ -9,7 +9,7 @@ export function Topbar({
   cur, archived, onHead, busy, draftCount, verifyN = 0, happyUrl, stale, notice, carrying,
   readStep = 1, onReadStep, moreOpen = false, onMore, onUpdate, updating = false,
   onRefresh, onCopyRef, onCarry, onZongpi, onSubmit, onQinci,
-  nextUp, onNextUp,
+  nextUp, onNextUp, onNoticeClose,
 }) {
   const pct = percentOf(readStep);
   // 面包屑根词跟折的实际归属走：遗留闲读折在读毕书架（未画可组）、画可折在已画可。写死「待审」
@@ -61,5 +61,8 @@ export function Topbar({
           </p>`}
         ${notice && html`<p class="notice">${notice}${nextUp && html`
           <button class="btn-ghost notice-next" title=${S.merge.nextUpTitle}
-            onClick=${onNextUp}>${S.merge.nextUp(nextUp.number, nextUp.title)}</button>`}</p>`}`;
+            onClick=${onNextUp}>${S.merge.nextUp(nextUp.number, nextUp.title)}</button>`}
+          ${/* 手机档提示条是 fixed 浮条，得有地方关；桌面档 .notice-close 不显示（布局不变）。 */ ''}
+          ${onNoticeClose && html`<button class="btn-ghost notice-close" title=${S.mobileBar.noticeCloseTitle}
+            onClick=${onNoticeClose}>${S.mobileBar.noticeClose}</button>`}</p>`}`;
 }

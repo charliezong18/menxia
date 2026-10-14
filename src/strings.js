@@ -146,6 +146,8 @@ export const S = deepFreeze({
   // 「目录」是折清单那一页，不是篇内大纲（那个叫「大纲」，见 outline.title）——两处别混词。
   mobileBar: {
     label: '读折动作',
+    noticeClose: '✕',
+    noticeCloseTitle: '关闭提示',
     back: '‹ 目录',
     backTitle: '本折的篇与节',
     backToDoc: '‹ 正文',

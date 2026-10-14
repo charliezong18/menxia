@@ -300,6 +300,8 @@ main { flex: 1; min-width: 0; height: 100%; display: flex; flex-direction: colum
 }
 /* 画可后的落地条：折不跳，下一折做成他自己踩的踏板 */
 .notice-next { margin-left: 12px; padding: 3px 12px; font-size: 13px; vertical-align: baseline; }
+/* 关闭钮只在手机档的浮条上露（见 ≤900 块）；桌面提示条仍随顶栏，布局不变。 */
+.notice-close { display: none; }
 
 .work { flex: 1; min-height: 0; overflow-y: auto; padding: 30px var(--work-pad) 60px; }
 /* 版心居中（2026-08-03 反馈：大屏上「很可笑」）——版心宽度是写死的，宽屏下整块一直贴左，
@@ -874,6 +876,22 @@ article a img { cursor: pointer; }   /* 包在链接里的图走链接，别谎�
   .actions { flex-wrap: wrap; }
 
   .notice { margin: 10px 16px 0; }
+  /* 提示条浮在视口里，贴在常驻底栏上方：原先挂在页面最顶、随正文滚走，读到中后段点底栏
+     「画可/判/呈出」的成功/失败/拦截提示全在视口外，看上去就是「点了没反应」。
+     底栏高 = 8 + 44 + 8 + 1(边) + 安全区；条再抬 7px 留缝，不压底栏按钮。
+     新版横幅 .stale-banner 是常驻横幅不是动作反馈，仍留在顶栏里，免得两条浮条叠在一起。
+     背景要不透明（原为半透明朱砂淡色，浮在正文上会透字）：纸色底 + 同色淡色渐变叠回去。 */
+  .notice:not(.stale-banner) {
+    position: fixed; left: 12px; right: 12px; z-index: 30; margin: 0;
+    bottom: calc(68px + env(safe-area-inset-bottom));
+    max-height: 40vh; overflow-y: auto;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px;
+    padding: 6px 6px 6px 14px;
+    background: linear-gradient(rgba(195,64,43,.08), rgba(195,64,43,.08)), var(--paper-raised);
+    border-color: var(--cinnabar); box-shadow: 0 4px 16px var(--shadow);
+  }
+  .notice:not(.stale-banner) .notice-next { margin-left: 0; }
+  .notice-close { display: inline-flex; align-items: center; justify-content: center; margin-left: auto; padding: 0 10px; }
   /* 底部留空躲开常驻底栏（读折时才有栏；padding 常留也不碍，清单页无正文）。
      env(safe-area-inset-bottom) 让全面屏手势条下也不吃掉最后一行。 */
   .work { padding: 18px 16px calc(80px + env(safe-area-inset-bottom)); }
