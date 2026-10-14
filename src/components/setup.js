@@ -9,6 +9,7 @@ export function Setup({ msg, onSave, canCancel, onCancel, onForget }) {
   const repoRef = useRef();
   const tokenRef = useRef();
   const submit = () => onSave(repoRef.current.value, tokenRef.current.value);
+  const stored = gh.maskToken(gh.getToken());
   return html`
     <section id="setup">
       <div class="setup-card">
@@ -28,6 +29,7 @@ export function Setup({ msg, onSave, canCancel, onCancel, onForget }) {
         <input id="token-input" ref=${tokenRef} type="password" placeholder="github_pat_…"
           autocomplete="off" spellcheck="false"
           onKeyDown=${(e) => { if (e.key === 'Enter') submit(); }} />
+        ${stored && html`<p class="setup-stored" id="token-stored">${S.setup.stored(stored)}<br />${S.setup.storedNote}</p>`}
         <div class="setup-actions">
           <button class="btn-primary" onClick=${submit}>${S.setup.save}</button>
           ${canCancel && html`<button class="btn-ghost" onClick=${onCancel}>${S.setup.back}</button>`}
