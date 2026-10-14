@@ -22,6 +22,13 @@ export function parseRepoSlug(input) {
 
 export const getToken = () => localStorage.getItem(TOKEN_KEY) || '';
 export const setToken = (t) => localStorage.setItem(TOKEN_KEY, t.trim());
+// 设置页只回显末 4 位（••••a1b2）：够核对「存的是不是那把」，又不把整把钥匙摆在屏上。
+// 密码框本身不回显已存值——2026-10-13 有人以为框里就是钥匙、拷不出来，转头给 App 存了错的值。
+export const maskToken = (t) => {
+  const s = String(t ?? '').trim();
+  if (!s) return '';
+  return '••••' + (s.length > 4 ? s.slice(-4) : '');
+};
 export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
 // 带 status 的错误：401 才是钥匙失效，403 可能只是限流（清 token 会误杀）

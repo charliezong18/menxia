@@ -28,6 +28,7 @@ export const setRepoSlug = fwd('setRepoSlug');
 export const repoSlug = fwd('repoSlug');
 export const parseRepoSlug = fwd('parseRepoSlug');
 export const getToken = fwd('getToken');
+export const maskToken = fwd('maskToken');
 export const setToken = fwd('setToken');
 export const clearToken = fwd('clearToken');
 export const verifyToken = fwd('verifyToken');

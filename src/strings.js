@@ -248,6 +248,8 @@ export const S = deepFreeze({
     back: '返回',
     forget: '清除钥匙',
     verifying: '验钥中…',
+    stored: (masked) => `已存：${masked}（末 4 位）`,
+    storedNote: '此框不回显已存钥匙；要把钥匙拷到别处，请用你保存 token 的地方。',
     repoAdoptedFromLink: (slug) => `敕草仓库已按你点开的这条链接填好（${slug}）——配一把开得了它的钥匙就能读。`,
     repoNowRequired: '这版起敕草仓库改成填的了——补一次 owner/repo，钥匙照旧粘一遍。',
     repoFormat: '敕草仓库要填成 owner/repo（贴 GitHub 链接也行）。',
