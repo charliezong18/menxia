@@ -45,6 +45,12 @@ const MD = [
   '',                               // 22   会被 CommonMark 吸进列表当续段，不成代码块
   '    缩进代码行一',                // 23
   '    缩进代码行二',                // 24
+  '',                               // 25
+  '```diff',                        // 26
+  '@@ -1,2 +1,2 @@',                // 27
+  '-旧的一行',                       // 28
+  '+新的一行',                       // 29
+  '```',                            // 30
 ].join('\n');
 
 stage.innerHTML = renderMarkdown(MD);
@@ -89,6 +95,14 @@ eq('缩进代码块第二行 → 精确到该行（+0 偏移）', computeAnchor(
 
 selectText(stage, '行二');
 eq('表格第二行划选 → 该行行号', computeAnchor(stage)?.line, 10);
+
+// ```diff 围栏的 data-line 在 <pre class="diff-block"> 上（不是 <code>），但它仍指向 ``` 行，
+// 必须与普通围栏一样 +1——曾按标签判成「缩进代码块 +0」，diff 里的涂归全部呈到上一行（review #182 N0）。
+eq('diff 围栏行号落在 pre.diff-block 上且指向 ``` 行', line('pre.diff-block[data-line]'), 26);
+selectText(stage, '@@ -1,2');
+eq('diff 围栏内第一行 → 与普通围栏同样 +1', computeAnchor(stage)?.line, 27);
+selectText(stage, '+新的一行');
+eq('diff 围栏内第三行 → 精确到该行', computeAnchor(stage)?.line, 29);
 
 selectText(stage, '加粗');
 const boldAnchor = computeAnchor(stage);

@@ -40,6 +40,8 @@ class Element extends Node {
       if (k.startsWith('data-')) ds[k.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = v;
     }
     this.dataset = ds;
+    const cls = () => (this.attrs.class || '').split(/\s+/).filter(Boolean);
+    this.classList = { contains: (c) => cls().includes(c) };
   }
   getAttribute(k) { return k in this.attrs ? this.attrs[k] : null; }
   hasAttribute(k) { return k in this.attrs; }

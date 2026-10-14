@@ -1,3 +1,6 @@
+diff 围栏内第一行 → 与普通围栏同样 +1
+diff 围栏内第三行 → 精确到该行
+diff 围栏行号落在 pre.diff-block 上且指向 ``` 行
 fence 内第一行代码
 fence 内第二行代码 → 精确到该行（fence 首行 +1 +换行数）
 fence 行号落在 <code> 上且指向 ``` 行

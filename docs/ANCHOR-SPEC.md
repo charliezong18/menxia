@@ -4,7 +4,7 @@
 >
 > 读者：menxia-ios（N1–N4）实现者。**只读这页 + `test/golden/` 就该能写对。**
 > 期望值全部由现行 web 代码生成（`test/golden/export.mjs` 直接调 `src/` 原函数，不复制逻辑），
-> `test/golden.test.js` 每次重生并逐字比对——web 规则一变 web 测试先红。行号以 2026-10-13 `origin/main`（6cd05e6）为准。
+> `test/golden.test.js` 每次重生并逐字比对——web 规则一变 web 测试先红。行号以 2026-10-13 `feat/native-golden` 分支（基于 `origin/main` 6cd05e6，含 diff 围栏行号修复）为准。
 > 来源：review #182 N0。
 
 ## 0. golden 文件怎么用
@@ -44,13 +44,13 @@
 - **松散 li 的 text** = `"\n" + 子块 text 以 "\n" 相接 + "\n"`；嵌套列表同理逐层包 `\n`——以 golden 为准，别自己推。
 - **代码块**：`fence`（普通围栏）的 `data-line` 在 `<code>` 上，指向 ```` ``` ```` 那一行，text = 围栏内容（含末尾 `\n`）；`code_block`（缩进代码）在 `<pre>` 上，指向首行内容；**```diff 围栏**由 `diffFence` 渲染，`data-line` 在 `<pre class="diff-block">` 上，text = 各行以 `\n` 相接、**无末尾换行、空行变成一个空格**（`src/render.js:16-36`）。判 diff 只看 info 首词（`diff js` 也算，`patch` 不算）。未闭合围栏延伸到文末（`edge-unclosed-fence`）。
 
-## 3. 选区 → 锚（`computeAnchor`，`src/anchor.js:10-44`）
+## 3. 选区 → 锚（`computeAnchor`，`src/anchor.js:10-47`）
 
 1. 选区为空/折叠或不在正文内 → `null`。`quote = toString().trim().replace(/\s+/g,' ')`，**长度 < 2 → `null`**；`quoteRaw = toString().trim()`；两者都截前 300 个 **UTF-16 单元**（JS `slice`，可能切开代理对——照做）。
 2. 锚块 = **选区起点**所在的最内层带行号元素（`closest('[data-line]')`）。跨块划选只锚起点块。`blockLine = 该块 line`。
 3. `offset` = 块 text 开头到选区起点的 **UTF-16 单元数**（TextKit 的 NSRange 同单位）。
-4. `line`：普通块 = `blockLine`；块内精确行只对 `tag` 为 `code`/`pre` 的块算：`line = blockLine + (tag==='code' ? 1 : 0) + 起点之前的 "\n" 个数`。
-   - ⚠️ **web 现行缺陷（照抄进 golden，未修）**：```diff 块的 tag 是 `pre`，于是**不 +1**，块内行号比源码**少 1**（`edge-diff.anchors.json`：选中 `@@ -1,4` 行得 `line 3`，源码在第 4 行）。这会让 diff 块里的涂归呈到上一行。已报给 Hermes 定夺；**原生先与 golden 保持一致**，web 修了会重生 golden。
+4. `line`：普通块 = `blockLine`；块内精确行只对代码块算：`line = blockLine + (type==='fence' ? 1 : 0) + 起点之前的 "\n" 个数`。即**所有围栏**（普通围栏与 ```diff 围栏）`+1`（`data-line` 指向 ```` ``` ```` 行），缩进代码块 `+0`。web 侧判据是 `tag==='code'` 或 `pre.diff-block`（`src/anchor.js:22-34`）；原生直接按块类型判即可。例：`edge-diff` 选中 `@@ -1,4` 行得 `line 4`，正是源码行。
+   - **历史数据影响（2026-10-13 修复前）**：旧版把 diff 围栏当缩进代码 `+0`，diff 块里的涂归 `line` 比源码**少 1**。①已呈的 inline 涂归在 GitHub 上落在上一行（PR Files 页看得到错一行；引文 `> …` 仍是对的）；②在门下回放不受影响——已呈串按 `line` 找块时取「`data-line ≤ line` 的最后一块」（`src/ui.js:686-689`），少 1 仍落在同一个 diff 块里（选的是首个内容行时少 1 正好等于块首行号，同样命中该块）；③当时少 1 的那行若不在 hunk 里，那条涂归已降级并入判，不受影响；④修复前存在 localStorage 里、尚未呈出的 diff 草稿，`line` 已按旧算法存好，呈出时仍会少 1（不重算）。数据一律不改。
 5. 起点恰在两个文本节点交界：归后一个节点开头（与 `rangeFromTextOffset` 同口径）。
 6. golden 的 `quote/quoteRaw` 由 Range 语义生成（＝块 text 的子串）；浏览器的 `Selection.toString()` 对跨块/折叠空白可能不同【未核】。原生以「块 text 子串」为准——`rangeForDraft` 本来就在 textContent 里找 `quoteRaw`。
 
@@ -60,15 +60,15 @@ inline rule（不进代码块/行内代码）：`[[` 起、找第一个 `]]`；�
 
 ## 5. 高亮回放与漂移重锚
 
-- **回放** `rangeForDraft`（`src/anchor.js:47-55`）：取**文档序第一个** `data-line == blockLine` 的元素（表头行会命中 table 而非 tr；松散 li 会命中 li 而非 p——golden `replay.block` 已体现），在其 text 里从 `max(0, offset-2)` 起 `indexOf(quoteRaw)`，找不到再从头找，仍无 → 不画。
-- **重锚** `reanchorByQuote`（`src/anchor.js:86-98`）：只用于 GitHub 把 `line` 置 null 的漂移串（`src/ui.js:1263-1271`，顺序 `line ?? 重锚 ?? original_line`）。needle = 引文 `trim` 后 `\s+→' '`，**< 4 字符不认**；遍历所有带行号块，块 text 同样压空白后 `includes(needle)`，取 **text 最短**的那块（并列取文档序先出现者）。
-- **sectionOf**（`src/anchor.js:74-80`）：`line ≤ blockLine` 的最后一个 h1–h3 的 textContent。
+- **回放** `rangeForDraft`（`src/anchor.js:50-58`）：取**文档序第一个** `data-line == blockLine` 的元素（表头行会命中 table 而非 tr；松散 li 会命中 li 而非 p——golden `replay.block` 已体现），在其 text 里从 `max(0, offset-2)` 起 `indexOf(quoteRaw)`，找不到再从头找，仍无 → 不画。
+- **重锚** `reanchorByQuote`（`src/anchor.js:89-101`）：只用于 GitHub 把 `line` 置 null 的漂移串（`src/ui.js:1263-1271`，顺序 `line ?? 重锚 ?? original_line`）。needle = 引文 `trim` 后 `\s+→' '`，**< 4 字符不认**；遍历所有带行号块，块 text 同样压空白后 `includes(needle)`，取 **text 最短**的那块（并列取文档序先出现者）。
+- **sectionOf**（`src/anchor.js:77-83`）：`line ≤ blockLine` 的最后一个 h1–h3 的 textContent。
 
 ## 6. 草稿、呈出、hunk 校验与降级
 
-- 草稿对象（`src/ui.js:797-808`）：`{id, path, ref(写时的 head sha), blockLine, line, offset, quote, quoteRaw, note, ts}`；web 存 `localStorage['zhupi.drafts.<PR号>'] = {"items":[…]}`（`src/anchor.js:121-136`）。原生自有存储即可，字段语义不变。
-- 正文格式 `fmtDraft = "> " + quote + "\n\n" + note`（`src/anchor.js:138`）；解析 `parseCommentBody`：开头连续 `>` 行为引文（去 `>` 与一个空格），跳过空行后余下为正文（`src/anchor.js:143-155`）。
-- `validRightLines(patch)`（`src/anchor.js:101-118`）：去掉末尾假空行；`@@` 行取 `+N` 为起点；`+` 行、` ` 行、裸空行各占一个 RIGHT 行号；`-` 行与 `\ No newline` 不占。patch 为空/null → `null`。
+- 草稿对象（`src/ui.js:797-808`）：`{id, path, ref(写时的 head sha), blockLine, line, offset, quote, quoteRaw, note, ts}`；web 存 `localStorage['zhupi.drafts.<PR号>'] = {"items":[…]}`（`src/anchor.js:124-139`）。原生自有存储即可，字段语义不变。
+- 正文格式 `fmtDraft = "> " + quote + "\n\n" + note`（`src/anchor.js:141`）；解析 `parseCommentBody`：开头连续 `>` 行为引文（去 `>` 与一个空格），跳过空行后余下为正文（`src/anchor.js:146-158`）。
+- `validRightLines(patch)`（`src/anchor.js:104-121`）：去掉末尾假空行；`@@` 行取 `+N` 为起点；`+` 行、` ` 行、裸空行各占一个 RIGHT 行号；`-` 行与 `\ No newline` 不占。patch 为空/null → `null`。
 - 呈出（`src/ui.js:1147-1160`）：`stale = d.ref !== 当前 head sha`；**`!stale` 且该文件 valid 集合含 `d.line`** → inline comment `{path, line: d.line, side:'RIGHT', body: fmtDraft(d)}`；否则降级。降级的拼成 review body：`"以下涂归锚定不到可批注行（或写于旧版本），并入判：\n\n" + 各条 fmtDraft 以 "\n\n---\n\n" 相接`；全部 inline 时 body = `"门下 · N 条"`（`src/strings.js:401-402`）。一次 `POST /pulls/{n}/reviews`，`commit_id` = head sha。注意用的是 `line`（块内精确行），不是 `blockLine`。
 
 ## 7. 续读 readstate（`src/offline.js:24-63`，写侧 `src/ui.js:475-505`）
@@ -96,7 +96,7 @@ inline rule（不进代码块/行内代码）：`[[` 起、找第一个 `]]`；�
 8. **softbreak/hardbreak** 都映射为 `"\n"`；**表格/松散列表/引用的容器 text 里的 `\n`** 是 HTML 序列化产物，cmark 没有，必须按 §2 规则拼（实测）。
 9. **表格打断段落**：markdown-it 允许无空行的表格紧跟段落（`edge-tables` 第 10/11 行）；cmark-gfm 行为【未核】。
 10. **CRLF / NUL**：markdown-it 归一 `\r\n`、`\r` → `\n`，NUL → U+FFFD；预处理在归一之前、正则自带 `\r?`（实测 `edge-crlf`）。cmark 文本节点是否保留 `\r`【未核】。
-11. **```diff 渲染**与块内行号（§3.4 缺陷）、空行 → 空格：是 web 自定义，cmark 无对应，按 §2 自实现（实测 `edge-diff`）。
+11. **```diff 渲染**（`data-line` 在 `<pre>` 上但按围栏 `+1`，§3.4）、空行 → 空格：是 web 自定义，cmark 无对应，按 §2 自实现（实测 `edge-diff`）。
 12. **JS 字符串语义**：`trim`/`\s`/`slice`/`indexOf` 都按 UTF-16 与 JS 空白集；Swift `String` 默认按字素簇，务必在 `utf16` 视图上算（实测 `edge-mixed` 含 emoji、代理对、组合字符、U+3000）。
 
 ## 10. 规则变更流程

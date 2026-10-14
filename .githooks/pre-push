@@ -27,7 +27,10 @@ WIDEN=0
 # （2026-08-06 实测撞到：第一次 push 被自己拦住）。
 LEGACY_SKIP=(':(exclude).githooks/pre-push' ':(exclude)tang-rename.py'
              ':(exclude)MIGRATION-WATCH.zh-CN.md'
-             ':(exclude)OPEN-QUESTIONS.md' ':(exclude)OPEN-QUESTIONS.zh-CN.md')
+             ':(exclude)OPEN-QUESTIONS.md' ':(exclude)OPEN-QUESTIONS.zh-CN.md'
+             ':(exclude)test/golden')
+# test/golden（review #182 N0）：语料是 review 仓已画可真折的逐字节快照、expected/ 是它们的渲染产物，
+# 当年用的就是旧词；改一个字 golden 就不再是「真折」，故同历史表格一样整目录排除。
 ADDED=""
 while read -r _lref lsha _rref rsha; do
   [ -z "${lsha:-}" ] && continue

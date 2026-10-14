@@ -133,7 +133,7 @@
       "docStart": 51,
       "expect": {
         "blockLine": 16,
-        "line": 16,
+        "line": 17,
         "offset": 0,
         "quote": "-旧 +新",
         "quoteRaw": "-旧\n+新"
@@ -151,7 +151,7 @@
       "docStart": 54,
       "expect": {
         "blockLine": 16,
-        "line": 17,
+        "line": 18,
         "offset": 3,
         "quote": "+新",
         "quoteRaw": "+新"

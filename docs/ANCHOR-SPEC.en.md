@@ -4,7 +4,7 @@
 >
 > Audience: menxia-ios implementers (N1–N4). **This page + `test/golden/` should be enough to get it right.**
 > Every expected value is produced by the current web code (`test/golden/export.mjs` calls the original `src/` functions — no logic is copied);
-> `test/golden.test.js` regenerates and byte-compares on every run, so a web rule change turns the web suite red first. Line refs: `origin/main` 6cd05e6 (2026-10-13). Origin: review #182 N0.
+> `test/golden.test.js` regenerates and byte-compares on every run, so a web rule change turns the web suite red first. Line refs: branch `feat/native-golden` (on `origin/main` 6cd05e6, includes the diff-fence line fix), 2026-10-13. Origin: review #182 N0.
 
 ## 0. Golden files
 
@@ -37,13 +37,13 @@
 - Inline text: soft and hard breaks both contribute `"\n"`; **image alt contributes nothing**; wikilinks contribute the label; linkify doesn't change text.
 - Code: plain `fence` → `data-line` on `<code>`, pointing at the opening fence line, text = content incl. trailing `\n`. `code_block` → on `<pre>`, pointing at the first content line. **```diff** (first info word) → `<pre class="diff-block">`, lines joined by `\n`, no trailing newline, empty lines become a single space.
 
-## 3. Selection → anchor — `computeAnchor`, `src/anchor.js:10-44`
+## 3. Selection → anchor — `computeAnchor`, `src/anchor.js:10-47`
 
 1. `quote = toString().trim().replace(/\s+/g,' ')`, **< 2 chars → null**; `quoteRaw = toString().trim()`; both cut to 300 **UTF-16 units**.
 2. Anchor block = innermost `[data-line]` ancestor of the **selection start**; cross-block selections anchor on the start block.
 3. `offset` = UTF-16 units from block-text start to selection start.
-4. `line = blockLine + (tag==='code' ? 1 : 0) + count("\n" before start)` for `code`/`pre` blocks; otherwise `line = blockLine`.
-   - ⚠️ **Known web defect (kept in golden, not fixed):** ```diff blocks are `pre`, so no +1 — in-block lines are **one less** than the source line (`edge-diff`: the `@@ -1,4` line yields `line 3`, source line 4). Reported to Hermes. **Native must match golden for now.**
+4. For code blocks `line = blockLine + (type==='fence' ? 1 : 0) + count("\n" before start)`; otherwise `line = blockLine`. **Every fence** (plain and ```diff) is +1 because `data-line` points at the opening fence; indented code is +0. Web checks `tag==='code'` or `pre.diff-block` (`src/anchor.js:22-34`); native can just switch on block type. Example: `edge-diff`, selecting the `@@ -1,4` line yields `line 4`, the true source line.
+   - **Historical data (before the 2026-10-13 fix):** diff fences were treated as indented code (+0), so diff annotations carry a `line` **one less** than the source. (1) Submitted inline comments sit one line too high on GitHub (the `> quote` is still right). (2) Replay in Menxia is unaffected: threads are placed on the last block with `data-line ≤ line` (`src/ui.js:686-689`), which is still the same diff block. (3) If the off-by-one line was outside the hunk, the note was folded into a 判 — unaffected. (4) Unsubmitted diff drafts saved before the fix keep their stored (old) `line`. No data is rewritten.
 5. A start exactly on a text-node boundary belongs to the start of the following node.
 6. Golden quotes use Range semantics (substring of block text); browser `Selection.toString()` may differ across blocks [unverified]. Native should use the block-text substring.
 
@@ -51,13 +51,13 @@
 
 Inline rule, never inside code. `[[` up to the first `]]`; empty/whitespace, containing `[` or newline → literal text. `target|label` (trimmed; empty label → target); `#` splits file and fragment; `[[#]]` → literal. Text = label.
 
-## 5. Replay and re-anchoring — `src/anchor.js:47-98`, `src/ui.js:1263-1271`
+## 5. Replay and re-anchoring — `src/anchor.js:50-101`, `src/ui.js:1263-1271`
 
 - Replay: **first element in document order** with `data-line == blockLine` (header row → table; loose li → li), `indexOf(quoteRaw)` from `max(0, offset-2)`, then from 0, else nothing.
 - Re-anchor (only for threads whose GitHub `line` is null; order `line ?? reanchor ?? original_line`): needle whitespace-collapsed, **< 4 chars rejected**; among all anchored blocks whose collapsed text contains it, take the **shortest**.
 - `sectionOf`: textContent of the last h1–h3 with `line ≤ blockLine`.
 
-## 6. Drafts, submission, hunk check, fallback — `src/ui.js:797-808,1147-1160`, `src/anchor.js:101-155`
+## 6. Drafts, submission, hunk check, fallback — `src/ui.js:797-808,1147-1160`, `src/anchor.js:104-158`
 
 - Draft `{id, path, ref, blockLine, line, offset, quote, quoteRaw, note, ts}`. Body `"> " + quote + "\n\n" + note`.
 - `validRightLines`: `+`, ` ` and bare empty lines each take one RIGHT line; `-` and `\ No newline` don't; trailing empty element dropped.
@@ -74,4 +74,4 @@ Lowercase → drop `\p{C}\p{Z}` except ASCII space → drop `\p{P}\p{S}` except 
 ## 9. Native notes: markdown-it vs cmark-gfm
 
 (Web side pinned by golden; cmark side all [unverified] until N2 runs the golden.)
-1. Raw HTML → cmark `HTMLBlock`/`InlineHTML`: render the source as text. 2. Tight lists: anchor on ListItem. 3. `lineEnd` range semantics differ. 4. Task lists / footnotes / single-tilde strike would change text — keep extensions to table/strikethrough/autolink. 5. Autolink vs linkify boundaries (display only). 6. Wikilinks must be implemented natively. 7. Exclude image alt from text. 8. Container `\n`s are an HTML-serialization artifact — reproduce per §2. 9. Table interrupting a paragraph. 10. CRLF/NUL normalization. 11. Custom diff rendering and the §3.4 defect. 12. Do all string math on UTF-16 with JS whitespace semantics.
+1. Raw HTML → cmark `HTMLBlock`/`InlineHTML`: render the source as text. 2. Tight lists: anchor on ListItem. 3. `lineEnd` range semantics differ. 4. Task lists / footnotes / single-tilde strike would change text — keep extensions to table/strikethrough/autolink. 5. Autolink vs linkify boundaries (display only). 6. Wikilinks must be implemented natively. 7. Exclude image alt from text. 8. Container `\n`s are an HTML-serialization artifact — reproduce per §2. 9. Table interrupting a paragraph. 10. CRLF/NUL normalization. 11. Custom diff rendering (`data-line` on `<pre>`, but +1 like any fence, §3.4). 12. Do all string math on UTF-16 with JS whitespace semantics.
