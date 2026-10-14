@@ -1,0 +1,153 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhupi-migration-reviews.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 14,
+      "level": 1,
+      "text": "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)",
+      "slug": "zhupi-ab-migration-dual-track-review-full-text-2026-07-26--3rd-round--rewrite-fidelity-audit"
+    },
+    {
+      "line": 27,
+      "level": 1,
+      "text": "I. Fable 5 Review (Fidelity Audit + Preact-ification New Defects)",
+      "slug": "i-fable-5-review-fidelity-audit--preact-ification-new-defects"
+    },
+    {
+      "line": 29,
+      "level": 2,
+      "text": "Overall Comment",
+      "slug": "overall-comment"
+    },
+    {
+      "line": 33,
+      "level": 2,
+      "text": "Checklist 1: 19 Items Survival Judgment",
+      "slug": "checklist-1-19-items-survival-judgment"
+    },
+    {
+      "line": 59,
+      "level": 2,
+      "text": "Checklist 2: Preact-ification New Defects",
+      "slug": "checklist-2-preact-ification-new-defects"
+    },
+    {
+      "line": 73,
+      "level": 2,
+      "text": "Investigation Conclusions on Named Suspects (Not Becoming Defects)",
+      "slug": "investigation-conclusions-on-named-suspects-not-becoming-defects"
+    },
+    {
+      "line": 77,
+      "level": 2,
+      "text": "Only Fix Three Things",
+      "slug": "only-fix-three-things"
+    },
+    {
+      "line": 87,
+      "level": 1,
+      "text": "II. agy / Gemini 3.1 Pro Review",
+      "slug": "ii-agy--gemini-31-pro-review"
+    },
+    {
+      "line": 91,
+      "level": 2,
+      "text": "Checklist A: 13 Items Survival Verification",
+      "slug": "checklist-a-13-items-survival-verification"
+    },
+    {
+      "line": 95,
+      "level": 2,
+      "text": "Checklist B: Migration New Defects",
+      "slug": "checklist-b-migration-new-defects"
+    },
+    {
+      "line": 103,
+      "level": 2,
+      "text": "Only Fix Three Things",
+      "slug": "only-fix-three-things-1"
+    },
+    {
+      "line": 109,
+      "level": 1,
+      "text": "III. Action Log (All implemented on the night of 2026-07-26)",
+      "slug": "iii-action-log-all-implemented-on-the-night-of-2026-07-26"
+    }
+  ],
+  "headings": [
+    {
+      "line": 14,
+      "level": 1,
+      "text": "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)",
+      "slug": "zhupi-ab-migration-dual-track-review-full-text-2026-07-26--3rd-round--rewrite-fidelity-audit"
+    },
+    {
+      "line": 27,
+      "level": 1,
+      "text": "I. Fable 5 Review (Fidelity Audit + Preact-ification New Defects)",
+      "slug": "i-fable-5-review-fidelity-audit--preact-ification-new-defects"
+    },
+    {
+      "line": 29,
+      "level": 2,
+      "text": "Overall Comment",
+      "slug": "overall-comment"
+    },
+    {
+      "line": 33,
+      "level": 2,
+      "text": "Checklist 1: 19 Items Survival Judgment",
+      "slug": "checklist-1-19-items-survival-judgment"
+    },
+    {
+      "line": 59,
+      "level": 2,
+      "text": "Checklist 2: Preact-ification New Defects",
+      "slug": "checklist-2-preact-ification-new-defects"
+    },
+    {
+      "line": 73,
+      "level": 2,
+      "text": "Investigation Conclusions on Named Suspects (Not Becoming Defects)",
+      "slug": "investigation-conclusions-on-named-suspects-not-becoming-defects"
+    },
+    {
+      "line": 77,
+      "level": 2,
+      "text": "Only Fix Three Things",
+      "slug": "only-fix-three-things"
+    },
+    {
+      "line": 87,
+      "level": 1,
+      "text": "II. agy / Gemini 3.1 Pro Review",
+      "slug": "ii-agy--gemini-31-pro-review"
+    },
+    {
+      "line": 91,
+      "level": 2,
+      "text": "Checklist A: 13 Items Survival Verification",
+      "slug": "checklist-a-13-items-survival-verification"
+    },
+    {
+      "line": 95,
+      "level": 2,
+      "text": "Checklist B: Migration New Defects",
+      "slug": "checklist-b-migration-new-defects"
+    },
+    {
+      "line": 103,
+      "level": 2,
+      "text": "Only Fix Three Things",
+      "slug": "only-fix-three-things-1"
+    },
+    {
+      "line": 109,
+      "level": 1,
+      "text": "III. Action Log (All implemented on the night of 2026-07-26)",
+      "slug": "iii-action-log-all-implemented-on-the-night-of-2026-07-26"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "format": 1,
+  "source": "corpus/edge-mixed.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "中英混排 Mixed 与杂项"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "text": "中文 English 混排，含全角，标点；以及 half-width, punctuation. 还有 emoji 😀👍🏽 和 非 BMP 字 𠀀𝄞（UTF-16 代理对）。"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 6,
+      "parent": null,
+      "text": "软换行\n接着一行（softbreak）。"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 8,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "硬换行两空格\n接着一行。"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 11,
+      "lineEnd": 12,
+      "parent": null,
+      "text": "反斜杠硬换行\n接着一行。"
+    },
+    {
+      "i": 5,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 14,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "\n引用一段\n同一段续行\n引用第二段\n\n嵌套引用\n\n\n引用里的列表\n第二项\n\n"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 14,
+      "lineEnd": 15,
+      "parent": 5,
+      "text": "引用一段\n同一段续行"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": 5,
+      "text": "引用第二段"
+    },
+    {
+      "i": 8,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": 5,
+      "text": "\n嵌套引用\n"
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": 8,
+      "text": "嵌套引用"
+    },
+    {
+      "i": 10,
+      "type": "list_item",
+      "tag": "li",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": 5,
+      "text": "引用里的列表"
+    },
+    {
+      "i": 11,
+      "type": "list_item",
+      "tag": "li",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": 5,
+      "text": "第二项"
+    },
+    {
+      "i": 12,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": null,
+      "text": "斜体 斜体 粗 粗 删除线 行内 code"
+    },
+    {
+      "i": 13,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": null,
+      "text": "组合字符：é（e + U+0301）与 é（预组合）。"
+    },
+    {
+      "i": 14,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": null,
+      "text": "Ｆｕｌｌｗｉｄｔｈ　全角空格分隔（U+3000）。"
+    }
+  ]
+}

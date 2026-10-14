@@ -1,0 +1,97 @@
+{
+  "format": 1,
+  "source": "corpus/edge-blank-boundaries.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 4,
+      "lineEnd": 4,
+      "parent": null,
+      "text": "文首有两行空行，这段在第 3 行。"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 8,
+      "lineEnd": 8,
+      "parent": null,
+      "text": "中间三行空行。"
+    },
+    {
+      "i": 2,
+      "type": "heading",
+      "tag": "h1",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "level": 1,
+      "text": "标题紧贴上一段（无空行）"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 10,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "标题后紧贴段落。"
+    },
+    {
+      "i": 4,
+      "type": "list_item",
+      "tag": "li",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": null,
+      "text": "列表打断段落"
+    },
+    {
+      "i": 5,
+      "type": "list_item",
+      "tag": "li",
+      "line": 12,
+      "lineEnd": 15,
+      "parent": null,
+      "text": "第二项\n段落续在列表项里（lazy continuation）"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "上一行只有空白。"
+    },
+    {
+      "i": 7,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 17,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "\n引用\n懒续行进引用\n"
+    },
+    {
+      "i": 8,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 17,
+      "lineEnd": 18,
+      "parent": 7,
+      "text": "引用\n懒续行进引用"
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "最后一行没有换行符"
+    }
+  ]
+}

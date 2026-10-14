@@ -1,0 +1,56 @@
+{
+  "format": 1,
+  "fn": "parseReadState",
+  "cases": [
+    {
+      "input": "<!-- menxia-readstate {\"device\":\"iPhone\",\"docPath\":\"docs/a.zh-CN.md\",\"anchor\":\"L42\",\"time\":\"2026-10-13T12:00:00.000Z\",\"v\":1} -->\n_门下续读位置（自动维护，勿手改）：iPhone · docs/a.zh-CN.md_",
+      "output": {
+        "device": "iPhone",
+        "docPath": "docs/a.zh-CN.md",
+        "anchor": "L42",
+        "time": "2026-10-13T12:00:00.000Z",
+        "v": 1
+      }
+    },
+    {
+      "input": "﻿  <!-- menxia-readstate {\"device\":\"Mac\",\"docPath\":\"d.md\",\"anchor\":\"L7\",\"time\":\"t\",\"v\":2} -->",
+      "output": {
+        "device": "Mac",
+        "docPath": "d.md",
+        "anchor": "L7",
+        "time": "t",
+        "v": 2
+      }
+    },
+    {
+      "input": "<!--menxia-readstate {\"device\":1,\"docPath\":\"d.md\"}-->",
+      "output": {
+        "device": "",
+        "docPath": "d.md",
+        "anchor": "",
+        "time": "",
+        "v": 1
+      }
+    },
+    {
+      "input": "<!-- menxia-readstate {坏 json} -->",
+      "output": null
+    },
+    {
+      "input": "<!-- menxia-readstate null -->",
+      "output": null
+    },
+    {
+      "input": "前面有字 <!-- menxia-readstate {\"docPath\":\"d.md\"} -->",
+      "output": null
+    },
+    {
+      "input": "普通判",
+      "output": null
+    },
+    {
+      "input": null,
+      "output": null
+    }
+  ]
+}

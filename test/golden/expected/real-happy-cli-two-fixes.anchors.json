@@ -1,0 +1,1978 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-cli-two-fixes.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "Two happ",
+        "quoteRaw": "Two happ"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 80,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "The bodi",
+        "quoteRaw": "The bodi"
+      },
+      "replay": {
+        "block": 2,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 32,
+      "length": 8,
+      "docStart": 112,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 32,
+        "quote": "go out v",
+        "quoteRaw": "go out v"
+      },
+      "replay": {
+        "block": 2,
+        "start": 33,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 67,
+      "length": 8,
+      "docStart": 147,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 67,
+        "quote": "slopus/h",
+        "quoteRaw": "slopus/h"
+      },
+      "replay": {
+        "block": 2,
+        "start": 68,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 79,
+      "length": 8,
+      "docStart": 159,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 79,
+        "quote": ", under",
+        "quoteRaw": ", under"
+      },
+      "replay": {
+        "block": 2,
+        "start": 80,
+        "length": 7
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 223,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "1. Start",
+        "quoteRaw": "1. Start"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 272,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "Screened",
+        "quoteRaw": "Screened"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 96,
+      "length": 8,
+      "docStart": 368,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 96,
+        "quote": "fixes ge",
+        "quoteRaw": "fixes ge"
+      },
+      "replay": {
+        "block": 5,
+        "start": 96,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 197,
+      "length": 8,
+      "docStart": 469,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 197,
+        "quote": ") and pi",
+        "quoteRaw": ") and pi"
+      },
+      "replay": {
+        "block": 5,
+        "start": 197,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 490,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 1,
+        "quote": "Issue Re",
+        "quoteRaw": "Issue\nRe"
+      },
+      "replay": {
+        "block": 6,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 496,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 7,
+        "quote": "Reporter",
+        "quoteRaw": "Reporter"
+      },
+      "replay": {
+        "block": 6,
+        "start": 9,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 505,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 16,
+        "quote": "Symptom",
+        "quoteRaw": "Symptom"
+      },
+      "replay": {
+        "block": 6,
+        "start": 18,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 517,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 1,
+        "quote": "#1532 Ye",
+        "quoteRaw": "#1532\nYe"
+      },
+      "replay": {
+        "block": 8,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 523,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 7,
+        "quote": "YesYouKe",
+        "quoteRaw": "YesYouKe"
+      },
+      "replay": {
+        "block": 8,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 538,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 22,
+        "quote": "happy --",
+        "quoteRaw": "happy --"
+      },
+      "replay": {
+        "block": 8,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 554,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 38,
+        "quote": "doesn't",
+        "quoteRaw": "doesn't"
+      },
+      "replay": {
+        "block": 8,
+        "start": 38,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 608,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 1,
+        "quote": "#1529 ka",
+        "quoteRaw": "#1529\nka"
+      },
+      "replay": {
+        "block": 9,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 614,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 7,
+        "quote": "kaovilai",
+        "quoteRaw": "kaovilai"
+      },
+      "replay": {
+        "block": 9,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 623,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 16,
+        "quote": "happy up",
+        "quoteRaw": "happy up"
+      },
+      "replay": {
+        "block": 9,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 29,
+      "length": 8,
+      "docStart": 636,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 29,
+        "quote": "fails wi",
+        "quoteRaw": "fails wi"
+      },
+      "replay": {
+        "block": 9,
+        "start": 29,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 40,
+      "length": 8,
+      "docStart": 647,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 40,
+        "quote": "error: u",
+        "quoteRaw": "error: u"
+      },
+      "replay": {
+        "block": 9,
+        "start": 40,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 685,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "While re",
+        "quoteRaw": "While re"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 710,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 25,
+        "quote": "picked u",
+        "quoteRaw": "picked u"
+      },
+      "replay": {
+        "block": 10,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 60,
+      "length": 8,
+      "docStart": 745,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 60,
+        "quote": ": the \"C",
+        "quoteRaw": ": the \"C"
+      },
+      "replay": {
+        "block": 10,
+        "start": 60,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 97,
+      "length": 8,
+      "docStart": 782,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 97,
+        "quote": "happy --",
+        "quoteRaw": "happy --"
+      },
+      "replay": {
+        "block": 10,
+        "start": 97,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 110,
+      "length": 8,
+      "docStart": 795,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 110,
+        "quote": "has neve",
+        "quoteRaw": "has neve"
+      },
+      "replay": {
+        "block": 10,
+        "start": 110,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 114,
+      "length": 8,
+      "docStart": 799,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 114,
+        "quote": "never pr",
+        "quoteRaw": "never pr"
+      },
+      "replay": {
+        "block": 10,
+        "start": 114,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 148,
+      "length": 8,
+      "docStart": 833,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 148,
+        "quote": "— the cl",
+        "quoteRaw": "— the cl"
+      },
+      "replay": {
+        "block": 10,
+        "start": 148,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 154,
+      "length": 8,
+      "docStart": 839,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 154,
+        "quote": "claude_l",
+        "quoteRaw": "claude_l"
+      },
+      "replay": {
+        "block": 10,
+        "start": 154,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 180,
+      "length": 8,
+      "docStart": 865,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 180,
+        "quote": "that cla",
+        "quoteRaw": "that cla"
+      },
+      "replay": {
+        "block": 10,
+        "start": 180,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 185,
+      "length": 8,
+      "docStart": 870,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 185,
+        "quote": "claudeCl",
+        "quoteRaw": "claudeCl"
+      },
+      "replay": {
+        "block": 10,
+        "start": 185,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 199,
+      "length": 8,
+      "docStart": 884,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 199,
+        "quote": "points a",
+        "quoteRaw": "points a"
+      },
+      "replay": {
+        "block": 10,
+        "start": 199,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 236,
+      "length": 8,
+      "docStart": 921,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 236,
+        "quote": "100644 i",
+        "quoteRaw": "100644 i"
+      },
+      "replay": {
+        "block": 10,
+        "start": 236,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 243,
+      "length": 8,
+      "docStart": 928,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 243,
+        "quote": "in git,",
+        "quoteRaw": "in git,"
+      },
+      "replay": {
+        "block": 10,
+        "start": 243,
+        "length": 7
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 254,
+      "length": 8,
+      "docStart": 939,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 254,
+        "quote": "execFile",
+        "quoteRaw": "execFile"
+      },
+      "replay": {
+        "block": 10,
+        "start": 254,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 267,
+      "length": 8,
+      "docStart": 952,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 267,
+        "quote": "running",
+        "quoteRaw": "running"
+      },
+      "replay": {
+        "block": 10,
+        "start": 267,
+        "length": 7
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 318,
+      "length": 8,
+      "docStart": 1003,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 318,
+        "quote": "catch fl",
+        "quoteRaw": "catch fl"
+      },
+      "replay": {
+        "block": 10,
+        "start": 318,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 324,
+      "length": 8,
+      "docStart": 1009,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 324,
+        "quote": "flattens",
+        "quoteRaw": "flattens"
+      },
+      "replay": {
+        "block": 10,
+        "start": 324,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1075,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "So it st",
+        "quoteRaw": "So it st"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1103,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "2. Doubl",
+        "quoteRaw": "2. Doubl"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1218,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "Verdict:",
+        "quoteRaw": "Verdict:"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1268,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 0,
+        "quote": "Two mist",
+        "quoteRaw": "Two mist"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1296,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 0,
+        "quote": "① I intr",
+        "quoteRaw": "① I intr"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1383,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 0,
+        "quote": "I had --",
+        "quoteRaw": "I had --"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 1389,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 6,
+        "quote": "--versio",
+        "quoteRaw": "--versio"
+      },
+      "replay": {
+        "block": 16,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 1399,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 16,
+        "quote": "also pri",
+        "quoteRaw": "also pri"
+      },
+      "replay": {
+        "block": 16,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1470,
+      "expect": {
+        "blockLine": 30,
+        "line": 31,
+        "offset": 0,
+        "quote": "stdout:",
+        "quoteRaw": "stdout:"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1603,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 0,
+        "quote": "That lin",
+        "quoteRaw": "That lin"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 21,
+      "length": 8,
+      "docStart": 1624,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 21,
+        "quote": "getClaud",
+        "quoteRaw": "getClaud"
+      },
+      "replay": {
+        "block": 18,
+        "start": 21,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 39,
+      "length": 8,
+      "docStart": 1642,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 39,
+        "quote": ", every",
+        "quoteRaw": ", every"
+      },
+      "replay": {
+        "block": 18,
+        "start": 39,
+        "length": 7
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 114,
+      "length": 8,
+      "docStart": 1717,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 114,
+        "quote": "I stared",
+        "quoteRaw": "I stared"
+      },
+      "replay": {
+        "block": 18,
+        "start": 114,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 168,
+      "length": 8,
+      "docStart": 1771,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 168,
+        "quote": ". The sa",
+        "quoteRaw": ". The sa"
+      },
+      "replay": {
+        "block": 18,
+        "start": 168,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 211,
+      "length": 8,
+      "docStart": 1814,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 211,
+        "quote": "claude_v",
+        "quoteRaw": "claude_v"
+      },
+      "replay": {
+        "block": 18,
+        "start": 211,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 240,
+      "length": 8,
+      "docStart": 1843,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 240,
+        "quote": "(stdio:[",
+        "quoteRaw": "(stdio:["
+      },
+      "replay": {
+        "block": 18,
+        "start": 240,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 241,
+      "length": 8,
+      "docStart": 1844,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 241,
+        "quote": "stdio:['",
+        "quoteRaw": "stdio:['"
+      },
+      "replay": {
+        "block": 18,
+        "start": 241,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 273,
+      "length": 2,
+      "docStart": 1876,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 273,
+        "quote": ").",
+        "quoteRaw": ")."
+      },
+      "replay": {
+        "block": 18,
+        "start": 273,
+        "length": 2
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1879,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 0,
+        "quote": "② I used",
+        "quoteRaw": "② I used"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1955,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 0,
+        "quote": "src/inde",
+        "quoteRaw": "src/inde"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 1968,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 13,
+        "quote": "has zero",
+        "quoteRaw": "has zero"
+      },
+      "replay": {
+        "block": 20,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 1972,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 17,
+        "quote": "zero tes",
+        "quoteRaw": "zero tes"
+      },
+      "replay": {
+        "block": 20,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 36,
+      "length": 8,
+      "docStart": 1991,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 36,
+        "quote": "— the un",
+        "quoteRaw": "— the un"
+      },
+      "replay": {
+        "block": 20,
+        "start": 36,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 69,
+      "length": 8,
+      "docStart": 2024,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 69,
+        "quote": "src/**/*",
+        "quoteRaw": "src/**/*"
+      },
+      "replay": {
+        "block": 20,
+        "start": 69,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 85,
+      "length": 8,
+      "docStart": 2040,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 85,
+        "quote": ", there",
+        "quoteRaw": ", there"
+      },
+      "replay": {
+        "block": 20,
+        "start": 85,
+        "length": 7
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 99,
+      "length": 8,
+      "docStart": 2054,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 99,
+        "quote": "index.te",
+        "quoteRaw": "index.te"
+      },
+      "replay": {
+        "block": 20,
+        "start": 99,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 112,
+      "length": 8,
+      "docStart": 2067,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 112,
+        "quote": ", and no",
+        "quoteRaw": ", and no"
+      },
+      "replay": {
+        "block": 20,
+        "start": 112,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2231,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 0,
+        "quote": "Same fai",
+        "quoteRaw": "Same fai"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 86,
+      "length": 8,
+      "docStart": 2317,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 86,
+        "quote": "measure",
+        "quoteRaw": "measure"
+      },
+      "replay": {
+        "block": 21,
+        "start": 86,
+        "length": 7
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2443,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 0,
+        "quote": "Other re",
+        "quoteRaw": "Other re"
+      },
+      "replay": {
+        "block": 22,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2483,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 0,
+        "quote": "With cla",
+        "quoteRaw": "With cla"
+      },
+      "replay": {
+        "block": 23,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 27,
+      "length": 8,
+      "docStart": 2510,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 27,
+        "quote": "happy --",
+        "quoteRaw": "happy --"
+      },
+      "replay": {
+        "block": 23,
+        "start": 27,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 43,
+      "length": 8,
+      "docStart": 2526,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 43,
+        "quote": "turns in",
+        "quoteRaw": "turns in"
+      },
+      "replay": {
+        "block": 23,
+        "start": 43,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 88,
+      "length": 8,
+      "docStart": 2571,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 88,
+        "quote": "exit(1).",
+        "quoteRaw": "exit(1)."
+      },
+      "replay": {
+        "block": 23,
+        "start": 88,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 95,
+      "length": 8,
+      "docStart": 2578,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 95,
+        "quote": ". happy",
+        "quoteRaw": ". happy"
+      },
+      "replay": {
+        "block": 23,
+        "start": 95,
+        "length": 7
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 97,
+      "length": 8,
+      "docStart": 2580,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 97,
+        "quote": "happy su",
+        "quoteRaw": "happy su"
+      },
+      "replay": {
+        "block": 23,
+        "start": 97,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 144,
+      "length": 8,
+      "docStart": 2627,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 144,
+        "quote": "claude i",
+        "quoteRaw": "claude i"
+      },
+      "replay": {
+        "block": 23,
+        "start": 144,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 179,
+      "length": 8,
+      "docStart": 2662,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 179,
+        "quote": ". A code",
+        "quoteRaw": ". A code"
+      },
+      "replay": {
+        "block": 23,
+        "start": 179,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 295,
+      "length": 8,
+      "docStart": 2778,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 295,
+        "quote": "entirely",
+        "quoteRaw": "entirely"
+      },
+      "replay": {
+        "block": 23,
+        "start": 295,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "Two happy-cli up",
+      "expect": 3
+    },
+    {
+      "quote": "The bodies of th",
+      "expect": 5
+    },
+    {
+      "quote": "The bodies of th",
+      "expect": 5
+    },
+    {
+      "quote": "1. Starting poin",
+      "expect": 7
+    },
+    {
+      "quote": "Screened upstrea",
+      "expect": 9
+    },
+    {
+      "quote": "Issue Reporter S",
+      "expect": 11
+    },
+    {
+      "quote": "Issue Reporter S",
+      "expect": 11
+    },
+    {
+      "quote": "#1532 YesYouKenS",
+      "expect": 13
+    },
+    {
+      "quote": "#1529 kaovilai h",
+      "expect": 14
+    },
+    {
+      "quote": "While reading th",
+      "expect": 16
+    },
+    {
+      "quote": "So it started as",
+      "expect": 18
+    },
+    {
+      "quote": "2. Double review",
+      "expect": 20
+    },
+    {
+      "quote": "Verdict: none of",
+      "expect": 22
+    },
+    {
+      "quote": "Two mistakes tha",
+      "expect": 24
+    },
+    {
+      "quote": "① I introduced s",
+      "expect": 26
+    },
+    {
+      "quote": "I had --version ",
+      "expect": 28
+    },
+    {
+      "quote": "stdout: happy ve",
+      "expect": 30
+    },
+    {
+      "quote": "That line comes ",
+      "expect": 36
+    },
+    {
+      "quote": "② I used \"unit t",
+      "expect": 38
+    },
+    {
+      "quote": "src/index.ts has",
+      "expect": 234
+    },
+    {
+      "quote": "Same failure mod",
+      "expect": 42
+    },
+    {
+      "quote": "Other real probl",
+      "expect": 44
+    },
+    {
+      "quote": "With claude not ",
+      "expect": 46
+    },
+    {
+      "quote": "upgrade is an al",
+      "expect": 47
+    },
+    {
+      "quote": "Signal exit code",
+      "expect": 48
+    },
+    {
+      "quote": "On Windows it's ",
+      "expect": 49
+    },
+    {
+      "quote": "There are real c",
+      "expect": 50
+    },
+    {
+      "quote": "The one place th",
+      "expect": 52
+    },
+    {
+      "quote": "process.execPath",
+      "expect": 54
+    },
+    {
+      "quote": "I went with Opus",
+      "expect": 56
+    },
+    {
+      "quote": "One finding only",
+      "expect": 58
+    },
+    {
+      "quote": "agy claimed that",
+      "expect": 60
+    },
+    {
+      "quote": "3. Root cause: I",
+      "expect": 62
+    },
+    {
+      "quote": "I packed two thi",
+      "expect": 64
+    },
+    {
+      "quote": "(a) Don't open a",
+      "expect": 66
+    },
+    {
+      "quote": "(b) Print claude",
+      "expect": 67
+    },
+    {
+      "quote": "Both blockers ca",
+      "expect": 69
+    },
+    {
+      "quote": "And Opus produce",
+      "expect": 71
+    },
+    {
+      "quote": "4. Where it land",
+      "expect": 73
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "Two happy-cli upstream fixes: double review cut three down to two"
+    ],
+    [
+      5,
+      "Two happy-cli upstream fixes: double review cut three down to two"
+    ],
+    [
+      7,
+      "1. Starting point: two genuine low hanging fruit"
+    ],
+    [
+      9,
+      "1. Starting point: two genuine low hanging fruit"
+    ],
+    [
+      11,
+      "1. Starting point: two genuine low hanging fruit"
+    ],
+    [
+      13,
+      "1. Starting point: two genuine low hanging fruit"
+    ],
+    [
+      14,
+      "1. Starting point: two genuine low hanging fruit"
+    ],
+    [
+      16,
+      "1. Starting point: two genuine low hanging fruit"
+    ],
+    [
+      18,
+      "1. Starting point: two genuine low hanging fruit"
+    ],
+    [
+      20,
+      "2. Double review (Opus and agy, one pass each — two independent model reviews, adversarial prompts, no cross-talk)"
+    ],
+    [
+      22,
+      "2. Double review (Opus and agy, one pass each — two independent model reviews, adversarial prompts, no cross-talk)"
+    ],
+    [
+      24,
+      "Two mistakes that were mine"
+    ],
+    [
+      26,
+      "Two mistakes that were mine"
+    ],
+    [
+      28,
+      "Two mistakes that were mine"
+    ],
+    [
+      30,
+      "Two mistakes that were mine"
+    ],
+    [
+      36,
+      "Two mistakes that were mine"
+    ],
+    [
+      38,
+      "Two mistakes that were mine"
+    ],
+    [
+      40,
+      "Two mistakes that were mine"
+    ],
+    [
+      42,
+      "Two mistakes that were mine"
+    ],
+    [
+      44,
+      "Other real problems the reviews caught"
+    ],
+    [
+      46,
+      "Other real problems the reviews caught"
+    ],
+    [
+      47,
+      "Other real problems the reviews caught"
+    ],
+    [
+      48,
+      "Other real problems the reviews caught"
+    ],
+    [
+      49,
+      "Other real problems the reviews caught"
+    ],
+    [
+      50,
+      "Other real problems the reviews caught"
+    ],
+    [
+      52,
+      "The one place the two reviews contradicted each other, and how I ruled"
+    ],
+    [
+      54,
+      "The one place the two reviews contradicted each other, and how I ruled"
+    ],
+    [
+      56,
+      "The one place the two reviews contradicted each other, and how I ruled"
+    ],
+    [
+      58,
+      "One finding only agy reported, which I'm marking unresolved"
+    ],
+    [
+      60,
+      "One finding only agy reported, which I'm marking unresolved"
+    ],
+    [
+      62,
+      "3. Root cause: I hit playbook ④(b) again"
+    ],
+    [
+      64,
+      "3. Root cause: I hit playbook ④(b) again"
+    ],
+    [
+      66,
+      "3. Root cause: I hit playbook ④(b) again"
+    ],
+    [
+      67,
+      "3. Root cause: I hit playbook ④(b) again"
+    ],
+    [
+      69,
+      "3. Root cause: I hit playbook ④(b) again"
+    ],
+    [
+      71,
+      "3. Root cause: I hit playbook ④(b) again"
+    ],
+    [
+      73,
+      "4. Where it landed"
+    ],
+    [
+      75,
+      "4. Where it landed"
+    ],
+    [
+      77,
+      "4. Where it landed"
+    ],
+    [
+      78,
+      "4. Where it landed"
+    ],
+    [
+      79,
+      "4. Where it landed"
+    ],
+    [
+      81,
+      "Two things I couldn't verify"
+    ],
+    [
+      83,
+      "Two things I couldn't verify"
+    ],
+    [
+      88,
+      "Two things I couldn't verify"
+    ],
+    [
+      89,
+      "Two things I couldn't verify"
+    ],
+    [
+      91,
+      "5. The two diffs"
+    ],
+    [
+      93,
+      "5. The two diffs"
+    ],
+    [
+      95,
+      "5. The two diffs"
+    ],
+    [
+      105,
+      "5. The two diffs"
+    ],
+    [
+      107,
+      "5. The two diffs"
+    ],
+    [
+      164,
+      "6. The two PR bodies (the text that ships — please read it line by line)"
+    ],
+    [
+      166,
+      "PR1 · fix(cli): exit after printing the version instead of opening a session"
+    ],
+    [
+      168,
+      "PR1 · fix(cli): exit after printing the version instead of opening a session"
+    ],
+    [
+      170,
+      "Problem"
+    ],
+    [
+      172,
+      "Problem"
+    ],
+    [
+      174,
+      "Problem"
+    ],
+    [
+      179,
+      "Problem"
+    ],
+    [
+      181,
+      "Problem"
+    ],
+    [
+      191,
+      "Problem"
+    ],
+    [
+      193,
+      "Problem"
+    ],
+    [
+      195,
+      "What changed"
+    ],
+    [
+      197,
+      "What changed"
+    ],
+    [
+      199,
+      "What changed"
+    ],
+    [
+      201,
+      "What changed"
+    ],
+    [
+      203,
+      "Test plan"
+    ],
+    [
+      205,
+      "Test plan"
+    ],
+    [
+      206,
+      "Test plan"
+    ],
+    [
+      207,
+      "Test plan"
+    ],
+    [
+      209,
+      "PR2 · fix(cli): delegate happy update/upgrade to claude"
+    ],
+    [
+      211,
+      "PR2 · fix(cli): delegate happy update/upgrade to claude"
+    ],
+    [
+      213,
+      "Problem"
+    ],
+    [
+      215,
+      "Problem"
+    ],
+    [
+      217,
+      "Problem"
+    ],
+    [
+      221,
+      "What changed"
+    ],
+    [
+      223,
+      "What changed"
+    ],
+    [
+      225,
+      "What changed"
+    ],
+    [
+      227,
+      "What changed"
+    ],
+    [
+      229,
+      "Test plan"
+    ],
+    [
+      231,
+      "Test plan"
+    ],
+    [
+      232,
+      "Test plan"
+    ],
+    [
+      233,
+      "Test plan"
+    ],
+    [
+      234,
+      "Test plan"
+    ],
+    [
+      236,
+      "Known limitation"
+    ],
+    [
+      238,
+      "Known limitation"
+    ],
+    [
+      240,
+      "7. A note on the verification environment"
+    ],
+    [
+      242,
+      "7. A note on the verification environment"
+    ],
+    [
+      244,
+      "7. A note on the verification environment"
+    ]
+  ]
+}

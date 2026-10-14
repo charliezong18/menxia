@@ -1,0 +1,1968 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-cli-two-fixes.zh-CN.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "两个 happy",
+        "quoteRaw": "两个 happy"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 42,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "这两折的正文将原",
+        "quoteRaw": "这两折的正文将原"
+      },
+      "replay": {
+        "block": 2,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 48,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 6,
+        "quote": "将原样发到公开仓",
+        "quoteRaw": "将原样发到公开仓"
+      },
+      "replay": {
+        "block": 2,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 57,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 15,
+        "quote": "slopus/h",
+        "quoteRaw": "slopus/h"
+      },
+      "replay": {
+        "block": 2,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 27,
+      "length": 8,
+      "docStart": 69,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 27,
+        "quote": "，署你的名。所以",
+        "quoteRaw": "，署你的名。所以"
+      },
+      "replay": {
+        "block": 2,
+        "start": 28,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 90,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "1. 起点：两个",
+        "quoteRaw": "1. 起点：两个"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 118,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "按你那份「给业余",
+        "quoteRaw": "按你那份「给业余"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 35,
+      "length": 8,
+      "docStart": 153,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 35,
+        "quote": "fix 收 fe",
+        "quoteRaw": "fix 收 fe"
+      },
+      "replay": {
+        "block": 5,
+        "start": 35,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 71,
+      "length": 7,
+      "docStart": 189,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 71,
+        "quote": "），挑出两个：",
+        "quoteRaw": "），挑出两个："
+      },
+      "replay": {
+        "block": 5,
+        "start": 71,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 200,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 1,
+        "quote": "Issue 报告",
+        "quoteRaw": "Issue\n报告"
+      },
+      "replay": {
+        "block": 6,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 7,
+      "length": 7,
+      "docStart": 206,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 7,
+        "quote": "报告人 症状",
+        "quoteRaw": "报告人\n症状"
+      },
+      "replay": {
+        "block": 6,
+        "start": 9,
+        "length": 6
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 11,
+      "length": 3,
+      "docStart": 210,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 11,
+        "quote": "症状",
+        "quoteRaw": "症状"
+      },
+      "replay": {
+        "block": 6,
+        "start": 13,
+        "length": 2
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 217,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 1,
+        "quote": "#1532 Ye",
+        "quoteRaw": "#1532\nYe"
+      },
+      "replay": {
+        "block": 8,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 223,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 7,
+        "quote": "YesYouKe",
+        "quoteRaw": "YesYouKe"
+      },
+      "replay": {
+        "block": 8,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 238,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 22,
+        "quote": "happy --",
+        "quoteRaw": "happy --"
+      },
+      "replay": {
+        "block": 8,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 254,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 38,
+        "quote": "不打印版本，反而",
+        "quoteRaw": "不打印版本，反而"
+      },
+      "replay": {
+        "block": 8,
+        "start": 38,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 270,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 1,
+        "quote": "#1529 ka",
+        "quoteRaw": "#1529\nka"
+      },
+      "replay": {
+        "block": 9,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 276,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 7,
+        "quote": "kaovilai",
+        "quoteRaw": "kaovilai"
+      },
+      "replay": {
+        "block": 9,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 285,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 16,
+        "quote": "happy up",
+        "quoteRaw": "happy up"
+      },
+      "replay": {
+        "block": 9,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 29,
+      "length": 8,
+      "docStart": 298,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 29,
+        "quote": "报 error:",
+        "quoteRaw": "报 error:"
+      },
+      "replay": {
+        "block": 9,
+        "start": 29,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 31,
+      "length": 8,
+      "docStart": 300,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 31,
+        "quote": "error: u",
+        "quoteRaw": "error: u"
+      },
+      "replay": {
+        "block": 9,
+        "start": 31,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 338,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "摸代码时顺手捡到",
+        "quoteRaw": "摸代码时顺手捡到"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 342,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 4,
+        "quote": "顺手捡到第三个：",
+        "quoteRaw": "顺手捡到第三个："
+      },
+      "replay": {
+        "block": 10,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 349,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 11,
+        "quote": "：happy -",
+        "quoteRaw": "：happy -"
+      },
+      "replay": {
+        "block": 10,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 350,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 12,
+        "quote": "happy --",
+        "quoteRaw": "happy --"
+      },
+      "replay": {
+        "block": 10,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 363,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 25,
+        "quote": "里那段「Clau",
+        "quoteRaw": "里那段「Clau"
+      },
+      "replay": {
+        "block": 10,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 50,
+      "length": 8,
+      "docStart": 388,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 50,
+        "quote": "任何安装上都没打",
+        "quoteRaw": "任何安装上都没打"
+      },
+      "replay": {
+        "block": 10,
+        "start": 50,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 60,
+      "length": 8,
+      "docStart": 398,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 60,
+        "quote": "——claude",
+        "quoteRaw": "——claude"
+      },
+      "replay": {
+        "block": 10,
+        "start": 60,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 62,
+      "length": 8,
+      "docStart": 400,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 62,
+        "quote": "claudeCl",
+        "quoteRaw": "claudeCl"
+      },
+      "replay": {
+        "block": 10,
+        "start": 62,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 76,
+      "length": 8,
+      "docStart": 414,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 76,
+        "quote": "指向的 clau",
+        "quoteRaw": "指向的 clau"
+      },
+      "replay": {
+        "block": 10,
+        "start": 76,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 80,
+      "length": 8,
+      "docStart": 418,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 80,
+        "quote": "claude_l",
+        "quoteRaw": "claude_l"
+      },
+      "replay": {
+        "block": 10,
+        "start": 80,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 106,
+      "length": 8,
+      "docStart": 444,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 106,
+        "quote": "没有 sheba",
+        "quoteRaw": "没有 sheba"
+      },
+      "replay": {
+        "block": 10,
+        "start": 106,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 124,
+      "length": 8,
+      "docStart": 462,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 124,
+        "quote": "100644，e",
+        "quoteRaw": "100644，e"
+      },
+      "replay": {
+        "block": 10,
+        "start": 124,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 130,
+      "length": 8,
+      "docStart": 468,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 130,
+        "quote": "，execFil",
+        "quoteRaw": "，execFil"
+      },
+      "replay": {
+        "block": 10,
+        "start": 130,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 131,
+      "length": 8,
+      "docStart": 469,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 131,
+        "quote": "execFile",
+        "quoteRaw": "execFile"
+      },
+      "replay": {
+        "block": 10,
+        "start": 131,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 144,
+      "length": 8,
+      "docStart": 482,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 144,
+        "quote": "直接执行它必然失",
+        "quoteRaw": "直接执行它必然失"
+      },
+      "replay": {
+        "block": 10,
+        "start": 144,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 154,
+      "length": 8,
+      "docStart": 492,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 154,
+        "quote": "catch 把真",
+        "quoteRaw": "catch 把真"
+      },
+      "replay": {
+        "block": 10,
+        "start": 154,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 160,
+      "length": 8,
+      "docStart": 498,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 160,
+        "quote": "把真相压成一句「",
+        "quoteRaw": "把真相压成一句「"
+      },
+      "replay": {
+        "block": 10,
+        "start": 160,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 538,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "于是本来是三个",
+        "quoteRaw": "于是本来是三个"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 550,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "2. 双查（Op",
+        "quoteRaw": "2. 双查（Op"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 588,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "结论：三个都不能",
+        "quoteRaw": "结论：三个都不能"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 602,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 0,
+        "quote": "我自己犯的两个错",
+        "quoteRaw": "我自己犯的两个错"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 611,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 0,
+        "quote": "① 我往 std",
+        "quoteRaw": "① 我往 std"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 644,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 0,
+        "quote": "我给 --ver",
+        "quoteRaw": "我给 --ver"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 647,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 3,
+        "quote": "--versio",
+        "quoteRaw": "--versio"
+      },
+      "replay": {
+        "block": 16,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 657,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 13,
+        "quote": "加了「顺手也打印",
+        "quoteRaw": "加了「顺手也打印"
+      },
+      "replay": {
+        "block": 16,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 683,
+      "expect": {
+        "blockLine": 30,
+        "line": 31,
+        "offset": 0,
+        "quote": "stdout:",
+        "quoteRaw": "stdout:"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 803,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 0,
+        "quote": "那行是 getC",
+        "quoteRaw": "那行是 getC"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 807,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 4,
+        "quote": "getClaud",
+        "quoteRaw": "getClaud"
+      },
+      "replay": {
+        "block": 18,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 826,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 23,
+        "quote": "每次都打的。我在",
+        "quoteRaw": "每次都打的。我在"
+      },
+      "replay": {
+        "block": 18,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 41,
+      "length": 8,
+      "docStart": 844,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 41,
+        "quote": "盯着它却没认出来",
+        "quoteRaw": "盯着它却没认出来"
+      },
+      "replay": {
+        "block": 18,
+        "start": 41,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 54,
+      "length": 8,
+      "docStart": 857,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 54,
+        "quote": "。同一个文件 c",
+        "quoteRaw": "。同一个文件 c"
+      },
+      "replay": {
+        "block": 18,
+        "start": 54,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 61,
+      "length": 8,
+      "docStart": 864,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 61,
+        "quote": "claude_v",
+        "quoteRaw": "claude_v"
+      },
+      "replay": {
+        "block": 18,
+        "start": 61,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 90,
+      "length": 8,
+      "docStart": 893,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 90,
+        "quote": "早就写对了（st",
+        "quoteRaw": "早就写对了（st"
+      },
+      "replay": {
+        "block": 18,
+        "start": 90,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 96,
+      "length": 8,
+      "docStart": 899,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 96,
+        "quote": "stdio:['",
+        "quoteRaw": "stdio:['"
+      },
+      "replay": {
+        "block": 18,
+        "start": 96,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 128,
+      "length": 2,
+      "docStart": 931,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 128,
+        "quote": "）。",
+        "quoteRaw": "）。"
+      },
+      "replay": {
+        "block": 18,
+        "start": 128,
+        "length": 2
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 934,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 0,
+        "quote": "② 我拿「单测",
+        "quoteRaw": "② 我拿「单测"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 966,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 0,
+        "quote": "src/inde",
+        "quoteRaw": "src/inde"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 979,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 13,
+        "quote": "零测试覆盖——u",
+        "quoteRaw": "零测试覆盖——u"
+      },
+      "replay": {
+        "block": 20,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 984,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 18,
+        "quote": "——unit p",
+        "quoteRaw": "——unit p"
+      },
+      "replay": {
+        "block": 20,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 43,
+      "length": 8,
+      "docStart": 1009,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 43,
+        "quote": "src/**/*",
+        "quoteRaw": "src/**/*"
+      },
+      "replay": {
+        "block": 20,
+        "start": 43,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 59,
+      "length": 8,
+      "docStart": 1025,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 59,
+        "quote": "，没有 inde",
+        "quoteRaw": "，没有 inde"
+      },
+      "replay": {
+        "block": 20,
+        "start": 59,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 63,
+      "length": 8,
+      "docStart": 1029,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 63,
+        "quote": "index.te",
+        "quoteRaw": "index.te"
+      },
+      "replay": {
+        "block": 20,
+        "start": 63,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 76,
+      "length": 8,
+      "docStart": 1042,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 76,
+        "quote": "，89 个测试文",
+        "quoteRaw": "，89 个测试文"
+      },
+      "replay": {
+        "block": 20,
+        "start": 76,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1102,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 0,
+        "quote": "这是 2026-",
+        "quoteRaw": "这是 2026-"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 39,
+      "length": 8,
+      "docStart": 1141,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 39,
+        "quote": "尺子量不到的类别",
+        "quoteRaw": "尺子量不到的类别"
+      },
+      "replay": {
+        "block": 21,
+        "start": 39,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1175,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 0,
+        "quote": "review 抓",
+        "quoteRaw": "review 抓"
+      },
+      "replay": {
+        "block": 22,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1191,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 0,
+        "quote": "claude 没",
+        "quoteRaw": "claude 没"
+      },
+      "replay": {
+        "block": 23,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 1202,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 11,
+        "quote": "happy --",
+        "quoteRaw": "happy --"
+      },
+      "replay": {
+        "block": 23,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 27,
+      "length": 8,
+      "docStart": 1218,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 27,
+        "quote": "会变成一屏安装广",
+        "quoteRaw": "会变成一屏安装广"
+      },
+      "replay": {
+        "block": 23,
+        "start": 27,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 39,
+      "length": 8,
+      "docStart": 1230,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 39,
+        "quote": "exit(1)。",
+        "quoteRaw": "exit(1)。"
+      },
+      "replay": {
+        "block": 23,
+        "start": 39,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 46,
+      "length": 8,
+      "docStart": 1237,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 46,
+        "quote": "。 happy",
+        "quoteRaw": "。 happy"
+      },
+      "replay": {
+        "block": 23,
+        "start": 46,
+        "length": 7
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 48,
+      "length": 8,
+      "docStart": 1239,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 48,
+        "quote": "happy 支持",
+        "quoteRaw": "happy 支持"
+      },
+      "replay": {
+        "block": 23,
+        "start": 48,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 87,
+      "length": 8,
+      "docStart": 1278,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 87,
+        "quote": "claude 不",
+        "quoteRaw": "claude 不"
+      },
+      "replay": {
+        "block": 23,
+        "start": 87,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 100,
+      "length": 8,
+      "docStart": 1291,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 100,
+        "quote": "。纯 codex",
+        "quoteRaw": "。纯 codex"
+      },
+      "replay": {
+        "block": 23,
+        "start": 100,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 159,
+      "length": 8,
+      "docStart": 1350,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 159,
+        "quote": "完全来自我额外加",
+        "quoteRaw": "完全来自我额外加"
+      },
+      "replay": {
+        "block": 23,
+        "start": 159,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 170,
+      "length": 1,
+      "docStart": 1361,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "两个 happy-cli 上游修",
+      "expect": 3
+    },
+    {
+      "quote": "这两折的正文将原样发到公开仓 s",
+      "expect": 5
+    },
+    {
+      "quote": "这两折的正文将原样发到公开仓 s",
+      "expect": 5
+    },
+    {
+      "quote": "1. 起点：两个真·low ha",
+      "expect": 7
+    },
+    {
+      "quote": "按你那份「给业余维护者投 PR ",
+      "expect": 9
+    },
+    {
+      "quote": "Issue 报告人 症状 #15",
+      "expect": 11
+    },
+    {
+      "quote": "Issue 报告人 症状",
+      "expect": 11
+    },
+    {
+      "quote": "#1532 YesYouKenS",
+      "expect": 13
+    },
+    {
+      "quote": "#1529 kaovilai h",
+      "expect": 14
+    },
+    {
+      "quote": "摸代码时顺手捡到第三个：happ",
+      "expect": 16
+    },
+    {
+      "quote": "于是本来是三个 PR。",
+      "expect": 18
+    },
+    {
+      "quote": "2. 双查（Opus + agy",
+      "expect": 20
+    },
+    {
+      "quote": "结论：三个都不能按原样发。",
+      "expect": 22
+    },
+    {
+      "quote": "我自己犯的两个错",
+      "expect": 24
+    },
+    {
+      "quote": "① 我往 stderr 引入了污",
+      "expect": 26
+    },
+    {
+      "quote": "我给 --version 加了「",
+      "expect": 28
+    },
+    {
+      "quote": "stdout: happy ve",
+      "expect": 30
+    },
+    {
+      "quote": "那行是 getClaudeCli",
+      "expect": 36
+    },
+    {
+      "quote": "② 我拿「单测 792/792 ",
+      "expect": 38
+    },
+    {
+      "quote": "src/index.ts 零测试",
+      "expect": 40
+    },
+    {
+      "quote": "这是 2026-07-27 那次",
+      "expect": 42
+    },
+    {
+      "quote": "review 抓到的其他硬伤",
+      "expect": 44
+    },
+    {
+      "quote": "claude 没装时，happy",
+      "expect": 46
+    },
+    {
+      "quote": "upgrade 是 update",
+      "expect": 47
+    },
+    {
+      "quote": "信号退出码：子进程被 Ctrl+",
+      "expect": 48
+    },
+    {
+      "quote": "Windows 上是 ENOEN",
+      "expect": 49
+    },
+    {
+      "quote": "CI 里真有消费者，我 grep",
+      "expect": 50
+    },
+    {
+      "quote": "两路矛盾的一处，我判了",
+      "expect": 52
+    },
+    {
+      "quote": "process.execPath",
+      "expect": 54
+    },
+    {
+      "quote": "我采 Opus：claude_v",
+      "expect": 56
+    },
+    {
+      "quote": "agy 单独报的一条，我判为存疑",
+      "expect": 58
+    },
+    {
+      "quote": "agy 说「离线降级路径下 ho",
+      "expect": 60
+    },
+    {
+      "quote": "3. 病根：我又犯了 playb",
+      "expect": 62
+    },
+    {
+      "quote": "PR1 里我塞了两件事：",
+      "expect": 64
+    },
+    {
+      "quote": "(a) 别开会话 —— 真 bu",
+      "expect": 66
+    },
+    {
+      "quote": "(b) 顺手打印 claude ",
+      "expect": 67
+    },
+    {
+      "quote": "两个 blocker 全部来自 ",
+      "expect": 69
+    },
+    {
+      "quote": "而且 Opus 给了个反驳，说明",
+      "expect": 71
+    },
+    {
+      "quote": "4. 最终形态",
+      "expect": 73
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "两个 happy-cli 上游修复：双查把三个砍成两个"
+    ],
+    [
+      5,
+      "两个 happy-cli 上游修复：双查把三个砍成两个"
+    ],
+    [
+      7,
+      "1. 起点：两个真·low hanging fruit"
+    ],
+    [
+      9,
+      "1. 起点：两个真·low hanging fruit"
+    ],
+    [
+      11,
+      "1. 起点：两个真·low hanging fruit"
+    ],
+    [
+      13,
+      "1. 起点：两个真·low hanging fruit"
+    ],
+    [
+      14,
+      "1. 起点：两个真·low hanging fruit"
+    ],
+    [
+      16,
+      "1. 起点：两个真·low hanging fruit"
+    ],
+    [
+      18,
+      "1. 起点：两个真·low hanging fruit"
+    ],
+    [
+      20,
+      "2. 双查（Opus + agy 各一路，对抗性 prompt，互不透风）"
+    ],
+    [
+      22,
+      "2. 双查（Opus + agy 各一路，对抗性 prompt，互不透风）"
+    ],
+    [
+      24,
+      "我自己犯的两个错"
+    ],
+    [
+      26,
+      "我自己犯的两个错"
+    ],
+    [
+      28,
+      "我自己犯的两个错"
+    ],
+    [
+      30,
+      "我自己犯的两个错"
+    ],
+    [
+      36,
+      "我自己犯的两个错"
+    ],
+    [
+      38,
+      "我自己犯的两个错"
+    ],
+    [
+      40,
+      "我自己犯的两个错"
+    ],
+    [
+      42,
+      "我自己犯的两个错"
+    ],
+    [
+      44,
+      "review 抓到的其他硬伤"
+    ],
+    [
+      46,
+      "review 抓到的其他硬伤"
+    ],
+    [
+      47,
+      "review 抓到的其他硬伤"
+    ],
+    [
+      48,
+      "review 抓到的其他硬伤"
+    ],
+    [
+      49,
+      "review 抓到的其他硬伤"
+    ],
+    [
+      50,
+      "review 抓到的其他硬伤"
+    ],
+    [
+      52,
+      "两路矛盾的一处，我判了"
+    ],
+    [
+      54,
+      "两路矛盾的一处，我判了"
+    ],
+    [
+      56,
+      "两路矛盾的一处，我判了"
+    ],
+    [
+      58,
+      "agy 单独报的一条，我判为存疑"
+    ],
+    [
+      60,
+      "agy 单独报的一条，我判为存疑"
+    ],
+    [
+      62,
+      "3. 病根：我又犯了 playbook ④(b)"
+    ],
+    [
+      64,
+      "3. 病根：我又犯了 playbook ④(b)"
+    ],
+    [
+      66,
+      "3. 病根：我又犯了 playbook ④(b)"
+    ],
+    [
+      67,
+      "3. 病根：我又犯了 playbook ④(b)"
+    ],
+    [
+      69,
+      "3. 病根：我又犯了 playbook ④(b)"
+    ],
+    [
+      71,
+      "3. 病根：我又犯了 playbook ④(b)"
+    ],
+    [
+      73,
+      "4. 最终形态"
+    ],
+    [
+      75,
+      "4. 最终形态"
+    ],
+    [
+      77,
+      "4. 最终形态"
+    ],
+    [
+      78,
+      "4. 最终形态"
+    ],
+    [
+      79,
+      "4. 最终形态"
+    ],
+    [
+      81,
+      "两处我没能验证"
+    ],
+    [
+      83,
+      "两处我没能验证"
+    ],
+    [
+      88,
+      "两处我没能验证"
+    ],
+    [
+      89,
+      "两处我没能验证"
+    ],
+    [
+      91,
+      "5. 两个 diff"
+    ],
+    [
+      93,
+      "5. 两个 diff"
+    ],
+    [
+      95,
+      "5. 两个 diff"
+    ],
+    [
+      105,
+      "5. 两个 diff"
+    ],
+    [
+      107,
+      "5. 两个 diff"
+    ],
+    [
+      164,
+      "6. 两份 PR 正文（要发出去的原文，请逐句看）"
+    ],
+    [
+      166,
+      "PR1 · fix(cli): exit after printing the version instead of opening a session"
+    ],
+    [
+      168,
+      "PR1 · fix(cli): exit after printing the version instead of opening a session"
+    ],
+    [
+      170,
+      "Problem"
+    ],
+    [
+      172,
+      "Problem"
+    ],
+    [
+      174,
+      "Problem"
+    ],
+    [
+      179,
+      "Problem"
+    ],
+    [
+      181,
+      "Problem"
+    ],
+    [
+      191,
+      "Problem"
+    ],
+    [
+      193,
+      "Problem"
+    ],
+    [
+      195,
+      "What changed"
+    ],
+    [
+      197,
+      "What changed"
+    ],
+    [
+      199,
+      "What changed"
+    ],
+    [
+      201,
+      "What changed"
+    ],
+    [
+      203,
+      "Test plan"
+    ],
+    [
+      205,
+      "Test plan"
+    ],
+    [
+      206,
+      "Test plan"
+    ],
+    [
+      207,
+      "Test plan"
+    ],
+    [
+      209,
+      "PR2 · fix(cli): delegate happy update/upgrade to claude"
+    ],
+    [
+      211,
+      "PR2 · fix(cli): delegate happy update/upgrade to claude"
+    ],
+    [
+      213,
+      "Problem"
+    ],
+    [
+      215,
+      "Problem"
+    ],
+    [
+      217,
+      "Problem"
+    ],
+    [
+      221,
+      "What changed"
+    ],
+    [
+      223,
+      "What changed"
+    ],
+    [
+      225,
+      "What changed"
+    ],
+    [
+      227,
+      "What changed"
+    ],
+    [
+      229,
+      "Test plan"
+    ],
+    [
+      231,
+      "Test plan"
+    ],
+    [
+      232,
+      "Test plan"
+    ],
+    [
+      233,
+      "Test plan"
+    ],
+    [
+      234,
+      "Test plan"
+    ],
+    [
+      236,
+      "Known limitation"
+    ],
+    [
+      238,
+      "Known limitation"
+    ],
+    [
+      240,
+      "7. 验证环境的一处交代"
+    ],
+    [
+      242,
+      "7. 验证环境的一处交代"
+    ],
+    [
+      244,
+      "7. 验证环境的一处交代"
+    ]
+  ]
+}

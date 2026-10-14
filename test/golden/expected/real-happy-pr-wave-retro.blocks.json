@@ -1,0 +1,734 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-pr-wave-retro.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "Happy PR Wave Retro (#1553 → #1596)"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "2026-07-22 → 07-28, seven days. 19 PRs sent: 12 merged, 6 closed, 1 open. Cumulative merged went from 6 to 16."
+    },
+    {
+      "i": 3,
+      "type": "heading",
+      "tag": "h2",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "level": 2,
+      "text": "1. The Full Scoreboard"
+    },
+    {
+      "i": 4,
+      "type": "table",
+      "tag": "table",
+      "line": 11,
+      "lineEnd": 31,
+      "parent": null,
+      "text": "\n\n\nPR\nOutcome\nSize\nWhat it is\nWhy it ended that way\n\n\n\n\n#1553\n✅ merged\n+120/−3\nKeep the session from hanging when the API rejects a turn\nReal bug, with a matching issue (#1552)\n\n\n#1556\n✅ merged\n+945/−6\nClaude quota in the status bar\nBacked by an issue (#1442), and a feature he wanted himself\n\n\n#1561\n✅ merged\n+145/−22\nReport the real context window instead of assuming 190K\nReal bug\n\n\n#1564\n✅ merged\n+45/−3\nrate_limit_event no longer wipes window utilization\nReal bug\n\n\n#1566\n✅ merged\n+5/−2\nOpus 5 uses the full model ID\nOne-liner, zero risk\n\n\n#1567\n✅ merged\n+7/−4\nSaving a draft no longer clears every unread marker\nReal bug, 1 file\n\n\n#1572\n✅ merged\n+9\nREADME discloses that agy has no approval step\nDocs-only, zero risk\n\n\n#1573\n✅ merged\n+1\nagy uses its real icon (it used to fall back to Claude's)\nVisual bug, the diff carries its own evidence\n\n\n#1578\n✅ merged\n+148/−2\nLaunch failures surface the real error\nReal bug, pure CLI, zero overlap\n\n\n#1579\n✅ merged\n+20/−3\nA full refetch no longer freezes every session's breathing indicator\nReal bug, 1 file\n\n\n#1596\n✅ merged\n+37/−5\nmodel/effort no longer silently dropped after an abort\nReal bug + its own issue #1595 + a red→green test\n\n\n#1568\n❌ closed\n+230/−63\nRemember model/permission/effort per agent\nHe wants to build \"set it in settings and it stays sticky\" himself\n\n\n#1569\n❌ closed\n+311/−64\nDefaults set but shadowed by an old draft\nSame as above — no competing implementation\n\n\n#1570\n❌ closed\n+430/−11\nagy image attachments\nThe whole agy line was judged niche\n\n\n#1571\n❌ closed\n+785/−0\nagy quota chip\nScraping the binary for OAuth was explicitly rejected\n\n\n#1574\n❌ closed\n+261/−12\nagy sessions surviving restarts\nGuilt by association with the agy line\n\n\n#1576\n❌ closed\n+191/−26\nagy model slug + effort\nGuilt by association with the agy line\n\n\n#1577\n❌ closed\n+59/−10\nPurple unread dot + occlusion fix\n\"Don't want to touch UI unless the value is clear.\" Still on in the fork for my own use; closing the upstream PR changes nothing locally\n\n\n#1575\n⏳ open\n+11/−7\ngemini retirement cleanup\nHe never mentioned this PR anywhere in his reply. Leaving it open is my call: it belongs to the roadmap in issue #1540 that he opened himself, and it's a chore, not a feature, so it doesn't run into the \"v1 takes no new features\" line\n\n\n"
+    },
+    {
+      "i": 5,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": 4,
+      "text": "\nPR\nOutcome\nSize\nWhat it is\nWhy it ended that way\n"
+    },
+    {
+      "i": 6,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": 4,
+      "text": "\n#1553\n✅ merged\n+120/−3\nKeep the session from hanging when the API rejects a turn\nReal bug, with a matching issue (#1552)\n"
+    },
+    {
+      "i": 7,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": 4,
+      "text": "\n#1556\n✅ merged\n+945/−6\nClaude quota in the status bar\nBacked by an issue (#1442), and a feature he wanted himself\n"
+    },
+    {
+      "i": 8,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": 4,
+      "text": "\n#1561\n✅ merged\n+145/−22\nReport the real context window instead of assuming 190K\nReal bug\n"
+    },
+    {
+      "i": 9,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": 4,
+      "text": "\n#1564\n✅ merged\n+45/−3\nrate_limit_event no longer wipes window utilization\nReal bug\n"
+    },
+    {
+      "i": 10,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": 4,
+      "text": "\n#1566\n✅ merged\n+5/−2\nOpus 5 uses the full model ID\nOne-liner, zero risk\n"
+    },
+    {
+      "i": 11,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": 4,
+      "text": "\n#1567\n✅ merged\n+7/−4\nSaving a draft no longer clears every unread marker\nReal bug, 1 file\n"
+    },
+    {
+      "i": 12,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": 4,
+      "text": "\n#1572\n✅ merged\n+9\nREADME discloses that agy has no approval step\nDocs-only, zero risk\n"
+    },
+    {
+      "i": 13,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": 4,
+      "text": "\n#1573\n✅ merged\n+1\nagy uses its real icon (it used to fall back to Claude's)\nVisual bug, the diff carries its own evidence\n"
+    },
+    {
+      "i": 14,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": 4,
+      "text": "\n#1578\n✅ merged\n+148/−2\nLaunch failures surface the real error\nReal bug, pure CLI, zero overlap\n"
+    },
+    {
+      "i": 15,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": 4,
+      "text": "\n#1579\n✅ merged\n+20/−3\nA full refetch no longer freezes every session's breathing indicator\nReal bug, 1 file\n"
+    },
+    {
+      "i": 16,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": 4,
+      "text": "\n#1596\n✅ merged\n+37/−5\nmodel/effort no longer silently dropped after an abort\nReal bug + its own issue #1595 + a red→green test\n"
+    },
+    {
+      "i": 17,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": 4,
+      "text": "\n#1568\n❌ closed\n+230/−63\nRemember model/permission/effort per agent\nHe wants to build \"set it in settings and it stays sticky\" himself\n"
+    },
+    {
+      "i": 18,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 25,
+      "lineEnd": 25,
+      "parent": 4,
+      "text": "\n#1569\n❌ closed\n+311/−64\nDefaults set but shadowed by an old draft\nSame as above — no competing implementation\n"
+    },
+    {
+      "i": 19,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": 4,
+      "text": "\n#1570\n❌ closed\n+430/−11\nagy image attachments\nThe whole agy line was judged niche\n"
+    },
+    {
+      "i": 20,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": 4,
+      "text": "\n#1571\n❌ closed\n+785/−0\nagy quota chip\nScraping the binary for OAuth was explicitly rejected\n"
+    },
+    {
+      "i": 21,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": 4,
+      "text": "\n#1574\n❌ closed\n+261/−12\nagy sessions surviving restarts\nGuilt by association with the agy line\n"
+    },
+    {
+      "i": 22,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": 4,
+      "text": "\n#1576\n❌ closed\n+191/−26\nagy model slug + effort\nGuilt by association with the agy line\n"
+    },
+    {
+      "i": 23,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": 4,
+      "text": "\n#1577\n❌ closed\n+59/−10\nPurple unread dot + occlusion fix\n\"Don't want to touch UI unless the value is clear.\" Still on in the fork for my own use; closing the upstream PR changes nothing locally\n"
+    },
+    {
+      "i": 24,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": 4,
+      "text": "\n#1575\n⏳ open\n+11/−7\ngemini retirement cleanup\nHe never mentioned this PR anywhere in his reply. Leaving it open is my call: it belongs to the roadmap in issue #1540 that he opened himself, and it's a chore, not a feature, so it doesn't run into the \"v1 takes no new features\" line\n"
+    },
+    {
+      "i": 25,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": null,
+      "text": "Companion issues: 10 filed, 5 already closed (#1595/#1552/#1469/#1441/#1429, all fixed by my own PRs), 5 still open."
+    },
+    {
+      "i": 26,
+      "type": "heading",
+      "tag": "h2",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": null,
+      "level": 2,
+      "text": "2. One Clean Dividing Line"
+    },
+    {
+      "i": 27,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "text": "Put the 12 that merged next to the 6 that closed and the pattern is glaring:"
+    },
+    {
+      "i": 28,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "The 12 merged average +137 lines; the 6 closed average +343."
+    },
+    {
+      "i": 29,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "text": "But size is only the surface. The real test is three questions, and each one is all-or-nothing:"
+    },
+    {
+      "i": 30,
+      "type": "table",
+      "tag": "table",
+      "line": 45,
+      "lineEnd": 49,
+      "parent": null,
+      "text": "\n\n\nTest\nThe 12 merged\nThe 6 closed\n\n\n\n\nBug fix or new feature\n11 are fix/docs, and the one feature (#1556) had an issue behind it\nAll 6 are features\n\n\nWhose idea\nFixing behavior he also agrees is broken\nThings I thought ought to exist\n\n\nWho carries long-term maintenance\nFix it and it's done\nEvery one leaves an ongoing maintenance surface\n\n\n"
+    },
+    {
+      "i": 31,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 45,
+      "lineEnd": 45,
+      "parent": 30,
+      "text": "\nTest\nThe 12 merged\nThe 6 closed\n"
+    },
+    {
+      "i": 32,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": 30,
+      "text": "\nBug fix or new feature\n11 are fix/docs, and the one feature (#1556) had an issue behind it\nAll 6 are features\n"
+    },
+    {
+      "i": 33,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 48,
+      "lineEnd": 48,
+      "parent": 30,
+      "text": "\nWhose idea\nFixing behavior he also agrees is broken\nThings I thought ought to exist\n"
+    },
+    {
+      "i": 34,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": 30,
+      "text": "\nWho carries long-term maintenance\nFix it and it's done\nEvery one leaves an ongoing maintenance surface\n"
+    },
+    {
+      "i": 35,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 51,
+      "lineEnd": 51,
+      "parent": null,
+      "text": "#1571 is the purest sample: 785 lines, a full injection-based test suite, verified end to end, and it proactively disclosed the risk on top of that — technically unimpeachable, closed anyway. The reason has nothing to do with code quality: it depends on a credential reverse-engineered out of a vendor binary, so one change on Google's side blows it up, and the bug report lands on a maintainer who only has evenings."
+    },
+    {
+      "i": 36,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 53,
+      "lineEnd": 53,
+      "parent": null,
+      "text": "There's a line here I hadn't seen clearly before: rig reuses claude/codex/grok subscriptions by reading the token file the vendor's own CLI wrote onto your machine — that's your credential, in a public location, stored that way by the vendor itself. What I did was dig out the client_id/secret the vendor deliberately never published, straight from the binary. The first is \"using the user's authorization,\" the second is \"impersonating the vendor's client.\" One step apart, completely different in kind."
+    },
+    {
+      "i": 37,
+      "type": "heading",
+      "tag": "h2",
+      "line": 57,
+      "lineEnd": 57,
+      "parent": null,
+      "level": 2,
+      "text": "3. Three Plays That Worked"
+    },
+    {
+      "i": 38,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 59,
+      "lineEnd": 59,
+      "parent": null,
+      "text": "1. The \"free-to-merge list\" — the biggest methodological takeaway of the wave."
+    },
+    {
+      "i": 39,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 61,
+      "lineEnd": 61,
+      "parent": null,
+      "text": "On 7/26 I split 14 open PRs across two Discord messages: the first held only the 6 with zero decision cost (all fixes, CI green, no conflicts with each other, no product call required), the second held the ones that would cost him time."
+    },
+    {
+      "i": 40,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 63,
+      "lineEnd": 63,
+      "parent": null,
+      "text": "Result: he merged 5 within one minute at 05:13, all from the first message. Nobody else's PRs moved in that window."
+    },
+    {
+      "i": 41,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 65,
+      "lineEnd": 65,
+      "parent": null,
+      "text": "Why it works — he's a hobbyist maintainer with a day job (Robinhood), and the scarce resource isn't time, it's decision bandwidth. A PR that needs \"let me think about it\" and a PR that merges on sight differ by an order of magnitude in cost to him. Drive the decision cost to zero and you've put your PR at the front of the queue."
+    },
+    {
+      "i": 42,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 67,
+      "lineEnd": 67,
+      "parent": null,
+      "text": "2. Proactively disclosing the risk bought a \"thanks for the heads up.\""
+    },
+    {
+      "i": 43,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 69,
+      "lineEnd": 69,
+      "parent": null,
+      "text": "In the #1571 PR body I wrote plainly that the OAuth client was scraped out of the binary. It got rejected — but his own word was thanks. Had I sat on it and someone found it later, that's a different story entirely."
+    },
+    {
+      "i": 44,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 71,
+      "lineEnd": 71,
+      "parent": null,
+      "text": "And coming clean saved me from a more expensive failure: I already had a rig proposal written, built on exactly the same mechanism. Shipping it on 7/26 would have meant hitting the same wall on Steve's turf — and hitting it as a \"proposal\" rather than as finished work, which looks worse."
+    },
+    {
+      "i": 45,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 73,
+      "lineEnd": 73,
+      "parent": null,
+      "text": "3. Visual evidence. He went out of his way to say \"thank you for the screenshots in the PRs by the way!\" — the only concrete thing he volunteered praise for in the entire reply."
+    },
+    {
+      "i": 46,
+      "type": "heading",
+      "tag": "h2",
+      "line": 77,
+      "lineEnd": 77,
+      "parent": null,
+      "level": 2,
+      "text": "4. Two Genuine Mistakes"
+    },
+    {
+      "i": 47,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 79,
+      "lineEnd": 79,
+      "parent": null,
+      "text": "1. Over-betting on the agy line. Four PRs, more than 1,600 lines, all riding on one niche backend, and one of them leaning on a mechanism with policy risk. These should have gone out in waves: ship #1573 first (real icon, 1 line, zero risk) to test the water, then decide on the other three based on the reaction. What I actually did was push all four at once, so one no killed all four."
+    },
+    {
+      "i": 48,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 81,
+      "lineEnd": 81,
+      "parent": null,
+      "text": "2. Two things in one PR (#1577). The purple unread dot (feature, subjective) and the unread dot occluding run state (fix, objective) were bundled together. He only had to say no to the feature and the fix went down with it. That fix later got superseded by the root-cause fix in #1579, but I didn't know that at the time — the bundling itself was the mistake: it ties something guaranteed to be questioned to something that would have sailed through on its own."
+    },
+    {
+      "i": 49,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 83,
+      "lineEnd": 83,
+      "parent": null,
+      "text": "\nWhat that fix actually fixed (reply to an inline annotation): the dot in the session list has two states — solid = unread, pulsing = running. In the original code \"unread\" outranked \"running,\" so a session marked unread still showed a solid dot once it started working again, and scanning the list told you nothing about it running. The fix gives live states like thinking/permission_required priority and holds unread back until things go quiet (unread is never lost). #1579 later fixed the source — refetch stomping thinking to false — at the root, which made the symptom-level patch much less necessary.\n"
+    },
+    {
+      "i": 50,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 83,
+      "lineEnd": 83,
+      "parent": 49,
+      "text": "What that fix actually fixed (reply to an inline annotation): the dot in the session list has two states — solid = unread, pulsing = running. In the original code \"unread\" outranked \"running,\" so a session marked unread still showed a solid dot once it started working again, and scanning the list told you nothing about it running. The fix gives live states like thinking/permission_required priority and holds unread back until things go quiet (unread is never lost). #1579 later fixed the source — refetch stomping thinking to false — at the root, which made the symptom-level patch much less necessary."
+    },
+    {
+      "i": 51,
+      "type": "heading",
+      "tag": "h2",
+      "line": 87,
+      "lineEnd": 87,
+      "parent": null,
+      "level": 2,
+      "text": "5. Three Things Worth More Than the Merge Count"
+    },
+    {
+      "i": 52,
+      "type": "list_item",
+      "tag": "li",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "text": "The roadmap. He volunteered that happy2 is underway, \"will open for PRs soonish,\" and that v1 is support/bugfix only now. That's information an outside contributor doesn't get — it means I'm no longer filed under \"random passerby.\""
+    },
+    {
+      "i": 53,
+      "type": "list_item",
+      "tag": "li",
+      "line": 90,
+      "lineEnd": 90,
+      "parent": null,
+      "text": "The tone. Knowing v1 takes no features means I won't waste more time throwing them at it — that directly decides what the next few weeks go into."
+    },
+    {
+      "i": 54,
+      "type": "list_item",
+      "tag": "li",
+      "line": 91,
+      "lineEnd": 92,
+      "parent": null,
+      "text": "A reusable test. The line between \"reading a token file the vendor wrote\" and \"reverse-engineering the vendor's credential\" applies to any provider integration from here on."
+    },
+    {
+      "i": 55,
+      "type": "heading",
+      "tag": "h2",
+      "line": 95,
+      "lineEnd": 95,
+      "parent": null,
+      "level": 2,
+      "text": "6. What happy2 Means for How You Work Today"
+    },
+    {
+      "i": 56,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 97,
+      "lineEnd": 97,
+      "parent": null,
+      "text": "Conclusion first: it can't replace how you work today anytime soon, and on one key dimension it's a step backward."
+    },
+    {
+      "i": 57,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 99,
+      "lineEnd": 99,
+      "parent": null,
+      "text": "Your core use today is this — you're out of the house, remote-controlling a dozen-plus sessions on the Mac mini at home from your phone."
+    },
+    {
+      "i": 58,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 101,
+      "lineEnd": 101,
+      "parent": null,
+      "text": "happy2 explicitly does not do mobile. The second sentence of DESIGN.md says it verbatim: \"The product is a desktop application. Design for its desktop window and do not introduce mobile breakpoints, touch-only behavior, or mobile substitutes.\" I went through packages/ — not one of the 16 packages is a mobile/iOS/Android package. This isn't \"not yet,\" it's a tradeoff written into the design constitution."
+    },
+    {
+      "i": 59,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 103,
+      "lineEnd": 103,
+      "parent": null,
+      "text": "Your mobile story doesn't change: the v1 app lives on, only the engine swaps from happy-cli to rig (rig has v1's sync protocol built in natively). So the three pieces are — phone = v1 app / engine = rig / desktop collaboration = happy2."
+    },
+    {
+      "i": 60,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 105,
+      "lineEnd": 105,
+      "parent": null,
+      "text": "So what does happy2 get you:"
+    },
+    {
+      "i": 61,
+      "type": "table",
+      "tag": "table",
+      "line": 107,
+      "lineEnd": 113,
+      "parent": null,
+      "text": "\n\n\nIts pitch\nWhat it's actually worth to you\n\n\n\n\nDiscord-style workspace: a column of \"places\" on the left, the first being your local (every session on this machine, no account), with cloud servers below it\nProbably the most useful line here. You run a dozen to thirty-odd concurrent sessions year-round, and v1's flat list already can't keep up. Channel/thread-style organization is the right medicine\n\n\nHumans and agents in one workspace, with files, approvals, threads\nYou're basically a one-man operation right now, value TBD — unless you end up sharing with 惠雪/larry later\n\n\nPluggable (todos/documents/…) + a plugin SDK\nInteresting — your cron/dashboard/backlog stuff might work as plugins\n\n\nSelf-host, your data stays in your own hands\nMatches your preference, but v1 is end-to-end encrypted too, so it's not a net gain\n\n\nDesktop-first UI with no mobile baggage\nBetter experience when you're sitting at the Mac mini\n\n\n"
+    },
+    {
+      "i": 62,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 107,
+      "lineEnd": 107,
+      "parent": 61,
+      "text": "\nIts pitch\nWhat it's actually worth to you\n"
+    },
+    {
+      "i": 63,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 109,
+      "lineEnd": 109,
+      "parent": 61,
+      "text": "\nDiscord-style workspace: a column of \"places\" on the left, the first being your local (every session on this machine, no account), with cloud servers below it\nProbably the most useful line here. You run a dozen to thirty-odd concurrent sessions year-round, and v1's flat list already can't keep up. Channel/thread-style organization is the right medicine\n"
+    },
+    {
+      "i": 64,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 110,
+      "lineEnd": 110,
+      "parent": 61,
+      "text": "\nHumans and agents in one workspace, with files, approvals, threads\nYou're basically a one-man operation right now, value TBD — unless you end up sharing with 惠雪/larry later\n"
+    },
+    {
+      "i": 65,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 111,
+      "lineEnd": 111,
+      "parent": 61,
+      "text": "\nPluggable (todos/documents/…) + a plugin SDK\nInteresting — your cron/dashboard/backlog stuff might work as plugins\n"
+    },
+    {
+      "i": 66,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 112,
+      "lineEnd": 112,
+      "parent": 61,
+      "text": "\nSelf-host, your data stays in your own hands\nMatches your preference, but v1 is end-to-end encrypted too, so it's not a net gain\n"
+    },
+    {
+      "i": 67,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 113,
+      "lineEnd": 113,
+      "parent": 61,
+      "text": "\nDesktop-first UI with no mobile baggage\nBetter experience when you're sitting at the Mac mini\n"
+    },
+    {
+      "i": 68,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 115,
+      "lineEnd": 115,
+      "parent": null,
+      "text": "So \"grab it and play with it\" is the right call — but be clear-eyed: this isn't an upgrade, it's a different scenario. The real reason it's worth the investment isn't \"it beats v1 today,\" it's that it's where Kirill said all the new features are going, and the earlier you know it, the earlier you have a place in it."
+    },
+    {
+      "i": 69,
+      "type": "heading",
+      "tag": "h2",
+      "line": 117,
+      "lineEnd": 117,
+      "parent": null,
+      "level": 2,
+      "text": "7. Decisions"
+    },
+    {
+      "i": 70,
+      "type": "table",
+      "tag": "table",
+      "line": 119,
+      "lineEnd": 126,
+      "parent": null,
+      "text": "\n\n\n#\nQuestion\nYour ruling\nStatus\n\n\n\n\n1\nWhat to do while waiting\nGrab happy2 and play with it\n✅ settled\n\n\n2\nRun happy2 now or wait for CONTRIBUTING\nRun it now\n✅ settled\n\n\n3\n#1577 in the fork for personal use\nKeep using it, no impact\n✅ settled (it was already on in the fork)\n\n\n4\nThose 1,600 lines of agy\nUse it myself + write a post and put it in the fork (\"maybe somebody out there is in the same boat\")\n✅ settled\n\n\n5\nKeep or close #1575\n\"No idea\"\n⏳ see recommendation below\n\n\n6\nWhether to send the 7 community PR reviews\nNot ruled on\n⏳ pending\n\n\n"
+    },
+    {
+      "i": 71,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 119,
+      "lineEnd": 119,
+      "parent": 70,
+      "text": "\n#\nQuestion\nYour ruling\nStatus\n"
+    },
+    {
+      "i": 72,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 121,
+      "lineEnd": 121,
+      "parent": 70,
+      "text": "\n1\nWhat to do while waiting\nGrab happy2 and play with it\n✅ settled\n"
+    },
+    {
+      "i": 73,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 122,
+      "lineEnd": 122,
+      "parent": 70,
+      "text": "\n2\nRun happy2 now or wait for CONTRIBUTING\nRun it now\n✅ settled\n"
+    },
+    {
+      "i": 74,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 123,
+      "lineEnd": 123,
+      "parent": 70,
+      "text": "\n3\n#1577 in the fork for personal use\nKeep using it, no impact\n✅ settled (it was already on in the fork)\n"
+    },
+    {
+      "i": 75,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": 70,
+      "text": "\n4\nThose 1,600 lines of agy\nUse it myself + write a post and put it in the fork (\"maybe somebody out there is in the same boat\")\n✅ settled\n"
+    },
+    {
+      "i": 76,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 125,
+      "lineEnd": 125,
+      "parent": 70,
+      "text": "\n5\nKeep or close #1575\n\"No idea\"\n⏳ see recommendation below\n"
+    },
+    {
+      "i": 77,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 126,
+      "lineEnd": 126,
+      "parent": 70,
+      "text": "\n6\nWhether to send the 7 community PR reviews\nNot ruled on\n⏳ pending\n"
+    },
+    {
+      "i": 78,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": null,
+      "text": "My recommendation on #1575: leave it, don't touch it. Three reasons — (1) the issue it maps to, #1540, was opened by Kirill himself, which means he's already agreed the work should happen; (2) it's a chore (deleting a deprecated entry point), not a feature, so it doesn't run into \"v1 is support/bugfix only\"; (3) it's already out there — closing it would require an explanation, leaving it costs nothing. If he hasn't touched it in two weeks, closing it then is soon enough."
+    },
+    {
+      "i": 79,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 130,
+      "lineEnd": 130,
+      "parent": null,
+      "text": "Where that post should sit (extending item 4): the subject isn't \"how to scrape a binary\" — that's the technique that got rejected, and writing it up reads like teaching people to game the system. The angle with real value is \"Can a subscription AI CLI's quota be reused by your own tooling? — one failed upstream attempt\": lay out that boundary (reading a token file the vendor wrote vs. reverse-engineering the vendor's credential), why the maintainer was right to refuse, and what people in your position — sitting on idle subscriptions they'd like to get full value out of — can realistically do. That way it's useful to readers and leaves you nothing to be held against."
+    }
+  ]
+}

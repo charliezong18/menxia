@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "source": "corpus/edge-wikilinks.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "双链"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "text": "下一章 → 01 这是个什么东西"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "别名：叫我别名，锚点：foo#某节，只锚：#本篇某节，带扩展名：a.md。"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "text": "空的 [[]] 与只有井号的 [[#]] 原样留着。"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "嵌套 [[嵌套[方括号]]] 不认；跨行 [[第一行\n第二行]] 不认。"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": null,
+      "text": "行内代码 [[foo]] 不认。"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "管道两侧有空格 显示，只有管道 目标。"
+    }
+  ]
+}

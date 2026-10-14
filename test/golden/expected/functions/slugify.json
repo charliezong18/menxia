@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "fn": "slugify",
+  "cases": [
+    {
+      "input": "Hello World",
+      "output": "hello-world"
+    },
+    {
+      "input": "🚀 起步",
+      "output": "-起步"
+    },
+    {
+      "input": " 介绍",
+      "output": "-介绍"
+    },
+    {
+      "input": "〈Highline 日模块〉",
+      "output": "highline-日模块"
+    },
+    {
+      "input": "a  b",
+      "output": "a--b"
+    },
+    {
+      "input": "a\tb",
+      "output": "ab"
+    },
+    {
+      "input": "foo-bar_baz",
+      "output": "foo-bar_baz"
+    },
+    {
+      "input": "C++ & C#",
+      "output": "c--c"
+    },
+    {
+      "input": "无票日·选项",
+      "output": "无票日选项"
+    },
+    {
+      "input": "x²",
+      "output": "x²"
+    },
+    {
+      "input": "½ 杯",
+      "output": "½-杯"
+    },
+    {
+      "input": "Ｆｕｌｌ",
+      "output": "ｆｕｌｌ"
+    },
+    {
+      "input": "a b",
+      "output": "ab"
+    },
+    {
+      "input": "a​b",
+      "output": "ab"
+    },
+    {
+      "input": "ÉCOLE",
+      "output": "école"
+    },
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": "!!!",
+      "output": ""
+    }
+  ]
+}

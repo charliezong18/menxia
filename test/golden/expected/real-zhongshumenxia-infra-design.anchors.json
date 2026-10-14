@@ -1,0 +1,1950 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhongshumenxia-infra-design.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "System D",
+        "quoteRaw": "System D"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 76,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "The infr",
+        "quoteRaw": "The infr"
+      },
+      "replay": {
+        "block": 2,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 53,
+      "length": 8,
+      "docStart": 129,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 53,
+        "quote": "One-line",
+        "quoteRaw": "One-line"
+      },
+      "replay": {
+        "block": 2,
+        "start": 54,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 66,
+      "length": 8,
+      "docStart": 142,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 66,
+        "quote": ": what i",
+        "quoteRaw": ": what i"
+      },
+      "replay": {
+        "block": 2,
+        "start": 67,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 460,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 0,
+        "quote": "Date: 20",
+        "quoteRaw": "Date: 20"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 464,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 4,
+        "quote": ": 2026-0",
+        "quoteRaw": ": 2026-0"
+      },
+      "replay": {
+        "block": 4,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 478,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 0,
+        "quote": "I. Requi",
+        "quoteRaw": "I. Requi"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 527,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "Function",
+        "quoteRaw": "Function"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 541,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 1,
+        "quote": "# Requir",
+        "quoteRaw": "#\nRequir"
+      },
+      "replay": {
+        "block": 7,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 543,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 3,
+        "quote": "Requirem",
+        "quoteRaw": "Requirem"
+      },
+      "replay": {
+        "block": 7,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 15,
+      "length": 7,
+      "docStart": 555,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 15,
+        "quote": "Source",
+        "quoteRaw": "Source"
+      },
+      "replay": {
+        "block": 7,
+        "start": 17,
+        "length": 6
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 566,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 1,
+        "quote": "F1 Run h",
+        "quoteRaw": "F1\nRun h"
+      },
+      "replay": {
+        "block": 9,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 569,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 4,
+        "quote": "Run happ",
+        "quoteRaw": "Run happ"
+      },
+      "replay": {
+        "block": 9,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 85,
+      "length": 8,
+      "docStart": 650,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 85,
+        "quote": "sys-02/0",
+        "quoteRaw": "sys-02/0"
+      },
+      "replay": {
+        "block": 9,
+        "start": 85,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 666,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 1,
+        "quote": "F2 Worke",
+        "quoteRaw": "F2\nWorke"
+      },
+      "replay": {
+        "block": 10,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 669,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 4,
+        "quote": "Worker a",
+        "quoteRaw": "Worker a"
+      },
+      "replay": {
+        "block": 10,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 48,
+      "length": 8,
+      "docStart": 713,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 48,
+        "quote": "the serv",
+        "quoteRaw": "the serv"
+      },
+      "replay": {
+        "block": 10,
+        "start": 48,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 93,
+      "length": 8,
+      "docStart": 758,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 93,
+        "quote": "topology",
+        "quoteRaw": "topology"
+      },
+      "replay": {
+        "block": 10,
+        "start": 93,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 779,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 1,
+        "quote": "F3 Backu",
+        "quoteRaw": "F3\nBacku"
+      },
+      "replay": {
+        "block": 11,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 782,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 4,
+        "quote": "Backups",
+        "quoteRaw": "Backups"
+      },
+      "replay": {
+        "block": 11,
+        "start": 4,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 81,
+      "length": 3,
+      "docStart": 859,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 81,
+        "quote": "C6",
+        "quoteRaw": "C6"
+      },
+      "replay": {
+        "block": 11,
+        "start": 81,
+        "length": 2
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 864,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 1,
+        "quote": "F4 From",
+        "quoteRaw": "F4\nFrom"
+      },
+      "replay": {
+        "block": 12,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 867,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 4,
+        "quote": "From M5,",
+        "quoteRaw": "From M5,"
+      },
+      "replay": {
+        "block": 12,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 54,
+      "length": 8,
+      "docStart": 917,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 54,
+        "quote": "dispatch",
+        "quoteRaw": "dispatch"
+      },
+      "replay": {
+        "block": 12,
+        "start": 54,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 936,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "Non-func",
+        "quoteRaw": "Non-func"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 954,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 1,
+        "quote": "# Requir",
+        "quoteRaw": "#\nRequir"
+      },
+      "replay": {
+        "block": 14,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 956,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 3,
+        "quote": "Requirem",
+        "quoteRaw": "Requirem"
+      },
+      "replay": {
+        "block": 14,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 968,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 15,
+        "quote": "Criterio",
+        "quoteRaw": "Criterio"
+      },
+      "replay": {
+        "block": 14,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 982,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 1,
+        "quote": "N1 Budge",
+        "quoteRaw": "N1\nBudge"
+      },
+      "replay": {
+        "block": 16,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 985,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 4,
+        "quote": "Budget:",
+        "quoteRaw": "Budget:"
+      },
+      "replay": {
+        "block": 16,
+        "start": 4,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 991,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 10,
+        "quote": ": ≤$20/m",
+        "quoteRaw": ": ≤$20/m"
+      },
+      "replay": {
+        "block": 16,
+        "start": 10,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 51,
+      "length": 8,
+      "docStart": 1032,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 51,
+        "quote": "structur",
+        "quoteRaw": "structur"
+      },
+      "replay": {
+        "block": 16,
+        "start": 51,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 78,
+      "length": 8,
+      "docStart": 1059,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 78,
+        "quote": "— hourly",
+        "quoteRaw": "— hourly"
+      },
+      "replay": {
+        "block": 16,
+        "start": 78,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 130,
+      "length": 8,
+      "docStart": 1111,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 130,
+        "quote": "ruled 20",
+        "quoteRaw": "ruled 20"
+      },
+      "replay": {
+        "block": 16,
+        "start": 130,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1130,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 1,
+        "quote": "N2 Avail",
+        "quoteRaw": "N2\nAvail"
+      },
+      "replay": {
+        "block": 17,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1133,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 4,
+        "quote": "Availabi",
+        "quoteRaw": "Availabi"
+      },
+      "replay": {
+        "block": 17,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 60,
+      "length": 8,
+      "docStart": 1189,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 60,
+        "quote": "Single b",
+        "quoteRaw": "Single b"
+      },
+      "replay": {
+        "block": 17,
+        "start": 60,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 111,
+      "length": 8,
+      "docStart": 1240,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 111,
+        "quote": "provisio",
+        "quoteRaw": "provisio"
+      },
+      "replay": {
+        "block": 17,
+        "start": 111,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 124,
+      "length": 8,
+      "docStart": 1253,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 124,
+        "quote": "+ restor",
+        "quoteRaw": "+ restor"
+      },
+      "replay": {
+        "block": 17,
+        "start": 124,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 167,
+      "length": 8,
+      "docStart": 1296,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 167,
+        "quote": "A silent",
+        "quoteRaw": "A silent"
+      },
+      "replay": {
+        "block": 17,
+        "start": 167,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 225,
+      "length": 8,
+      "docStart": 1354,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 225,
+        "quote": "— covere",
+        "quoteRaw": "— covere"
+      },
+      "replay": {
+        "block": 17,
+        "start": 225,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 287,
+      "length": 8,
+      "docStart": 1416,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 287,
+        "quote": "#56 F4 (",
+        "quoteRaw": "#56 F4 ("
+      },
+      "replay": {
+        "block": 17,
+        "start": 287,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1436,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 1,
+        "quote": "N3 Secur",
+        "quoteRaw": "N3\nSecur"
+      },
+      "replay": {
+        "block": 18,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1439,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 4,
+        "quote": "Security",
+        "quoteRaw": "Security"
+      },
+      "replay": {
+        "block": 18,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 1447,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 12,
+        "quote": ": Contra",
+        "quoteRaw": ": Contra"
+      },
+      "replay": {
+        "block": 18,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 171,
+      "length": 8,
+      "docStart": 1606,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 171,
+        "quote": "sys-02 §",
+        "quoteRaw": "sys-02 §"
+      },
+      "replay": {
+        "block": 18,
+        "start": 171,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1619,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 1,
+        "quote": "N4 Opera",
+        "quoteRaw": "N4\nOpera"
+      },
+      "replay": {
+        "block": 19,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1622,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 4,
+        "quote": "Operabil",
+        "quoteRaw": "Operabil"
+      },
+      "replay": {
+        "block": 19,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 1633,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 15,
+        "quote": ": bare m",
+        "quoteRaw": ": bare m"
+      },
+      "replay": {
+        "block": 19,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 50,
+      "length": 8,
+      "docStart": 1668,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 50,
+        "quote": "provisio",
+        "quoteRaw": "provisio"
+      },
+      "replay": {
+        "block": 19,
+        "start": 50,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 62,
+      "length": 8,
+      "docStart": 1680,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 62,
+        "quote": ", annota",
+        "quoteRaw": ", annota"
+      },
+      "replay": {
+        "block": 19,
+        "start": 62,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 150,
+      "length": 8,
+      "docStart": 1768,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 150,
+        "quote": "#57 anno",
+        "quoteRaw": "#57 anno"
+      },
+      "replay": {
+        "block": 19,
+        "start": 150,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1793,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 1,
+        "quote": "N5 Legal",
+        "quoteRaw": "N5\nLegal"
+      },
+      "replay": {
+        "block": 20,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1796,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 4,
+        "quote": "Legal hy",
+        "quoteRaw": "Legal hy"
+      },
+      "replay": {
+        "block": 20,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 1809,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 17,
+        "quote": ": person",
+        "quoteRaw": ": person"
+      },
+      "replay": {
+        "block": 20,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 67,
+      "length": 8,
+      "docStart": 1859,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 67,
+        "quote": "never an",
+        "quoteRaw": "never an"
+      },
+      "replay": {
+        "block": 20,
+        "start": 67,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 119,
+      "length": 8,
+      "docStart": 1911,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 119,
+        "quote": "(that is",
+        "quoteRaw": "(that is"
+      },
+      "replay": {
+        "block": 20,
+        "start": 119,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 202,
+      "length": 8,
+      "docStart": 1994,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 202,
+        "quote": "happy2-a",
+        "quoteRaw": "happy2-a"
+      },
+      "replay": {
+        "block": 20,
+        "start": 202,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2017,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 0,
+        "quote": "II. Sele",
+        "quoteRaw": "II. Sele"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2072,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 0,
+        "quote": "Primary:",
+        "quoteRaw": "Primary:"
+      },
+      "replay": {
+        "block": 22,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 70,
+      "length": 8,
+      "docStart": 2142,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 70,
+        "quote": "; fallba",
+        "quoteRaw": "; fallba"
+      },
+      "replay": {
+        "block": 22,
+        "start": 70,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2243,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 0,
+        "quote": "Why AWS/",
+        "quoteRaw": "Why AWS/"
+      },
+      "replay": {
+        "block": 23,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 37,
+      "length": 8,
+      "docStart": 2280,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 37,
+        "quote": "(the 202",
+        "quoteRaw": "(the 202"
+      },
+      "replay": {
+        "block": 23,
+        "start": 37,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2333,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 0,
+        "quote": "Every 4",
+        "quoteRaw": "Every 4"
+      },
+      "replay": {
+        "block": 24,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 40,
+      "length": 8,
+      "docStart": 2373,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 40,
+        "quote": ": EC2 t4",
+        "quoteRaw": ": EC2 t4"
+      },
+      "replay": {
+        "block": 24,
+        "start": 40,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2554,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 0,
+        "quote": "The bill",
+        "quoteRaw": "The bill"
+      },
+      "replay": {
+        "block": 25,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 32,
+      "length": 8,
+      "docStart": 2586,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 32,
+        "quote": ": pure p",
+        "quoteRaw": ": pure p"
+      },
+      "replay": {
+        "block": 25,
+        "start": 32,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2764,
+      "expect": {
+        "blockLine": 43,
+        "line": 43,
+        "offset": 0,
+        "quote": "Complexi",
+        "quoteRaw": "Complexi"
+      },
+      "replay": {
+        "block": 26,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 32,
+      "length": 8,
+      "docStart": 2796,
+      "expect": {
+        "blockLine": 43,
+        "line": 43,
+        "offset": 32,
+        "quote": ": IAM/VP",
+        "quoteRaw": ": IAM/VP"
+      },
+      "replay": {
+        "block": 26,
+        "start": 32,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2942,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 0,
+        "quote": "Free tie",
+        "quoteRaw": "Free tie"
+      },
+      "replay": {
+        "block": 27,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3068,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 0,
+        "quote": "Lock-in",
+        "quoteRaw": "Lock-in"
+      },
+      "replay": {
+        "block": 28,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 3084,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 16,
+        "quote": ": N4's p",
+        "quoteRaw": ": N4's p"
+      },
+      "replay": {
+        "block": 28,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 3091,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 23,
+        "quote": "provisio",
+        "quoteRaw": "provisio"
+      },
+      "replay": {
+        "block": 28,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 36,
+      "length": 8,
+      "docStart": 3104,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 36,
+        "quote": "+ C6 bac",
+        "quoteRaw": "+ C6 bac"
+      },
+      "replay": {
+        "block": 28,
+        "start": 36,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3205,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 0,
+        "quote": "III. Top",
+        "quoteRaw": "III. Top"
+      },
+      "replay": {
+        "block": 29,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 31,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3220,
+      "expect": {
+        "blockLine": 54,
+        "line": 54,
+        "offset": 0,
+        "quote": "All thre",
+        "quoteRaw": "All thre"
+      },
+      "replay": {
+        "block": 31,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 31,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 3242,
+      "expect": {
+        "blockLine": 54,
+        "line": 54,
+        "offset": 22,
+        "quote": "outbound",
+        "quoteRaw": "outbound"
+      },
+      "replay": {
+        "block": 31,
+        "start": 22,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "System Design 08",
+      "expect": 3
+    },
+    {
+      "quote": "The infrastructu",
+      "expect": 5
+    },
+    {
+      "quote": "The infrastructu",
+      "expect": 5
+    },
+    {
+      "quote": "Date: 2026-07-31",
+      "expect": 8
+    },
+    {
+      "quote": "I. Requirements ",
+      "expect": 12
+    },
+    {
+      "quote": "Functional",
+      "expect": 14
+    },
+    {
+      "quote": "# Requirement So",
+      "expect": 16
+    },
+    {
+      "quote": "# Requirement So",
+      "expect": 16
+    },
+    {
+      "quote": "F1 Run happy2 se",
+      "expect": 18
+    },
+    {
+      "quote": "F2 Worker and ph",
+      "expect": 19
+    },
+    {
+      "quote": "F3 Backups can l",
+      "expect": 20
+    },
+    {
+      "quote": "F4 From M5, Rig ",
+      "expect": 21
+    },
+    {
+      "quote": "Non-functional",
+      "expect": 23
+    },
+    {
+      "quote": "# Requirement Cr",
+      "expect": 25
+    },
+    {
+      "quote": "# Requirement Cr",
+      "expect": 25
+    },
+    {
+      "quote": "N1 Budget: ≤$20/",
+      "expect": 27
+    },
+    {
+      "quote": "N2 Availability ",
+      "expect": 28
+    },
+    {
+      "quote": "N3 Security: Con",
+      "expect": 29
+    },
+    {
+      "quote": "N4 Operability: ",
+      "expect": 30
+    },
+    {
+      "quote": "N5 Legal hygiene",
+      "expect": 31
+    },
+    {
+      "quote": "II. Selection (v",
+      "expect": 35
+    },
+    {
+      "quote": "Primary: Hetzner",
+      "expect": 37
+    },
+    {
+      "quote": "Why AWS/GCP/Azur",
+      "expect": 39
+    },
+    {
+      "quote": "Every 4 GB tier ",
+      "expect": 41
+    },
+    {
+      "quote": "The billing mode",
+      "expect": 42
+    },
+    {
+      "quote": "Complexity tax w",
+      "expect": 43
+    },
+    {
+      "quote": "Free tiers (1 GB",
+      "expect": 44
+    },
+    {
+      "quote": "Lock-in backstop",
+      "expect": 46
+    },
+    {
+      "quote": "III. Topology",
+      "expect": 50
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "All three stream",
+      "expect": 78
+    },
+    {
+      "quote": "IV. Capacity and",
+      "expect": 58
+    },
+    {
+      "quote": "How the 4 GB get",
+      "expect": 60
+    },
+    {
+      "quote": "Consumer Budget ",
+      "expect": 62
+    },
+    {
+      "quote": "Consumer Budget ",
+      "expect": 62
+    },
+    {
+      "quote": "OS + sshd + Cadd",
+      "expect": 64
+    },
+    {
+      "quote": "happy2 server ~0",
+      "expect": 65
+    },
+    {
+      "quote": "Plugin container",
+      "expect": 67
+    },
+    {
+      "quote": "Plugin container",
+      "expect": 67
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "System Design 08 · Infra (selection · requirements · scaling)"
+    ],
+    [
+      5,
+      "System Design 08 · Infra (selection · requirements · scaling)"
+    ],
+    [
+      8,
+      "System Design 08 · Infra (selection · requirements · scaling)"
+    ],
+    [
+      12,
+      "I. Requirements (criteria first, choices second)"
+    ],
+    [
+      14,
+      "Functional"
+    ],
+    [
+      16,
+      "Functional"
+    ],
+    [
+      18,
+      "Functional"
+    ],
+    [
+      19,
+      "Functional"
+    ],
+    [
+      20,
+      "Functional"
+    ],
+    [
+      21,
+      "Functional"
+    ],
+    [
+      23,
+      "Non-functional"
+    ],
+    [
+      25,
+      "Non-functional"
+    ],
+    [
+      27,
+      "Non-functional"
+    ],
+    [
+      28,
+      "Non-functional"
+    ],
+    [
+      29,
+      "Non-functional"
+    ],
+    [
+      30,
+      "Non-functional"
+    ],
+    [
+      31,
+      "Non-functional"
+    ],
+    [
+      35,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      37,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      39,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      41,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      42,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      43,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      44,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      46,
+      "II. Selection (verdict + why the hyperscalers are out)"
+    ],
+    [
+      50,
+      "III. Topology"
+    ],
+    [
+      52,
+      "III. Topology"
+    ],
+    [
+      54,
+      "III. Topology"
+    ],
+    [
+      58,
+      "IV. Capacity and scaling"
+    ],
+    [
+      60,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      62,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      64,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      65,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      66,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      67,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      68,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      70,
+      "How the 4 GB gets spent (M1–M4 budget)"
+    ],
+    [
+      72,
+      "Disk (80 GB)"
+    ],
+    [
+      74,
+      "Disk (80 GB)"
+    ],
+    [
+      76,
+      "Traffic (US 1 TB/mo)"
+    ],
+    [
+      78,
+      "Traffic (US 1 TB/mo)"
+    ],
+    [
+      80,
+      "Scaling path (by trigger, not by date)"
+    ],
+    [
+      82,
+      "Scaling path (by trigger, not by date)"
+    ],
+    [
+      84,
+      "Scaling path (by trigger, not by date)"
+    ],
+    [
+      85,
+      "Scaling path (by trigger, not by date)"
+    ],
+    [
+      86,
+      "Scaling path (by trigger, not by date)"
+    ],
+    [
+      88,
+      "Scaling path (by trigger, not by date)"
+    ],
+    [
+      92,
+      "V. ⏳ Decision box A · Exposure staging (tailnet-first vs public day-1)"
+    ],
+    [
+      94,
+      "V. ⏳ Decision box A · Exposure staging (tailnet-first vs public day-1)"
+    ],
+    [
+      96,
+      "V. ⏳ Decision box A · Exposure staging (tailnet-first vs public day-1)"
+    ],
+    [
+      99,
+      "V. ⏳ Decision box A · Exposure staging (tailnet-first vs public day-1)"
+    ],
+    [
+      101,
+      "VI. ⏳ Decision box B · The honest trade on server-disk encryption"
+    ],
+    [
+      103,
+      "VI. ⏳ Decision box B · The honest trade on server-disk encryption"
+    ],
+    [
+      105,
+      "VI. ⏳ Decision box B · The honest trade on server-disk encryption"
+    ],
+    [
+      108,
+      "VI. ⏳ Decision box B · The honest trade on server-disk encryption"
+    ],
+    [
+      112,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      114,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      116,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      117,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      118,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      119,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      120,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      121,
+      "VII. Ops contract (code-to-infra, annotation adopted)"
+    ],
+    [
+      123,
+      "VIII. Cost"
+    ],
+    [
+      125,
+      "VIII. Cost"
+    ],
+    [
+      127,
+      "VIII. Cost"
+    ],
+    [
+      128,
+      "VIII. Cost"
+    ],
+    [
+      129,
+      "VIII. Cost"
+    ],
+    [
+      130,
+      "VIII. Cost"
+    ],
+    [
+      132,
+      "IX. Failure modes"
+    ],
+    [
+      134,
+      "IX. Failure modes"
+    ],
+    [
+      136,
+      "IX. Failure modes"
+    ],
+    [
+      137,
+      "IX. Failure modes"
+    ],
+    [
+      138,
+      "IX. Failure modes"
+    ],
+    [
+      139,
+      "IX. Failure modes"
+    ],
+    [
+      140,
+      "IX. Failure modes"
+    ],
+    [
+      142,
+      "X. Open items"
+    ],
+    [
+      144,
+      "X. Open items"
+    ],
+    [
+      145,
+      "X. Open items"
+    ],
+    [
+      146,
+      "X. Open items"
+    ]
+  ]
+}

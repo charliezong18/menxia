@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "fn": "fmtDraft",
+  "cases": [
+    {
+      "input": {
+        "quote": "引文",
+        "note": "批注"
+      },
+      "output": "> 引文\n\n批注"
+    },
+    {
+      "input": {
+        "quote": "multi word quote",
+        "note": "第一行\n第二行"
+      },
+      "output": "> multi word quote\n\n第一行\n第二行"
+    },
+    {
+      "input": {
+        "quote": "",
+        "note": ""
+      },
+      "output": "> \n\n"
+    }
+  ]
+}

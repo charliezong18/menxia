@@ -1,0 +1,278 @@
+{
+  "format": 1,
+  "source": "corpus/edge-lists.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "列表边角"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "text": "紧凑无序列表："
+    },
+    {
+      "i": 2,
+      "type": "list_item",
+      "tag": "li",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "第一项"
+    },
+    {
+      "i": 3,
+      "type": "list_item",
+      "tag": "li",
+      "line": 6,
+      "lineEnd": 6,
+      "parent": null,
+      "text": "第二项 加粗"
+    },
+    {
+      "i": 4,
+      "type": "list_item",
+      "tag": "li",
+      "line": 7,
+      "lineEnd": 8,
+      "parent": null,
+      "text": "third item with code"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "松散无序列表（项之间有空行）："
+    },
+    {
+      "i": 6,
+      "type": "list_item",
+      "tag": "li",
+      "line": 11,
+      "lineEnd": 12,
+      "parent": null,
+      "text": "\n松散一\n"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": 6,
+      "text": "松散一"
+    },
+    {
+      "i": 8,
+      "type": "list_item",
+      "tag": "li",
+      "line": 13,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "\n松散二\n"
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": 8,
+      "text": "松散二"
+    },
+    {
+      "i": 10,
+      "type": "list_item",
+      "tag": "li",
+      "line": 15,
+      "lineEnd": 17,
+      "parent": null,
+      "text": "\n松散三，\n续行（softbreak）\n"
+    },
+    {
+      "i": 11,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 15,
+      "lineEnd": 16,
+      "parent": 10,
+      "text": "松散三，\n续行（softbreak）"
+    },
+    {
+      "i": 12,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "嵌套紧凑列表："
+    },
+    {
+      "i": 13,
+      "type": "list_item",
+      "tag": "li",
+      "line": 20,
+      "lineEnd": 23,
+      "parent": null,
+      "text": "外层一\n\n内层 a\n内层 b\n\n第三层\n\n\n\n"
+    },
+    {
+      "i": 14,
+      "type": "list_item",
+      "tag": "li",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": 13,
+      "text": "内层 a"
+    },
+    {
+      "i": 15,
+      "type": "list_item",
+      "tag": "li",
+      "line": 22,
+      "lineEnd": 23,
+      "parent": 13,
+      "text": "内层 b\n\n第三层\n\n"
+    },
+    {
+      "i": 16,
+      "type": "list_item",
+      "tag": "li",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": 15,
+      "text": "第三层"
+    },
+    {
+      "i": 17,
+      "type": "list_item",
+      "tag": "li",
+      "line": 24,
+      "lineEnd": 25,
+      "parent": null,
+      "text": "外层二"
+    },
+    {
+      "i": 18,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": null,
+      "text": "一项多段："
+    },
+    {
+      "i": 19,
+      "type": "list_item",
+      "tag": "li",
+      "line": 28,
+      "lineEnd": 34,
+      "parent": null,
+      "text": "\n第一段\n第二段在同一项里\n项内围栏\n\n"
+    },
+    {
+      "i": 20,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": 19,
+      "text": "第一段"
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": 19,
+      "text": "第二段在同一项里"
+    },
+    {
+      "i": 22,
+      "type": "fence",
+      "tag": "code",
+      "line": 32,
+      "lineEnd": 34,
+      "parent": 19,
+      "info": "",
+      "text": "项内围栏\n"
+    },
+    {
+      "i": 23,
+      "type": "list_item",
+      "tag": "li",
+      "line": 35,
+      "lineEnd": 38,
+      "parent": null,
+      "text": "\n下一项\n缩进代码不在列表里（前面是段落续行还是代码？）\n"
+    },
+    {
+      "i": 24,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": 23,
+      "text": "下一项"
+    },
+    {
+      "i": 25,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": 23,
+      "text": "缩进代码不在列表里（前面是段落续行还是代码？）"
+    },
+    {
+      "i": 26,
+      "type": "list_item",
+      "tag": "li",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "text": "星号列表"
+    },
+    {
+      "i": 27,
+      "type": "list_item",
+      "tag": "li",
+      "line": 40,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "加号列表（换符号＝新列表）"
+    },
+    {
+      "i": 28,
+      "type": "list_item",
+      "tag": "li",
+      "line": 42,
+      "lineEnd": 42,
+      "parent": null,
+      "text": "从三开始"
+    },
+    {
+      "i": 29,
+      "type": "list_item",
+      "tag": "li",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "text": "接着四"
+    }
+  ]
+}

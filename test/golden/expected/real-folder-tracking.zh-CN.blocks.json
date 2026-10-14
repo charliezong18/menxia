@@ -1,0 +1,784 @@
+{
+  "format": 1,
+  "source": "corpus/real-folder-tracking.zh-CN.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "折务追踪：折子的项目归属、依赖与覆盖（今日 9 折已分诊 + F13 设计）"
+    },
+    {
+      "i": 2,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "\n你今天的原话：「一堆折子等着我读。我也不知道这个是 block 哪个的，或者两天前的有没有被之后的哪个提前批了的 cover 了。」本折做三件事：①把今天的 9 个 open 折当场分诊完（§一，现在就能用）；②把病根改成机制（§二、§三）；③给出不违反 8/8 冻结的切法（§四）。留档要点：#58 的两项拍板已被 #59 的会话三批盖掉——该批发生在会话里、两个折面上均无痕迹，出处是今日会话记录（memory 已录）；如与你记忆不符，#58 恢复候审即可，机制结论不受影响。\n"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": 2,
+      "text": "你今天的原话：「一堆折子等着我读。我也不知道这个是 block 哪个的，或者两天前的有没有被之后的哪个提前批了的 cover 了。」本折做三件事：①把今天的 9 个 open 折当场分诊完（§一，现在就能用）；②把病根改成机制（§二、§三）；③给出不违反 8/8 冻结的切法（§四）。留档要点：#58 的两项拍板已被 #59 的会话三批盖掉——该批发生在会话里、两个折面上均无痕迹，出处是今日会话记录（memory 已录）；如与你记忆不符，#58 恢复候审即可，机制结论不受影响。"
+    },
+    {
+      "i": 4,
+      "type": "heading",
+      "tag": "h2",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "level": 2,
+      "text": "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 6,
+      "type": "table",
+      "tag": "table",
+      "line": 11,
+      "lineEnd": 21,
+      "parent": null,
+      "text": "\n\n\n折\n项目\n等谁\n状态 / 关系\n建议\n\n\n\n\n#41 NIW 表单提案\nNIW\n等你拍\ngate 对外提交与回信；内网数据窗口只到 8 月底\n第 1 读\n\n\n#57 拍板收尾 SSOT\n中书门下\n等你拍（残余 D 项）\n⚠️ 两条涂归修正只在批注串、未回写正文，以批注串为准；批完解锁 M0.5/M1 细案\n第 2 读\n\n\n#44 全量补审\n门下＋中书门下\n等你读\n审 #43 设计、写入侧、阅读器三摊\n第 3 读\n\n\n#60 差异化评估\n门下\n等你读\n与本折同源——tracking 正是「专读 AI 产出」缺的分诊层\n第 4 读\n\n\n#55 项目 wiki\n门下\n等你读\n定稿后作项目入口\n第 5 读\n\n\n#31 官名书全书\n读物\n闲读\n连载，不 gate 任何事\n随缘\n\n\n#58 服务器选型\n中书门下\n无人\n僵尸折：两项拍板（主选 Hetzner、域名）均已被 #59 三批盖掉\n不用读；一句「归档」或「作废」即清\n\n\n#43 系统设计 8 组\n中书门下\n无人\n与 #57 冲突处以 #57 为准（#57 明文声明）；活的部分已被 #57/#59 吸收\n不用逐篇读；建议画可归档\n\n\n#35 归档双语补齐\n门下\n等 agent\n你 21:52 的判「基本认可，加到 wiki 里…」还没 agent 认领\n你不用动\n\n\n"
+    },
+    {
+      "i": 7,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": 6,
+      "text": "\n折\n项目\n等谁\n状态 / 关系\n建议\n"
+    },
+    {
+      "i": 8,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": 6,
+      "text": "\n#41 NIW 表单提案\nNIW\n等你拍\ngate 对外提交与回信；内网数据窗口只到 8 月底\n第 1 读\n"
+    },
+    {
+      "i": 9,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": 6,
+      "text": "\n#57 拍板收尾 SSOT\n中书门下\n等你拍（残余 D 项）\n⚠️ 两条涂归修正只在批注串、未回写正文，以批注串为准；批完解锁 M0.5/M1 细案\n第 2 读\n"
+    },
+    {
+      "i": 10,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": 6,
+      "text": "\n#44 全量补审\n门下＋中书门下\n等你读\n审 #43 设计、写入侧、阅读器三摊\n第 3 读\n"
+    },
+    {
+      "i": 11,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": 6,
+      "text": "\n#60 差异化评估\n门下\n等你读\n与本折同源——tracking 正是「专读 AI 产出」缺的分诊层\n第 4 读\n"
+    },
+    {
+      "i": 12,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": 6,
+      "text": "\n#55 项目 wiki\n门下\n等你读\n定稿后作项目入口\n第 5 读\n"
+    },
+    {
+      "i": 13,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": 6,
+      "text": "\n#31 官名书全书\n读物\n闲读\n连载，不 gate 任何事\n随缘\n"
+    },
+    {
+      "i": 14,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": 6,
+      "text": "\n#58 服务器选型\n中书门下\n无人\n僵尸折：两项拍板（主选 Hetzner、域名）均已被 #59 三批盖掉\n不用读；一句「归档」或「作废」即清\n"
+    },
+    {
+      "i": 15,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": 6,
+      "text": "\n#43 系统设计 8 组\n中书门下\n无人\n与 #57 冲突处以 #57 为准（#57 明文声明）；活的部分已被 #57/#59 吸收\n不用逐篇读；建议画可归档\n"
+    },
+    {
+      "i": 16,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": 6,
+      "text": "\n#35 归档双语补齐\n门下\n等 agent\n你 21:52 的判「基本认可，加到 wiki 里…」还没 agent 认领\n你不用动\n"
+    },
+    {
+      "i": 17,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": null,
+      "text": "三个发现："
+    },
+    {
+      "i": 18,
+      "type": "list_item",
+      "tag": "li",
+      "line": 25,
+      "lineEnd": 25,
+      "parent": null,
+      "text": "9 折里真要你从头读的只有 5 个（#41→#57→#44→#60→#55）。两个灰折各只需你一句话处置。"
+    },
+    {
+      "i": 19,
+      "type": "list_item",
+      "tag": "li",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": null,
+      "text": "#58 的批不在任何折面上。 「主选 Hetzner」「域名推迟」批在会话里，#58 与 #59 的折面都没有痕迹——拍板散落在涂归、判、聊天三处，折堆自己不会说话。这不是哪次的疏忽，是机制缺口（§二）。"
+    },
+    {
+      "i": 20,
+      "type": "list_item",
+      "tag": "li",
+      "line": 27,
+      "lineEnd": 28,
+      "parent": null,
+      "text": "中书门下现在真正卡住的不是折，是行动：#59 批完后欠的 Hetzner 注册＋租机（证件核验要你本人）。折堆清空这条也不会自己消失。"
+    },
+    {
+      "i": 21,
+      "type": "heading",
+      "tag": "h2",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": null,
+      "level": 2,
+      "text": "二 · 病根与需求"
+    },
+    {
+      "i": 22,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": null,
+      "text": "速度失配：7/29 至今画可 30 折、在批 9 折——产折是 AI 速度，读折是人速度。堆一旦超过短期记忆容量，「哪个 block 哪个、哪个已被盖」就只能靠翻。这正是 #60 问的「专读 AI 产出」该长的肌肉，也是中书门下 M2 排序的前置数据（#56-F5 砍掉内置排序后，排序信号本来就该先在数据侧长出来）。"
+    },
+    {
+      "i": 23,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": null,
+      "text": "病根三条："
+    },
+    {
+      "i": 24,
+      "type": "list_item",
+      "tag": "li",
+      "line": 34,
+      "lineEnd": 34,
+      "parent": null,
+      "text": "呈折不声明——项目归属与关系全埋在标题措辞里（#50 标题里的「取代 #48」就是关系声明，只是机器读不到）；"
+    },
+    {
+      "i": 25,
+      "type": "list_item",
+      "tag": "li",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": null,
+      "text": "拍板不落面——会话里批的决定，折面无痕（#58 案）；"
+    },
+    {
+      "i": 26,
+      "type": "list_item",
+      "tag": "li",
+      "line": 36,
+      "lineEnd": 37,
+      "parent": null,
+      "text": "画可不闭环——#59 画可时，没人处置被它盖掉的 #58。"
+    },
+    {
+      "i": 27,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 38,
+      "lineEnd": 38,
+      "parent": null,
+      "text": "需求："
+    },
+    {
+      "i": 28,
+      "type": "list_item",
+      "tag": "li",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "text": "R1 呈折时由 agent 声明项目、种类、关系（依赖 / 覆盖 / 解锁什么）——工具焊入，无人手填表。"
+    },
+    {
+      "i": 29,
+      "type": "list_item",
+      "tag": "li",
+      "line": 40,
+      "lineEnd": 40,
+      "parent": null,
+      "text": "R2 待审清单按项目分组，折卡带「等谁」徽章与关系链。"
+    },
+    {
+      "i": 30,
+      "type": "list_item",
+      "tag": "li",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "R3 「等谁」四态可见：等你拍 / 等你读 / 等 agent / 闲。"
+    },
+    {
+      "i": 31,
+      "type": "list_item",
+      "tag": "li",
+      "line": 42,
+      "lineEnd": 42,
+      "parent": null,
+      "text": "R4 覆盖闭环：画可带 supersedes 声明的折时，被盖折当场处置（close＋判词）；巡检报失配。"
+    },
+    {
+      "i": 32,
+      "type": "list_item",
+      "tag": "li",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "text": "R5 存量 9 折立即可用（backfill），不等新折。"
+    },
+    {
+      "i": 33,
+      "type": "list_item",
+      "tag": "li",
+      "line": 44,
+      "lineEnd": 45,
+      "parent": null,
+      "text": "R6 数据全长在 GitHub 原生对象上：无新存储、无后端；中书门下 M2/M4 直接消费同一字段。"
+    },
+    {
+      "i": 34,
+      "type": "heading",
+      "tag": "h2",
+      "line": 46,
+      "lineEnd": 46,
+      "parent": null,
+      "level": 2,
+      "text": "三 · 设计"
+    },
+    {
+      "i": 35,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 48,
+      "lineEnd": 48,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 36,
+      "type": "heading",
+      "tag": "h3",
+      "line": 50,
+      "lineEnd": 50,
+      "parent": null,
+      "level": 3,
+      "text": "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    },
+    {
+      "i": 37,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 52,
+      "lineEnd": 52,
+      "parent": null,
+      "text": "labels——可变状态，GitHub 原生可筛、自带颜色："
+    },
+    {
+      "i": 38,
+      "type": "table",
+      "tag": "table",
+      "line": 54,
+      "lineEnd": 58,
+      "parent": null,
+      "text": "\n\n\n前缀\n取值\n说明\n\n\n\n\nproj:\nzhongshumenxia / menxia / niw / guanzhi / …\n开放集；agent 起新词前先查现有 labels；词表登记进门下 wiki\n\n\nkind:\n拍板 / 评审 / 设计 / 读物 / 交付 / 参考\n主用途取一\n\n\nwait:\n你拍（红）/ 你读（黄）/ agent（蓝）/ 闲（灰）\n阅读器直接用 label 颜色，零映射表\n\n\n"
+    },
+    {
+      "i": 39,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": 38,
+      "text": "\n前缀\n取值\n说明\n"
+    },
+    {
+      "i": 40,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 56,
+      "lineEnd": 56,
+      "parent": 38,
+      "text": "\nproj:\nzhongshumenxia / menxia / niw / guanzhi / …\n开放集；agent 起新词前先查现有 labels；词表登记进门下 wiki\n"
+    },
+    {
+      "i": 41,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 57,
+      "lineEnd": 57,
+      "parent": 38,
+      "text": "\nkind:\n拍板 / 评审 / 设计 / 读物 / 交付 / 参考\n主用途取一\n"
+    },
+    {
+      "i": 42,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 58,
+      "lineEnd": 58,
+      "parent": 38,
+      "text": "\nwait:\n你拍（红）/ 你读（黄）/ agent（蓝）/ 闲（灰）\n阅读器直接用 label 颜色，零映射表\n"
+    },
+    {
+      "i": 43,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": null,
+      "text": "body 尾行标记——一次性声明的关系边（与 happy-session 同族，读者不可见）："
+    },
+    {
+      "i": 44,
+      "type": "code_block",
+      "tag": "pre",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": null,
+      "text": "<!-- menxia-rel: needs=#49; supersedes=#48,#50; unblocks=T1.2 租机链 -->\n"
+    },
+    {
+      "i": 45,
+      "type": "list_item",
+      "tag": "li",
+      "line": 64,
+      "lineEnd": 64,
+      "parent": null,
+      "text": "needs=#N：本折依赖 #N 的结论；"
+    },
+    {
+      "i": 46,
+      "type": "list_item",
+      "tag": "li",
+      "line": 65,
+      "lineEnd": 65,
+      "parent": null,
+      "text": "supersedes=#N：本折覆盖/取代 #N；"
+    },
+    {
+      "i": 47,
+      "type": "list_item",
+      "tag": "li",
+      "line": 66,
+      "lineEnd": 66,
+      "parent": null,
+      "text": "unblocks=<短语>：画可后解锁什么（自由文本，禁分号）；"
+    },
+    {
+      "i": 48,
+      "type": "list_item",
+      "tag": "li",
+      "line": 67,
+      "lineEnd": 68,
+      "parent": null,
+      "text": "多项目折允许多个 proj: label，阅读器按第一个分组。"
+    },
+    {
+      "i": 49,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 69,
+      "lineEnd": 69,
+      "parent": null,
+      "text": "单点定义：词表常量只在 menxia-mcp 一处定义；阅读器只认前缀（proj: / kind: / wait:），不硬编码取值全集——改名的教训：跨系统契约是裸字符串，两头写死必静默失效。"
+    },
+    {
+      "i": 50,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 71,
+      "lineEnd": 71,
+      "parent": null,
+      "text": "为什么不是别的："
+    },
+    {
+      "i": 51,
+      "type": "list_item",
+      "tag": "li",
+      "line": 72,
+      "lineEnd": 72,
+      "parent": null,
+      "text": "GitHub Projects / milestone：第二块阅读面，违背 attention-hub 初衷；Projects 写入要 GraphQL、移动端弱；milestone 单亲装不下多项目。"
+    },
+    {
+      "i": 52,
+      "type": "list_item",
+      "tag": "li",
+      "line": 73,
+      "lineEnd": 73,
+      "parent": null,
+      "text": "本地状态文件（processed.json 那类）：阅读器跑在浏览器里，看不见 Mac 上的文件；关系必须公开长在折上。"
+    },
+    {
+      "i": 53,
+      "type": "list_item",
+      "tag": "li",
+      "line": 74,
+      "lineEnd": 75,
+      "parent": null,
+      "text": "AI 语义自动判覆盖：误报要人擦屁股。声明优先；语义扫描只做定期巡检的兜底（§3.4），不进机制。"
+    },
+    {
+      "i": 54,
+      "type": "heading",
+      "tag": "h3",
+      "line": 76,
+      "lineEnd": 76,
+      "parent": null,
+      "level": 3,
+      "text": "3.2 写入侧（menxia-mcp）"
+    },
+    {
+      "i": 55,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 78,
+      "lineEnd": 78,
+      "parent": null,
+      "text": "open_folder 增 track 参数：{ proj, kind, needs?, supersedes?, unblocks? } → 贴 labels（幂等，缺则按定色新建）＋ 焊尾行标记。不传 track 出 warning，不硬拦（与 body 缺段同级）。"
+    },
+    {
+      "i": 56,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 80,
+      "lineEnd": 80,
+      "parent": null,
+      "text": "溯改老折只 close 不改 body：给存量折补关系一律「close ＋ 判词 comment」，不碰老折 body——别惊动 happy-session 标记。"
+    },
+    {
+      "i": 57,
+      "type": "heading",
+      "tag": "h3",
+      "line": 82,
+      "lineEnd": 82,
+      "parent": null,
+      "level": 3,
+      "text": "3.3 阅读侧（menxia）"
+    },
+    {
+      "i": 58,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 84,
+      "lineEnd": 84,
+      "parent": null,
+      "text": "listOpenPRs() 的响应里 labels 和 body 本来就有（现在扔掉没用）——分组、徽章、关系链零新增 API 请求。sidebar 按 proj: 分组、wait: 定色、kind: 作徽章；尾行标记解析复用 parseHappySession 同族正则，关系 chips 点击跳折。落地排在 integrate/five-branches 合完之后（那五条分支在飞，别撞）。"
+    },
+    {
+      "i": 59,
+      "type": "heading",
+      "tag": "h3",
+      "line": 86,
+      "lineEnd": 86,
+      "parent": null,
+      "level": 3,
+      "text": "3.4 闭环（audit_folders 增三类巡检，只报不动手）"
+    },
+    {
+      "i": 60,
+      "type": "list_item",
+      "tag": "li",
+      "line": 88,
+      "lineEnd": 88,
+      "parent": null,
+      "text": "已画可折声明 supersedes=#N 而 #N 还 open → 僵尸候选；"
+    },
+    {
+      "i": 61,
+      "type": "list_item",
+      "tag": "li",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "text": "open 折 needs=#N 而 #N 已画可 → 已解锁，可动手；"
+    },
+    {
+      "i": 62,
+      "type": "list_item",
+      "tag": "li",
+      "line": 90,
+      "lineEnd": 91,
+      "parent": null,
+      "text": "wait:你拍/你读 但 needsReply>0 → 漂移（其实在等 agent）。"
+    },
+    {
+      "i": 63,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 92,
+      "lineEnd": 92,
+      "parent": null,
+      "text": "处置权在你：巡检只报候选，close 永远等你一句话。"
+    },
+    {
+      "i": 64,
+      "type": "heading",
+      "tag": "h3",
+      "line": 94,
+      "lineEnd": 94,
+      "parent": null,
+      "level": 3,
+      "text": "3.5 doorbell / 8-8 结账对接"
+    },
+    {
+      "i": 65,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 96,
+      "lineEnd": 96,
+      "parent": null,
+      "text": "doorbell 日报从「14 折待决」升级为分项目计数＋等你拍 Top3。你已批过「结论页行动率拆开算」——proj: label 就是「拆开算」的实现前提；存量僵尸清掉，行动率的分母立即变干净。"
+    },
+    {
+      "i": 66,
+      "type": "heading",
+      "tag": "h3",
+      "line": 98,
+      "lineEnd": 98,
+      "parent": null,
+      "level": 3,
+      "text": "3.6 与中书门下的关系"
+    },
+    {
+      "i": 67,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 100,
+      "lineEnd": 100,
+      "parent": null,
+      "text": "这就是中书门下「收进来的东西自带项目/状态维度」那一块，前置到门下现有面上。字段长在 GitHub 对象上：M2 排序直接拿 labels 当特征，M4 门下并入时零迁移。与 #56-F5（M1–M2 砍内置排序）同向：排序模块可以砍，排序数据从今天就开始攒。"
+    },
+    {
+      "i": 68,
+      "type": "heading",
+      "tag": "h2",
+      "line": 102,
+      "lineEnd": 102,
+      "parent": null,
+      "level": 2,
+      "text": "四 · 冻结期怎么切"
+    },
+    {
+      "i": 69,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 104,
+      "lineEnd": 104,
+      "parent": null,
+      "text": "zhupi-backlog 现行规矩：功能冻结到 8/8 结账，不加新 F，只修 bug 与挡路的摩擦。本方案切两片："
+    },
+    {
+      "i": 70,
+      "type": "list_item",
+      "tag": "li",
+      "line": 106,
+      "lineEnd": 106,
+      "parent": null,
+      "text": "现在就做（不碰阅读器代码）：本折分诊立即生效；T3 存量 backfill（gh 贴 label，零代码）；T1 mcp track 参数；T4 巡检；T5 doorbell 拆分。定性：T3–T5 直接服务 8/8 结账指标本身；T1 我定性为「不让每天的新折继续裸奔」——你若不认这个定性，T1 也推到 8/8 后。"
+    },
+    {
+      "i": 71,
+      "type": "list_item",
+      "tag": "li",
+      "line": 107,
+      "lineEnd": 108,
+      "parent": null,
+      "text": "8/8 后（或你明示豁免）：T2 阅读器分组 UI——这是真「新 F」，登记 BACKLOG F13。"
+    },
+    {
+      "i": 72,
+      "type": "heading",
+      "tag": "h2",
+      "line": 109,
+      "lineEnd": 109,
+      "parent": null,
+      "level": 2,
+      "text": "五 · 任务拆分"
+    },
+    {
+      "i": 73,
+      "type": "table",
+      "tag": "table",
+      "line": 111,
+      "lineEnd": 117,
+      "parent": null,
+      "text": "\n\n\n#\n内容\n验收\n排期\n\n\n\n\nT3\n存量 9 折贴 labels（词表首用）＋ #58/#43 按你的判处置\nGitHub 上 9 折全有 proj/kind/wait；僵尸清零\n你批完当场\n\n\nT1\nmcp open_folder 增 track：labels 幂等＋尾行标记＋词表常量单点\n新呈折自带三类 label 与标记；不传 track 出 warning；自验脚本过\n本周\n\n\nT4\naudit_folders 增三类巡检\n对当前存量能报出 #58 类失配\n本周\n\n\nT5\ndoorbell 分项目摘要\n日报按项目计数＋等你拍 Top3\nT3 后一天\n\n\nT2\n阅读器分组＋徽章＋关系 chips（登记 F13）\n分组渲染零新增请求；BUILD_FILES 登记；排在 five-branches 之后\n8/8 后或豁免\n\n\n"
+    },
+    {
+      "i": 74,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 111,
+      "lineEnd": 111,
+      "parent": 73,
+      "text": "\n#\n内容\n验收\n排期\n"
+    },
+    {
+      "i": 75,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 113,
+      "lineEnd": 113,
+      "parent": 73,
+      "text": "\nT3\n存量 9 折贴 labels（词表首用）＋ #58/#43 按你的判处置\nGitHub 上 9 折全有 proj/kind/wait；僵尸清零\n你批完当场\n"
+    },
+    {
+      "i": 76,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 114,
+      "lineEnd": 114,
+      "parent": 73,
+      "text": "\nT1\nmcp open_folder 增 track：labels 幂等＋尾行标记＋词表常量单点\n新呈折自带三类 label 与标记；不传 track 出 warning；自验脚本过\n本周\n"
+    },
+    {
+      "i": 77,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 115,
+      "lineEnd": 115,
+      "parent": 73,
+      "text": "\nT4\naudit_folders 增三类巡检\n对当前存量能报出 #58 类失配\n本周\n"
+    },
+    {
+      "i": 78,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": 73,
+      "text": "\nT5\ndoorbell 分项目摘要\n日报按项目计数＋等你拍 Top3\nT3 后一天\n"
+    },
+    {
+      "i": 79,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 117,
+      "lineEnd": 117,
+      "parent": 73,
+      "text": "\nT2\n阅读器分组＋徽章＋关系 chips（登记 F13）\n分组渲染零新增请求；BUILD_FILES 登记；排在 five-branches 之后\n8/8 后或豁免\n"
+    },
+    {
+      "i": 80,
+      "type": "heading",
+      "tag": "h2",
+      "line": 119,
+      "lineEnd": 119,
+      "parent": null,
+      "level": 2,
+      "text": "六 · 待你拍板"
+    },
+    {
+      "i": 81,
+      "type": "list_item",
+      "tag": "li",
+      "line": 121,
+      "lineEnd": 121,
+      "parent": null,
+      "text": "方案整体：labels＋尾行标记双轨、词表初稿（§3.1）——批不批？"
+    },
+    {
+      "i": 82,
+      "type": "list_item",
+      "tag": "li",
+      "line": 122,
+      "lineEnd": 122,
+      "parent": null,
+      "text": "存量处置（各一句话）：#58 画可归档（作选型依据）还是作废关闭？#43 画可归档？"
+    },
+    {
+      "i": 83,
+      "type": "list_item",
+      "tag": "li",
+      "line": 123,
+      "lineEnd": 123,
+      "parent": null,
+      "text": "冻结切法：按 §四 剖面走（推荐），还是明示豁免、T2 阅读器 UI 也现在做？"
+    },
+    {
+      "i": 84,
+      "type": "list_item",
+      "tag": "li",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": null,
+      "text": "wait 标签维护：agent 处理批注时顺手转移（推荐；接受偶尔漂移，巡检兜底），还是只在呈折时定一次不再动？"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-crlf.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 4,
+      "level": 1,
+      "text": "CRLF 换行的文档",
+      "slug": "crlf-换行的文档"
+    }
+  ],
+  "headings": [
+    {
+      "line": 4,
+      "level": 1,
+      "text": "CRLF 换行的文档",
+      "slug": "crlf-换行的文档"
+    }
+  ]
+}

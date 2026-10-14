@@ -1,0 +1,1445 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhupi-spec.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "zhupi v0 spec — 御笔朱批, a reading and annotation desk"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "In one sentence: the AI (臣, the minister) submits a long document as a 奏折 (a memorial to the throne); you (御, the sovereign) select a sentence and write a 朱批 (a vermilion annotation) on the rendered text; you submit the batch in one tap, the agent replies to every comment and produces the next revision; when you're satisfied, 钦此 (merge = final). The data, the versions and the review loop all stay in GitHub — this app is just a lens you can take off at any time."
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "text": "Revised per comments (v2): added design renders (§1), renamed to 朱批 (§2), plain-language v1→v2 comparison view (§7), tech stack comparison table (§8), plain-language anchoring (§9), glossary (§12), references (§13). v2.2 (verbal input 7/26): switched to desktop web first, mobile moved to v1 (§1 / §4 / §6 / §10). v2.3–2.4: diff-document concept render + split view (§10 / §1)."
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "v2.5 (2026-07-26): all three open questions decided — ② no comparison view ③ tech stack A (zero-build) ④ loose anchoring accepted; added §8.1, the quantified architecture switch gate. Spec finalized, M1 begins."
+    },
+    {
+      "i": 5,
+      "type": "heading",
+      "tag": "h2",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": null,
+      "level": 2,
+      "text": "Contents"
+    },
+    {
+      "i": 6,
+      "type": "list_item",
+      "tag": "li",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": null,
+      "text": "§1 Design renders"
+    },
+    {
+      "i": 7,
+      "type": "list_item",
+      "tag": "li",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "§2 Name and vocabulary"
+    },
+    {
+      "i": 8,
+      "type": "list_item",
+      "tag": "li",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": null,
+      "text": "§3 Goals / non-goals"
+    },
+    {
+      "i": 9,
+      "type": "list_item",
+      "tag": "li",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "§4 Form factor"
+    },
+    {
+      "i": 10,
+      "type": "list_item",
+      "tag": "li",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": null,
+      "text": "§5 Data and authentication"
+    },
+    {
+      "i": 11,
+      "type": "list_item",
+      "tag": "li",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "§6 Pages and interactions"
+    },
+    {
+      "i": 12,
+      "type": "list_item",
+      "tag": "li",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": null,
+      "text": "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    },
+    {
+      "i": 13,
+      "type": "list_item",
+      "tag": "li",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "§8 Open question ③: tech stack comparison"
+    },
+    {
+      "i": 14,
+      "type": "list_item",
+      "tag": "li",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": null,
+      "text": "§9 Open question ④: comment anchoring (in plain language)"
+    },
+    {
+      "i": 15,
+      "type": "list_item",
+      "tag": "li",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "§10 Milestones"
+    },
+    {
+      "i": 16,
+      "type": "list_item",
+      "tag": "li",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": null,
+      "text": "§11 Risks and fallbacks"
+    },
+    {
+      "i": 17,
+      "type": "list_item",
+      "tag": "li",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": null,
+      "text": "§12 Glossary"
+    },
+    {
+      "i": 18,
+      "type": "list_item",
+      "tag": "li",
+      "line": 25,
+      "lineEnd": 26,
+      "parent": null,
+      "text": "§13 References"
+    },
+    {
+      "i": 19,
+      "type": "heading",
+      "tag": "h2",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": null,
+      "level": 2,
+      "text": "§1 Design renders"
+    },
+    {
+      "i": 20,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": null,
+      "text": "Design language: rice-paper ground + ink type + cinnabar red reserved exclusively for the act of annotating; the background carries a very faint 朱丝栏 (the vertical ruling of memorial paper) texture; headings and buttons set in a Song serif (the sovereign's voice), body text in PingFang (modern reading)."
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": null,
+      "text": "① Desktop main view (the v0 battleground) — document list on the left, rendered text in the middle, comment rail on the right: comments sit permanently alongside the text (Docs-style margin comments), and each card shows the 御批 → 臣回 (sovereign comments → minister replies) loop. 钦此 sits top right:"
+    },
+    {
+      "i": 22,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 23,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": null,
+      "text": "The three below are mobile designs (v1; kept here as drafts):"
+    },
+    {
+      "i": 24,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": null,
+      "text": "② List page, \"documents awaiting comment\" — one card per document, a cinnabar spine on the left = waiting on you; a square seal marks the status:"
+    },
+    {
+      "i": 25,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 26,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "③ Reading page — rendered body text, annotated sentences carry a cinnabar brush stroke, \"submit 朱批 · n\" is pinned to the bottom:"
+    },
+    {
+      "i": 27,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 28,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 45,
+      "lineEnd": 45,
+      "parent": null,
+      "text": "④ Comment entry (mobile) — after selecting, a comment sheet rises from the bottom: the quotation (with its source line number) + an input + save/discard:"
+    },
+    {
+      "i": 29,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 30,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": null,
+      "text": "(Mockup sources are in assets/mockups/src/; real development adjusts against these.)"
+    },
+    {
+      "i": 31,
+      "type": "heading",
+      "tag": "h2",
+      "line": 51,
+      "lineEnd": 51,
+      "parent": null,
+      "level": 2,
+      "text": "§2 Name and vocabulary"
+    },
+    {
+      "i": 32,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 53,
+      "lineEnd": 53,
+      "parent": null,
+      "text": "Named 朱批 per your direction (full product name 御笔朱批): repo zhupi, site charliezong18.github.io/zhupi, PWA home-screen name 朱批. Alternatives considered: 批红 (the Ming-dynasty practice of the eunuch directorate annotating on the emperor's behalf — dropped, too much \"ghost-written by a eunuch\"), 奏对, 御览 — 朱批 is the most precise: the action is the thing you do."
+    },
+    {
+      "i": 33,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 55,
+      "lineEnd": 55,
+      "parent": null,
+      "text": "The mapping from interface vocabulary to what happens underneath (one vocabulary across the whole app; learn it once):"
+    },
+    {
+      "i": 34,
+      "type": "table",
+      "tag": "table",
+      "line": 57,
+      "lineEnd": 64,
+      "parent": null,
+      "text": "\n\n\nInterface term\nUnderlying action\n\n\n\n\n奏折 (memorial)\na document in one open PR in the review repo\n\n\n朱批 (vermilion annotation)\nan inline review comment, anchored to a specific sentence\n\n\n总批 (general comment)\na conversation comment on the whole document — e.g. your numbered lists of feedback\n\n\n提交朱批 (submit)\nsubmit the accumulated comments as one review\n\n\n钦此 (so ordered)\nsquash merge; final\n\n\n作罢 (let it go)\ndiscard this half-written comment\n\n\n"
+    },
+    {
+      "i": 35,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 57,
+      "lineEnd": 57,
+      "parent": 34,
+      "text": "\nInterface term\nUnderlying action\n"
+    },
+    {
+      "i": 36,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 59,
+      "lineEnd": 59,
+      "parent": 34,
+      "text": "\n奏折 (memorial)\na document in one open PR in the review repo\n"
+    },
+    {
+      "i": 37,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": 34,
+      "text": "\n朱批 (vermilion annotation)\nan inline review comment, anchored to a specific sentence\n"
+    },
+    {
+      "i": 38,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 61,
+      "lineEnd": 61,
+      "parent": 34,
+      "text": "\n总批 (general comment)\na conversation comment on the whole document — e.g. your numbered lists of feedback\n"
+    },
+    {
+      "i": 39,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": 34,
+      "text": "\n提交朱批 (submit)\nsubmit the accumulated comments as one review\n"
+    },
+    {
+      "i": 40,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 63,
+      "lineEnd": 63,
+      "parent": 34,
+      "text": "\n钦此 (so ordered)\nsquash merge; final\n"
+    },
+    {
+      "i": 41,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 64,
+      "lineEnd": 64,
+      "parent": 34,
+      "text": "\n作罢 (let it go)\ndiscard this half-written comment\n"
+    },
+    {
+      "i": 42,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 66,
+      "lineEnd": 66,
+      "parent": null,
+      "text": "总批 is a first-class citizen newly proposed in v2: across two live trials you spontaneously used \"numbered list of opinions\" general comments both times. That habit goes straight into the product rather than being treated as a fallback."
+    },
+    {
+      "i": 43,
+      "type": "heading",
+      "tag": "h2",
+      "line": 68,
+      "lineEnd": 68,
+      "parent": null,
+      "level": 2,
+      "text": "§3 Goals / non-goals"
+    },
+    {
+      "i": 44,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 70,
+      "lineEnd": 70,
+      "parent": null,
+      "text": "Goals (all of v0):"
+    },
+    {
+      "i": 45,
+      "type": "list_item",
+      "tag": "li",
+      "line": 72,
+      "lineEnd": 72,
+      "parent": null,
+      "text": "Read AI-authored markdown comfortably on a phone — rendered, not diff source"
+    },
+    {
+      "i": 46,
+      "type": "list_item",
+      "tag": "li",
+      "line": 73,
+      "lineEnd": 73,
+      "parent": null,
+      "text": "Annotate sentence by sentence as you read, write a general comment at any point, hand the whole batch back in one tap"
+    },
+    {
+      "i": 47,
+      "type": "list_item",
+      "tag": "li",
+      "line": 74,
+      "lineEnd": 74,
+      "parent": null,
+      "text": "A 钦此 button you can actually press"
+    },
+    {
+      "i": 48,
+      "type": "list_item",
+      "tag": "li",
+      "line": 75,
+      "lineEnd": 76,
+      "parent": null,
+      "text": "Kill the known PAINs one by one:"
+    },
+    {
+      "i": 49,
+      "type": "table",
+      "tag": "table",
+      "line": 77,
+      "lineEnd": 82,
+      "parent": null,
+      "text": "\n\n\nPAIN (from the pilot)\nThe zhupi fix\n\n\n\n\napprove blocked by \"author cannot approve\"\nships its own 钦此 = merge\n\n\ncomment entry isn't discoverable\nselect text → comment. The one main interaction\n\n\nmarkdown diff doesn't render\nrenders the document, only\n\n\nexternal links drop you into a logged-out 404\nrenders in place + PWA, never links out\n\n\n"
+    },
+    {
+      "i": 50,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 77,
+      "lineEnd": 77,
+      "parent": 49,
+      "text": "\nPAIN (from the pilot)\nThe zhupi fix\n"
+    },
+    {
+      "i": 51,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 79,
+      "lineEnd": 79,
+      "parent": 49,
+      "text": "\napprove blocked by \"author cannot approve\"\nships its own 钦此 = merge\n"
+    },
+    {
+      "i": 52,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 80,
+      "lineEnd": 80,
+      "parent": 49,
+      "text": "\ncomment entry isn't discoverable\nselect text → comment. The one main interaction\n"
+    },
+    {
+      "i": 53,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 81,
+      "lineEnd": 81,
+      "parent": 49,
+      "text": "\nmarkdown diff doesn't render\nrenders the document, only\n"
+    },
+    {
+      "i": 54,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 82,
+      "lineEnd": 82,
+      "parent": 49,
+      "text": "\nexternal links drop you into a logged-out 404\nrenders in place + PWA, never links out\n"
+    },
+    {
+      "i": 55,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 84,
+      "lineEnd": 84,
+      "parent": null,
+      "text": "Non-goals (frozen for v0 — not built even if requested): feed ranking / unread management / push notifications (the rejected attention inbox); multi-repo browsing and code diff (not in v0, but listed as the v1 north star, see §10); AI integration (the review-loop skill owns the agent side entirely; zhupi doesn't know AI exists); editing documents (read + annotate only)."
+    },
+    {
+      "i": 56,
+      "type": "heading",
+      "tag": "h2",
+      "line": 86,
+      "lineEnd": 86,
+      "parent": null,
+      "level": 2,
+      "text": "§4 Form factor"
+    },
+    {
+      "i": 57,
+      "type": "list_item",
+      "tag": "li",
+      "line": 88,
+      "lineEnd": 88,
+      "parent": null,
+      "text": "A purely static single-page app hosted on GitHub Pages: a new public repo, zhupi"
+    },
+    {
+      "i": 58,
+      "type": "list_item",
+      "tag": "li",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "text": "Code public, content private: the page contains no data and no secrets; documents are fetched live by the browser with your token"
+    },
+    {
+      "i": 59,
+      "type": "list_item",
+      "tag": "li",
+      "line": 90,
+      "lineEnd": 90,
+      "parent": null,
+      "text": "Desktop web first (v0): a wide two-column layout (document list + reading area) + a right-hand comment rail; keyboard shortcuts like ⌘Enter to submit"
+    },
+    {
+      "i": 60,
+      "type": "list_item",
+      "tag": "li",
+      "line": 91,
+      "lineEnd": 92,
+      "parent": null,
+      "text": "Mobile + PWA moved to v1 (the phone designs are ready — see §1, figures ②③④)"
+    },
+    {
+      "i": 61,
+      "type": "heading",
+      "tag": "h2",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": null,
+      "level": 2,
+      "text": "§5 Data and authentication"
+    },
+    {
+      "i": 62,
+      "type": "list_item",
+      "tag": "li",
+      "line": 95,
+      "lineEnd": 95,
+      "parent": null,
+      "text": "One data source: a single review repository (on my machine, charliezong18/review, private); the browser talks to api.github.com directly (CORS is officially enabled). As of 2026-07-26 the repo is entered on the settings page and stored in localStorage rather than hardcoded — otherwise people who fork it would have to edit code, and the README's fork SOP wouldn't hold."
+    },
+    {
+      "i": 63,
+      "type": "list_item",
+      "tag": "li",
+      "line": 96,
+      "lineEnd": 96,
+      "parent": null,
+      "text": "Authentication in plain language: generate a key in the GitHub backend that is valid for the review repo only (a fine-grained PAT with exactly two permissions ticked, Contents and Pull requests), paste it once the first time you open the app, and it lives in the phone browser's localStorage. The key passes through no server and is sent to nobody; if you lose the phone, revoke it on GitHub in one click."
+    },
+    {
+      "i": 64,
+      "type": "list_item",
+      "tag": "li",
+      "line": 97,
+      "lineEnd": 98,
+      "parent": null,
+      "text": "No backend, no third-party requests, no analytics."
+    },
+    {
+      "i": 65,
+      "type": "heading",
+      "tag": "h2",
+      "line": 99,
+      "lineEnd": 99,
+      "parent": null,
+      "level": 2,
+      "text": "§6 Pages and interactions"
+    },
+    {
+      "i": 66,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 101,
+      "lineEnd": 101,
+      "parent": null,
+      "text": "List page: a list of open PRs (title / submission time / comment count / status seal); manual pull-to-refresh (no backend, no push — acceptable in v0)."
+    },
+    {
+      "i": 67,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 103,
+      "lineEnd": 103,
+      "parent": null,
+      "text": "Reading page: fetch docs/*.md from the PR's head branch and render with markdown-it (tables, code blocks, task lists all supported); reading typography = 17px body, a maximum line width, 1.8 line height, dark mode following the system; 钦此 at the top, \"submit 朱批 · n\" at the bottom."
+    },
+    {
+      "i": 68,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 105,
+      "lineEnd": 105,
+      "parent": null,
+      "text": "Annotating: select text → a card lands in the right-hand comment rail (§1 figure ①, alongside the text; mobile v1 uses the bottom comment sheet, figure ④); comments are accumulated as local drafts first (localStorage, so a half-written comment can't be lost), and annotated sentences get a pale cinnabar highlight; \"submit 朱批\" writes the whole batch back as inline comments on that PR; the 总批 entry point is permanently in the top bar."
+    },
+    {
+      "i": 69,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 107,
+      "lineEnd": 107,
+      "parent": null,
+      "text": "Closing the loop: the reading page shows existing comment threads plus the agent's point-by-point replies (so when v2 comes back you can read how each one was handled); 钦此 pops one confirmation and then squash merges, and the document disappears from the list."
+    },
+    {
+      "i": 70,
+      "type": "heading",
+      "tag": "h2",
+      "line": 109,
+      "lineEnd": 109,
+      "parent": null,
+      "level": 2,
+      "text": "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    },
+    {
+      "i": 71,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 111,
+      "lineEnd": 111,
+      "parent": null,
+      "text": "The scenario: you left 10 comments on v1, I revise and submit v2. When you re-read v2, there are two postures —"
+    },
+    {
+      "i": 72,
+      "type": "list_item",
+      "tag": "li",
+      "line": 113,
+      "lineEnd": 113,
+      "parent": null,
+      "text": "A. No comparison view (the v0 plan): you simply re-read the rendered version; under each 朱批 is my reply (\"done, section 3 rewritten\"), and you locate the changes via the comment threads. Cost = you re-read, or skim by following the replies."
+    },
+    {
+      "i": 73,
+      "type": "list_item",
+      "tag": "li",
+      "line": 114,
+      "lineEnd": 115,
+      "parent": null,
+      "text": "B. Build a comparison view: paragraphs in v2 that changed relative to v1 are highlighted automatically (like Word's track changes). Lovely, but it means paragraph-level diffing on rendered output plus the UI — the single most expensive piece in v0."
+    },
+    {
+      "i": 74,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": null,
+      "text": "The question is exactly: is A enough for you? My recommendation: use A in v0, and add B in v0.5 if it genuinely feels missing — by then there's real usage data showing how you actually hunt for changes on a re-read."
+    },
+    {
+      "i": 75,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 118,
+      "lineEnd": 118,
+      "parent": null,
+      "text": "✅ Decided (2026-07-26): v0 uses A (no comparison view), with B held for later, on demand, after real usage."
+    },
+    {
+      "i": 76,
+      "type": "heading",
+      "tag": "h2",
+      "line": 120,
+      "lineEnd": 120,
+      "parent": null,
+      "level": 2,
+      "text": "§8 Open question ③: tech stack comparison"
+    },
+    {
+      "i": 77,
+      "type": "table",
+      "tag": "table",
+      "line": 122,
+      "lineEnd": 128,
+      "parent": null,
+      "text": "\n\n\n\nA. Zero-build: vanilla JS + markdown-it (recommended)\nB. Preact + Vite\nC. React + Next\n\n\n\n\nWhat it is\nNo framework; a few hand-written JS files, with the render library vendored into the repo\nMini React (3KB) + a modern bundler\nThe full kitchen sink\n\n\nDevelopment speed\nMedium (interactions hand-written, but v0 has very little state)\nFast (componentization is convenient)\nFast, but a cannon for a mosquito\n\n\nMaintenance cost\nLowest: zero dependency chain; open it in two years and it still runs\nMedium: dependencies need version upkeep\nHigh\n\n\nDeployment\nPush is deploy (Pages serves the source directly)\nNeeds a build step (run in Actions)\nNeeds a build, and it's heavy\n\n\nFit for this project\nv0 has three pages and almost no state — a good match\nIf v1 grows complex interactions, migrating then is soon enough\nRejected\n\n\n"
+    },
+    {
+      "i": 78,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 122,
+      "lineEnd": 122,
+      "parent": 77,
+      "text": "\n\nA. Zero-build: vanilla JS + markdown-it (recommended)\nB. Preact + Vite\nC. React + Next\n"
+    },
+    {
+      "i": 79,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": 77,
+      "text": "\nWhat it is\nNo framework; a few hand-written JS files, with the render library vendored into the repo\nMini React (3KB) + a modern bundler\nThe full kitchen sink\n"
+    },
+    {
+      "i": 80,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 125,
+      "lineEnd": 125,
+      "parent": 77,
+      "text": "\nDevelopment speed\nMedium (interactions hand-written, but v0 has very little state)\nFast (componentization is convenient)\nFast, but a cannon for a mosquito\n"
+    },
+    {
+      "i": 81,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 126,
+      "lineEnd": 126,
+      "parent": 77,
+      "text": "\nMaintenance cost\nLowest: zero dependency chain; open it in two years and it still runs\nMedium: dependencies need version upkeep\nHigh\n"
+    },
+    {
+      "i": 82,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 127,
+      "lineEnd": 127,
+      "parent": 77,
+      "text": "\nDeployment\nPush is deploy (Pages serves the source directly)\nNeeds a build step (run in Actions)\nNeeds a build, and it's heavy\n"
+    },
+    {
+      "i": 83,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": 77,
+      "text": "\nFit for this project\nv0 has three pages and almost no state — a good match\nIf v1 grows complex interactions, migrating then is soon enough\nRejected\n"
+    },
+    {
+      "i": 84,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 130,
+      "lineEnd": 130,
+      "parent": null,
+      "text": "The core case for A: this is a small tool you personally use for ten years, not an engineering project that needs to onboard people — fewer dependencies means never hitting the \"npm install won't install two years later\" graveyard. The cost: interaction code is a bit more verbose than componentized code, and the extra time is mine, not yours."
+    },
+    {
+      "i": 85,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 132,
+      "lineEnd": 132,
+      "parent": null,
+      "text": "✅ Decided (2026-07-26): A. B/C are retained as future options, triggered by the breakpoints below."
+    },
+    {
+      "i": 86,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 134,
+      "lineEnd": 134,
+      "parent": null,
+      "text": "🔔 Tripped and executed (the same night, 2026-07-26): the M2 ledger put #3 over the line, and the guards added after review put #8 over the line → the two-indicator gate was live, so per the rule we migrated to B. The executed form deliberately departs from the literal B in one place: htm/preact standalone (a single vendored 13KB file) rather than Preact+Vite — what the gate is treating is the mental load of \"hand-written DOM sync + async timing\" (both bugs the review caught live in that layer), so what's needed is a reactive view layer, not a bundler; going build-free preserves A's most valuable property (push is deploy, zero dependency chain, still runs in ten years). If JSX/TS is ever needed, Vite goes in then — and that counts as changing toolchains, not architecture. The migration record and post-migration measurements are in MIGRATION-WATCH.md."
+    },
+    {
+      "i": 87,
+      "type": "heading",
+      "tag": "h3",
+      "line": 136,
+      "lineEnd": 136,
+      "parent": null,
+      "level": 3,
+      "text": "§8.1 Architecture switch breakpoints (the quantified gate)"
+    },
+    {
+      "i": 88,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 138,
+      "lineEnd": 138,
+      "parent": null,
+      "text": "A zero-build approach fails with clear warning signs. Tripping any two means A has run out of road: feature work pauses and the A→B (Preact + Vite) migration happens first. Tripping only one means record the observation and leave the architecture alone. Check against this table at the end of each development session and write anything over threshold into MIGRATION-WATCH.md."
+    },
+    {
+      "i": 89,
+      "type": "table",
+      "tag": "table",
+      "line": 140,
+      "lineEnd": 150,
+      "parent": null,
+      "text": "\n\n\n#\nIndicator\nThreshold\nWhy this number\n\n\n\n\n1\nLines in a single JS file\nany file > 800 lines\nPast that volume, the branching in hand-written DOM updates can't be held down\n\n\n2\nTotal app code\n> 2500 lines (excluding vendored libraries)\nThree pages reaching that size means state complexity has crossed the line\n\n\n3\nHand-written DOM update sites\n> 25 innerHTML / appendChild / attribute-sync sites on one page\nThe most direct signal of \"time for a reactive framework\"\n\n\n4\nNumber of state sources\n> 6 independent states needing cross-page sync\nHand-written subscriptions start costing more thought than a framework\n\n\n5\nRepeat render bugs\nthe same class of \"the view didn't keep up with the data\" bug fixed ≥ 3 times\nA symptom-level signal, harder evidence than code volume\n\n\n6\nBlast radius of one change\nadding one small feature touches ≥ 4 files and total source files > 8\nIndicates missing component boundaries (without the second clause, a 4-file repo false-positives daily)\n\n\n7\nFirst paint > 1.5s\nDeleted (2026-07-26)\nA zero-dependency static page can't reach this line, and the actual causes of slow loading (content, images) aren't cured by a framework — it isn't measuring \"should we adopt a framework\"\n\n\n8\nAsync race guards\n> 3 sites needing hand-written \"discard stale response / cancel\"\nWhat actually forces you onto a framework is concurrent writes, not line count (openPR consumed site #1 that same day)\n\n\n9\nOptimistic-update rollback\n> 2 operations needing a rollback path\nM2's comment drafts + submit-failure rollback are the first of these\n\n\n"
+    },
+    {
+      "i": 90,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 140,
+      "lineEnd": 140,
+      "parent": 89,
+      "text": "\n#\nIndicator\nThreshold\nWhy this number\n"
+    },
+    {
+      "i": 91,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 142,
+      "lineEnd": 142,
+      "parent": 89,
+      "text": "\n1\nLines in a single JS file\nany file > 800 lines\nPast that volume, the branching in hand-written DOM updates can't be held down\n"
+    },
+    {
+      "i": 92,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 143,
+      "lineEnd": 143,
+      "parent": 89,
+      "text": "\n2\nTotal app code\n> 2500 lines (excluding vendored libraries)\nThree pages reaching that size means state complexity has crossed the line\n"
+    },
+    {
+      "i": 93,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 144,
+      "lineEnd": 144,
+      "parent": 89,
+      "text": "\n3\nHand-written DOM update sites\n> 25 innerHTML / appendChild / attribute-sync sites on one page\nThe most direct signal of \"time for a reactive framework\"\n"
+    },
+    {
+      "i": 94,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 145,
+      "lineEnd": 145,
+      "parent": 89,
+      "text": "\n4\nNumber of state sources\n> 6 independent states needing cross-page sync\nHand-written subscriptions start costing more thought than a framework\n"
+    },
+    {
+      "i": 95,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 146,
+      "lineEnd": 146,
+      "parent": 89,
+      "text": "\n5\nRepeat render bugs\nthe same class of \"the view didn't keep up with the data\" bug fixed ≥ 3 times\nA symptom-level signal, harder evidence than code volume\n"
+    },
+    {
+      "i": 96,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 147,
+      "lineEnd": 147,
+      "parent": 89,
+      "text": "\n6\nBlast radius of one change\nadding one small feature touches ≥ 4 files and total source files > 8\nIndicates missing component boundaries (without the second clause, a 4-file repo false-positives daily)\n"
+    },
+    {
+      "i": 97,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 148,
+      "lineEnd": 148,
+      "parent": 89,
+      "text": "\n7\nFirst paint > 1.5s\nDeleted (2026-07-26)\nA zero-dependency static page can't reach this line, and the actual causes of slow loading (content, images) aren't cured by a framework — it isn't measuring \"should we adopt a framework\"\n"
+    },
+    {
+      "i": 98,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 149,
+      "lineEnd": 149,
+      "parent": 89,
+      "text": "\n8\nAsync race guards\n> 3 sites needing hand-written \"discard stale response / cancel\"\nWhat actually forces you onto a framework is concurrent writes, not line count (openPR consumed site #1 that same day)\n"
+    },
+    {
+      "i": 99,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 150,
+      "lineEnd": 150,
+      "parent": 89,
+      "text": "\n9\nOptimistic-update rollback\n> 2 operations needing a rollback path\nM2's comment drafts + submit-failure rollback are the first of these\n"
+    },
+    {
+      "i": 100,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 152,
+      "lineEnd": 152,
+      "parent": null,
+      "text": "The counting rule for indicator 3 has to be honest: innerHTML / appendChild / attribute sync, all three categories combined, not innerHTML alone (the first entry undercounted; corrected in MIGRATION-WATCH)."
+    },
+    {
+      "i": 101,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 154,
+      "lineEnd": 154,
+      "parent": null,
+      "text": "Cost estimate for a triggered migration: the anchoring algorithm, the GitHub API wrapper and all the styling port over unchanged (those three are the bulk of the code); only the view layer is rewritten. The original \"half a day to a day\" estimate was optimistic — the genuinely expensive part is prying state out of the event closures it's scattered across. Which is why the hedge worth doing whether or not you migrate is: a single state object + an explicit render() + generation-counter guards (a poor man's one-way data flow, about 50 lines)."
+    },
+    {
+      "i": 102,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 156,
+      "lineEnd": 156,
+      "parent": null,
+      "text": "C (React + Next) has its own separate trigger: only consider it when zhupi needs a server (push notifications, multi-person collaboration, a non-GitHub data source) — at which point the product's form has changed, not the architecture's capacity. Not evaluated within v0/v1."
+    },
+    {
+      "i": 103,
+      "type": "heading",
+      "tag": "h2",
+      "line": 158,
+      "lineEnd": 158,
+      "parent": null,
+      "level": 2,
+      "text": "§9 Open question ④: comment anchoring (in plain language)"
+    },
+    {
+      "i": 104,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 160,
+      "lineEnd": 160,
+      "parent": null,
+      "text": "First, an extension of §8: can A (zero-build) do sentence-level annotation? It can — every capability sentence annotation needs (selecting text, getting the selection's position, injecting a highlight, positioning the rail cards) comes from the browser's native Selection API and DOM operations; a framework doesn't provide that layer. Hypothesis, the benchmark product, implements its annotation layer with native DOM injection. What a framework helps with is \"automatic view refresh under complex state\", and zhupi's state is one list of drafts. The genuinely hard part is the anchoring algorithm below — and that code is word-for-word identical under A or B."
+    },
+    {
+      "i": 105,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 162,
+      "lineEnd": 162,
+      "parent": null,
+      "text": "\"Anchoring\" = you select a sentence on the rendered page, and the system has to work out which line of the source markdown file it corresponds to, in order to write it as a GitHub inline comment (GitHub pins comments to line numbers)."
+    },
+    {
+      "i": 106,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 164,
+      "lineEnd": 164,
+      "parent": null,
+      "text": "An example of the flow: you select \"the lens can be taken off at any time\" → the system searches the source file for that sentence → the unique match is on line 3 → the comment is pinned to line 3."
+    },
+    {
+      "i": 107,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 166,
+      "lineEnd": 166,
+      "parent": null,
+      "text": "Two failure modes and their fallbacks:"
+    },
+    {
+      "i": 108,
+      "type": "list_item",
+      "tag": "li",
+      "line": 168,
+      "lineEnd": 168,
+      "parent": null,
+      "text": "The sentence appears twice in the document → pin to whichever occurrence is nearest your reading position."
+    },
+    {
+      "i": 109,
+      "type": "list_item",
+      "tag": "li",
+      "line": 169,
+      "lineEnd": 170,
+      "parent": null,
+      "text": "It can't be located at all (e.g. the selection spans several elements) → pin to the nearest heading line for that section."
+    },
+    {
+      "i": 110,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 171,
+      "lineEnd": 171,
+      "parent": null,
+      "text": "Whether or not the pin is accurate, the comment body always carries \"> the sentence you selected\" — even if the line number lands wrong, both you and the agent can see which sentence is being discussed. The meaning is never lost. That's what \"loose anchoring + quoted-sentence fallback\" means. The question: is that precision acceptable? (Pixel-perfect accuracy is far heavier and isn't worth it in v0.)"
+    },
+    {
+      "i": 111,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 173,
+      "lineEnd": 173,
+      "parent": null,
+      "text": "✅ Decided (2026-07-26): accepted."
+    },
+    {
+      "i": 112,
+      "type": "heading",
+      "tag": "h3",
+      "line": 175,
+      "lineEnd": 175,
+      "parent": null,
+      "level": 3,
+      "text": "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    },
+    {
+      "i": 113,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 177,
+      "lineEnd": 177,
+      "parent": null,
+      "text": "The original approach — \"search the source file for the selected text to get the line number\" — has a flaw that fails on the main path first: rendered text differs from source. **bold**, `code`, [link](url) can't be found by searching what you selected, and nearly every paragraph in this project's documents has inline formatting. Corrected to:"
+    },
+    {
+      "i": 114,
+      "type": "list_item",
+      "tag": "li",
+      "line": 179,
+      "lineEnd": 179,
+      "parent": null,
+      "text": "Primary anchor = DOM line number: read the line number directly from the selection node's closest('[data-line]') — no search, unaffected by formatting. The renderer already stamps data-line and data-line-end onto paragraph / heading / list_item / table / tr (table row) / blockquote / fence / code_block (tr_open and code_block carrying a map has been verified locally)."
+    },
+    {
+      "i": 115,
+      "type": "list_item",
+      "tag": "li",
+      "line": 180,
+      "lineEnd": 180,
+      "parent": null,
+      "text": "Text search demoted to verification: check the quotation against the vicinity of that line; a hit confirms it, a miss still defers to the DOM line number."
+    },
+    {
+      "i": 116,
+      "type": "list_item",
+      "tag": "li",
+      "line": 181,
+      "lineEnd": 181,
+      "parent": null,
+      "text": "Quoted fallback unchanged: the comment body always carries > the original sentence."
+    },
+    {
+      "i": 117,
+      "type": "list_item",
+      "tag": "li",
+      "line": 182,
+      "lineEnd": 183,
+      "parent": null,
+      "text": "Exact line inside a fence = the fence's data-line + the newline count of the text preceding the selection."
+    },
+    {
+      "i": 118,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 184,
+      "lineEnd": 184,
+      "parent": null,
+      "text": "Three hard constraints on the GitHub side (not discussed in the original spec; M2 must handle them):"
+    },
+    {
+      "i": 119,
+      "type": "list_item",
+      "tag": "li",
+      "line": 186,
+      "lineEnd": 186,
+      "parent": null,
+      "text": "Only lines that appear in the PR diff can carry an inline comment, otherwise 422. This works today because documents are files newly added by the PR (the whole file is in the diff) — an implicit premise. The north star's code PRs (which modify existing files) will hit this wall on day one."
+    },
+    {
+      "i": 120,
+      "type": "list_item",
+      "tag": "li",
+      "line": 187,
+      "lineEnd": 187,
+      "parent": null,
+      "text": "Submitting a review is atomic: if any single comment in POST /pulls/{n}/reviews has an invalid line number, the entire batch dies. So the batch must be validated locally before submitting — parse the hunks from the patch field returned by listPRFiles and you know which lines are commentable; invalid ones automatically degrade to a 总批."
+    },
+    {
+      "i": 121,
+      "type": "list_item",
+      "tag": "li",
+      "line": 188,
+      "lineEnd": 189,
+      "parent": null,
+      "text": "Draft PRs can't be merged, so 钦此 needs them marked ready first; REST can't change the draft field, that requires GraphQL, and fine-grained PAT support for GraphQL needs testing. If it doesn't work, the cheapest fix is to abandon draft in the convention (draft never bought anything in a private single-person repo). ✅ Handled (2026-07-26): the review-loop convention abandons draft (new documents are always ordinary PRs); for pre-existing draft documents the app tries GraphQL markReady before merging, and on failure hands you fallback wording to take back to Happy."
+    },
+    {
+      "i": 122,
+      "type": "heading",
+      "tag": "h2",
+      "line": 190,
+      "lineEnd": 190,
+      "parent": null,
+      "level": 2,
+      "text": "§10 Milestones (each step ships a playable link)"
+    },
+    {
+      "i": 123,
+      "type": "list_item",
+      "tag": "li",
+      "line": 192,
+      "lineEnd": 192,
+      "parent": null,
+      "text": "M1 skeleton ✅: token settings page + desktop two-column layout (document list + reading area) + rendered reading — make reading comfortable first"
+    },
+    {
+      "i": 124,
+      "type": "list_item",
+      "tag": "li",
+      "line": 193,
+      "lineEnd": 193,
+      "parent": null,
+      "text": "M2 朱批 ✅: select → accumulate comments in the right-hand rail → hand the batch back in one tap (including 总批)"
+    },
+    {
+      "i": 125,
+      "type": "list_item",
+      "tag": "li",
+      "line": 194,
+      "lineEnd": 195,
+      "parent": null,
+      "text": "M3 the loop ✅ (2026-07-26): comment threads and replies displayed, 钦此 (already shipped in M2.5), and rev switching (F4 tier 1: list versions from PR commits + a version dropdown on the reading page; read-only, no comparison). Implementation notes: threads attach to the current document via line ?? original_line, outdated ones are marked 旧, threads for other documents collapse into an \"other N threads\" group; switching to an old rev is read-only (no floating comment button, no draft highlights, 钦此/submit disabled, a subtle notice at the top). All 5 ?demo=1&auto=1 smoke checks green. The migration structurally eliminated DOM update sites — M3's new features tripped no gate indicator at all (details in MIGRATION-WATCH)"
+    },
+    {
+      "i": 126,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 196,
+      "lineEnd": 196,
+      "parent": null,
+      "text": "v1: mobile + PWA (input 2026-07-26: the main review battleground is the computer, so desktop goes first; the phone designs in §1 figures ②③④ stay as drafts)."
+    },
+    {
+      "i": 127,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 198,
+      "lineEnd": 198,
+      "parent": null,
+      "text": "North star (scheduled after v1): diff documents — real code PRs enter the same list, with the same 朱批/总批/钦此 semantics. This is the complete form of \"design and diff share one entry point and one format\" (the main ask added in a verbal 总批 on 2026-07-26); make the markdown-document half solid first. Concept render (the same right-hand comment rail landing on code lines; colour rule: cinnabar belongs to the sovereign's annotations only, added lines use tea-green, deleted lines use an ink strike, so nothing competes with the comments for red):"
+    },
+    {
+      "i": 128,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 200,
+      "lineEnd": 200,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 129,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 202,
+      "lineEnd": 202,
+      "parent": null,
+      "text": "Split view is the desktop default, with a one-tap \"unified / split\" toggle in the top bar (input 2026-07-26: Charlie prefers side-by-side when reading diffs). Old on the left, new on the right; deleted lines struck in ink, added lines in tea-green, placeholder blocks hatched to mean \"no corresponding line on this side\"; 朱批 still lands on lines on the new side (GitHub's inline comments only recognize new-file line numbers), and the right-hand comment rail is unchanged:"
+    },
+    {
+      "i": 130,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 204,
+      "lineEnd": 204,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 131,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 206,
+      "lineEnd": 206,
+      "parent": null,
+      "text": "Narrow screens (<1280px) fall back to unified automatically — split view squeezing two columns of code plus a comment rail compresses the code past readability. That's why v1 mobile naturally has unified view only."
+    },
+    {
+      "i": 132,
+      "type": "heading",
+      "tag": "h2",
+      "line": 208,
+      "lineEnd": 208,
+      "parent": null,
+      "level": 2,
+      "text": "§11 Risks and fallbacks"
+    },
+    {
+      "i": 133,
+      "type": "list_item",
+      "tag": "li",
+      "line": 210,
+      "lineEnd": 210,
+      "parent": null,
+      "text": "Anchoring precision is the biggest technical risk → §9's loose anchoring + quoted fallback"
+    },
+    {
+      "i": 134,
+      "type": "list_item",
+      "tag": "li",
+      "line": 211,
+      "lineEnd": 211,
+      "parent": null,
+      "text": "The PAT in localStorage → lose the phone, revoke on GitHub in one click; blast radius = one private repo"
+    },
+    {
+      "i": 135,
+      "type": "list_item",
+      "tag": "li",
+      "line": 212,
+      "lineEnd": 212,
+      "parent": null,
+      "text": "API quota: 5000 requests/hour once authenticated — no pressure at personal reading volume"
+    },
+    {
+      "i": 136,
+      "type": "list_item",
+      "tag": "li",
+      "line": 213,
+      "lineEnd": 214,
+      "parent": null,
+      "text": "zhupi itself goes down → fall back to the GitHub web UI, zero data loss"
+    },
+    {
+      "i": 137,
+      "type": "heading",
+      "tag": "h2",
+      "line": 215,
+      "lineEnd": 215,
+      "parent": null,
+      "level": 2,
+      "text": "§12 Glossary"
+    },
+    {
+      "i": 138,
+      "type": "table",
+      "tag": "table",
+      "line": 217,
+      "lineEnd": 228,
+      "parent": null,
+      "text": "\n\n\nTerm\nMeaning\n\n\n\n\nPAT\nPersonal Access Token, GitHub's personal key; fine-grained = the granular version scoped to a single repo\n\n\nCORS\nThe browser's cross-origin permission mechanism; GitHub's API enables it, which is what lets page JS connect directly\n\n\nlocalStorage\nThe browser's built-in local store; data lives only in this browser on this device\n\n\nPWA\nA web page that can be \"added to the home screen\" and used as an app\n\n\nmarkdown-it\nThe JS library that renders markdown text into HTML, compatible with GitHub's syntax (GFM)\n\n\nvanilla JS\n\"Plain JS\", no framework\n\n\nPreact / Vite\nMini React / a modern frontend bundler\n\n\nsquash merge\nCompress all of a PR's commits into one and merge into main\n\n\ninline comment\nA GitHub comment pinned to one specific line\n\n\nanchoring\nThe process of converting the sentence you selected into a source line number (§9)\n\n\n"
+    },
+    {
+      "i": 139,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 217,
+      "lineEnd": 217,
+      "parent": 138,
+      "text": "\nTerm\nMeaning\n"
+    },
+    {
+      "i": 140,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 219,
+      "lineEnd": 219,
+      "parent": 138,
+      "text": "\nPAT\nPersonal Access Token, GitHub's personal key; fine-grained = the granular version scoped to a single repo\n"
+    },
+    {
+      "i": 141,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 220,
+      "lineEnd": 220,
+      "parent": 138,
+      "text": "\nCORS\nThe browser's cross-origin permission mechanism; GitHub's API enables it, which is what lets page JS connect directly\n"
+    },
+    {
+      "i": 142,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 221,
+      "lineEnd": 221,
+      "parent": 138,
+      "text": "\nlocalStorage\nThe browser's built-in local store; data lives only in this browser on this device\n"
+    },
+    {
+      "i": 143,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 222,
+      "lineEnd": 222,
+      "parent": 138,
+      "text": "\nPWA\nA web page that can be \"added to the home screen\" and used as an app\n"
+    },
+    {
+      "i": 144,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 223,
+      "lineEnd": 223,
+      "parent": 138,
+      "text": "\nmarkdown-it\nThe JS library that renders markdown text into HTML, compatible with GitHub's syntax (GFM)\n"
+    },
+    {
+      "i": 145,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 224,
+      "lineEnd": 224,
+      "parent": 138,
+      "text": "\nvanilla JS\n\"Plain JS\", no framework\n"
+    },
+    {
+      "i": 146,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 225,
+      "lineEnd": 225,
+      "parent": 138,
+      "text": "\nPreact / Vite\nMini React / a modern frontend bundler\n"
+    },
+    {
+      "i": 147,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 226,
+      "lineEnd": 226,
+      "parent": 138,
+      "text": "\nsquash merge\nCompress all of a PR's commits into one and merge into main\n"
+    },
+    {
+      "i": 148,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 227,
+      "lineEnd": 227,
+      "parent": 138,
+      "text": "\ninline comment\nA GitHub comment pinned to one specific line\n"
+    },
+    {
+      "i": 149,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 228,
+      "lineEnd": 228,
+      "parent": 138,
+      "text": "\nanchoring\nThe process of converting the sentence you selected into a source line number (§9)\n"
+    },
+    {
+      "i": 150,
+      "type": "heading",
+      "tag": "h2",
+      "line": 230,
+      "lineEnd": 230,
+      "parent": null,
+      "level": 2,
+      "text": "§13 References"
+    },
+    {
+      "i": 151,
+      "type": "list_item",
+      "tag": "li",
+      "line": 232,
+      "lineEnd": 232,
+      "parent": null,
+      "text": "GitHub REST API: PR comments / PR reviews"
+    },
+    {
+      "i": 152,
+      "type": "list_item",
+      "tag": "li",
+      "line": 233,
+      "lineEnd": 233,
+      "parent": null,
+      "text": "GitHub Pages docs"
+    },
+    {
+      "i": 153,
+      "type": "list_item",
+      "tag": "li",
+      "line": 234,
+      "lineEnd": 234,
+      "parent": null,
+      "text": "markdown-it (the render library)"
+    },
+    {
+      "i": 154,
+      "type": "list_item",
+      "tag": "li",
+      "line": 235,
+      "lineEnd": 235,
+      "parent": null,
+      "text": "Hypothesis: Fuzzy Anchoring — the classic precedent for web annotation anchoring; the source of §9's approach"
+    },
+    {
+      "i": 155,
+      "type": "list_item",
+      "tag": "li",
+      "line": 236,
+      "lineEnd": 236,
+      "parent": null,
+      "text": "W3C Web Annotation Data Model — the standard shape for annotation data; v0 borrows the concepts without adopting it wholesale"
+    },
+    {
+      "i": 156,
+      "type": "list_item",
+      "tag": "li",
+      "line": 237,
+      "lineEnd": 237,
+      "parent": null,
+      "text": "MDN Selection API — the native browser capability behind \"select text\""
+    },
+    {
+      "i": 157,
+      "type": "list_item",
+      "tag": "li",
+      "line": 238,
+      "lineEnd": 238,
+      "parent": null,
+      "text": "Preact / Vite (option B in §8)"
+    }
+  ]
+}

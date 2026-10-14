@@ -1,0 +1,126 @@
+{
+  "format": 1,
+  "fn": "matchAnchor",
+  "cases": [
+    {
+      "input": {
+        "headings": [
+          {
+            "id": "无票日选项",
+            "text": "无票日选项"
+          },
+          {
+            "id": "无票日选项-1",
+            "text": "无票日·选项"
+          },
+          {
+            "id": "highline-日模块",
+            "text": "〈Highline 日模块〉"
+          }
+        ],
+        "frag": "无票日选项-1"
+      },
+      "output": "无票日选项-1"
+    },
+    {
+      "input": {
+        "headings": [
+          {
+            "id": "无票日选项",
+            "text": "无票日选项"
+          },
+          {
+            "id": "无票日选项-1",
+            "text": "无票日·选项"
+          },
+          {
+            "id": "highline-日模块",
+            "text": "〈Highline 日模块〉"
+          }
+        ],
+        "frag": "无票日·选项"
+      },
+      "output": "无票日选项-1"
+    },
+    {
+      "input": {
+        "headings": [
+          {
+            "id": "无票日选项",
+            "text": "无票日选项"
+          },
+          {
+            "id": "无票日选项-1",
+            "text": "无票日·选项"
+          },
+          {
+            "id": "highline-日模块",
+            "text": "〈Highline 日模块〉"
+          }
+        ],
+        "frag": "〈Highline 日模块〉"
+      },
+      "output": "highline-日模块"
+    },
+    {
+      "input": {
+        "headings": [
+          {
+            "id": "无票日选项",
+            "text": "无票日选项"
+          },
+          {
+            "id": "无票日选项-1",
+            "text": "无票日·选项"
+          },
+          {
+            "id": "highline-日模块",
+            "text": "〈Highline 日模块〉"
+          }
+        ],
+        "frag": "highline日模块"
+      },
+      "output": "highline-日模块"
+    },
+    {
+      "input": {
+        "headings": [
+          {
+            "id": "无票日选项",
+            "text": "无票日选项"
+          },
+          {
+            "id": "无票日选项-1",
+            "text": "无票日·选项"
+          },
+          {
+            "id": "highline-日模块",
+            "text": "〈Highline 日模块〉"
+          }
+        ],
+        "frag": "不存在"
+      },
+      "output": null
+    },
+    {
+      "input": {
+        "headings": [
+          {
+            "id": "无票日选项",
+            "text": "无票日选项"
+          },
+          {
+            "id": "无票日选项-1",
+            "text": "无票日·选项"
+          },
+          {
+            "id": "highline-日模块",
+            "text": "〈Highline 日模块〉"
+          }
+        ],
+        "frag": ""
+      },
+      "output": null
+    }
+  ]
+}

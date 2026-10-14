@@ -1,0 +1,153 @@
+{
+  "format": 1,
+  "source": "corpus/real-sys-00-overview.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "System Design 00 · Overview",
+      "slug": "system-design-00--overview"
+    },
+    {
+      "line": 14,
+      "level": 2,
+      "text": "I. What this system does",
+      "slug": "i-what-this-system-does"
+    },
+    {
+      "line": 22,
+      "level": 2,
+      "text": "II. Component list",
+      "slug": "ii-component-list"
+    },
+    {
+      "line": 39,
+      "level": 2,
+      "text": "III. Architecture diagram",
+      "slug": "iii-architecture-diagram"
+    },
+    {
+      "line": 78,
+      "level": 2,
+      "text": "IV. Four contracts across components",
+      "slug": "iv-four-contracts-across-components"
+    },
+    {
+      "line": 82,
+      "level": 3,
+      "text": "Contract 1 · The shape of an \"item\"",
+      "slug": "contract-1--the-shape-of-an-item"
+    },
+    {
+      "line": 93,
+      "level": 3,
+      "text": "Contract 2 · State machine",
+      "slug": "contract-2--state-machine"
+    },
+    {
+      "line": 110,
+      "level": 3,
+      "text": "Contract 3 · Body never hits the server disk (one exception)",
+      "slug": "contract-3--body-never-hits-the-server-disk-one-exception"
+    },
+    {
+      "line": 117,
+      "level": 3,
+      "text": "Contract 4 · External input never enters operation tier",
+      "slug": "contract-4--external-input-never-enters-operation-tier"
+    },
+    {
+      "line": 123,
+      "level": 2,
+      "text": "V. Tech stack selection",
+      "slug": "v-tech-stack-selection"
+    },
+    {
+      "line": 136,
+      "level": 2,
+      "text": "VI. Milestones and corresponding components",
+      "slug": "vi-milestones-and-corresponding-components"
+    },
+    {
+      "line": 155,
+      "level": 2,
+      "text": "VII. Global open items",
+      "slug": "vii-global-open-items"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "System Design 00 · Overview",
+      "slug": "system-design-00--overview"
+    },
+    {
+      "line": 14,
+      "level": 2,
+      "text": "I. What this system does",
+      "slug": "i-what-this-system-does"
+    },
+    {
+      "line": 22,
+      "level": 2,
+      "text": "II. Component list",
+      "slug": "ii-component-list"
+    },
+    {
+      "line": 39,
+      "level": 2,
+      "text": "III. Architecture diagram",
+      "slug": "iii-architecture-diagram"
+    },
+    {
+      "line": 78,
+      "level": 2,
+      "text": "IV. Four contracts across components",
+      "slug": "iv-four-contracts-across-components"
+    },
+    {
+      "line": 82,
+      "level": 3,
+      "text": "Contract 1 · The shape of an \"item\"",
+      "slug": "contract-1--the-shape-of-an-item"
+    },
+    {
+      "line": 93,
+      "level": 3,
+      "text": "Contract 2 · State machine",
+      "slug": "contract-2--state-machine"
+    },
+    {
+      "line": 110,
+      "level": 3,
+      "text": "Contract 3 · Body never hits the server disk (one exception)",
+      "slug": "contract-3--body-never-hits-the-server-disk-one-exception"
+    },
+    {
+      "line": 117,
+      "level": 3,
+      "text": "Contract 4 · External input never enters operation tier",
+      "slug": "contract-4--external-input-never-enters-operation-tier"
+    },
+    {
+      "line": 123,
+      "level": 2,
+      "text": "V. Tech stack selection",
+      "slug": "v-tech-stack-selection"
+    },
+    {
+      "line": 136,
+      "level": 2,
+      "text": "VI. Milestones and corresponding components",
+      "slug": "vi-milestones-and-corresponding-components"
+    },
+    {
+      "line": 155,
+      "level": 2,
+      "text": "VII. Global open items",
+      "slug": "vii-global-open-items"
+    }
+  ]
+}

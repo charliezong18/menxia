@@ -1,0 +1,50 @@
+{
+  "format": 1,
+  "fn": "stripFrontmatter",
+  "cases": [
+    {
+      "input": "---\ncreated_by: claude\ntags: [a]\n---\n# 标题\n正文",
+      "output": "\n\n\n\n# 标题\n正文"
+    },
+    {
+      "input": "---\r\na: 1\r\n---\r\n# CRLF",
+      "output": "\n\n\n# CRLF"
+    },
+    {
+      "input": "---  \na: 1\n---\t\nbody",
+      "output": "\n\n\nbody"
+    },
+    {
+      "input": "---\na: 1\n---",
+      "output": "\n\n"
+    },
+    {
+      "input": "---\n---\nempty",
+      "output": "---\n---\nempty"
+    },
+    {
+      "input": "# 只有正文",
+      "output": "# 只有正文"
+    },
+    {
+      "input": "---\n没有闭合",
+      "output": "---\n没有闭合"
+    },
+    {
+      "input": "# 标题\n\n---\n\n分隔线不是 frontmatter",
+      "output": "# 标题\n\n---\n\n分隔线不是 frontmatter"
+    },
+    {
+      "input": "\n---\na: 1\n---\n不在第一行",
+      "output": "\n---\na: 1\n---\n不在第一行"
+    },
+    {
+      "input": "----\na: 1\n----\n四个横线",
+      "output": "----\na: 1\n----\n四个横线"
+    },
+    {
+      "input": "",
+      "output": ""
+    }
+  ]
+}

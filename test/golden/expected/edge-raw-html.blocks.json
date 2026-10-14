@@ -1,0 +1,97 @@
+{
+  "format": 1,
+  "source": "corpus/edge-raw-html.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "原始 HTML（html:false 全部当文字）"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "<div class=\"note\">\n块级 div 里的文字\n</div>"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 8,
+      "parent": null,
+      "text": "<details>\n<summary>点开</summary>"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 10,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "details 里的 markdown 粗体"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": null,
+      "text": "</details>"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "<!-- 一条 HTML 注释 -->"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "行内 <kbd>Cmd</kbd>+<kbd>K</kbd>，换行标签<br>之后，<span style=\"color:red\">红字</span>。"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "<img src=\"x.png\" alt=\"裸图\">"
+    },
+    {
+      "i": 8,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "<script>alert(1)</script>"
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "<已转义> 与 & 与 © 与 中 与 中"
+    }
+  ]
+}

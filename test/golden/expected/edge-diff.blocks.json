@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "source": "corpus/edge-diff.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "diff 块"
+    },
+    {
+      "i": 1,
+      "type": "fence",
+      "tag": "pre",
+      "line": 3,
+      "lineEnd": 14,
+      "parent": null,
+      "info": "diff",
+      "text": "@@ -1,4 +1,5 @@\n 上下文行\n-删掉的行\n+新增的行\n+<script>alert(1)</script>\n \n 空行之后的上下文\n@@ -20,2 +21,2 @@ function foo() {\n-  return 1;\n+  return 2;"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "info 首词是 diff、后面还有别的："
+    },
+    {
+      "i": 3,
+      "type": "fence",
+      "tag": "pre",
+      "line": 18,
+      "lineEnd": 21,
+      "parent": null,
+      "info": "diff",
+      "text": "-a\n+b"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": null,
+      "text": "不是 diff 的 patch 语言："
+    },
+    {
+      "i": 5,
+      "type": "fence",
+      "tag": "code",
+      "line": 25,
+      "lineEnd": 28,
+      "parent": null,
+      "info": "patch",
+      "text": "-a\n+b\n"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": null,
+      "text": "结尾段落。"
+    }
+  ]
+}

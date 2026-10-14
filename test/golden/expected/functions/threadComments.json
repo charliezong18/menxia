@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "fn": "threadComments",
+  "cases": [
+    {
+      "input": [
+        {
+          "id": 1,
+          "created_at": "2026-01-01T00:00:00Z"
+        },
+        {
+          "id": 2,
+          "in_reply_to_id": 1,
+          "created_at": "2026-01-01T00:02:00Z"
+        },
+        {
+          "id": 3,
+          "in_reply_to_id": 1,
+          "created_at": "2026-01-01T00:01:00Z"
+        },
+        {
+          "id": 4,
+          "created_at": "2026-01-01T00:00:30Z"
+        },
+        {
+          "id": 5,
+          "in_reply_to_id": 99,
+          "created_at": "2026-01-01T00:03:00Z"
+        },
+        {
+          "id": 6,
+          "in_reply_to_id": 4,
+          "created_at": "2026-01-01T00:04:00Z"
+        }
+      ],
+      "output": [
+        {
+          "root": 1,
+          "replies": [
+            3,
+            2
+          ]
+        },
+        {
+          "root": 4,
+          "replies": [
+            6
+          ]
+        },
+        {
+          "root": 5,
+          "replies": []
+        }
+      ]
+    },
+    {
+      "input": [],
+      "output": []
+    }
+  ]
+}

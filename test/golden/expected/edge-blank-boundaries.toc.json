@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-blank-boundaries.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 9,
+      "level": 1,
+      "text": "标题紧贴上一段（无空行）",
+      "slug": "标题紧贴上一段无空行"
+    }
+  ],
+  "headings": [
+    {
+      "line": 9,
+      "level": 1,
+      "text": "标题紧贴上一段（无空行）",
+      "slug": "标题紧贴上一段无空行"
+    }
+  ]
+}

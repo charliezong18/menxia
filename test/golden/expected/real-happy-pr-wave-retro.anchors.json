@@ -1,0 +1,1926 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-pr-wave-retro.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "Happy PR",
+        "quoteRaw": "Happy PR"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 49,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "2026-07-",
+        "quoteRaw": "2026-07-"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 32,
+      "length": 8,
+      "docStart": 81,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 32,
+        "quote": "19 PRs s",
+        "quoteRaw": "19 PRs s"
+      },
+      "replay": {
+        "block": 2,
+        "start": 32,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 74,
+      "length": 8,
+      "docStart": 123,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 74,
+        "quote": "Cumulati",
+        "quoteRaw": "Cumulati"
+      },
+      "replay": {
+        "block": 2,
+        "start": 74,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 161,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "1. The F",
+        "quoteRaw": "1. The F"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 187,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 1,
+        "quote": "PR Outco",
+        "quoteRaw": "PR\nOutco"
+      },
+      "replay": {
+        "block": 4,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 190,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 4,
+        "quote": "Outcome",
+        "quoteRaw": "Outcome"
+      },
+      "replay": {
+        "block": 4,
+        "start": 6,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 198,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 12,
+        "quote": "Size Wha",
+        "quoteRaw": "Size\nWha"
+      },
+      "replay": {
+        "block": 4,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 203,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 17,
+        "quote": "What it",
+        "quoteRaw": "What it"
+      },
+      "replay": {
+        "block": 4,
+        "start": 19,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 28,
+      "length": 8,
+      "docStart": 214,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 28,
+        "quote": "Why it e",
+        "quoteRaw": "Why it e"
+      },
+      "replay": {
+        "block": 4,
+        "start": 30,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 240,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 1,
+        "quote": "#1553 ✅",
+        "quoteRaw": "#1553\n✅"
+      },
+      "replay": {
+        "block": 6,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 246,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 6,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 255,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 16,
+        "quote": "+120/−3",
+        "quoteRaw": "+120/−3"
+      },
+      "replay": {
+        "block": 6,
+        "start": 16,
+        "length": 7
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 24,
+      "length": 8,
+      "docStart": 263,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 24,
+        "quote": "Keep the",
+        "quoteRaw": "Keep the"
+      },
+      "replay": {
+        "block": 6,
+        "start": 24,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 82,
+      "length": 8,
+      "docStart": 321,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 82,
+        "quote": "Real bug",
+        "quoteRaw": "Real bug"
+      },
+      "replay": {
+        "block": 6,
+        "start": 82,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 363,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 1,
+        "quote": "#1556 ✅",
+        "quoteRaw": "#1556\n✅"
+      },
+      "replay": {
+        "block": 7,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 369,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 7,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 378,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 16,
+        "quote": "+945/−6",
+        "quoteRaw": "+945/−6"
+      },
+      "replay": {
+        "block": 7,
+        "start": 16,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 24,
+      "length": 8,
+      "docStart": 386,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 24,
+        "quote": "Claude q",
+        "quoteRaw": "Claude q"
+      },
+      "replay": {
+        "block": 7,
+        "start": 24,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 55,
+      "length": 8,
+      "docStart": 417,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 55,
+        "quote": "Backed b",
+        "quoteRaw": "Backed b"
+      },
+      "replay": {
+        "block": 7,
+        "start": 55,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 479,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 1,
+        "quote": "#1561 ✅",
+        "quoteRaw": "#1561\n✅"
+      },
+      "replay": {
+        "block": 8,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 485,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 8,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 494,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 16,
+        "quote": "+145/−22",
+        "quoteRaw": "+145/−22"
+      },
+      "replay": {
+        "block": 8,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 503,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 25,
+        "quote": "Report t",
+        "quoteRaw": "Report t"
+      },
+      "replay": {
+        "block": 8,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 81,
+      "length": 8,
+      "docStart": 559,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 81,
+        "quote": "Real bug",
+        "quoteRaw": "Real bug"
+      },
+      "replay": {
+        "block": 8,
+        "start": 81,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 570,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 1,
+        "quote": "#1564 ✅",
+        "quoteRaw": "#1564\n✅"
+      },
+      "replay": {
+        "block": 9,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 576,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 9,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 585,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 16,
+        "quote": "+45/−3 r",
+        "quoteRaw": "+45/−3\nr"
+      },
+      "replay": {
+        "block": 9,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 592,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 23,
+        "quote": "rate_lim",
+        "quoteRaw": "rate_lim"
+      },
+      "replay": {
+        "block": 9,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 75,
+      "length": 8,
+      "docStart": 644,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 75,
+        "quote": "Real bug",
+        "quoteRaw": "Real bug"
+      },
+      "replay": {
+        "block": 9,
+        "start": 75,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 655,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 1,
+        "quote": "#1566 ✅",
+        "quoteRaw": "#1566\n✅"
+      },
+      "replay": {
+        "block": 10,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 661,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 10,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 670,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 16,
+        "quote": "+5/−2 Op",
+        "quoteRaw": "+5/−2\nOp"
+      },
+      "replay": {
+        "block": 10,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 676,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 22,
+        "quote": "Opus 5 u",
+        "quoteRaw": "Opus 5 u"
+      },
+      "replay": {
+        "block": 10,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 52,
+      "length": 8,
+      "docStart": 706,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 52,
+        "quote": "One-line",
+        "quoteRaw": "One-line"
+      },
+      "replay": {
+        "block": 10,
+        "start": 52,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 729,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 1,
+        "quote": "#1567 ✅",
+        "quoteRaw": "#1567\n✅"
+      },
+      "replay": {
+        "block": 11,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 735,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 11,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 744,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 16,
+        "quote": "+7/−4 Sa",
+        "quoteRaw": "+7/−4\nSa"
+      },
+      "replay": {
+        "block": 11,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 750,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 22,
+        "quote": "Saving a",
+        "quoteRaw": "Saving a"
+      },
+      "replay": {
+        "block": 11,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 74,
+      "length": 8,
+      "docStart": 802,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 74,
+        "quote": "Real bug",
+        "quoteRaw": "Real bug"
+      },
+      "replay": {
+        "block": 11,
+        "start": 74,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 821,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 1,
+        "quote": "#1572 ✅",
+        "quoteRaw": "#1572\n✅"
+      },
+      "replay": {
+        "block": 12,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 827,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 12,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 836,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 16,
+        "quote": "+9 READM",
+        "quoteRaw": "+9\nREADM"
+      },
+      "replay": {
+        "block": 12,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 839,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 19,
+        "quote": "README d",
+        "quoteRaw": "README d"
+      },
+      "replay": {
+        "block": 12,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 66,
+      "length": 8,
+      "docStart": 886,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 66,
+        "quote": "Docs-onl",
+        "quoteRaw": "Docs-onl"
+      },
+      "replay": {
+        "block": 12,
+        "start": 66,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 909,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 1,
+        "quote": "#1573 ✅",
+        "quoteRaw": "#1573\n✅"
+      },
+      "replay": {
+        "block": 13,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 915,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 13,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 924,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 16,
+        "quote": "+1 agy u",
+        "quoteRaw": "+1\nagy u"
+      },
+      "replay": {
+        "block": 13,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 927,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 19,
+        "quote": "agy uses",
+        "quoteRaw": "agy uses"
+      },
+      "replay": {
+        "block": 13,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 77,
+      "length": 8,
+      "docStart": 985,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 77,
+        "quote": "Visual b",
+        "quoteRaw": "Visual b"
+      },
+      "replay": {
+        "block": 13,
+        "start": 77,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1033,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 1,
+        "quote": "#1578 ✅",
+        "quoteRaw": "#1578\n✅"
+      },
+      "replay": {
+        "block": 14,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1039,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 14,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 1048,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 16,
+        "quote": "+148/−2",
+        "quoteRaw": "+148/−2"
+      },
+      "replay": {
+        "block": 14,
+        "start": 16,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 24,
+      "length": 8,
+      "docStart": 1056,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 24,
+        "quote": "Launch f",
+        "quoteRaw": "Launch f"
+      },
+      "replay": {
+        "block": 14,
+        "start": 24,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 63,
+      "length": 8,
+      "docStart": 1095,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 63,
+        "quote": "Real bug",
+        "quoteRaw": "Real bug"
+      },
+      "replay": {
+        "block": 14,
+        "start": 63,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1130,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 1,
+        "quote": "#1579 ✅",
+        "quoteRaw": "#1579\n✅"
+      },
+      "replay": {
+        "block": 15,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1136,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 15,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 1145,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 16,
+        "quote": "+20/−3 A",
+        "quoteRaw": "+20/−3\nA"
+      },
+      "replay": {
+        "block": 15,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 1152,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 23,
+        "quote": "A full r",
+        "quoteRaw": "A full r"
+      },
+      "replay": {
+        "block": 15,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 92,
+      "length": 8,
+      "docStart": 1221,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 92,
+        "quote": "Real bug",
+        "quoteRaw": "Real bug"
+      },
+      "replay": {
+        "block": 15,
+        "start": 92,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1240,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 1,
+        "quote": "#1596 ✅",
+        "quoteRaw": "#1596\n✅"
+      },
+      "replay": {
+        "block": 16,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1246,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 7,
+        "quote": "✅ merged",
+        "quoteRaw": "✅ merged"
+      },
+      "replay": {
+        "block": 16,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 1255,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 16,
+        "quote": "+37/−5 m",
+        "quoteRaw": "+37/−5\nm"
+      },
+      "replay": {
+        "block": 16,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 1262,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 23,
+        "quote": "model/ef",
+        "quoteRaw": "model/ef"
+      },
+      "replay": {
+        "block": 16,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 78,
+      "length": 8,
+      "docStart": 1317,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 78,
+        "quote": "Real bug",
+        "quoteRaw": "Real bug"
+      },
+      "replay": {
+        "block": 16,
+        "start": 78,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1369,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 1,
+        "quote": "#1568 ❌",
+        "quoteRaw": "#1568\n❌"
+      },
+      "replay": {
+        "block": 17,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1375,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 7,
+        "quote": "❌ closed",
+        "quoteRaw": "❌ closed"
+      },
+      "replay": {
+        "block": 17,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 1384,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 16,
+        "quote": "+230/−63",
+        "quoteRaw": "+230/−63"
+      },
+      "replay": {
+        "block": 17,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 1393,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 25,
+        "quote": "Remember",
+        "quoteRaw": "Remember"
+      },
+      "replay": {
+        "block": 17,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 68,
+      "length": 8,
+      "docStart": 1436,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 68,
+        "quote": "He wants",
+        "quoteRaw": "He wants"
+      },
+      "replay": {
+        "block": 17,
+        "start": 68,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1505,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 1,
+        "quote": "#1569 ❌",
+        "quoteRaw": "#1569\n❌"
+      },
+      "replay": {
+        "block": 18,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1511,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 7,
+        "quote": "❌ closed",
+        "quoteRaw": "❌ closed"
+      },
+      "replay": {
+        "block": 18,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 1520,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 16,
+        "quote": "+311/−64",
+        "quoteRaw": "+311/−64"
+      },
+      "replay": {
+        "block": 18,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 1529,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 25,
+        "quote": "Defaults",
+        "quoteRaw": "Defaults"
+      },
+      "replay": {
+        "block": 18,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 67,
+      "length": 8,
+      "docStart": 1571,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 67,
+        "quote": "Same as",
+        "quoteRaw": "Same as"
+      },
+      "replay": {
+        "block": 18,
+        "start": 67,
+        "length": 7
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1617,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 1,
+        "quote": "#1570 ❌",
+        "quoteRaw": "#1570\n❌"
+      },
+      "replay": {
+        "block": 19,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1623,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 7,
+        "quote": "❌ closed",
+        "quoteRaw": "❌ closed"
+      },
+      "replay": {
+        "block": 19,
+        "start": 7,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "Happy PR Wave Re",
+      "expect": 3
+    },
+    {
+      "quote": "2026-07-22 → 07-",
+      "expect": 5
+    },
+    {
+      "quote": "1. The Full Scor",
+      "expect": 9
+    },
+    {
+      "quote": "PR Outcome Size ",
+      "expect": 11
+    },
+    {
+      "quote": "PR Outcome Size ",
+      "expect": 11
+    },
+    {
+      "quote": "#1553 ✅ merged +",
+      "expect": 13
+    },
+    {
+      "quote": "#1556 ✅ merged +",
+      "expect": 14
+    },
+    {
+      "quote": "#1561 ✅ merged +",
+      "expect": 15
+    },
+    {
+      "quote": "#1564 ✅ merged +",
+      "expect": 16
+    },
+    {
+      "quote": "#1566 ✅ merged +",
+      "expect": 17
+    },
+    {
+      "quote": "#1567 ✅ merged +",
+      "expect": 18
+    },
+    {
+      "quote": "#1572 ✅ merged +",
+      "expect": 19
+    },
+    {
+      "quote": "#1573 ✅ merged +",
+      "expect": 20
+    },
+    {
+      "quote": "#1578 ✅ merged +",
+      "expect": 21
+    },
+    {
+      "quote": "#1579 ✅ merged +",
+      "expect": 22
+    },
+    {
+      "quote": "#1596 ✅ merged +",
+      "expect": 23
+    },
+    {
+      "quote": "#1568 ❌ closed +",
+      "expect": 24
+    },
+    {
+      "quote": "#1569 ❌ closed +",
+      "expect": 25
+    },
+    {
+      "quote": "#1570 ❌ closed +",
+      "expect": 26
+    },
+    {
+      "quote": "#1571 ❌ closed +",
+      "expect": 27
+    },
+    {
+      "quote": "#1574 ❌ closed +",
+      "expect": 28
+    },
+    {
+      "quote": "#1576 ❌ closed +",
+      "expect": 29
+    },
+    {
+      "quote": "#1577 ❌ closed +",
+      "expect": 30
+    },
+    {
+      "quote": "#1575 ⏳ open +11",
+      "expect": 31
+    },
+    {
+      "quote": "Companion issues",
+      "expect": 33
+    },
+    {
+      "quote": "2. One Clean Div",
+      "expect": 37
+    },
+    {
+      "quote": "Put the 12 that ",
+      "expect": 39
+    },
+    {
+      "quote": "The 12 merged av",
+      "expect": 41
+    },
+    {
+      "quote": "But size is only",
+      "expect": 43
+    },
+    {
+      "quote": "Test The 12 merg",
+      "expect": 45
+    },
+    {
+      "quote": "Test The 12 merg",
+      "expect": 45
+    },
+    {
+      "quote": "Bug fix or new f",
+      "expect": 47
+    },
+    {
+      "quote": "Whose idea Fixin",
+      "expect": 48
+    },
+    {
+      "quote": "Who carries long",
+      "expect": 49
+    },
+    {
+      "quote": "#1571 is the pur",
+      "expect": 51
+    },
+    {
+      "quote": "There's a line h",
+      "expect": 53
+    },
+    {
+      "quote": "3. Three Plays T",
+      "expect": 57
+    },
+    {
+      "quote": "1. The \"free-to-",
+      "expect": 59
+    },
+    {
+      "quote": "On 7/26 I split ",
+      "expect": 61
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "Happy PR Wave Retro (#1553 → #1596)"
+    ],
+    [
+      5,
+      "Happy PR Wave Retro (#1553 → #1596)"
+    ],
+    [
+      9,
+      "1. The Full Scoreboard"
+    ],
+    [
+      11,
+      "1. The Full Scoreboard"
+    ],
+    [
+      13,
+      "1. The Full Scoreboard"
+    ],
+    [
+      14,
+      "1. The Full Scoreboard"
+    ],
+    [
+      15,
+      "1. The Full Scoreboard"
+    ],
+    [
+      16,
+      "1. The Full Scoreboard"
+    ],
+    [
+      17,
+      "1. The Full Scoreboard"
+    ],
+    [
+      18,
+      "1. The Full Scoreboard"
+    ],
+    [
+      19,
+      "1. The Full Scoreboard"
+    ],
+    [
+      20,
+      "1. The Full Scoreboard"
+    ],
+    [
+      21,
+      "1. The Full Scoreboard"
+    ],
+    [
+      22,
+      "1. The Full Scoreboard"
+    ],
+    [
+      23,
+      "1. The Full Scoreboard"
+    ],
+    [
+      24,
+      "1. The Full Scoreboard"
+    ],
+    [
+      25,
+      "1. The Full Scoreboard"
+    ],
+    [
+      26,
+      "1. The Full Scoreboard"
+    ],
+    [
+      27,
+      "1. The Full Scoreboard"
+    ],
+    [
+      28,
+      "1. The Full Scoreboard"
+    ],
+    [
+      29,
+      "1. The Full Scoreboard"
+    ],
+    [
+      30,
+      "1. The Full Scoreboard"
+    ],
+    [
+      31,
+      "1. The Full Scoreboard"
+    ],
+    [
+      33,
+      "1. The Full Scoreboard"
+    ],
+    [
+      37,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      39,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      41,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      43,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      45,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      47,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      48,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      49,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      51,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      53,
+      "2. One Clean Dividing Line"
+    ],
+    [
+      57,
+      "3. Three Plays That Worked"
+    ],
+    [
+      59,
+      "3. Three Plays That Worked"
+    ],
+    [
+      61,
+      "3. Three Plays That Worked"
+    ],
+    [
+      63,
+      "3. Three Plays That Worked"
+    ],
+    [
+      65,
+      "3. Three Plays That Worked"
+    ],
+    [
+      67,
+      "3. Three Plays That Worked"
+    ],
+    [
+      69,
+      "3. Three Plays That Worked"
+    ],
+    [
+      71,
+      "3. Three Plays That Worked"
+    ],
+    [
+      73,
+      "3. Three Plays That Worked"
+    ],
+    [
+      77,
+      "4. Two Genuine Mistakes"
+    ],
+    [
+      79,
+      "4. Two Genuine Mistakes"
+    ],
+    [
+      81,
+      "4. Two Genuine Mistakes"
+    ],
+    [
+      83,
+      "4. Two Genuine Mistakes"
+    ],
+    [
+      87,
+      "5. Three Things Worth More Than the Merge Count"
+    ],
+    [
+      89,
+      "5. Three Things Worth More Than the Merge Count"
+    ],
+    [
+      90,
+      "5. Three Things Worth More Than the Merge Count"
+    ],
+    [
+      91,
+      "5. Three Things Worth More Than the Merge Count"
+    ],
+    [
+      95,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      97,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      99,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      101,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      103,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      105,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      107,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      109,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      110,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      111,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      112,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      113,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      115,
+      "6. What happy2 Means for How You Work Today"
+    ],
+    [
+      117,
+      "7. Decisions"
+    ],
+    [
+      119,
+      "7. Decisions"
+    ],
+    [
+      121,
+      "7. Decisions"
+    ],
+    [
+      122,
+      "7. Decisions"
+    ],
+    [
+      123,
+      "7. Decisions"
+    ],
+    [
+      124,
+      "7. Decisions"
+    ],
+    [
+      125,
+      "7. Decisions"
+    ],
+    [
+      126,
+      "7. Decisions"
+    ],
+    [
+      128,
+      "7. Decisions"
+    ],
+    [
+      130,
+      "7. Decisions"
+    ]
+  ]
+}

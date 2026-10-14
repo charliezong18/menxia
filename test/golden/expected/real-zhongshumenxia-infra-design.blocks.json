@@ -1,0 +1,842 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhongshumenxia-infra-design.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "System Design 08 · Infra (selection · requirements · scaling)"
+    },
+    {
+      "i": 2,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 5,
+      "lineEnd": 6,
+      "parent": null,
+      "text": "\nThe infrastructure chapter, added to the #43 series. One-line duty: what iron 中书门下 runs on, why that iron, and what happens when the iron runs out.\nPrior context: selection comparison (#58), decision close-out D1–D10 (#57), runtime & 班子 (sys-07). Division of labor with sys-07: sys-07 owns \"how many installations, who sees which\"; this doc owns \"machine, network, capacity, money\".\n"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 6,
+      "parent": 2,
+      "text": "The infrastructure chapter, added to the #43 series. One-line duty: what iron 中书门下 runs on, why that iron, and what happens when the iron runs out.\nPrior context: selection comparison (#58), decision close-out D1–D10 (#57), runtime & 班子 (sys-07). Division of labor with sys-07: sys-07 owns \"how many installations, who sees which\"; this doc owns \"machine, network, capacity, money\"."
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 8,
+      "lineEnd": 8,
+      "parent": null,
+      "text": "Date: 2026-07-31"
+    },
+    {
+      "i": 5,
+      "type": "heading",
+      "tag": "h2",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": null,
+      "level": 2,
+      "text": "I. Requirements (criteria first, choices second)"
+    },
+    {
+      "i": 6,
+      "type": "heading",
+      "tag": "h3",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "level": 3,
+      "text": "Functional"
+    },
+    {
+      "i": 7,
+      "type": "table",
+      "tag": "table",
+      "line": 16,
+      "lineEnd": 21,
+      "parent": null,
+      "text": "\n\n\n#\nRequirement\nSource\n\n\n\n\nF1\nRun happy2 server (Fastify + SQLite) + Docker plugin containers (1 GiB cap each)\nsys-02/07, M0\n\n\nF2\nWorker and phone can reach in from outside; the server never dials into the home machine\ntopology iron rule\n\n\nF3\nBackups can leave the island (off-site second copy, against whole-host loss)\nC6\n\n\nF4\nFrom M5, Rig agent containers run on the same box\ndispatch-1pager\n\n\n"
+    },
+    {
+      "i": 8,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": 7,
+      "text": "\n#\nRequirement\nSource\n"
+    },
+    {
+      "i": 9,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": 7,
+      "text": "\nF1\nRun happy2 server (Fastify + SQLite) + Docker plugin containers (1 GiB cap each)\nsys-02/07, M0\n"
+    },
+    {
+      "i": 10,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": 7,
+      "text": "\nF2\nWorker and phone can reach in from outside; the server never dials into the home machine\ntopology iron rule\n"
+    },
+    {
+      "i": 11,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": 7,
+      "text": "\nF3\nBackups can leave the island (off-site second copy, against whole-host loss)\nC6\n"
+    },
+    {
+      "i": 12,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": 7,
+      "text": "\nF4\nFrom M5, Rig agent containers run on the same box\ndispatch-1pager\n"
+    },
+    {
+      "i": 13,
+      "type": "heading",
+      "tag": "h3",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": null,
+      "level": 3,
+      "text": "Non-functional"
+    },
+    {
+      "i": 14,
+      "type": "table",
+      "tag": "table",
+      "line": 25,
+      "lineEnd": 31,
+      "parent": null,
+      "text": "\n\n\n#\nRequirement\nCriterion\n\n\n\n\nN1\nBudget: ≤$20/mo, and the billing model must be structurally runaway-proof — hourly-capped-at-monthly beats pure pay-as-you-go\nruled 2026-07-31\n\n\nN2\nAvailability SLO: self-alerting, not high availability. Single box, single disk, no HA; targets RTO ≤ 4 h (provision.sh + restore) and RPO ≤ 24 h (daily backups). A silently dead doorbell is the only unacceptable failure — covered by the worker self-alert (C7), not by more machines\n#56 F4 (approved)\n\n\nN3\nSecurity: Contract 3 (bodies never at rest) is the main line; plugin egress-open enters the threat model as fact (D2); the smaller the exposed surface the better (§V)\nsys-02 §IX\n\n\nN4\nOperability: bare metal to B1 in one command (provision.sh, annotation adopted); upstream pinned at tag v0.0.22, upgrades rehearsed locally first\n#57 annotation, sys-07\n\n\nN5\nLegal hygiene: personal account, personal payment, throughout; never any employer-affiliated cloud account/credits (that is precisely how §2870's \"used employer resources\" exception gets triggered)\nhappy2-as-base §4②\n\n\n"
+    },
+    {
+      "i": 15,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 25,
+      "lineEnd": 25,
+      "parent": 14,
+      "text": "\n#\nRequirement\nCriterion\n"
+    },
+    {
+      "i": 16,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": 14,
+      "text": "\nN1\nBudget: ≤$20/mo, and the billing model must be structurally runaway-proof — hourly-capped-at-monthly beats pure pay-as-you-go\nruled 2026-07-31\n"
+    },
+    {
+      "i": 17,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": 14,
+      "text": "\nN2\nAvailability SLO: self-alerting, not high availability. Single box, single disk, no HA; targets RTO ≤ 4 h (provision.sh + restore) and RPO ≤ 24 h (daily backups). A silently dead doorbell is the only unacceptable failure — covered by the worker self-alert (C7), not by more machines\n#56 F4 (approved)\n"
+    },
+    {
+      "i": 18,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": 14,
+      "text": "\nN3\nSecurity: Contract 3 (bodies never at rest) is the main line; plugin egress-open enters the threat model as fact (D2); the smaller the exposed surface the better (§V)\nsys-02 §IX\n"
+    },
+    {
+      "i": 19,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": 14,
+      "text": "\nN4\nOperability: bare metal to B1 in one command (provision.sh, annotation adopted); upstream pinned at tag v0.0.22, upgrades rehearsed locally first\n#57 annotation, sys-07\n"
+    },
+    {
+      "i": 20,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": 14,
+      "text": "\nN5\nLegal hygiene: personal account, personal payment, throughout; never any employer-affiliated cloud account/credits (that is precisely how §2870's \"used employer resources\" exception gets triggered)\nhappy2-as-base §4②\n"
+    },
+    {
+      "i": 21,
+      "type": "heading",
+      "tag": "h2",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": null,
+      "level": 2,
+      "text": "II. Selection (verdict + why the hyperscalers are out)"
+    },
+    {
+      "i": 22,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": null,
+      "text": "Primary: Hetzner CPX21 @ Hillsboro (3 vCPU / 4 GB / 80 GB, ≈$12.53/mo); fallback Vultr 4 GB ($20, at cap). The four-way comparison with sources is #58; not repeated here."
+    },
+    {
+      "i": 23,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "text": "Why AWS/GCP/Azure are out as a class (the 2026-07-31 follow-up question, archived here):"
+    },
+    {
+      "i": 24,
+      "type": "list_item",
+      "tag": "li",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "Every 4 GB tier prices out before extras: EC2 t4g.medium ≈$24.5 + EBS + IPv4 (now billed) + metered egress ≈ $30+; GCP e2-medium the same class. Even Lightsail at the line only buys \"a pricier Hetzner with an AWS login\"."
+    },
+    {
+      "i": 25,
+      "type": "list_item",
+      "tag": "li",
+      "line": 42,
+      "lineEnd": 42,
+      "parent": null,
+      "text": "The billing model is N1 inverted: pure pay-as-you-go, metered egress, no spend ceiling — the classic accident shape for an unattended personal box. Hetzner's hourly-capped-at-monthly satisfies N1 structurally."
+    },
+    {
+      "i": 26,
+      "type": "list_item",
+      "tag": "li",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "text": "Complexity tax with zero payback: IAM/VPC/egress rate cards are the entry fee for managed services; this design is one VPS + SQLite — none of the hyperscaler strengths get used."
+    },
+    {
+      "i": 27,
+      "type": "list_item",
+      "tag": "li",
+      "line": 44,
+      "lineEnd": 45,
+      "parent": null,
+      "text": "Free tiers (1 GB) can't hold F1; GCP's $300 credit buys two free months at the price of one forced migration — not worth it."
+    },
+    {
+      "i": 28,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 46,
+      "lineEnd": 46,
+      "parent": null,
+      "text": "Lock-in backstop: N4's provision.sh + C6 backups compress \"picked the wrong host\" to hours — this decision does not need to be perfect."
+    },
+    {
+      "i": 29,
+      "type": "heading",
+      "tag": "h2",
+      "line": 50,
+      "lineEnd": 50,
+      "parent": null,
+      "level": 2,
+      "text": "III. Topology"
+    },
+    {
+      "i": 30,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 52,
+      "lineEnd": 52,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 31,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": null,
+      "text": "All three streams are outbound-only (worker → server); the phone browser and Telegram are the only two human-facing entrances. Three trust zones: the VPS (housing the plugin container, a \"tenant with open egress\"), the mini (holds all local credentials, never reachable inbound), the phone (read-only consumer). GitHub is an external source, pulled one-way by the worker."
+    },
+    {
+      "i": 32,
+      "type": "heading",
+      "tag": "h2",
+      "line": 58,
+      "lineEnd": 58,
+      "parent": null,
+      "level": 2,
+      "text": "IV. Capacity and scaling"
+    },
+    {
+      "i": 33,
+      "type": "heading",
+      "tag": "h3",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": null,
+      "level": 3,
+      "text": "How the 4 GB gets spent (M1–M4 budget)"
+    },
+    {
+      "i": 34,
+      "type": "table",
+      "tag": "table",
+      "line": 62,
+      "lineEnd": 68,
+      "parent": null,
+      "text": "\n\n\nConsumer\nBudget\nBasis\n\n\n\n\nOS + sshd + Caddy\n~0.4 GB\nroutine\n\n\nhappy2 server\n~0.3–0.5 GB\nFastify + SQLite, light\n\n\nPlugin container × 1 (self-use 班子)\n≤1 GiB\nupstream hard cap\n\n\nPlugin container × 2 (M3 collab 班子)\n≤1 GiB\nditto\n\n\nHeadroom\n~1–1.2 GB\nbursts + page cache\n\n\n"
+    },
+    {
+      "i": 35,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": 34,
+      "text": "\nConsumer\nBudget\nBasis\n"
+    },
+    {
+      "i": 36,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 64,
+      "lineEnd": 64,
+      "parent": 34,
+      "text": "\nOS + sshd + Caddy\n~0.4 GB\nroutine\n"
+    },
+    {
+      "i": 37,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 65,
+      "lineEnd": 65,
+      "parent": 34,
+      "text": "\nhappy2 server\n~0.3–0.5 GB\nFastify + SQLite, light\n"
+    },
+    {
+      "i": 38,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 66,
+      "lineEnd": 66,
+      "parent": 34,
+      "text": "\nPlugin container × 1 (self-use 班子)\n≤1 GiB\nupstream hard cap\n"
+    },
+    {
+      "i": 39,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 67,
+      "lineEnd": 67,
+      "parent": 34,
+      "text": "\nPlugin container × 2 (M3 collab 班子)\n≤1 GiB\nditto\n"
+    },
+    {
+      "i": 40,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 68,
+      "lineEnd": 68,
+      "parent": 34,
+      "text": "\nHeadroom\n~1–1.2 GB\nbursts + page cache\n"
+    },
+    {
+      "i": 41,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 70,
+      "lineEnd": 70,
+      "parent": null,
+      "text": "Conclusion: 4 GB carries M1–M4 comfortably; 2 GB starts pinching at M3's second 班子 — which is exactly why the 2 GB tier wasn't chosen."
+    },
+    {
+      "i": 42,
+      "type": "heading",
+      "tag": "h3",
+      "line": 72,
+      "lineEnd": 72,
+      "parent": null,
+      "level": 3,
+      "text": "Disk (80 GB)"
+    },
+    {
+      "i": 43,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 74,
+      "lineEnd": 74,
+      "parent": null,
+      "text": "Item metadata is KB-scale, 敕草 snapshots MB-scale — business data won't fill it in a decade. The real consumer is Docker images and build cache: the ops contract gains a weekly docker system prune timer, and disk >80% joins the worker self-alert probes."
+    },
+    {
+      "i": 44,
+      "type": "heading",
+      "tag": "h3",
+      "line": 76,
+      "lineEnd": 76,
+      "parent": null,
+      "level": 3,
+      "text": "Traffic (US 1 TB/mo)"
+    },
+    {
+      "i": 45,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 78,
+      "lineEnd": 78,
+      "parent": null,
+      "text": "All three streams are KB-scale metadata packets; body fetch-back is MB-scale and human-triggered. Cannot hit the ceiling by orders of magnitude — not designed for."
+    },
+    {
+      "i": 46,
+      "type": "heading",
+      "tag": "h3",
+      "line": 80,
+      "lineEnd": 80,
+      "parent": null,
+      "level": 3,
+      "text": "Scaling path (by trigger, not by date)"
+    },
+    {
+      "i": 47,
+      "type": "table",
+      "tag": "table",
+      "line": 82,
+      "lineEnd": 86,
+      "parent": null,
+      "text": "\n\n\nTrigger\nAction\nNote\n\n\n\n\nM5 Rig lands and memory is measured tight\nCPX21 → CPX31 (8 GB, ≈$23/mo, over cap — needs your budget re-approval); Hetzner supports in-place rescale (disk only grows)\nthe single foreseeable vertical step\n\n\nDisk persistently >80%\nprune first, grow later\nalmost always image junk\n\n\nOne box not enough (multi-user, agent concurrency)\nExplicit non-goal. If that day comes, the project's nature has changed — redesign then, nothing pre-built here\nanti-overengineering\n\n\n"
+    },
+    {
+      "i": 48,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 82,
+      "lineEnd": 82,
+      "parent": 47,
+      "text": "\nTrigger\nAction\nNote\n"
+    },
+    {
+      "i": 49,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 84,
+      "lineEnd": 84,
+      "parent": 47,
+      "text": "\nM5 Rig lands and memory is measured tight\nCPX21 → CPX31 (8 GB, ≈$23/mo, over cap — needs your budget re-approval); Hetzner supports in-place rescale (disk only grows)\nthe single foreseeable vertical step\n"
+    },
+    {
+      "i": 50,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 85,
+      "lineEnd": 85,
+      "parent": 47,
+      "text": "\nDisk persistently >80%\nprune first, grow later\nalmost always image junk\n"
+    },
+    {
+      "i": 51,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 86,
+      "lineEnd": 86,
+      "parent": 47,
+      "text": "\nOne box not enough (multi-user, agent concurrency)\nExplicit non-goal. If that day comes, the project's nature has changed — redesign then, nothing pre-built here\nanti-overengineering\n"
+    },
+    {
+      "i": 52,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 88,
+      "lineEnd": 88,
+      "parent": null,
+      "text": "Explicitly not done: HA/standby, load balancing, K8s, multi-region. N2's SLO is met by \"self-alert + hours-scale rebuild\", not by a second machine."
+    },
+    {
+      "i": 53,
+      "type": "heading",
+      "tag": "h2",
+      "line": 92,
+      "lineEnd": 92,
+      "parent": null,
+      "level": 2,
+      "text": "V. ⏳ Decision box A · Exposure staging (tailnet-first vs public day-1)"
+    },
+    {
+      "i": 54,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 94,
+      "lineEnd": 94,
+      "parent": null,
+      "text": "sys-07 says \"public HTTPS + upstream auth\", reasoned from the second user and phone deep links. But during M1–M2 you are the only user, and your phone is already in the tailnet — public exposure buys nothing in that window, while parking a 395-commits-in-60-days young Fastify in front of internet-wide scanning."
+    },
+    {
+      "i": 55,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 96,
+      "lineEnd": 99,
+      "parent": null,
+      "text": "\nRecommendation (a) | tailnet-first, flip public at M3: for M1–M2 the server joins Tailscale only; happy2/Caddy bind the tailnet address; TLS via tailscale cert (ts.net name, phones trust it natively); worker and phone deep links all work unchanged. When the friend joins at M3, flip to public + upstream auth (rebind Caddy + domain, half a day). Side benefit: the domain purchase defers to M3 — #58's domain question dissolves.\nOption (b) | public from day 1: sys-07 as written. Saves the half-day flip at M3, at the cost of the whole build period's exposure.\nRecommending (a). No conflict with sys-07's \"Tailscale is wrong once the second user joins\" — that ruling governs M3+; this box governs M1–M2 only.\n"
+    },
+    {
+      "i": 56,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 96,
+      "lineEnd": 97,
+      "parent": 55,
+      "text": "Recommendation (a) | tailnet-first, flip public at M3: for M1–M2 the server joins Tailscale only; happy2/Caddy bind the tailnet address; TLS via tailscale cert (ts.net name, phones trust it natively); worker and phone deep links all work unchanged. When the friend joins at M3, flip to public + upstream auth (rebind Caddy + domain, half a day). Side benefit: the domain purchase defers to M3 — #58's domain question dissolves.\nOption (b) | public from day 1: sys-07 as written. Saves the half-day flip at M3, at the cost of the whole build period's exposure."
+    },
+    {
+      "i": 57,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 99,
+      "lineEnd": 99,
+      "parent": 55,
+      "text": "Recommending (a). No conflict with sys-07's \"Tailscale is wrong once the second user joins\" — that ruling governs M3+; this box governs M1–M2 only."
+    },
+    {
+      "i": 58,
+      "type": "heading",
+      "tag": "h2",
+      "line": 101,
+      "lineEnd": 101,
+      "parent": null,
+      "level": 2,
+      "text": "VI. ⏳ Decision box B · The honest trade on server-disk encryption"
+    },
+    {
+      "i": 59,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 103,
+      "lineEnd": 103,
+      "parent": null,
+      "text": "\"Full-disk encryption\" on an unattended single VPS has an unavoidable knot: auto-mount requires the key on the same disk (encryption theater), while manual unlock means every reboot leaves the hub down until you show up (you're out = doorbell dead, violating N2)."
+    },
+    {
+      "i": 60,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 105,
+      "lineEnd": 108,
+      "parent": null,
+      "text": "\nRecommendation (a) | skip server-disk encryption, spend encryption where it pays: the at-rest sensitive surface is already minimized by Contract 3 (SQLite metadata + 敕草 snapshots from M4); the off-site backup lands on the mini's FileVault disk (already encrypted); server-side, backup dir 0700 and snapshots never in logs. Accept the residual \"provider disk-recycling\" risk.\nOption (b) | LUKS on the data dir + manual unlock: closes the disk-recycling risk fully, at the cost of a human present at every reboot — in tension with N2's self-healing goal.\nRecommending (a). If 敕草 snapshot sensitivity actually escalates after M4 (immigration/finance folders flowing in), revisit (b) — or the app-layer fix (\"sensitive sources refuse attach_doc\"), which treats the cause rather than the disk.\n"
+    },
+    {
+      "i": 61,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 105,
+      "lineEnd": 106,
+      "parent": 60,
+      "text": "Recommendation (a) | skip server-disk encryption, spend encryption where it pays: the at-rest sensitive surface is already minimized by Contract 3 (SQLite metadata + 敕草 snapshots from M4); the off-site backup lands on the mini's FileVault disk (already encrypted); server-side, backup dir 0700 and snapshots never in logs. Accept the residual \"provider disk-recycling\" risk.\nOption (b) | LUKS on the data dir + manual unlock: closes the disk-recycling risk fully, at the cost of a human present at every reboot — in tension with N2's self-healing goal."
+    },
+    {
+      "i": 62,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 108,
+      "lineEnd": 108,
+      "parent": 60,
+      "text": "Recommending (a). If 敕草 snapshot sensitivity actually escalates after M4 (immigration/finance folders flowing in), revisit (b) — or the app-layer fix (\"sensitive sources refuse attach_doc\"), which treats the cause rather than the disk."
+    },
+    {
+      "i": 63,
+      "type": "heading",
+      "tag": "h2",
+      "line": 112,
+      "lineEnd": 112,
+      "parent": null,
+      "level": 2,
+      "text": "VII. Ops contract (code-to-infra, annotation adopted)"
+    },
+    {
+      "i": 64,
+      "type": "table",
+      "tag": "table",
+      "line": 114,
+      "lineEnd": 121,
+      "parent": null,
+      "text": "\n\n\nItem\nContract\n\n\n\n\nProvisioning\nprovision.sh, idempotent, in-repo: bare metal → Docker + happy2@v0.0.22 + Caddy/TLS + account + backup cron + prune timer, one command; acceptance = replay on a clean box reaches B1\n\n\nConfig\neverything in-repo; secrets never — .env on the server (0600), README states how each is regenerated\n\n\nUpgrades\npinned tag; upgrade = verify on a local happy2 instance → apply on server → rerun the Day-1 probes. Never track trunk\n\n\nBackups\ndaily VACUUM INTO → on-island backup dir (outside plugins.directory); worker pulls a daily copy to the mini (FileVault disk, never a Drive path); the restore drill is an M1 exit criterion (C6)\n\n\nMonitoring\nno monitoring stack. Three probes, all via the worker self-alert (C7): bridge unreachable / disk >80% / backup older than 48 h\n\n\nRehosting\nnew box: provision.sh + restore = how RTO ≤ 4 h is achieved; every restore drill re-proves it\n\n\n"
+    },
+    {
+      "i": 65,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 114,
+      "lineEnd": 114,
+      "parent": 64,
+      "text": "\nItem\nContract\n"
+    },
+    {
+      "i": 66,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": 64,
+      "text": "\nProvisioning\nprovision.sh, idempotent, in-repo: bare metal → Docker + happy2@v0.0.22 + Caddy/TLS + account + backup cron + prune timer, one command; acceptance = replay on a clean box reaches B1\n"
+    },
+    {
+      "i": 67,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 117,
+      "lineEnd": 117,
+      "parent": 64,
+      "text": "\nConfig\neverything in-repo; secrets never — .env on the server (0600), README states how each is regenerated\n"
+    },
+    {
+      "i": 68,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 118,
+      "lineEnd": 118,
+      "parent": 64,
+      "text": "\nUpgrades\npinned tag; upgrade = verify on a local happy2 instance → apply on server → rerun the Day-1 probes. Never track trunk\n"
+    },
+    {
+      "i": 69,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 119,
+      "lineEnd": 119,
+      "parent": 64,
+      "text": "\nBackups\ndaily VACUUM INTO → on-island backup dir (outside plugins.directory); worker pulls a daily copy to the mini (FileVault disk, never a Drive path); the restore drill is an M1 exit criterion (C6)\n"
+    },
+    {
+      "i": 70,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 120,
+      "lineEnd": 120,
+      "parent": 64,
+      "text": "\nMonitoring\nno monitoring stack. Three probes, all via the worker self-alert (C7): bridge unreachable / disk >80% / backup older than 48 h\n"
+    },
+    {
+      "i": 71,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 121,
+      "lineEnd": 121,
+      "parent": 64,
+      "text": "\nRehosting\nnew box: provision.sh + restore = how RTO ≤ 4 h is achieved; every restore drill re-proves it\n"
+    },
+    {
+      "i": 72,
+      "type": "heading",
+      "tag": "h2",
+      "line": 123,
+      "lineEnd": 123,
+      "parent": null,
+      "level": 2,
+      "text": "VIII. Cost"
+    },
+    {
+      "i": 73,
+      "type": "table",
+      "tag": "table",
+      "line": 125,
+      "lineEnd": 130,
+      "parent": null,
+      "text": "\n\n\nItem\nMonthly\n\n\n\n\nCPX21\n≈$12.53\n\n\nIPv4 add-on (skippable during M1–M2 under box A option (a))\n≈$0.6–1\n\n\nDomain (deferred to M3 under (a); ~$10–15/yr then)\n~$1 amortized\n\n\nTotal\n≈$13–14.5 against a $20 cap — ~30% headroom\n\n\n"
+    },
+    {
+      "i": 74,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 125,
+      "lineEnd": 125,
+      "parent": 73,
+      "text": "\nItem\nMonthly\n"
+    },
+    {
+      "i": 75,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 127,
+      "lineEnd": 127,
+      "parent": 73,
+      "text": "\nCPX21\n≈$12.53\n"
+    },
+    {
+      "i": 76,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": 73,
+      "text": "\nIPv4 add-on (skippable during M1–M2 under box A option (a))\n≈$0.6–1\n"
+    },
+    {
+      "i": 77,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 129,
+      "lineEnd": 129,
+      "parent": 73,
+      "text": "\nDomain (deferred to M3 under (a); ~$10–15/yr then)\n~$1 amortized\n"
+    },
+    {
+      "i": 78,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 130,
+      "lineEnd": 130,
+      "parent": 73,
+      "text": "\nTotal\n≈$13–14.5 against a $20 cap — ~30% headroom\n"
+    },
+    {
+      "i": 79,
+      "type": "heading",
+      "tag": "h2",
+      "line": 132,
+      "lineEnd": 132,
+      "parent": null,
+      "level": 2,
+      "text": "IX. Failure modes"
+    },
+    {
+      "i": 80,
+      "type": "table",
+      "tag": "table",
+      "line": 134,
+      "lineEnd": 140,
+      "parent": null,
+      "text": "\n\n\nFailure\nSymptom\nHandling\n\n\n\n\nVPS lost / lapsed / wiped\nall three streams stop; worker self-alert fires\nprovision.sh + mini-side backup rebuild (RTO ≤4 h, RPO ≤24 h)\n\n\nPlugin container OOM (1 GiB cap)\nthat 班子 503s, doorbell decisions stop\nworker self-alert (same probe as bridge-loss); container restart self-heals\n\n\nHetzner signup verification stalls\ncan't rent the primary\nfallback Vultr 4 GB; provision.sh is host-agnostic\n\n\nDocker image junk fills the disk\n>80% alert\nprune timer + alert backstop\n\n\nUpstream upgrade breaks the plugin surface\nprobes red after upgrade\nroll back to the tag; always rehearse locally first (sys-07 §VI)\n\n\n"
+    },
+    {
+      "i": 81,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 134,
+      "lineEnd": 134,
+      "parent": 80,
+      "text": "\nFailure\nSymptom\nHandling\n"
+    },
+    {
+      "i": 82,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 136,
+      "lineEnd": 136,
+      "parent": 80,
+      "text": "\nVPS lost / lapsed / wiped\nall three streams stop; worker self-alert fires\nprovision.sh + mini-side backup rebuild (RTO ≤4 h, RPO ≤24 h)\n"
+    },
+    {
+      "i": 83,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 137,
+      "lineEnd": 137,
+      "parent": 80,
+      "text": "\nPlugin container OOM (1 GiB cap)\nthat 班子 503s, doorbell decisions stop\nworker self-alert (same probe as bridge-loss); container restart self-heals\n"
+    },
+    {
+      "i": 84,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 138,
+      "lineEnd": 138,
+      "parent": 80,
+      "text": "\nHetzner signup verification stalls\ncan't rent the primary\nfallback Vultr 4 GB; provision.sh is host-agnostic\n"
+    },
+    {
+      "i": 85,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 139,
+      "lineEnd": 139,
+      "parent": 80,
+      "text": "\nDocker image junk fills the disk\n>80% alert\nprune timer + alert backstop\n"
+    },
+    {
+      "i": 86,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 140,
+      "lineEnd": 140,
+      "parent": 80,
+      "text": "\nUpstream upgrade breaks the plugin surface\nprobes red after upgrade\nroll back to the tag; always rehearse locally first (sys-07 §VI)\n"
+    },
+    {
+      "i": 87,
+      "type": "heading",
+      "tag": "h2",
+      "line": 142,
+      "lineEnd": 142,
+      "parent": null,
+      "level": 2,
+      "text": "X. Open items"
+    },
+    {
+      "i": 88,
+      "type": "list_item",
+      "tag": "li",
+      "line": 144,
+      "lineEnd": 144,
+      "parent": null,
+      "text": "Decision boxes A (exposure staging) and B (disk encryption) — yours to rule."
+    },
+    {
+      "i": 89,
+      "type": "list_item",
+      "tag": "li",
+      "line": 145,
+      "lineEnd": 145,
+      "parent": null,
+      "text": "Budget re-approval for the CPX31 upsize — parked on the M5 trigger, not decided now."
+    },
+    {
+      "i": 90,
+      "type": "list_item",
+      "tag": "li",
+      "line": 146,
+      "lineEnd": 146,
+      "parent": null,
+      "text": "Whether Hetzner US offers ARM (CAX) tiers — check on the order page; if yes, more RAM at the same price is free upside (images must be arm64; the M0 spike kit's node:24-alpine is multi-arch, no obstacle)."
+    }
+  ]
+}

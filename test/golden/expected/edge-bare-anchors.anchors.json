@@ -1,0 +1,278 @@
+{
+  "format": 1,
+  "source": "corpus/edge-bare-anchors.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 4,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "裸锚边角",
+        "quoteRaw": "裸锚边角"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 4
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 2,
+      "docStart": 5,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "每日",
+        "quoteRaw": "每日"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "段落里夹一个",
+        "quoteRaw": "段落里夹一个"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 44,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 0,
+        "quote": "单引号自闭合裸锚",
+        "quoteRaw": "单引号自闭合裸锚"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 57,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "带文字的 a 不",
+        "quoteRaw": "带文字的 a 不"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 76,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 19,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 4,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 95,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 38,
+        "quote": "\">看得见的链接",
+        "quoteRaw": "\">看得见的链接"
+      },
+      "replay": {
+        "block": 4,
+        "start": 38,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 110,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "<a id=\"x",
+        "quoteRaw": "<a id=\"x"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 21,
+      "length": 8,
+      "docStart": 182,
+      "expect": {
+        "blockLine": 18,
+        "line": 19,
+        "offset": 21,
+        "quote": "代码块里的裸锚也",
+        "quoteRaw": "代码块里的裸锚也"
+      },
+      "replay": {
+        "block": 6,
+        "start": 21,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 210,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "结尾。",
+        "quoteRaw": "结尾。"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "裸锚边角",
+      "expect": 1
+    },
+    {
+      "quote": "每日",
+      "expect": null
+    },
+    {
+      "quote": "段落里夹一个 裸锚，前后文字照常",
+      "expect": 7
+    },
+    {
+      "quote": "单引号自闭合裸锚在段首。",
+      "expect": 10
+    },
+    {
+      "quote": "带文字的 a 不剥：<a hre",
+      "expect": 14
+    },
+    {
+      "quote": "<a id=\"x\" class=",
+      "expect": 16
+    },
+    {
+      "quote": "代码块里的裸锚也会被剥（预处理在",
+      "expect": 18
+    },
+    {
+      "quote": "结尾。",
+      "expect": null
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "裸锚边角"
+    ],
+    [
+      5,
+      "每日"
+    ],
+    [
+      7,
+      "每日"
+    ],
+    [
+      10,
+      "每日"
+    ],
+    [
+      14,
+      "每日"
+    ],
+    [
+      16,
+      "每日"
+    ],
+    [
+      18,
+      "每日"
+    ],
+    [
+      22,
+      "每日"
+    ]
+  ]
+}

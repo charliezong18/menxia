@@ -1,0 +1,176 @@
+{
+  "format": 1,
+  "source": "corpus/edge-code.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "代码块边角"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "text": "带语言的围栏："
+    },
+    {
+      "i": 2,
+      "type": "fence",
+      "tag": "code",
+      "line": 5,
+      "lineEnd": 9,
+      "parent": null,
+      "info": "js",
+      "text": "const a = 1;\n\nconst b = '<script>';\n"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": null,
+      "text": "无语言围栏，内含 markdown 与双链（都不该被解析）："
+    },
+    {
+      "i": 4,
+      "type": "fence",
+      "tag": "code",
+      "line": 13,
+      "lineEnd": 18,
+      "parent": null,
+      "info": "",
+      "text": "# 不是标题\n- 不是列表\n[[不是双链]]\n<div>不是 HTML</div>\n"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "波浪线围栏，内含反引号围栏："
+    },
+    {
+      "i": 6,
+      "type": "fence",
+      "tag": "code",
+      "line": 22,
+      "lineEnd": 26,
+      "parent": null,
+      "info": "text",
+      "text": "```\ninner\n```\n"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": null,
+      "text": "四个反引号围栏："
+    },
+    {
+      "i": 8,
+      "type": "fence",
+      "tag": "code",
+      "line": 30,
+      "lineEnd": 34,
+      "parent": null,
+      "info": "md",
+      "text": "```js\nx\n```\n"
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 36,
+      "lineEnd": 36,
+      "parent": null,
+      "text": "缩进代码块："
+    },
+    {
+      "i": 10,
+      "type": "code_block",
+      "tag": "pre",
+      "line": 38,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "第一行\n第二行\n\n空行之后的第三行\n"
+    },
+    {
+      "i": 11,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "text": "段落之后紧跟围栏（不需要空行）："
+    },
+    {
+      "i": 12,
+      "type": "fence",
+      "tag": "code",
+      "line": 44,
+      "lineEnd": 46,
+      "parent": null,
+      "info": "",
+      "text": "紧跟\n"
+    },
+    {
+      "i": 13,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 48,
+      "lineEnd": 48,
+      "parent": null,
+      "text": "围栏 info 带多个词："
+    },
+    {
+      "i": 14,
+      "type": "fence",
+      "tag": "code",
+      "line": 50,
+      "lineEnd": 52,
+      "parent": null,
+      "info": "python",
+      "text": "print(\"hi\")\n"
+    },
+    {
+      "i": 15,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": null,
+      "text": "空围栏："
+    },
+    {
+      "i": 16,
+      "type": "fence",
+      "tag": "code",
+      "line": 56,
+      "lineEnd": 57,
+      "parent": null,
+      "info": "",
+      "text": ""
+    },
+    {
+      "i": 17,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 59,
+      "lineEnd": 59,
+      "parent": null,
+      "text": "结尾。"
+    }
+  ]
+}

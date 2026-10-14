@@ -1,0 +1,506 @@
+{
+  "format": 1,
+  "source": "corpus/edge-mixed.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "中英混排 Mix",
+        "quoteRaw": "中英混排 Mix"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 15,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "中文 Engli",
+        "quoteRaw": "中文 Engli"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 108,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "软换行 接着一行",
+        "quoteRaw": "软换行\n接着一行"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 129,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 0,
+        "quote": "硬换行两空格 接",
+        "quoteRaw": "硬换行两空格\n接"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 7,
+      "length": 5,
+      "docStart": 136,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 7,
+        "quote": "接着一行。",
+        "quoteRaw": "接着一行。"
+      },
+      "replay": {
+        "block": 3,
+        "start": 7,
+        "length": 5
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 142,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "反斜杠硬换行 接",
+        "quoteRaw": "反斜杠硬换行\n接"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 7,
+      "length": 5,
+      "docStart": 149,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 7,
+        "quote": "接着一行。",
+        "quoteRaw": "接着一行。"
+      },
+      "replay": {
+        "block": 4,
+        "start": 7,
+        "length": 5
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 156,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "引用一段 同一段",
+        "quoteRaw": "引用一段\n同一段"
+      },
+      "replay": {
+        "block": 5,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 167,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "引用第二段",
+        "quoteRaw": "引用第二段"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 4,
+      "docStart": 174,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "嵌套引用",
+        "quoteRaw": "嵌套引用"
+      },
+      "replay": {
+        "block": 8,
+        "start": 1,
+        "length": 4
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 181,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "引用里的列表",
+        "quoteRaw": "引用里的列表"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 188,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "第二项",
+        "quoteRaw": "第二项"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 194,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 0,
+        "quote": "斜体 斜体 粗",
+        "quoteRaw": "斜体 斜体 粗"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 197,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 3,
+        "quote": "斜体 粗 粗 删",
+        "quoteRaw": "斜体 粗 粗 删"
+      },
+      "replay": {
+        "block": 12,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 200,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 6,
+        "quote": "粗 粗 删除线",
+        "quoteRaw": "粗 粗 删除线"
+      },
+      "replay": {
+        "block": 12,
+        "start": 6,
+        "length": 7
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 202,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 8,
+        "quote": "粗 删除线 行内",
+        "quoteRaw": "粗 删除线 行内"
+      },
+      "replay": {
+        "block": 12,
+        "start": 8,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 204,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 10,
+        "quote": "删除线 行内 c",
+        "quoteRaw": "删除线 行内 c"
+      },
+      "replay": {
+        "block": 12,
+        "start": 10,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 14,
+      "length": 7,
+      "docStart": 208,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 14,
+        "quote": "行内 code",
+        "quoteRaw": "行内 code"
+      },
+      "replay": {
+        "block": 12,
+        "start": 14,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 217,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 0,
+        "quote": "组合字符：é（e",
+        "quoteRaw": "组合字符：é（e"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 245,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 0,
+        "quote": "Ｆｕｌｌｗｉｄｔ",
+        "quoteRaw": "Ｆｕｌｌｗｉｄｔ"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "中英混排 Mixed 与杂项",
+      "expect": 1
+    },
+    {
+      "quote": "中文 English 混排，含全",
+      "expect": 3
+    },
+    {
+      "quote": "软换行 接着一行（softbre",
+      "expect": 5
+    },
+    {
+      "quote": "硬换行两空格 接着一行。",
+      "expect": 8
+    },
+    {
+      "quote": "反斜杠硬换行 接着一行。",
+      "expect": 11
+    },
+    {
+      "quote": "引用一段 同一段续行 引用第二段",
+      "expect": 14
+    },
+    {
+      "quote": "引用一段 同一段续行",
+      "expect": 14
+    },
+    {
+      "quote": "引用第二段",
+      "expect": 17
+    },
+    {
+      "quote": "嵌套引用",
+      "expect": 19
+    },
+    {
+      "quote": "嵌套引用",
+      "expect": 19
+    },
+    {
+      "quote": "引用里的列表",
+      "expect": 21
+    },
+    {
+      "quote": "第二项",
+      "expect": null
+    },
+    {
+      "quote": "斜体 斜体 粗 粗 删除线 行内",
+      "expect": 24
+    },
+    {
+      "quote": "组合字符：é（e + U+030",
+      "expect": 28
+    },
+    {
+      "quote": "Ｆｕｌｌｗｉｄｔｈ 全角空格分隔",
+      "expect": 30
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      3,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      5,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      8,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      11,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      14,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      17,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      19,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      21,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      22,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      24,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      28,
+      "中英混排 Mixed 与杂项"
+    ],
+    [
+      30,
+      "中英混排 Mixed 与杂项"
+    ]
+  ]
+}

@@ -1,0 +1,2238 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhupi-spec.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "zhupi v0",
+        "quoteRaw": "zhupi v0"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 65,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "In one s",
+        "quoteRaw": "In one s"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 71,
+      "length": 8,
+      "docStart": 136,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 71,
+        "quote": "奏折 (a me",
+        "quoteRaw": "奏折 (a me"
+      },
+      "replay": {
+        "block": 2,
+        "start": 71,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 74,
+      "length": 8,
+      "docStart": 139,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 74,
+        "quote": "(a memor",
+        "quoteRaw": "(a memor"
+      },
+      "replay": {
+        "block": 2,
+        "start": 74,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 125,
+      "length": 8,
+      "docStart": 190,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 125,
+        "quote": "select a",
+        "quoteRaw": "select a"
+      },
+      "replay": {
+        "block": 2,
+        "start": 125,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 158,
+      "length": 8,
+      "docStart": 223,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 158,
+        "quote": "(a vermi",
+        "quoteRaw": "(a vermi"
+      },
+      "replay": {
+        "block": 2,
+        "start": 158,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 328,
+      "length": 8,
+      "docStart": 393,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 328,
+        "quote": "钦此 (merg",
+        "quoteRaw": "钦此 (merg"
+      },
+      "replay": {
+        "block": 2,
+        "start": 328,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 331,
+      "length": 8,
+      "docStart": 396,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 331,
+        "quote": "(merge =",
+        "quoteRaw": "(merge ="
+      },
+      "replay": {
+        "block": 2,
+        "start": 331,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 531,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "Revised",
+        "quoteRaw": "Revised"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 254,
+      "length": 8,
+      "docStart": 785,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 254,
+        "quote": "desktop",
+        "quoteRaw": "desktop"
+      },
+      "replay": {
+        "block": 3,
+        "start": 254,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 271,
+      "length": 8,
+      "docStart": 802,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 271,
+        "quote": ", mobile",
+        "quoteRaw": ", mobile"
+      },
+      "replay": {
+        "block": 3,
+        "start": 271,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 909,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "v2.5 (20",
+        "quoteRaw": "v2.5 (20"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1120,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "Contents",
+        "quoteRaw": "Contents"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1130,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 0,
+        "quote": "§1 Desig",
+        "quoteRaw": "§1 Desig"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1148,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "§2 Name",
+        "quoteRaw": "§2 Name"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1171,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "§3 Goals",
+        "quoteRaw": "§3 Goals"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1192,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "§4 Form",
+        "quoteRaw": "§4 Form"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1207,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "§5 Data",
+        "quoteRaw": "§5 Data"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1234,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "§6 Pages",
+        "quoteRaw": "§6 Pages"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1260,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "§7 Open",
+        "quoteRaw": "§7 Open"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1326,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "§8 Open",
+        "quoteRaw": "§8 Open"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1368,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "§9 Open",
+        "quoteRaw": "§9 Open"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1426,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "§10 Mile",
+        "quoteRaw": "§10 Mile"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1441,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "§11 Risk",
+        "quoteRaw": "§11 Risk"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1465,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 0,
+        "quote": "§12 Glos",
+        "quoteRaw": "§12 Glos"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1478,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 0,
+        "quote": "§13 Refe",
+        "quoteRaw": "§13 Refe"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1494,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 0,
+        "quote": "§1 Desig",
+        "quoteRaw": "§1 Desig"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1512,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 0,
+        "quote": "Design l",
+        "quoteRaw": "Design l"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1816,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 0,
+        "quote": "① Deskto",
+        "quoteRaw": "① Deskto"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 42,
+      "length": 8,
+      "docStart": 1858,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 42,
+        "quote": "— docume",
+        "quoteRaw": "— docume"
+      },
+      "replay": {
+        "block": 21,
+        "start": 42,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2115,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 0,
+        "quote": "The thre",
+        "quoteRaw": "The thre"
+      },
+      "replay": {
+        "block": 23,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2177,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 0,
+        "quote": "② List p",
+        "quoteRaw": "② List p"
+      },
+      "replay": {
+        "block": 24,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 42,
+      "length": 8,
+      "docStart": 2219,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 42,
+        "quote": "— one ca",
+        "quoteRaw": "— one ca"
+      },
+      "replay": {
+        "block": 24,
+        "start": 42,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2324,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 0,
+        "quote": "③ Readin",
+        "quoteRaw": "③ Readin"
+      },
+      "replay": {
+        "block": 26,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 2339,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 15,
+        "quote": "— render",
+        "quoteRaw": "— render"
+      },
+      "replay": {
+        "block": 26,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2454,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 0,
+        "quote": "④ Commen",
+        "quoteRaw": "④ Commen"
+      },
+      "replay": {
+        "block": 28,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 2479,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 25,
+        "quote": "— after",
+        "quoteRaw": "— after"
+      },
+      "replay": {
+        "block": 28,
+        "start": 25,
+        "length": 7
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2609,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 0,
+        "quote": "(Mockup",
+        "quoteRaw": "(Mockup"
+      },
+      "replay": {
+        "block": 30,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 2632,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 23,
+        "quote": "assets/m",
+        "quoteRaw": "assets/m"
+      },
+      "replay": {
+        "block": 30,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 42,
+      "length": 8,
+      "docStart": 2651,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 42,
+        "quote": "; real d",
+        "quoteRaw": "; real d"
+      },
+      "replay": {
+        "block": 30,
+        "start": 42,
+        "length": 8
+      }
+    },
+    {
+      "block": 31,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2694,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 0,
+        "quote": "§2 Name",
+        "quoteRaw": "§2 Name"
+      },
+      "replay": {
+        "block": 31,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2717,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 0,
+        "quote": "Named 朱批",
+        "quoteRaw": "Named 朱批"
+      },
+      "replay": {
+        "block": 32,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 2723,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 6,
+        "quote": "朱批 per y",
+        "quoteRaw": "朱批 per y"
+      },
+      "replay": {
+        "block": 32,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 9,
+      "length": 8,
+      "docStart": 2726,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 9,
+        "quote": "per your",
+        "quoteRaw": "per your"
+      },
+      "replay": {
+        "block": 32,
+        "start": 9,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 59,
+      "length": 8,
+      "docStart": 2776,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 59,
+        "quote": "zhupi, s",
+        "quoteRaw": "zhupi, s"
+      },
+      "replay": {
+        "block": 32,
+        "start": 59,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 64,
+      "length": 8,
+      "docStart": 2781,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 64,
+        "quote": ", site c",
+        "quoteRaw": ", site c"
+      },
+      "replay": {
+        "block": 32,
+        "start": 64,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 71,
+      "length": 8,
+      "docStart": 2788,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 71,
+        "quote": "charliez",
+        "quoteRaw": "charliez"
+      },
+      "replay": {
+        "block": 32,
+        "start": 71,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 100,
+      "length": 8,
+      "docStart": 2817,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 100,
+        "quote": ", PWA ho",
+        "quoteRaw": ", PWA ho"
+      },
+      "replay": {
+        "block": 32,
+        "start": 100,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 337,
+      "length": 8,
+      "docStart": 3054,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 337,
+        "quote": "is the t",
+        "quoteRaw": "is the t"
+      },
+      "replay": {
+        "block": 32,
+        "start": 337,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 340,
+      "length": 8,
+      "docStart": 3057,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 340,
+        "quote": "the thin",
+        "quoteRaw": "the thin"
+      },
+      "replay": {
+        "block": 32,
+        "start": 340,
+        "length": 8
+      }
+    },
+    {
+      "block": 33,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3075,
+      "expect": {
+        "blockLine": 55,
+        "line": 55,
+        "offset": 0,
+        "quote": "The mapp",
+        "quoteRaw": "The mapp"
+      },
+      "replay": {
+        "block": 33,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 35,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3197,
+      "expect": {
+        "blockLine": 57,
+        "line": 57,
+        "offset": 1,
+        "quote": "Interfac",
+        "quoteRaw": "Interfac"
+      },
+      "replay": {
+        "block": 34,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 35,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 3212,
+      "expect": {
+        "blockLine": 57,
+        "line": 57,
+        "offset": 16,
+        "quote": "Underlyi",
+        "quoteRaw": "Underlyi"
+      },
+      "replay": {
+        "block": 34,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 36,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3234,
+      "expect": {
+        "blockLine": 59,
+        "line": 59,
+        "offset": 1,
+        "quote": "奏折 (memo",
+        "quoteRaw": "奏折 (memo"
+      },
+      "replay": {
+        "block": 36,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 36,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 3248,
+      "expect": {
+        "blockLine": 59,
+        "line": 59,
+        "offset": 15,
+        "quote": "a docume",
+        "quoteRaw": "a docume"
+      },
+      "replay": {
+        "block": 36,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 37,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3295,
+      "expect": {
+        "blockLine": 60,
+        "line": 60,
+        "offset": 1,
+        "quote": "朱批 (verm",
+        "quoteRaw": "朱批 (verm"
+      },
+      "replay": {
+        "block": 37,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 37,
+      "blockStart": 27,
+      "length": 8,
+      "docStart": 3321,
+      "expect": {
+        "blockLine": 60,
+        "line": 60,
+        "offset": 27,
+        "quote": "an inlin",
+        "quoteRaw": "an inlin"
+      },
+      "replay": {
+        "block": 37,
+        "start": 27,
+        "length": 8
+      }
+    },
+    {
+      "block": 38,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3381,
+      "expect": {
+        "blockLine": 61,
+        "line": 61,
+        "offset": 1,
+        "quote": "总批 (gene",
+        "quoteRaw": "总批 (gene"
+      },
+      "replay": {
+        "block": 38,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 38,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 3402,
+      "expect": {
+        "blockLine": 61,
+        "line": 61,
+        "offset": 22,
+        "quote": "a conver",
+        "quoteRaw": "a conver"
+      },
+      "replay": {
+        "block": 38,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 39,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3488,
+      "expect": {
+        "blockLine": 62,
+        "line": 62,
+        "offset": 1,
+        "quote": "提交朱批 (su",
+        "quoteRaw": "提交朱批 (su"
+      },
+      "replay": {
+        "block": 39,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 39,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 3502,
+      "expect": {
+        "blockLine": 62,
+        "line": 62,
+        "offset": 15,
+        "quote": "submit t",
+        "quoteRaw": "submit t"
+      },
+      "replay": {
+        "block": 39,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 40,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3550,
+      "expect": {
+        "blockLine": 63,
+        "line": 63,
+        "offset": 1,
+        "quote": "钦此 (so o",
+        "quoteRaw": "钦此 (so o"
+      },
+      "replay": {
+        "block": 40,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 40,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 3566,
+      "expect": {
+        "blockLine": 63,
+        "line": 63,
+        "offset": 17,
+        "quote": "squash m",
+        "quoteRaw": "squash m"
+      },
+      "replay": {
+        "block": 40,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 41,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3588,
+      "expect": {
+        "blockLine": 64,
+        "line": 64,
+        "offset": 1,
+        "quote": "作罢 (let",
+        "quoteRaw": "作罢 (let"
+      },
+      "replay": {
+        "block": 41,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 41,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 3603,
+      "expect": {
+        "blockLine": 64,
+        "line": 64,
+        "offset": 16,
+        "quote": "discard",
+        "quoteRaw": "discard"
+      },
+      "replay": {
+        "block": 41,
+        "start": 16,
+        "length": 7
+      }
+    },
+    {
+      "block": 42,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3640,
+      "expect": {
+        "blockLine": 66,
+        "line": 66,
+        "offset": 0,
+        "quote": "总批 is a",
+        "quoteRaw": "总批 is a"
+      },
+      "replay": {
+        "block": 42,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 43,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3876,
+      "expect": {
+        "blockLine": 68,
+        "line": 68,
+        "offset": 0,
+        "quote": "§3 Goals",
+        "quoteRaw": "§3 Goals"
+      },
+      "replay": {
+        "block": 43,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 44,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3897,
+      "expect": {
+        "blockLine": 70,
+        "line": 70,
+        "offset": 0,
+        "quote": "Goals (a",
+        "quoteRaw": "Goals (a"
+      },
+      "replay": {
+        "block": 44,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 45,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3917,
+      "expect": {
+        "blockLine": 72,
+        "line": 72,
+        "offset": 0,
+        "quote": "Read AI-",
+        "quoteRaw": "Read AI-"
+      },
+      "replay": {
+        "block": 45,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 46,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3994,
+      "expect": {
+        "blockLine": 73,
+        "line": 73,
+        "offset": 0,
+        "quote": "Annotate",
+        "quoteRaw": "Annotate"
+      },
+      "replay": {
+        "block": 46,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 47,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 4112,
+      "expect": {
+        "blockLine": 74,
+        "line": 74,
+        "offset": 0,
+        "quote": "A 钦此 but",
+        "quoteRaw": "A 钦此 but"
+      },
+      "replay": {
+        "block": 47,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 48,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 4147,
+      "expect": {
+        "blockLine": 75,
+        "line": 75,
+        "offset": 0,
+        "quote": "Kill the",
+        "quoteRaw": "Kill the"
+      },
+      "replay": {
+        "block": 48,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 50,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 4184,
+      "expect": {
+        "blockLine": 77,
+        "line": 77,
+        "offset": 1,
+        "quote": "PAIN (fr",
+        "quoteRaw": "PAIN (fr"
+      },
+      "replay": {
+        "block": 49,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 50,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 4206,
+      "expect": {
+        "blockLine": 77,
+        "line": 77,
+        "offset": 23,
+        "quote": "The zhup",
+        "quoteRaw": "The zhup"
+      },
+      "replay": {
+        "block": 49,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 51,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 4224,
+      "expect": {
+        "blockLine": 79,
+        "line": 79,
+        "offset": 1,
+        "quote": "approve",
+        "quoteRaw": "approve"
+      },
+      "replay": {
+        "block": 51,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 51,
+      "blockStart": 9,
+      "length": 8,
+      "docStart": 4232,
+      "expect": {
+        "blockLine": 79,
+        "line": 79,
+        "offset": 9,
+        "quote": "blocked",
+        "quoteRaw": "blocked"
+      },
+      "replay": {
+        "block": 51,
+        "start": 9,
+        "length": 7
+      }
+    },
+    {
+      "block": 51,
+      "blockStart": 44,
+      "length": 8,
+      "docStart": 4267,
+      "expect": {
+        "blockLine": 79,
+        "line": 79,
+        "offset": 44,
+        "quote": "ships it",
+        "quoteRaw": "ships it"
+      },
+      "replay": {
+        "block": 51,
+        "start": 44,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "zhupi v0 spec — ",
+      "expect": 3
+    },
+    {
+      "quote": "In one sentence:",
+      "expect": 5
+    },
+    {
+      "quote": "Revised per comm",
+      "expect": 7
+    },
+    {
+      "quote": "v2.5 (2026-07-26",
+      "expect": 9
+    },
+    {
+      "quote": "Contents",
+      "expect": 11
+    },
+    {
+      "quote": "§1 Design render",
+      "expect": 13
+    },
+    {
+      "quote": "§2 Name and voca",
+      "expect": 14
+    },
+    {
+      "quote": "§3 Goals / non-g",
+      "expect": 15
+    },
+    {
+      "quote": "§4 Form factor",
+      "expect": 16
+    },
+    {
+      "quote": "§5 Data and auth",
+      "expect": 17
+    },
+    {
+      "quote": "§6 Pages and int",
+      "expect": 18
+    },
+    {
+      "quote": "§7 Open question",
+      "expect": 19
+    },
+    {
+      "quote": "§8 Open question",
+      "expect": 20
+    },
+    {
+      "quote": "§9 Open question",
+      "expect": 21
+    },
+    {
+      "quote": "§10 Milestones",
+      "expect": 22
+    },
+    {
+      "quote": "§11 Risks and fa",
+      "expect": 23
+    },
+    {
+      "quote": "§12 Glossary",
+      "expect": 24
+    },
+    {
+      "quote": "§13 References",
+      "expect": 25
+    },
+    {
+      "quote": "§1 Design render",
+      "expect": 13
+    },
+    {
+      "quote": "Design language:",
+      "expect": 29
+    },
+    {
+      "quote": "① Desktop main v",
+      "expect": 31
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "The three below ",
+      "expect": 35
+    },
+    {
+      "quote": "② List page, \"do",
+      "expect": 37
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "③ Reading page —",
+      "expect": 41
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "④ Comment entry ",
+      "expect": 45
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "(Mockup sources ",
+      "expect": 49
+    },
+    {
+      "quote": "§2 Name and voca",
+      "expect": 14
+    },
+    {
+      "quote": "Named 朱批 per you",
+      "expect": 53
+    },
+    {
+      "quote": "The mapping from",
+      "expect": 55
+    },
+    {
+      "quote": "Interface term U",
+      "expect": 57
+    },
+    {
+      "quote": "Interface term U",
+      "expect": 57
+    },
+    {
+      "quote": "奏折 (memorial) a ",
+      "expect": 59
+    },
+    {
+      "quote": "朱批 (vermilion an",
+      "expect": 60
+    },
+    {
+      "quote": "总批 (general comm",
+      "expect": 61
+    },
+    {
+      "quote": "提交朱批 (submit) su",
+      "expect": 62
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "zhupi v0 spec — 御笔朱批, a reading and annotation desk"
+    ],
+    [
+      5,
+      "zhupi v0 spec — 御笔朱批, a reading and annotation desk"
+    ],
+    [
+      7,
+      "zhupi v0 spec — 御笔朱批, a reading and annotation desk"
+    ],
+    [
+      9,
+      "zhupi v0 spec — 御笔朱批, a reading and annotation desk"
+    ],
+    [
+      11,
+      "Contents"
+    ],
+    [
+      13,
+      "Contents"
+    ],
+    [
+      14,
+      "Contents"
+    ],
+    [
+      15,
+      "Contents"
+    ],
+    [
+      16,
+      "Contents"
+    ],
+    [
+      17,
+      "Contents"
+    ],
+    [
+      18,
+      "Contents"
+    ],
+    [
+      19,
+      "Contents"
+    ],
+    [
+      20,
+      "Contents"
+    ],
+    [
+      21,
+      "Contents"
+    ],
+    [
+      22,
+      "Contents"
+    ],
+    [
+      23,
+      "Contents"
+    ],
+    [
+      24,
+      "Contents"
+    ],
+    [
+      25,
+      "Contents"
+    ],
+    [
+      27,
+      "§1 Design renders"
+    ],
+    [
+      29,
+      "§1 Design renders"
+    ],
+    [
+      31,
+      "§1 Design renders"
+    ],
+    [
+      33,
+      "§1 Design renders"
+    ],
+    [
+      35,
+      "§1 Design renders"
+    ],
+    [
+      37,
+      "§1 Design renders"
+    ],
+    [
+      39,
+      "§1 Design renders"
+    ],
+    [
+      41,
+      "§1 Design renders"
+    ],
+    [
+      43,
+      "§1 Design renders"
+    ],
+    [
+      45,
+      "§1 Design renders"
+    ],
+    [
+      47,
+      "§1 Design renders"
+    ],
+    [
+      49,
+      "§1 Design renders"
+    ],
+    [
+      51,
+      "§2 Name and vocabulary"
+    ],
+    [
+      53,
+      "§2 Name and vocabulary"
+    ],
+    [
+      55,
+      "§2 Name and vocabulary"
+    ],
+    [
+      57,
+      "§2 Name and vocabulary"
+    ],
+    [
+      59,
+      "§2 Name and vocabulary"
+    ],
+    [
+      60,
+      "§2 Name and vocabulary"
+    ],
+    [
+      61,
+      "§2 Name and vocabulary"
+    ],
+    [
+      62,
+      "§2 Name and vocabulary"
+    ],
+    [
+      63,
+      "§2 Name and vocabulary"
+    ],
+    [
+      64,
+      "§2 Name and vocabulary"
+    ],
+    [
+      66,
+      "§2 Name and vocabulary"
+    ],
+    [
+      68,
+      "§3 Goals / non-goals"
+    ],
+    [
+      70,
+      "§3 Goals / non-goals"
+    ],
+    [
+      72,
+      "§3 Goals / non-goals"
+    ],
+    [
+      73,
+      "§3 Goals / non-goals"
+    ],
+    [
+      74,
+      "§3 Goals / non-goals"
+    ],
+    [
+      75,
+      "§3 Goals / non-goals"
+    ],
+    [
+      77,
+      "§3 Goals / non-goals"
+    ],
+    [
+      79,
+      "§3 Goals / non-goals"
+    ],
+    [
+      80,
+      "§3 Goals / non-goals"
+    ],
+    [
+      81,
+      "§3 Goals / non-goals"
+    ],
+    [
+      82,
+      "§3 Goals / non-goals"
+    ],
+    [
+      84,
+      "§3 Goals / non-goals"
+    ],
+    [
+      86,
+      "§4 Form factor"
+    ],
+    [
+      88,
+      "§4 Form factor"
+    ],
+    [
+      89,
+      "§4 Form factor"
+    ],
+    [
+      90,
+      "§4 Form factor"
+    ],
+    [
+      91,
+      "§4 Form factor"
+    ],
+    [
+      93,
+      "§5 Data and authentication"
+    ],
+    [
+      95,
+      "§5 Data and authentication"
+    ],
+    [
+      96,
+      "§5 Data and authentication"
+    ],
+    [
+      97,
+      "§5 Data and authentication"
+    ],
+    [
+      99,
+      "§6 Pages and interactions"
+    ],
+    [
+      101,
+      "§6 Pages and interactions"
+    ],
+    [
+      103,
+      "§6 Pages and interactions"
+    ],
+    [
+      105,
+      "§6 Pages and interactions"
+    ],
+    [
+      107,
+      "§6 Pages and interactions"
+    ],
+    [
+      109,
+      "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    ],
+    [
+      111,
+      "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    ],
+    [
+      113,
+      "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    ],
+    [
+      114,
+      "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    ],
+    [
+      116,
+      "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    ],
+    [
+      118,
+      "§7 Open question ②: the v1→v2 comparison view (in plain language)"
+    ],
+    [
+      120,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      122,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      124,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      125,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      126,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      127,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      128,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      130,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      132,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      134,
+      "§8 Open question ③: tech stack comparison"
+    ],
+    [
+      136,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      138,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      140,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      142,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      143,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      144,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      145,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      146,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      147,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      148,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      149,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      150,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      152,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      154,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      156,
+      "§8.1 Architecture switch breakpoints (the quantified gate)"
+    ],
+    [
+      158,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      160,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      162,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      164,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      166,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      168,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      169,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      171,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      173,
+      "§9 Open question ④: comment anchoring (in plain language)"
+    ],
+    [
+      175,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      177,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      179,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      180,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      181,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      182,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      184,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      186,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      187,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      188,
+      "§9.1 Anchoring implementation correction (2026-07-26, after the dual-track review)"
+    ],
+    [
+      190,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      192,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      193,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      194,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      196,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      198,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      200,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      202,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      204,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      206,
+      "§10 Milestones (each step ships a playable link)"
+    ],
+    [
+      208,
+      "§11 Risks and fallbacks"
+    ],
+    [
+      210,
+      "§11 Risks and fallbacks"
+    ],
+    [
+      211,
+      "§11 Risks and fallbacks"
+    ],
+    [
+      212,
+      "§11 Risks and fallbacks"
+    ],
+    [
+      213,
+      "§11 Risks and fallbacks"
+    ],
+    [
+      215,
+      "§12 Glossary"
+    ],
+    [
+      217,
+      "§12 Glossary"
+    ],
+    [
+      219,
+      "§12 Glossary"
+    ],
+    [
+      220,
+      "§12 Glossary"
+    ],
+    [
+      221,
+      "§12 Glossary"
+    ],
+    [
+      222,
+      "§12 Glossary"
+    ],
+    [
+      223,
+      "§12 Glossary"
+    ],
+    [
+      224,
+      "§12 Glossary"
+    ],
+    [
+      225,
+      "§12 Glossary"
+    ],
+    [
+      226,
+      "§12 Glossary"
+    ],
+    [
+      227,
+      "§12 Glossary"
+    ],
+    [
+      228,
+      "§12 Glossary"
+    ],
+    [
+      230,
+      "§13 References"
+    ],
+    [
+      232,
+      "§13 References"
+    ],
+    [
+      233,
+      "§13 References"
+    ],
+    [
+      234,
+      "§13 References"
+    ],
+    [
+      235,
+      "§13 References"
+    ],
+    [
+      236,
+      "§13 References"
+    ],
+    [
+      237,
+      "§13 References"
+    ],
+    [
+      238,
+      "§13 References"
+    ]
+  ]
+}

@@ -1,0 +1,755 @@
+{
+  "format": 1,
+  "source": "corpus/real-menxia-rename-glossary-v2.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "Menxia: the rename and the glossary (v2 · the edict track)"
+    },
+    {
+      "i": 2,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 5,
+      "lineEnd": 6,
+      "parent": null,
+      "text": "\nv2 is a rewrite, not an addendum. After your annotations I ran a double review (Fable 5 and agy, independently). Both bit down on the same fatal flaw: v1 stitched together vocabulary from three unrelated Tang document tracks — edicts (downward), memorials (upward), and routine submissions. Per your ruling, v2 runs on the edict track only, and every term lands in its proper place. The self-assessed \"confidence\" column has been replaced with an evidence grade.\nFiled 2026-07-30; v2 same day. Your four annotations — use 判, \"I am the emperor\", accept Q2(a), rename everything — are all adopted; two of them stand only because of the role-folding declaration below.\n"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 6,
+      "parent": 2,
+      "text": "v2 is a rewrite, not an addendum. After your annotations I ran a double review (Fable 5 and agy, independently). Both bit down on the same fatal flaw: v1 stitched together vocabulary from three unrelated Tang document tracks — edicts (downward), memorials (upward), and routine submissions. Per your ruling, v2 runs on the edict track only, and every term lands in its proper place. The self-assessed \"confidence\" column has been replaced with an evidence grade.\nFiled 2026-07-30; v2 same day. Your four annotations — use 判, \"I am the emperor\", accept Q2(a), rename everything — are all adopted; two of them stand only because of the role-folding declaration below."
+    },
+    {
+      "i": 4,
+      "type": "heading",
+      "tag": "h2",
+      "line": 8,
+      "lineEnd": 8,
+      "parent": null,
+      "level": 2,
+      "text": "Replies to your four annotations on #48"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 10,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "You finalized #48 in the same second you annotated it (annotations 02:42:06, merge 02:42:12), so replies cannot land there — a reply on a finalized folder is worth nothing. The four replies are therefore recorded here, and v1 stays on main uncorrected (an archive is not retroactively edited; history should keep its mistakes visible)."
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": null,
+      "text": "① \"判 is better\" — adopted, but it needs the role fold to stand. In the sources pan is invariably a subordinate's word: Comprehensive Mirror ch. 193, the Secretariat drafters \"each set out their view and jointly signed their names — the five-flower judgment\", an act of the drafting side. The sovereign's word is pi, chi, ke; no Tang emperor \"judged\" as an institution. So this and your next annotation were two imperial rescripts in direct conflict. v2 does not swap your word; the explicit convention below carries it. For the record, v1's pida was in fact the better-attested option (Li Zhao's Hanlin Annals: \"for pida to memorials, no seal is used\"; Taiping Yulan ch. 221, Li Fan's \"would you call that annotating an edict?\" showing 批 was already a Tang document verb) — but you want pan, so pan it is."
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "② \"I am the emperor\" — adopted, but the cell you marked is gone. Not a rejection of the statement; the double review knocked out its foundation. Fable could find no Tang primary attestation for huawen, only Song practice and a Ming retrospective; agy produced a Tang Liudian quotation Fable could not locate, which given its record I treat as probably invented. More decisively, huawen belongs to the zouchao track and cannot coexist with tugui and fengbo on the edict track. You chose the edict track, so huawen goes with zouchao and finalization returns to huake. Your imperial seat is not lost — it is now written into the glossary explicitly."
+    },
+    {
+      "i": 8,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "③ Q2 \"accept\" — adopted, no change. Menxia (the desk) and Zhongshu-Menxia (the control plane) coexist. One correction from the double review: v1 said they are \"two tiers of one system\", which is wrong — the Secretariat-Chancellery was the renamed joint chancellors' office, a product of the three-department separation decaying. The two names come from mutually superseding stages. Conclusion unchanged, reasoning withdrawn."
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "④ \"rename everything\" — adopted, with four cells labelled as inventions. Both reviewers opposed force-translating interaction verbs. You ruled otherwise and I complied; next/pin/export/link are marked \"no attestation — invented\" so no future session cites them as historical."
+    },
+    {
+      "i": 10,
+      "type": "heading",
+      "tag": "h2",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "level": 2,
+      "text": "What v1 got wrong (conclusions only — don't reread the old draft)"
+    },
+    {
+      "i": 11,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "One hard error, proven by the very passage I cited. v1 named your line-level annotations tugui while naming the document zouchao. But the New Tang History, ch. 47, reads:"
+    },
+    {
+      "i": 12,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": null,
+      "text": "\"Of all the offices' zouchao, once the Chancellor has reviewed them, he rebuts and corrects errors. When an edict is unsuitable, it is amended and returned — this is called tugui.\""
+    },
+    {
+      "i": 13,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": null,
+      "text": "Tugui acts on edicts, not on zouchao; the action for zouchao is \"rebut and correct\". I quoted the whole sentence and used only its second half, thereby attaching a downward-document action to an upward document. The same applies to fengbo: the \"seal and return\" half only works on downward edicts, so on v1's zouchao track that character was idling."
+    },
+    {
+      "i": 14,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": null,
+      "text": "Moving to the edict track erases all of this at once: the agent drafts (the Secretariat drafter's role), you review, amend, and grant (the Chancellery's and the sovereign's roles), and the finalized text goes for execution. Tugui, fengbo, huake, and even the justification for the platform's name (\"Tang edicts open with the characters 門下\") all land correctly. The only cost is losing zouchao and huawen — and huawen's Tang-era primary attestation turns out to be the weakest claim in the whole table (see below)."
+    },
+    {
+      "i": 15,
+      "type": "heading",
+      "tag": "h2",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": null,
+      "level": 2,
+      "text": "One declaration: the role fold"
+    },
+    {
+      "i": 16,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 32,
+      "lineEnd": 32,
+      "parent": null,
+      "text": "You are the emperor, seated in the Chancellery, personally performing the Supervising Secretary's duty."
+    },
+    {
+      "i": 17,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 34,
+      "lineEnd": 34,
+      "parent": null,
+      "text": "No such office ever existed. I state it explicitly so that it stands as a deliberate convention of the naming system rather than masquerading as a historical claim. The reason: in Tang practice \"the Chancellery reviews\" and \"the sovereign grants\" are two hands performing two steps, whereas here both are you pressing one button. Since the real topology is folded, the naming should reflect that rather than splitting you into two officers to please the histories."
+    },
+    {
+      "i": 18,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 36,
+      "lineEnd": 36,
+      "parent": null,
+      "text": "This single declaration resolves every actor mismatch at once, which is why both of the words you chose survive:"
+    },
+    {
+      "i": 19,
+      "type": "list_item",
+      "tag": "li",
+      "line": 38,
+      "lineEnd": 38,
+      "parent": null,
+      "text": "Tugui was properly a Supervising Secretary's act → you perform it in person; valid."
+    },
+    {
+      "i": 20,
+      "type": "list_item",
+      "tag": "li",
+      "line": 39,
+      "lineEnd": 40,
+      "parent": null,
+      "text": "Pan (判) was properly a Secretariat drafter's word (the six drafters each signing their own opinion) → same; valid."
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "Without this declaration, \"I am the emperor\" and \"use 判\" are two of your own annotations in direct conflict, and I will not quietly adopt both."
+    },
+    {
+      "i": 22,
+      "type": "heading",
+      "tag": "h2",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "level": 2,
+      "text": "The glossary (edict track)"
+    },
+    {
+      "i": 23,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 45,
+      "lineEnd": 45,
+      "parent": null,
+      "text": "Four evidence grades: Verified (a reviewer located the primary text during the double review) / Received view (standard in the literature, no primary hit) / Disputed (the two reviewers reached opposite conclusions) / Inferred (no attestation; my own construction)."
+    },
+    {
+      "i": 24,
+      "type": "table",
+      "tag": "table",
+      "line": 47,
+      "lineEnd": 58,
+      "parent": null,
+      "text": "\n\n\nNow\nProposed\nEvidence\nBasis\n\n\n\n\nZhupi (platform)\n门下 Ménxià\nVerified\nTang Liudian ch. 8: \"the Chancellor's office is to convey and receive the imperial word\"; the Supervising Secretary rebuts and corrects errors. Plus \"Tang edicts open with 門下\" (received view) — which only holds on the edict track; on v1's zouchao track it was self-contradictory\n\n\nmemorial\n敕草 Chìcǎo (draft edict)\nInferred\nTang usage has the verbs \"to draft an edict\"; the noun form is unattested. Your call — see below\n\n\ninline note\n涂归 Túguī\nVerified\nNew Tang History ch. 47: \"when an edict is unsuitable, it is amended and returned — called tugui\" — the object is precisely an edict\n\n\noverall note\n判 Pàn\nVerified (actor via the fold)\nComprehensive Mirror ch. 193: the Secretariat drafters \"each set out their view and jointly signed their names — called the five-flower judgment\"\n\n\nfinalize\n画可 Huàkě\nVerified; sequence disputed\nTang Liudian ch. 8 commentary: \"the Chancellor notes the grant, seals across the seam, and sends it to the Department of State for execution.\" But whether huake falls before or after the Chancellery's review, the two reviewers concluded opposite things — see below\n\n\nsend back\n封驳 Fēngbó\nPartial\n\"Seal and return\" takes downward edicts as its object, so it only stands on this track. Whether Tang writers used fengbo as a compound needs checking (the Song founded a Chancellery bureau by that name)\n\n\npending list\n待审 dàishěn\nReceived view\nNothing takes effect until the Chancellery has reviewed\n\n\nfinalized\n已画可\nas huake\n\n\n\n(new) shelve\n寝 Qǐn\nLiterary usage, not a Tang technical term\n\"To let a memorial rest\" is common in both Tang histories, but it has no prescribed form and no procedural standing. Honestly, this is a literary borrowing, not an institutional match — though shelving memorials is precisely a sovereign's prerogative, which suits \"I am the emperor\"\n\n\nsession marker\n印缝 Yìnfèng\nVerified\nTang Liudian ch. 8 commentary: \"the Chancellor notes the grant, seals across the seam\" — a seal spanning the join so the sheets can be matched later, which is exactly \"findable again afterwards\". Replaces v1's 骑缝: that word is absent from Tang sources and clusters in Ming, Qing, and modern material\n\n\n"
+    },
+    {
+      "i": 25,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": 24,
+      "text": "\nNow\nProposed\nEvidence\nBasis\n"
+    },
+    {
+      "i": 26,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": 24,
+      "text": "\nZhupi (platform)\n门下 Ménxià\nVerified\nTang Liudian ch. 8: \"the Chancellor's office is to convey and receive the imperial word\"; the Supervising Secretary rebuts and corrects errors. Plus \"Tang edicts open with 門下\" (received view) — which only holds on the edict track; on v1's zouchao track it was self-contradictory\n"
+    },
+    {
+      "i": 27,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 50,
+      "lineEnd": 50,
+      "parent": 24,
+      "text": "\nmemorial\n敕草 Chìcǎo (draft edict)\nInferred\nTang usage has the verbs \"to draft an edict\"; the noun form is unattested. Your call — see below\n"
+    },
+    {
+      "i": 28,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 51,
+      "lineEnd": 51,
+      "parent": 24,
+      "text": "\ninline note\n涂归 Túguī\nVerified\nNew Tang History ch. 47: \"when an edict is unsuitable, it is amended and returned — called tugui\" — the object is precisely an edict\n"
+    },
+    {
+      "i": 29,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 52,
+      "lineEnd": 52,
+      "parent": 24,
+      "text": "\noverall note\n判 Pàn\nVerified (actor via the fold)\nComprehensive Mirror ch. 193: the Secretariat drafters \"each set out their view and jointly signed their names — called the five-flower judgment\"\n"
+    },
+    {
+      "i": 30,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 53,
+      "lineEnd": 53,
+      "parent": 24,
+      "text": "\nfinalize\n画可 Huàkě\nVerified; sequence disputed\nTang Liudian ch. 8 commentary: \"the Chancellor notes the grant, seals across the seam, and sends it to the Department of State for execution.\" But whether huake falls before or after the Chancellery's review, the two reviewers concluded opposite things — see below\n"
+    },
+    {
+      "i": 31,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": 24,
+      "text": "\nsend back\n封驳 Fēngbó\nPartial\n\"Seal and return\" takes downward edicts as its object, so it only stands on this track. Whether Tang writers used fengbo as a compound needs checking (the Song founded a Chancellery bureau by that name)\n"
+    },
+    {
+      "i": 32,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 55,
+      "lineEnd": 55,
+      "parent": 24,
+      "text": "\npending list\n待审 dàishěn\nReceived view\nNothing takes effect until the Chancellery has reviewed\n"
+    },
+    {
+      "i": 33,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 56,
+      "lineEnd": 56,
+      "parent": 24,
+      "text": "\nfinalized\n已画可\nas huake\n\n"
+    },
+    {
+      "i": 34,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 57,
+      "lineEnd": 57,
+      "parent": 24,
+      "text": "\n(new) shelve\n寝 Qǐn\nLiterary usage, not a Tang technical term\n\"To let a memorial rest\" is common in both Tang histories, but it has no prescribed form and no procedural standing. Honestly, this is a literary borrowing, not an institutional match — though shelving memorials is precisely a sovereign's prerogative, which suits \"I am the emperor\"\n"
+    },
+    {
+      "i": 35,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 58,
+      "lineEnd": 58,
+      "parent": 24,
+      "text": "\nsession marker\n印缝 Yìnfèng\nVerified\nTang Liudian ch. 8 commentary: \"the Chancellor notes the grant, seals across the seam\" — a seal spanning the join so the sheets can be matched later, which is exactly \"findable again afterwards\". Replaces v1's 骑缝: that word is absent from Tang sources and clusters in Ming, Qing, and modern material\n"
+    },
+    {
+      "i": 36,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": null,
+      "text": "The one cell left for you: what to call the document. Chicao is a compound I inferred, with no attestation. Three candidates:"
+    },
+    {
+      "i": 37,
+      "type": "list_item",
+      "tag": "li",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": null,
+      "text": "敕草 Chicao (recommended) — two characters, transparently \"draft of an edict\", cognate with the attested verbs"
+    },
+    {
+      "i": 38,
+      "type": "list_item",
+      "tag": "li",
+      "line": 63,
+      "lineEnd": 63,
+      "parent": null,
+      "text": "制草 Zhicao — same construction, more formal; a 制 edict outranks a 敕"
+    },
+    {
+      "i": 39,
+      "type": "list_item",
+      "tag": "li",
+      "line": 64,
+      "lineEnd": 65,
+      "parent": null,
+      "text": "黄敕 Huangchi — attested (Taiping Yulan ch. 221 records Li Fan \"writing his objection on the back of the yellow edict\" — the very anecdote about annotating a document). But huangchi means an edict already promulgated, not a draft, so using it says you are annotating a live document"
+    },
+    {
+      "i": 40,
+      "type": "heading",
+      "tag": "h2",
+      "line": 66,
+      "lineEnd": 66,
+      "parent": null,
+      "level": 2,
+      "text": "Two things I will not adjudicate"
+    },
+    {
+      "i": 41,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 68,
+      "lineEnd": 68,
+      "parent": null,
+      "text": "1. Whether huake falls before or after the Chancellery's review. Fable cites Tang Liudian ch. 8 commentary (\"re-submitted, the grant written, kept in the Chancellery as the record … the Chancellor notes the grant, seals across the seam, sends it to the Department of State\") and concludes review first, grant second — and on that basis points out that v1's apology in Q1 (\"our order is reversed\") apologized for a defect that does not exist: the platform's review-then-finalize order was right all along. agy concluded v1's order was correct, but supplied no quotation."
+    },
+    {
+      "i": 42,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 70,
+      "lineEnd": 70,
+      "parent": null,
+      "text": "I lean toward Fable (it produced primary text with a chapter number; agy did not), but I will not convert a direct conflict between two reviewers into a settled conclusion on your behalf. Marked disputed; it does not affect the word — huake stands under either reading."
+    },
+    {
+      "i": 43,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 72,
+      "lineEnd": 72,
+      "parent": null,
+      "text": "2. The Tang attestation for huawen. Fable searched and reported no Tang primary source, only Song practice and a Ming author's retrospective note. agy supplied a Tang Liudian ch. 8 quotation that Fable could not locate. Given agy's track record of fabricating citations, I am treating that quotation as probably invented."
+    },
+    {
+      "i": 44,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 74,
+      "lineEnd": 74,
+      "parent": null,
+      "text": "This is also part of the practical case for dropping huawen: beyond the track choice, it was the weakest entry in the table."
+    },
+    {
+      "i": 45,
+      "type": "heading",
+      "tag": "h2",
+      "line": 76,
+      "lineEnd": 76,
+      "parent": null,
+      "level": 2,
+      "text": "Renaming everything (your Q3)"
+    },
+    {
+      "i": 46,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 78,
+      "lineEnd": 78,
+      "parent": null,
+      "text": "Both reviewers opposed force-translating the third group, on the grounds that it turns the interface into a puzzle. You ruled rename-everything, so I am doing it — but the four invented cells are labelled as inventions. That zone is where a future session is most likely to fabricate a historical source, and labelling it is how we stop that."
+    },
+    {
+      "i": 47,
+      "type": "table",
+      "tag": "table",
+      "line": 80,
+      "lineEnd": 98,
+      "parent": null,
+      "text": "\n\n\nInterface word\nProposed\nGrade\n\n\n\n\ncopy\n录\nFine (the Tang Liudian text itself says \"write out another copy\")\n\n\nsearch\n检\nFine (Tang auditing and inspection are real official verbs)\n\n\nexpand / collapse\n展 / 卷\nFine (scroll idiom, though not a document term)\n\n\nread / unread\n已览 / 未览\nFine (sovereigns \"peruse\" memorials — apt for the imperial seat)\n\n\ndraft\n草\nFine\n\n\nversion\n本 / 别本\nFine (manuscript idiom)\n\n\nrevise\n刊定\nFine (刊 = to excise and correct)\n\n\narchive\n入甲库\nFine but extended (the Tang Personnel archive was real, but held appointment certificates specifically)\n\n\ndelete\n削\nAlready the classical word\n\n\nfilter\n简择\nFine (selection-process idiom)\n\n\ntitle\n题\nAlready classical\n\n\ncontents\n目\nAlready classical\n\n\nattachment\n别纸\nFine; the specific Dunhuang letter-form source needs checking\n\n\nnext / previous\n次 / 前\n⚠️ No attestation — invented\n\n\npin\n冠首\n⚠️ No attestation — invented\n\n\nexport\n录出\n⚠️ No attestation — invented\n\n\nlink\n引\n⚠️ No attestation — invented; deep links especially should stay as they are\n\n\n"
+    },
+    {
+      "i": 48,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 80,
+      "lineEnd": 80,
+      "parent": 47,
+      "text": "\nInterface word\nProposed\nGrade\n"
+    },
+    {
+      "i": 49,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 82,
+      "lineEnd": 82,
+      "parent": 47,
+      "text": "\ncopy\n录\nFine (the Tang Liudian text itself says \"write out another copy\")\n"
+    },
+    {
+      "i": 50,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 83,
+      "lineEnd": 83,
+      "parent": 47,
+      "text": "\nsearch\n检\nFine (Tang auditing and inspection are real official verbs)\n"
+    },
+    {
+      "i": 51,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 84,
+      "lineEnd": 84,
+      "parent": 47,
+      "text": "\nexpand / collapse\n展 / 卷\nFine (scroll idiom, though not a document term)\n"
+    },
+    {
+      "i": 52,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 85,
+      "lineEnd": 85,
+      "parent": 47,
+      "text": "\nread / unread\n已览 / 未览\nFine (sovereigns \"peruse\" memorials — apt for the imperial seat)\n"
+    },
+    {
+      "i": 53,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 86,
+      "lineEnd": 86,
+      "parent": 47,
+      "text": "\ndraft\n草\nFine\n"
+    },
+    {
+      "i": 54,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 87,
+      "lineEnd": 87,
+      "parent": 47,
+      "text": "\nversion\n本 / 别本\nFine (manuscript idiom)\n"
+    },
+    {
+      "i": 55,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 88,
+      "lineEnd": 88,
+      "parent": 47,
+      "text": "\nrevise\n刊定\nFine (刊 = to excise and correct)\n"
+    },
+    {
+      "i": 56,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": 47,
+      "text": "\narchive\n入甲库\nFine but extended (the Tang Personnel archive was real, but held appointment certificates specifically)\n"
+    },
+    {
+      "i": 57,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 90,
+      "lineEnd": 90,
+      "parent": 47,
+      "text": "\ndelete\n削\nAlready the classical word\n"
+    },
+    {
+      "i": 58,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 91,
+      "lineEnd": 91,
+      "parent": 47,
+      "text": "\nfilter\n简择\nFine (selection-process idiom)\n"
+    },
+    {
+      "i": 59,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 92,
+      "lineEnd": 92,
+      "parent": 47,
+      "text": "\ntitle\n题\nAlready classical\n"
+    },
+    {
+      "i": 60,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": 47,
+      "text": "\ncontents\n目\nAlready classical\n"
+    },
+    {
+      "i": 61,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 94,
+      "lineEnd": 94,
+      "parent": 47,
+      "text": "\nattachment\n别纸\nFine; the specific Dunhuang letter-form source needs checking\n"
+    },
+    {
+      "i": 62,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 95,
+      "lineEnd": 95,
+      "parent": 47,
+      "text": "\nnext / previous\n次 / 前\n⚠️ No attestation — invented\n"
+    },
+    {
+      "i": 63,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 96,
+      "lineEnd": 96,
+      "parent": 47,
+      "text": "\npin\n冠首\n⚠️ No attestation — invented\n"
+    },
+    {
+      "i": 64,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 97,
+      "lineEnd": 97,
+      "parent": 47,
+      "text": "\nexport\n录出\n⚠️ No attestation — invented\n"
+    },
+    {
+      "i": 65,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 98,
+      "lineEnd": 98,
+      "parent": 47,
+      "text": "\nlink\n引\n⚠️ No attestation — invented; deep links especially should stay as they are\n"
+    },
+    {
+      "i": 66,
+      "type": "heading",
+      "tag": "h2",
+      "line": 100,
+      "lineEnd": 100,
+      "parent": null,
+      "level": 2,
+      "text": "Why this version has an evidence column"
+    },
+    {
+      "i": 67,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 102,
+      "lineEnd": 102,
+      "parent": null,
+      "text": "v1's \"confidence\" column was my own self-assessment, and the double review judged it worthless. I accept that: the confidence and the content came out of one generative process, so there is no independent signal. The evidence bore it out — a row marked \"high\" carried a cross-sourced quotation (the New Tang History's wording attributed to the Tang Liudian), a row marked \"medium\" had its entire comparative argument backwards, while the \"high\" tugui row was in fact word-perfect. \"Confidence\" meant \"how familiar this feels\", not \"how much I checked\"."
+    },
+    {
+      "i": 68,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 104,
+      "lineEnd": 104,
+      "parent": null,
+      "text": "Worse: v1's only external check was ch. 4 of your History of Chinese Official Titles — a textbook I wrote myself. A model using its own prior output as external evidence can only catch \"this memory contradicts that memory\"; errors inside the shared prior are undetectable by construction. And that chapter presents exactly the simplified \"Secretariat drafts → Chancellery rebuts → Department executes\" diagram that produced the huake sequencing error: checking against it would not catch the error, it would reinforce it."
+    },
+    {
+      "i": 69,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 106,
+      "lineEnd": 106,
+      "parent": null,
+      "text": "So from v2 onward: the evidence column records what was checked and by whom, never how I feel. Anything without a primary hit is downgraded to \"received view\" or \"inferred\"."
+    },
+    {
+      "i": 70,
+      "type": "heading",
+      "tag": "h2",
+      "line": 108,
+      "lineEnd": 108,
+      "parent": null,
+      "level": 2,
+      "text": "Outstanding, needs checking (not fabricated — left blank on purpose)"
+    },
+    {
+      "i": 71,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 110,
+      "lineEnd": 110,
+      "parent": null,
+      "text": "A worked example of an edict opening with 門下; Tang usage of fengbo as a compound; the specific Dunhuang source for bienzhi; attestation of chicao as a noun; the year the Secretariat-Chancellery was renamed. Next round these get verified or stay downgraded. No session should cite them as settled."
+    },
+    {
+      "i": 72,
+      "type": "heading",
+      "tag": "h2",
+      "line": 112,
+      "lineEnd": 112,
+      "parent": null,
+      "level": 2,
+      "text": "Engineering and breakage (unchanged from v1, condensed)"
+    },
+    {
+      "i": 73,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 114,
+      "lineEnd": 114,
+      "parent": null,
+      "text": "One real break: the Pages URL (…github.io/zhupi → /menxia/). A shell repo still called zhupi forwards ?pr=…&path=… verbatim, so old links work forever."
+    },
+    {
+      "i": 74,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": null,
+      "text": "The rest: the zhupi repo, 30 files / 323 occurrences; zhupi-mcp, 61 files / 636 (~30% test fixtures); the MCP key, 1 place (tools become mcp__menxia__*; needs a session restart); the review-loop skill and 3 guards, 41 occurrences (directory name and hook paths do not move, so hook config needs zero edits); global CLAUDE.md §10, 9 occurrences; 12 memory files and 5 ex notes."
+    },
+    {
+      "i": 75,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 118,
+      "lineEnd": 118,
+      "parent": null,
+      "text": "Not changing: the charliezong18/review repo; the text of finalized folders; the retired scripts."
+    },
+    {
+      "i": 76,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 120,
+      "lineEnd": 120,
+      "parent": null,
+      "text": "No old command is removed — all become permanent aliases."
+    },
+    {
+      "i": 77,
+      "type": "heading",
+      "tag": "h2",
+      "line": 122,
+      "lineEnd": 122,
+      "parent": null,
+      "level": 2,
+      "text": "Three steps, stoppable at any point"
+    },
+    {
+      "i": 78,
+      "type": "list_item",
+      "tag": "li",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": null,
+      "text": "Freeze the glossary (approve this folder) → documents only, no code."
+    },
+    {
+      "i": 79,
+      "type": "list_item",
+      "tag": "li",
+      "line": 125,
+      "lineEnd": 125,
+      "parent": null,
+      "text": "Rewrite both repos + stand up the redirect shell → run tests, file a folder for acceptance. After this the interface is entirely Tang."
+    },
+    {
+      "i": 80,
+      "type": "list_item",
+      "tag": "li",
+      "line": 126,
+      "lineEnd": 127,
+      "parent": null,
+      "text": "Rewrite skill / hooks / memory / CLAUDE.md → so every session changes its vocabulary too."
+    },
+    {
+      "i": 81,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": null,
+      "text": "Step 2 alone is usable; skipping step 3 only means other sessions still say \"zhupi\"."
+    }
+  ]
+}

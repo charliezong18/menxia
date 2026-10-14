@@ -1,0 +1,687 @@
+{
+  "format": 1,
+  "source": "corpus/real-sys-00-overview.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "System Design 00 · Overview"
+    },
+    {
+      "i": 2,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "\nv2 (2026-07-31): Absorbs cross-model review #44 (decision-independent parts) + the M0 spike verdict (#49). This doc: records M0 as \"settled / conditional pass\" and adds the M1 Day-1 live-rerun gate; adds the Docker/Podman hard deployment requirement; the transport is now settled (plain Bearer + Streamable HTTP); the push-channel cell is realigned to sys-06's Telegram-first (#44-15); folds the M1 must-carry four fixes into the \"can clear to zero\" acceptance criteria. The review desk platform is renamed to menxia (the reading desk); zhupi → menxia. The Contract 2 diagram is synced to the state rename and gains stalled/source_gone (v2 review patch).\n"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": 2,
+      "text": "v2 (2026-07-31): Absorbs cross-model review #44 (decision-independent parts) + the M0 spike verdict (#49). This doc: records M0 as \"settled / conditional pass\" and adds the M1 Day-1 live-rerun gate; adds the Docker/Podman hard deployment requirement; the transport is now settled (plain Bearer + Streamable HTTP); the push-channel cell is realigned to sys-06's Telegram-first (#44-15); folds the M1 must-carry four fixes into the \"can clear to zero\" acceptance criteria. The review desk platform is renamed to menxia (the reading desk); zhupi → menxia. The Contract 2 diagram is synced to the state rename and gains stalled/source_gone (v2 review patch)."
+    },
+    {
+      "i": 4,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 7,
+      "lineEnd": 8,
+      "parent": null,
+      "text": "\n中书门下 (Secretariat-Chancellery) —— The 中枢 (the central hub) built on a self-hosted Happy (2) for personal agent outputs. Taking the plugin route, not forking upstream.\nPrevious context: List of pending decisions · Base feasibility and legal risks · Relationship with Happy (2) · v1 design\n"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 8,
+      "parent": 4,
+      "text": "中书门下 (Secretariat-Chancellery) —— The 中枢 (the central hub) built on a self-hosted Happy (2) for personal agent outputs. Taking the plugin route, not forking upstream.\nPrevious context: List of pending decisions · Base feasibility and legal risks · Relationship with Happy (2) · v1 design"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 10,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "Date: 2026-07-30 · System Design v1 ｜ Revised: 2026-07-31 · v2"
+    },
+    {
+      "i": 7,
+      "type": "heading",
+      "tag": "h2",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "level": 2,
+      "text": "I. What this system does"
+    },
+    {
+      "i": 8,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "In one sentence: Aggregate scattered agent outputs into a single inbox that can be cleared to zero, read and review them, and dispatch them for execution."
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "Three-step closed loop: 收 (ingest) → 判 (decide) → 派 (dispatch). Upstream only lacks the first two steps; the third step uses its directly."
+    },
+    {
+      "i": 10,
+      "type": "heading",
+      "tag": "h2",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "level": 2,
+      "text": "II. Component list"
+    },
+    {
+      "i": 11,
+      "type": "table",
+      "tag": "table",
+      "line": 24,
+      "lineEnd": 33,
+      "parent": null,
+      "text": "\n\n\n#\nComponent\nRuns where\nOne-sentence duty\nDesign doc\n\n\n\n\n1\nIngester\nEach person's own machine\nScans local sources, POSTs new outputs to the core\n01\n\n\n2\nCore\nPlugin container\nThe single source of truth for an item: storage, state machine, API\n02\n\n\n3\nInbox\nBrowser (full-page App)\nRead, layer, clear to zero\n03\n\n\n4\nReview desk\nBrowser (full-page App)\nSentence-level annotation, approve/reject\n04\n\n\n5\nRanking\nA module inside the core\nDecides what ranks first\n05\n\n\n6\nNotifier\nBackground process inside the core\nCalls the person over (two outlets)\n06\n\n\n7\nDispatch\nUpstream agent (Rig)\nExecute after approval\n1-pager\n\n\n8\nRuntime and 班子 (an installation / \"team\")\nDeployment layer\nHow many to install, who can see which installation\n07\n\n\n"
+    },
+    {
+      "i": 12,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": 11,
+      "text": "\n#\nComponent\nRuns where\nOne-sentence duty\nDesign doc\n"
+    },
+    {
+      "i": 13,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": 11,
+      "text": "\n1\nIngester\nEach person's own machine\nScans local sources, POSTs new outputs to the core\n01\n"
+    },
+    {
+      "i": 14,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": 11,
+      "text": "\n2\nCore\nPlugin container\nThe single source of truth for an item: storage, state machine, API\n02\n"
+    },
+    {
+      "i": 15,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": 11,
+      "text": "\n3\nInbox\nBrowser (full-page App)\nRead, layer, clear to zero\n03\n"
+    },
+    {
+      "i": 16,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": 11,
+      "text": "\n4\nReview desk\nBrowser (full-page App)\nSentence-level annotation, approve/reject\n04\n"
+    },
+    {
+      "i": 17,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": 11,
+      "text": "\n5\nRanking\nA module inside the core\nDecides what ranks first\n05\n"
+    },
+    {
+      "i": 18,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": 11,
+      "text": "\n6\nNotifier\nBackground process inside the core\nCalls the person over (two outlets)\n06\n"
+    },
+    {
+      "i": 19,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 32,
+      "lineEnd": 32,
+      "parent": 11,
+      "text": "\n7\nDispatch\nUpstream agent (Rig)\nExecute after approval\n1-pager\n"
+    },
+    {
+      "i": 20,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": 11,
+      "text": "\n8\nRuntime and 班子 (an installation / \"team\")\nDeployment layer\nHow many to install, who can see which installation\n07\n"
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": null,
+      "text": "Not built ourselves: Accounts and authentication, channels, projects, scheduled tasks and run logs, agent execution, desktop client —— all use upstream. Push: M1–M2 rides the local tg-notify.sh (Telegram-first); the notifier only decides core-side and a local worker pulls and delivers; happy2's built-in pushRoutes is a later \"switch only if you'll actually read it\" option, not the default (#44-15 · see 06)."
+    },
+    {
+      "i": 22,
+      "type": "heading",
+      "tag": "h2",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "level": 2,
+      "text": "III. Architecture diagram"
+    },
+    {
+      "i": 23,
+      "type": "fence",
+      "tag": "code",
+      "line": 41,
+      "lineEnd": 66,
+      "parent": null,
+      "info": "",
+      "text": "┌───────────────────────────────────────────────────────────────┐\n│  happy2 server (self-hosted, rented server)                   │\n│  accounts / channels / projects / automations / agent (Rig)   │\n│                                                               │\n│  ┌─────────────────────────────────────────────────────────┐  │\n│  │  中书门下 plugin (1 installation = 1 班子)                 │  │\n│  │                                                          │  │\n│  │   ┌────────────┐   ┌──────────┐   ┌──────────────────┐  │  │\n│  │   │  Core API  │──▶│  SQLite  │◀──│  Background proc │  │  │\n│  │   │  (MCP)     │   │          │   │  archive/poll/not│  │  │\n│  │   └─────▲──────┘   └──────────┘   └────────┬─────────┘  │  │\n│  │         │                                   │            │  │\n│  │   ┌─────┴───────┐  ┌──────────────┐        │            │  │\n│  │   │ Inbox App   │  │ Review Desk  │        │            │  │\n│  │   └─────────────┘  └──────────────┘        │            │  │\n│  └───────────▲─────────────────────────────────┼───────────┘  │\n└──────────────┼─────────────────────────────────┼──────────────┘\n               │ ① POST /items (new outputs)      │ ③ Notifier\n               │ ② GET  /fetch (fetch back)       ▼\n     ┌─────────┴─────────┐              Telegram / OB homepage\n     │ Ingester + worker │\n     │ (own machines)    │\n     │ Local source/cred │\n     └───────────────────┘\n"
+    },
+    {
+      "i": 24,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 68,
+      "lineEnd": 68,
+      "parent": null,
+      "text": "Three data streams, all initiated by the worker or pushed by the core, the server never actively connects to your machine:"
+    },
+    {
+      "i": 25,
+      "type": "list_item",
+      "tag": "li",
+      "line": 70,
+      "lineEnd": 70,
+      "parent": null,
+      "text": "Ingest: worker spots new output → POST /items (only sends metadata + pointer)"
+    },
+    {
+      "i": 26,
+      "type": "list_item",
+      "tag": "li",
+      "line": 71,
+      "lineEnd": 71,
+      "parent": null,
+      "text": "Fetch back: frontend wants to read body → core pulls from the owner worker of that item → does not hit disk"
+    },
+    {
+      "i": 27,
+      "type": "list_item",
+      "tag": "li",
+      "line": 72,
+      "lineEnd": 73,
+      "parent": null,
+      "text": "Notifier: background process only decides it's time to call the person over and exposes pending-notifications; delivery is done by the local worker via long-poll pull, executed locally (tg-notify.sh / writes OB homepage) —— the server never dials into your machine (#44-4 · see 06)"
+    },
+    {
+      "i": 28,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 74,
+      "lineEnd": 74,
+      "parent": null,
+      "text": "Ingress/egress path (verified by M0, #49): all three data streams ride happy2's plugin bridge GET|POST /v0/pluginInstallations/:installationId/mcp, auth = plain Happy Bearer (no plugin-specific token), MCP Streamable HTTP (GET+POST only). Installation not ready → 503. This settles the former sys-01 \"what to use for the long-lived connection\" open item."
+    },
+    {
+      "i": 29,
+      "type": "heading",
+      "tag": "h2",
+      "line": 78,
+      "lineEnd": 78,
+      "parent": null,
+      "level": 2,
+      "text": "IV. Four contracts across components"
+    },
+    {
+      "i": 30,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 80,
+      "lineEnd": 80,
+      "parent": null,
+      "text": "These four are the only coupling points between components; modifying them requires touching multiple components. Otherwise, internal changes to each component are unrestricted."
+    },
+    {
+      "i": 31,
+      "type": "heading",
+      "tag": "h3",
+      "line": 82,
+      "lineEnd": 82,
+      "parent": null,
+      "level": 3,
+      "text": "Contract 1 · The shape of an \"item\""
+    },
+    {
+      "i": 32,
+      "type": "fence",
+      "tag": "code",
+      "line": 84,
+      "lineEnd": 87,
+      "parent": null,
+      "info": "",
+      "text": "{ id, owner_user_id, source_id, external_key,\n  title, summary, tier, state, priority, body_ref, timestamps }\n"
+    },
+    {
+      "i": 33,
+      "type": "list_item",
+      "tag": "li",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "text": "external_key is the stable identifier on the source side (PR number, file path+mtime, URL). The core uses (source_id, external_key) for idempotency; duplicate delivery is a no-op."
+    },
+    {
+      "i": 34,
+      "type": "list_item",
+      "tag": "li",
+      "line": 90,
+      "lineEnd": 90,
+      "parent": null,
+      "text": "body_ref is a pointer, not the body (see Contract 3)."
+    },
+    {
+      "i": 35,
+      "type": "list_item",
+      "tag": "li",
+      "line": 91,
+      "lineEnd": 92,
+      "parent": null,
+      "text": "tier is declared by the source, not guessed by the core."
+    },
+    {
+      "i": 36,
+      "type": "heading",
+      "tag": "h3",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": null,
+      "level": 3,
+      "text": "Contract 2 · State machine"
+    },
+    {
+      "i": 37,
+      "type": "fence",
+      "tag": "code",
+      "line": 95,
+      "lineEnd": 104,
+      "parent": null,
+      "info": "",
+      "text": "new ──▶ read ─────────────────────────────▶ closed\n  │                                          ▲\n  └──▶ awaiting_decision ──▶ approved ──▶ running\n                    │                        │\n                    └──▶ rejected ───────────┘\n         source_gone ──▶ closed (source vanished; auto-close)\n         running ──▶ stalled (timeout; alert-only, revertible)\n                                    abandoned (enter from any state)\n"
+    },
+    {
+      "i": 38,
+      "type": "list_item",
+      "tag": "li",
+      "line": 106,
+      "lineEnd": 106,
+      "parent": null,
+      "text": "Only the core can change the state. The frontend and ingester can only request; they cannot write directly."
+    },
+    {
+      "i": 39,
+      "type": "list_item",
+      "tag": "li",
+      "line": 107,
+      "lineEnd": 107,
+      "parent": null,
+      "text": "running does not count as uncleared —— it is waiting for an agent, not waiting for a person."
+    },
+    {
+      "i": 40,
+      "type": "list_item",
+      "tag": "li",
+      "line": 108,
+      "lineEnd": 109,
+      "parent": null,
+      "text": "awaiting_decision never expires on a timer — the only automatic close is source-side disappearance source_gone (#44-2); fyi is archived 7 days after entering read."
+    },
+    {
+      "i": 41,
+      "type": "heading",
+      "tag": "h3",
+      "line": 110,
+      "lineEnd": 110,
+      "parent": null,
+      "level": 3,
+      "text": "Contract 3 · Body never hits the server disk (one exception)"
+    },
+    {
+      "i": 42,
+      "type": "list_item",
+      "tag": "li",
+      "line": 112,
+      "lineEnd": 112,
+      "parent": null,
+      "text": "By default, only body_ref ({worker_id, kind, locator}) is stored. When the body needs to be read, the core fetches it from the worker; the response does not hit the disk and does not enter logs."
+    },
+    {
+      "i": 43,
+      "type": "list_item",
+      "tag": "li",
+      "line": 113,
+      "lineEnd": 114,
+      "parent": null,
+      "text": "The only exception: documents you explicitly send into the review desk will have a doc.text snapshot saved —— because annotation anchors must be anchored to an immutable text. This is an explicit action, not an automatic sync."
+    },
+    {
+      "i": 44,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 115,
+      "lineEnd": 115,
+      "parent": null,
+      "text": "Reasoning see Legal risk report §4④: happy2 lacks end-to-end encryption, messages.text is a plaintext column."
+    },
+    {
+      "i": 45,
+      "type": "heading",
+      "tag": "h3",
+      "line": 117,
+      "lineEnd": 117,
+      "parent": null,
+      "level": 3,
+      "text": "Contract 4 · External input never enters operation tier"
+    },
+    {
+      "i": 46,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 119,
+      "lineEnd": 119,
+      "parent": null,
+      "text": "Dispatching is split into two tiers. Any string from external content (news headlines, webpages, RSS, emails) can never appear in the prompt of an operation tier task. See Dispatch 1-pager for details."
+    },
+    {
+      "i": 47,
+      "type": "heading",
+      "tag": "h2",
+      "line": 123,
+      "lineEnd": 123,
+      "parent": null,
+      "level": 2,
+      "text": "V. Tech stack selection"
+    },
+    {
+      "i": 48,
+      "type": "table",
+      "tag": "table",
+      "line": 125,
+      "lineEnd": 130,
+      "parent": null,
+      "text": "\n\n\nLayer\nSelection\nReason\n\n\n\n\nPlugin server\nTypeScript + MCP SDK\nUpstream plugin SDK is TS, happy2-plugin-todos is a ready-made template\n\n\nStorage\nnode:sqlite's DatabaseSync\nSame as upstream todos plugin, zero extra dependencies, single file is easy to backup\n\n\nFrontend\nReact, single file bundle\nregisterHtmlAppResource wants exactly a single file HTML\n\n\nIngester / worker\nGo\nMatches the stack of the new Snap team; perfect for long-running polling and local file scanning\n\n\n"
+    },
+    {
+      "i": 49,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 125,
+      "lineEnd": 125,
+      "parent": 48,
+      "text": "\nLayer\nSelection\nReason\n"
+    },
+    {
+      "i": 50,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 127,
+      "lineEnd": 127,
+      "parent": 48,
+      "text": "\nPlugin server\nTypeScript + MCP SDK\nUpstream plugin SDK is TS, happy2-plugin-todos is a ready-made template\n"
+    },
+    {
+      "i": 51,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": 48,
+      "text": "\nStorage\nnode:sqlite's DatabaseSync\nSame as upstream todos plugin, zero extra dependencies, single file is easy to backup\n"
+    },
+    {
+      "i": 52,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 129,
+      "lineEnd": 129,
+      "parent": 48,
+      "text": "\nFrontend\nReact, single file bundle\nregisterHtmlAppResource wants exactly a single file HTML\n"
+    },
+    {
+      "i": 53,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 130,
+      "lineEnd": 130,
+      "parent": 48,
+      "text": "\nIngester / worker\nGo\nMatches the stack of the new Snap team; perfect for long-running polling and local file scanning\n"
+    },
+    {
+      "i": 54,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 132,
+      "lineEnd": 132,
+      "parent": null,
+      "text": "Why the server doesn't use Go: The plugin server must be an MCP server and must consume upstream SDK types; using TS saves an entire layer of glue. Go is placed on the ingester and worker —— those two are independent processes, free to choose their language, and exactly in the sweet spot of \"long-running + polling + concurrent IO\"."
+    },
+    {
+      "i": 55,
+      "type": "heading",
+      "tag": "h2",
+      "line": 136,
+      "lineEnd": 136,
+      "parent": null,
+      "level": 2,
+      "text": "VI. Milestones and corresponding components"
+    },
+    {
+      "i": 56,
+      "type": "table",
+      "tag": "table",
+      "line": 138,
+      "lineEnd": 145,
+      "parent": null,
+      "text": "\n\n\nMilestone\nComponents involved\nCompletion criteria\n\n\n\n\nM0\nTopology spike (1–2 days, before everything)\n✅ Settled · conditional pass (#49): the bridge really exists, auth is a plain Bearer, the ingest / fetch-back / notification-pull three-stream architecture holds; the egress-is-closed assumption is falsified (see §III and the decision box below). Only remaining: happy2 has no non-container plugin runtime (providers hardcoded docker | podman), and the local mini has neither → M1 Day-1 gate: first rerun the spike kit live on the real server, all three criteria live-green, before writing any business code\n\n\nM1\nCore + Inbox + Ingester (only github_pr)\nPending PRs appear in the inbox, clicking jumps to the menxia (the reading desk) deep link. \"Can clear to zero\" requires all M1 must-carry four fixes (note below)\n\n\nM2\n+ 2 Obsidian sources + Ranking + Notifier\nCalled over once a day, finish reading in one sitting, able to clear to zero\n\n\nM3\n+ Runtime and 班子 (install a second set)\nTwo installations each read their own, data directories are mutually invisible\n\n\nM4\n+ menxia review desk\nA document can have sentence-level 涂归 (inline comments), approve/reject\n\n\nM5\n+ Dispatch\nCan be dispatched after approval, can take over, verified that research tier cannot write\n\n\n"
+    },
+    {
+      "i": 57,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 138,
+      "lineEnd": 138,
+      "parent": 56,
+      "text": "\nMilestone\nComponents involved\nCompletion criteria\n"
+    },
+    {
+      "i": 58,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 140,
+      "lineEnd": 140,
+      "parent": 56,
+      "text": "\nM0\nTopology spike (1–2 days, before everything)\n✅ Settled · conditional pass (#49): the bridge really exists, auth is a plain Bearer, the ingest / fetch-back / notification-pull three-stream architecture holds; the egress-is-closed assumption is falsified (see §III and the decision box below). Only remaining: happy2 has no non-container plugin runtime (providers hardcoded docker | podman), and the local mini has neither → M1 Day-1 gate: first rerun the spike kit live on the real server, all three criteria live-green, before writing any business code\n"
+    },
+    {
+      "i": 59,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 141,
+      "lineEnd": 141,
+      "parent": 56,
+      "text": "\nM1\nCore + Inbox + Ingester (only github_pr)\nPending PRs appear in the inbox, clicking jumps to the menxia (the reading desk) deep link. \"Can clear to zero\" requires all M1 must-carry four fixes (note below)\n"
+    },
+    {
+      "i": 60,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 142,
+      "lineEnd": 142,
+      "parent": 56,
+      "text": "\nM2\n+ 2 Obsidian sources + Ranking + Notifier\nCalled over once a day, finish reading in one sitting, able to clear to zero\n"
+    },
+    {
+      "i": 61,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 143,
+      "lineEnd": 143,
+      "parent": 56,
+      "text": "\nM3\n+ Runtime and 班子 (install a second set)\nTwo installations each read their own, data directories are mutually invisible\n"
+    },
+    {
+      "i": 62,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 144,
+      "lineEnd": 144,
+      "parent": 56,
+      "text": "\nM4\n+ menxia review desk\nA document can have sentence-level 涂归 (inline comments), approve/reject\n"
+    },
+    {
+      "i": 63,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 145,
+      "lineEnd": 145,
+      "parent": 56,
+      "text": "\nM5\n+ Dispatch\nCan be dispatched after approval, can take over, verified that research tier cannot write\n"
+    },
+    {
+      "i": 64,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 147,
+      "lineEnd": 147,
+      "parent": null,
+      "text": "M1–M2 is the minimum closed loop to \"use it comfortably yourself first\"."
+    },
+    {
+      "i": 65,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 149,
+      "lineEnd": 149,
+      "parent": null,
+      "text": "M1 must-carry four fixes (not new requirements —— they make the \"can clear to zero\" criterion true, #44-2/3/6/8): ① source-gone semantics source_gone + auto-close (01/02); ② the inbox's fourth section \"approved-awaiting-dispatch\" (03); ③ ingest hard-codes the tier→state mapping + a two-way set_tier (02); ④ dual-host backup (host-side cron + worker pulling a copy back to the mini, 02/07)."
+    },
+    {
+      "i": 66,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 151,
+      "lineEnd": 151,
+      "parent": null,
+      "text": "Deployment hard requirement (M0 adds, #49): the host must have Docker or Podman (the happy2 sandbox provider recognizes only these two). Trivial on a rented Linux server; the local mini currently has neither —— this affects local dev and reruns only, not the production topology."
+    },
+    {
+      "i": 67,
+      "type": "heading",
+      "tag": "h2",
+      "line": 155,
+      "lineEnd": 155,
+      "parent": null,
+      "level": 2,
+      "text": "VII. Global open items"
+    },
+    {
+      "i": 68,
+      "type": "table",
+      "tag": "table",
+      "line": 157,
+      "lineEnd": 162,
+      "parent": null,
+      "text": "\n\n\n#\nOpen item\nBlocked by\n\n\n\n\n1\nHow exactly the two-tier permissions land on happy2 (Happy 1 passed permissionMode through directly, happy2 uses Rig, mechanism unverified)\nM5\n\n\n2\nHow chatId gates app instance visibility\nThe third kind of 班子 in M3 (restricted to specific few people)\n\n\n3\nWhether the name is ultimately \"中书门下\" or something else (waiting for you to discuss with friends)\nOne-time rename of file slugs\n\n\n4\nprior inventions declaration text (suggest consulting a lawyer first)\nDoesn't block tech, blocks ownership\n\n\n"
+    },
+    {
+      "i": 69,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 157,
+      "lineEnd": 157,
+      "parent": 68,
+      "text": "\n#\nOpen item\nBlocked by\n"
+    },
+    {
+      "i": 70,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 159,
+      "lineEnd": 159,
+      "parent": 68,
+      "text": "\n1\nHow exactly the two-tier permissions land on happy2 (Happy 1 passed permissionMode through directly, happy2 uses Rig, mechanism unverified)\nM5\n"
+    },
+    {
+      "i": 71,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 160,
+      "lineEnd": 160,
+      "parent": 68,
+      "text": "\n2\nHow chatId gates app instance visibility\nThe third kind of 班子 in M3 (restricted to specific few people)\n"
+    },
+    {
+      "i": 72,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 161,
+      "lineEnd": 161,
+      "parent": 68,
+      "text": "\n3\nWhether the name is ultimately \"中书门下\" or something else (waiting for you to discuss with friends)\nOne-time rename of file slugs\n"
+    },
+    {
+      "i": 73,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 162,
+      "lineEnd": 162,
+      "parent": 68,
+      "text": "\n4\nprior inventions declaration text (suggest consulting a lawyer first)\nDoesn't block tech, blocks ownership\n"
+    }
+  ]
+}

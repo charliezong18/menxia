@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "source": "corpus/edge-frontmatter.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 6,
+      "lineEnd": 6,
+      "parent": null,
+      "level": 1,
+      "text": "标题在第 6 行"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 8,
+      "lineEnd": 8,
+      "parent": null,
+      "text": "正文第 8 行。"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": null,
+      "text": "上面是分隔线，不是 frontmatter。"
+    },
+    {
+      "i": 3,
+      "type": "heading",
+      "tag": "h2",
+      "line": 15,
+      "lineEnd": 16,
+      "parent": null,
+      "level": 2,
+      "text": "这一段夹在两条 --- 之间"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "结尾。"
+    }
+  ]
+}

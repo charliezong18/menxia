@@ -1,0 +1,81 @@
+{
+  "format": 1,
+  "source": "corpus/edge-bare-anchors.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "裸锚边角"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h2",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "level": 2,
+      "text": "每日"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "text": "段落里夹一个                   裸锚，前后文字照常。"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 10,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "单引号自闭合裸锚在段首。"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "带文字的 a 不剥：<a href=\"https://example.com\">看得见的链接文字</a>"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "<a id=\"x\" class=\"y\"></a> 多属性的不算裸锚（正则只认单个 id/name）。"
+    },
+    {
+      "i": 6,
+      "type": "fence",
+      "tag": "code",
+      "line": 18,
+      "lineEnd": 20,
+      "parent": null,
+      "info": "",
+      "text": "                     代码块里的裸锚也会被剥（预处理在解析前，不认代码块）\n"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "结尾。"
+    }
+  ]
+}

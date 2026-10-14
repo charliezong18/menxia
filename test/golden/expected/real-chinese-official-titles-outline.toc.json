@@ -1,0 +1,333 @@
+{
+  "format": 1,
+  "source": "corpus/real-chinese-official-titles-outline.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "Chapter Outline — A History of Chinese Official Titles",
+      "slug": "chapter-outline--a-history-of-chinese-official-titles"
+    },
+    {
+      "line": 15,
+      "level": 2,
+      "text": "The Book's Argument",
+      "slug": "the-books-argument"
+    },
+    {
+      "line": 31,
+      "level": 2,
+      "text": "Diagram Policy",
+      "slug": "diagram-policy"
+    },
+    {
+      "line": 42,
+      "level": 3,
+      "text": "Figure list by chapter",
+      "slug": "figure-list-by-chapter"
+    },
+    {
+      "line": 74,
+      "level": 1,
+      "text": "Part One — General Principles",
+      "slug": "part-one--general-principles"
+    },
+    {
+      "line": 76,
+      "level": 2,
+      "text": "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)",
+      "slug": "chapter-1-three-keys-to-reading-an-official-title-5000-chars"
+    },
+    {
+      "line": 87,
+      "level": 1,
+      "text": "Part Two — The Center: A Thousand Deaths of the Chief Councillor",
+      "slug": "part-two--the-center-a-thousand-deaths-of-the-chief-councillor"
+    },
+    {
+      "line": 89,
+      "level": 2,
+      "text": "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)",
+      "slug": "chapter-2-from-household-servant-to-head-of-the-bureaucracy-7000-chars"
+    },
+    {
+      "line": 100,
+      "level": 2,
+      "text": "Chapter 3. The Inner Court's First Victory (7,000 chars)",
+      "slug": "chapter-3-the-inner-courts-first-victory-7000-chars"
+    },
+    {
+      "line": 112,
+      "level": 2,
+      "text": "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)",
+      "slug": "chapter-4-the-three-departments-and-the-chancellery-hall-7000-chars"
+    },
+    {
+      "line": 123,
+      "level": 2,
+      "text": "Chapter 5. The Age of Commissions (7,000 chars)",
+      "slug": "chapter-5-the-age-of-commissions-7000-chars"
+    },
+    {
+      "line": 135,
+      "level": 2,
+      "text": "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)",
+      "slug": "chapter-6-after-the-chancellorship-was-abolished-7000-chars"
+    },
+    {
+      "line": 148,
+      "level": 1,
+      "text": "Part Three — Local Administration",
+      "slug": "part-three--local-administration"
+    },
+    {
+      "line": 150,
+      "level": 2,
+      "text": "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)",
+      "slug": "chapter-7-commanderies-and-counties-versus-enfeoffment-7000-chars"
+    },
+    {
+      "line": 161,
+      "level": 2,
+      "text": "Chapter 8. How Inspectors Became Administrators (7,000 chars)",
+      "slug": "chapter-8-how-inspectors-became-administrators-7000-chars"
+    },
+    {
+      "line": 174,
+      "level": 2,
+      "text": "Chapter 9. The Birth of the Province (6,000 chars)",
+      "slug": "chapter-9-the-birth-of-the-province-6000-chars"
+    },
+    {
+      "line": 187,
+      "level": 1,
+      "text": "Part Four — Recruitment and Status",
+      "slug": "part-four--recruitment-and-status"
+    },
+    {
+      "line": 189,
+      "level": 2,
+      "text": "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)",
+      "slug": "chapter-10-hereditary-office--recommendation--nine-ranks--examination-8000-chars"
+    },
+    {
+      "line": 200,
+      "level": 2,
+      "text": "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)",
+      "slug": "chapter-11-rank-grade-merit-title-and-nobility-7000-chars"
+    },
+    {
+      "line": 216,
+      "level": 1,
+      "text": "Part Five — Specialized Systems",
+      "slug": "part-five--specialized-systems"
+    },
+    {
+      "line": 218,
+      "level": 2,
+      "text": "Chapter 12. The Censorate (6,000 chars)",
+      "slug": "chapter-12-the-censorate-6000-chars"
+    },
+    {
+      "line": 230,
+      "level": 2,
+      "text": "Chapter 13. Finance and the Military (7,000 chars)",
+      "slug": "chapter-13-finance-and-the-military-7000-chars"
+    },
+    {
+      "line": 250,
+      "level": 2,
+      "text": "Chapter 14. The Palace and the Eunuchs (5,000 chars)",
+      "slug": "chapter-14-the-palace-and-the-eunuchs-5000-chars"
+    },
+    {
+      "line": 262,
+      "level": 2,
+      "text": "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)",
+      "slug": "chapter-15-dual-administration-government-under-the-conquest-dynasties-8000-chars"
+    },
+    {
+      "line": 283,
+      "level": 1,
+      "text": "Part Six — Conclusion",
+      "slug": "part-six--conclusion"
+    },
+    {
+      "line": 285,
+      "level": 2,
+      "text": "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)",
+      "slug": "chapter-16-the-late-qing-reforms-and-the-end-of-the-system-7000-chars"
+    },
+    {
+      "line": 297,
+      "level": 1,
+      "text": "Appendices",
+      "slug": "appendices"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "Chapter Outline — A History of Chinese Official Titles",
+      "slug": "chapter-outline--a-history-of-chinese-official-titles"
+    },
+    {
+      "line": 15,
+      "level": 2,
+      "text": "The Book's Argument",
+      "slug": "the-books-argument"
+    },
+    {
+      "line": 31,
+      "level": 2,
+      "text": "Diagram Policy",
+      "slug": "diagram-policy"
+    },
+    {
+      "line": 42,
+      "level": 3,
+      "text": "Figure list by chapter",
+      "slug": "figure-list-by-chapter"
+    },
+    {
+      "line": 74,
+      "level": 1,
+      "text": "Part One — General Principles",
+      "slug": "part-one--general-principles"
+    },
+    {
+      "line": 76,
+      "level": 2,
+      "text": "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)",
+      "slug": "chapter-1-three-keys-to-reading-an-official-title-5000-chars"
+    },
+    {
+      "line": 87,
+      "level": 1,
+      "text": "Part Two — The Center: A Thousand Deaths of the Chief Councillor",
+      "slug": "part-two--the-center-a-thousand-deaths-of-the-chief-councillor"
+    },
+    {
+      "line": 89,
+      "level": 2,
+      "text": "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)",
+      "slug": "chapter-2-from-household-servant-to-head-of-the-bureaucracy-7000-chars"
+    },
+    {
+      "line": 100,
+      "level": 2,
+      "text": "Chapter 3. The Inner Court's First Victory (7,000 chars)",
+      "slug": "chapter-3-the-inner-courts-first-victory-7000-chars"
+    },
+    {
+      "line": 112,
+      "level": 2,
+      "text": "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)",
+      "slug": "chapter-4-the-three-departments-and-the-chancellery-hall-7000-chars"
+    },
+    {
+      "line": 123,
+      "level": 2,
+      "text": "Chapter 5. The Age of Commissions (7,000 chars)",
+      "slug": "chapter-5-the-age-of-commissions-7000-chars"
+    },
+    {
+      "line": 135,
+      "level": 2,
+      "text": "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)",
+      "slug": "chapter-6-after-the-chancellorship-was-abolished-7000-chars"
+    },
+    {
+      "line": 148,
+      "level": 1,
+      "text": "Part Three — Local Administration",
+      "slug": "part-three--local-administration"
+    },
+    {
+      "line": 150,
+      "level": 2,
+      "text": "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)",
+      "slug": "chapter-7-commanderies-and-counties-versus-enfeoffment-7000-chars"
+    },
+    {
+      "line": 161,
+      "level": 2,
+      "text": "Chapter 8. How Inspectors Became Administrators (7,000 chars)",
+      "slug": "chapter-8-how-inspectors-became-administrators-7000-chars"
+    },
+    {
+      "line": 174,
+      "level": 2,
+      "text": "Chapter 9. The Birth of the Province (6,000 chars)",
+      "slug": "chapter-9-the-birth-of-the-province-6000-chars"
+    },
+    {
+      "line": 187,
+      "level": 1,
+      "text": "Part Four — Recruitment and Status",
+      "slug": "part-four--recruitment-and-status"
+    },
+    {
+      "line": 189,
+      "level": 2,
+      "text": "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)",
+      "slug": "chapter-10-hereditary-office--recommendation--nine-ranks--examination-8000-chars"
+    },
+    {
+      "line": 200,
+      "level": 2,
+      "text": "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)",
+      "slug": "chapter-11-rank-grade-merit-title-and-nobility-7000-chars"
+    },
+    {
+      "line": 216,
+      "level": 1,
+      "text": "Part Five — Specialized Systems",
+      "slug": "part-five--specialized-systems"
+    },
+    {
+      "line": 218,
+      "level": 2,
+      "text": "Chapter 12. The Censorate (6,000 chars)",
+      "slug": "chapter-12-the-censorate-6000-chars"
+    },
+    {
+      "line": 230,
+      "level": 2,
+      "text": "Chapter 13. Finance and the Military (7,000 chars)",
+      "slug": "chapter-13-finance-and-the-military-7000-chars"
+    },
+    {
+      "line": 250,
+      "level": 2,
+      "text": "Chapter 14. The Palace and the Eunuchs (5,000 chars)",
+      "slug": "chapter-14-the-palace-and-the-eunuchs-5000-chars"
+    },
+    {
+      "line": 262,
+      "level": 2,
+      "text": "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)",
+      "slug": "chapter-15-dual-administration-government-under-the-conquest-dynasties-8000-chars"
+    },
+    {
+      "line": 283,
+      "level": 1,
+      "text": "Part Six — Conclusion",
+      "slug": "part-six--conclusion"
+    },
+    {
+      "line": 285,
+      "level": 2,
+      "text": "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)",
+      "slug": "chapter-16-the-late-qing-reforms-and-the-end-of-the-system-7000-chars"
+    },
+    {
+      "line": 297,
+      "level": 1,
+      "text": "Appendices",
+      "slug": "appendices"
+    }
+  ]
+}

@@ -1,0 +1,880 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-cli-two-fixes.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "Two happy-cli upstream fixes: double review cut three down to two"
+    },
+    {
+      "i": 2,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "\nThe bodies of these two folders go out verbatim to the public repo slopus/happy, under your name. So this needs a final sign-off, not a skim.\n"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": 2,
+      "text": "The bodies of these two folders go out verbatim to the public repo slopus/happy, under your name. So this needs a final sign-off, not a skim."
+    },
+    {
+      "i": 4,
+      "type": "heading",
+      "tag": "h2",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "level": 2,
+      "text": "1. Starting point: two genuine low hanging fruit"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "Screened upstream open issues against your \"how to pitch PRs to hobbyist maintainers\" playbook (fixes get taken, features die / zero decision cost / done is done, no maintenance surface left behind) and picked two:"
+    },
+    {
+      "i": 6,
+      "type": "table",
+      "tag": "table",
+      "line": 11,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "\n\n\nIssue\nReporter\nSymptom\n\n\n\n\n#1532\nYesYouKenSpace\nhappy --version doesn't print a version, it opens a session instead\n\n\n#1529\nkaovilai\nhappy update fails with error: unknown option '--settings'\n\n\n"
+    },
+    {
+      "i": 7,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": 6,
+      "text": "\nIssue\nReporter\nSymptom\n"
+    },
+    {
+      "i": 8,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": 6,
+      "text": "\n#1532\nYesYouKenSpace\nhappy --version doesn't print a version, it opens a session instead\n"
+    },
+    {
+      "i": 9,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": 6,
+      "text": "\n#1529\nkaovilai\nhappy update fails with error: unknown option '--settings'\n"
+    },
+    {
+      "i": 10,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "While reading the code I picked up a third one along the way: the \"Claude Code Options\" block in happy --help has never printed on any installation — the claude_local_launcher.cjs that claudeCliPath points at has no shebang and is mode 100644 in git, so execFileSync running it directly is guaranteed to fail, and the catch flattens the truth into a single \"Make sure claude is installed\"."
+    },
+    {
+      "i": 11,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "So it started as three PRs."
+    },
+    {
+      "i": 12,
+      "type": "heading",
+      "tag": "h2",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "level": 2,
+      "text": "2. Double review (Opus and agy, one pass each — two independent model reviews, adversarial prompts, no cross-talk)"
+    },
+    {
+      "i": 13,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "Verdict: none of the three could ship as written."
+    },
+    {
+      "i": 14,
+      "type": "heading",
+      "tag": "h3",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": null,
+      "level": 3,
+      "text": "Two mistakes that were mine"
+    },
+    {
+      "i": 15,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": null,
+      "text": "① I introduced stderr pollution, and it was sitting right there in my own test output."
+    },
+    {
+      "i": 16,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": null,
+      "text": "I had --version also print claude's version while it was at it. Split the streams and:"
+    },
+    {
+      "i": 17,
+      "type": "fence",
+      "tag": "code",
+      "line": 30,
+      "lineEnd": 34,
+      "parent": null,
+      "info": "",
+      "text": "stdout:  happy version: 1.2.0\n         2.1.185 (Claude Code)\nstderr:  Using Claude Code v2.1.185 from Homebrew   ← the line I added\n"
+    },
+    {
+      "i": 18,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 36,
+      "lineEnd": 36,
+      "parent": null,
+      "text": "That line comes from getClaudeCliPath(), every single time. In the terminal the two streams were interleaved, and I stared straight at it without recognizing it as mine. The same file already gets this right at claude_version_utils.cjs:518 (stdio:['ignore','pipe','ignore'])."
+    },
+    {
+      "i": 19,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 38,
+      "lineEnd": 38,
+      "parent": null,
+      "text": "② I used \"unit tests 792/792 green\" as evidence. That green light is empty."
+    },
+    {
+      "i": 20,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 40,
+      "lineEnd": 40,
+      "parent": null,
+      "text": "src/index.ts has zero test coverage — the unit project only includes src/**/*.test.ts, there is no index.test.ts, and not one of the 89 test files touches subcommand dispatch. Both reviews flagged this independently. 792 green only proves \"I didn't break anyone else's code\"."
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 42,
+      "lineEnd": 42,
+      "parent": null,
+      "text": "Same failure mode as the 2026-07-27 \"I wrote a program to verify it ≠ I verified it\": measure a category the ruler can't reach, then declare it clean — logically vacuous, but it looks an awful lot like evidence."
+    },
+    {
+      "i": 22,
+      "type": "heading",
+      "tag": "h3",
+      "line": 44,
+      "lineEnd": 44,
+      "parent": null,
+      "level": 3,
+      "text": "Other real problems the reviews caught"
+    },
+    {
+      "i": 23,
+      "type": "list_item",
+      "tag": "li",
+      "line": 46,
+      "lineEnd": 46,
+      "parent": null,
+      "text": "With claude not installed, happy --version turns into a screenful of install pitch plus exit(1). happy supports codex/gemini/agy/acp/openclaw — claude is not a required dependency. A codex-only user asking for a version number gets 12 lines of \"Claude Code is not installed\". That fallout comes entirely from the half I added on top."
+    },
+    {
+      "i": 24,
+      "type": "list_item",
+      "tag": "li",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": null,
+      "text": "upgrade is an alias for update (claude --help spells it update|upgrade). I missed it, so happy upgrade reproduces the same failure."
+    },
+    {
+      "i": 25,
+      "type": "list_item",
+      "tag": "li",
+      "line": 48,
+      "lineEnd": 48,
+      "parent": null,
+      "text": "Signal exit codes: when the child is killed by Ctrl+C, status is null and I reported 1 across the board; it should be 128 + signal (SIGINT → 130)."
+    },
+    {
+      "i": 26,
+      "type": "list_item",
+      "tag": "li",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": null,
+      "text": "On Windows it's ENOENT, not EACCES — the conclusion (it has never printed) holds, but the reasoning only holds on Unix."
+    },
+    {
+      "i": 27,
+      "type": "list_item",
+      "tag": "li",
+      "line": 50,
+      "lineEnd": 51,
+      "parent": null,
+      "text": "There are real consumers in CI and my grep missed them: .github/workflows/cli-smoke-test.yml:79 runs timeout 10s happy --version, with :231/:233 as the Windows variants; scripts/install-local.cjs:49 calls process.exit on a non-zero exit. Which turns out to be the strongest argument for #1532 — CI runners have no credentials, so that step is most likely stuck at the login picker and being rescued by timeout."
+    },
+    {
+      "i": 28,
+      "type": "heading",
+      "tag": "h3",
+      "line": 52,
+      "lineEnd": 52,
+      "parent": null,
+      "level": 3,
+      "text": "The one place the two reviews contradicted each other, and how I ruled"
+    },
+    {
+      "i": 29,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": null,
+      "text": "process.execPath vs. the hardcoded 'node' in claudeLocal.ts: agy called it falsified — the two must match. Opus called the choice correct but said my comment cited the wrong precedent."
+    },
+    {
+      "i": 30,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 56,
+      "lineEnd": 56,
+      "parent": null,
+      "text": "I went with Opus: claude_version_utils.cjs:514 is already isJsFile ? process.execPath : cliPath, so the precedent exists in the repo; and an absolute path actually sidesteps Windows PATH resolution (the whole cross-spawn apparatus exists to solve node→node.exe). The comment now cites claude_version_utils.cjs."
+    },
+    {
+      "i": 31,
+      "type": "heading",
+      "tag": "h3",
+      "line": 58,
+      "lineEnd": 58,
+      "parent": null,
+      "level": 3,
+      "text": "One finding only agy reported, which I'm marking unresolved"
+    },
+    {
+      "i": 32,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": null,
+      "text": "agy claimed that on the offline fallback path hookSettingsPath never gets set, so happy update would actually succeed with the network down. I checked runClaude.ts:502: generateHookSettingsFile() is called unconditionally, and I couldn't find the branch it described. agy has a track record of making things up (the 7/27 substring-match false positive), so I'm not accepting this one — but I couldn't fully falsify it either."
+    },
+    {
+      "i": 33,
+      "type": "heading",
+      "tag": "h2",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": null,
+      "level": 2,
+      "text": "3. Root cause: I hit playbook ④(b) again"
+    },
+    {
+      "i": 34,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 64,
+      "lineEnd": 64,
+      "parent": null,
+      "text": "I packed two things into PR1:"
+    },
+    {
+      "i": 35,
+      "type": "list_item",
+      "tag": "li",
+      "line": 66,
+      "lineEnd": 66,
+      "parent": null,
+      "text": "(a) Don't open a session — the actual bug fix, one line of process.exit(0)"
+    },
+    {
+      "i": 36,
+      "type": "list_item",
+      "tag": "li",
+      "line": 67,
+      "lineEnd": 68,
+      "parent": null,
+      "text": "(b) Print claude's version while we're at it — added to \"preserve existing behavior\""
+    },
+    {
+      "i": 37,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 69,
+      "lineEnd": 69,
+      "parent": null,
+      "text": "Both blockers came out of (b). Cut (b) and PR1 shrinks to one line, taking both blockers with it."
+    },
+    {
+      "i": 38,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 71,
+      "lineEnd": 71,
+      "parent": null,
+      "text": "And Opus produced a counter that kills the premise behind (b) outright: the matching -h/--help pass-through has been dead code all along (the help branch just exit(0)s). help never printed anything from claude — so \"version shouldn't print it either\" is the consistent behavior."
+    },
+    {
+      "i": 39,
+      "type": "heading",
+      "tag": "h2",
+      "line": 73,
+      "lineEnd": 73,
+      "parent": null,
+      "level": 2,
+      "text": "4. Where it landed"
+    },
+    {
+      "i": 40,
+      "type": "table",
+      "tag": "table",
+      "line": 75,
+      "lineEnd": 79,
+      "parent": null,
+      "text": "\n\n\n\nDecision\nWhy\n\n\n\n\nPR1 #1532\nShip, cut to one line\nDrop (b) and both blockers disappear\n\n\nPR2 #1529\nShip, four fixes applied\nAdd upgrade, fix the signal code, correct the comment's citation, spawn the real claude binary instead of going through the launcher (v2)\n\n\nPR3 --help\nDon't ship\nFixing it would dump another 225 lines / 15.6KB and drown happy's own help; upstream more likely wants that block deleted than wants a never-shipped behavior lit up — that's a product decision, which by the criteria lands on the \"will die\" side. Worktree already cleaned up\n\n\n"
+    },
+    {
+      "i": 41,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 75,
+      "lineEnd": 75,
+      "parent": 40,
+      "text": "\n\nDecision\nWhy\n"
+    },
+    {
+      "i": 42,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 77,
+      "lineEnd": 77,
+      "parent": 40,
+      "text": "\nPR1 #1532\nShip, cut to one line\nDrop (b) and both blockers disappear\n"
+    },
+    {
+      "i": 43,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 78,
+      "lineEnd": 78,
+      "parent": 40,
+      "text": "\nPR2 #1529\nShip, four fixes applied\nAdd upgrade, fix the signal code, correct the comment's citation, spawn the real claude binary instead of going through the launcher (v2)\n"
+    },
+    {
+      "i": 44,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 79,
+      "lineEnd": 79,
+      "parent": 40,
+      "text": "\nPR3 --help\nDon't ship\nFixing it would dump another 225 lines / 15.6KB and drown happy's own help; upstream more likely wants that block deleted than wants a never-shipped behavior lit up — that's a product decision, which by the criteria lands on the \"will die\" side. Worktree already cleaned up\n"
+    },
+    {
+      "i": 45,
+      "type": "heading",
+      "tag": "h3",
+      "line": 81,
+      "lineEnd": 81,
+      "parent": null,
+      "level": 3,
+      "text": "Two things I couldn't verify"
+    },
+    {
+      "i": 46,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 83,
+      "lineEnd": 86,
+      "parent": null,
+      "text": "\nv2 update (2026-07-30): item 1 below no longer exists. The original shape had PR2 go through claude_local_launcher.cjs, which is where the open question \"does DISABLE_AUTOUPDATER=1 block claude update\" came from.\nYou said you'd verify it yourself. I priced that out first: claude isn't a brew formula, it's npm-installed into the Homebrew prefix — 2.1.185 installed, 2.1.220 latest on npm, so the update is genuinely live, and running it would swap the binary out from under 10 active sessions.\nSo instead of answering the question I removed it: findGlobalClaudeCliPath() in claude_version_utils.cjs is quiet (stderr measured empty) and hands back the real binary path. PR2 now bypasses the launcher and spawns claude directly — no DISABLE_AUTOUPDATER, no fetch hijack, no banner line, and nothing to run on your machine.\nThe createRequire idiom already has precedent in this package (src/commands/server.ts:5,14). The §5 diff and the §6 PR2 body are both updated to the new shape.\n"
+    },
+    {
+      "i": 47,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 83,
+      "lineEnd": 86,
+      "parent": 46,
+      "text": "v2 update (2026-07-30): item 1 below no longer exists. The original shape had PR2 go through claude_local_launcher.cjs, which is where the open question \"does DISABLE_AUTOUPDATER=1 block claude update\" came from.\nYou said you'd verify it yourself. I priced that out first: claude isn't a brew formula, it's npm-installed into the Homebrew prefix — 2.1.185 installed, 2.1.220 latest on npm, so the update is genuinely live, and running it would swap the binary out from under 10 active sessions.\nSo instead of answering the question I removed it: findGlobalClaudeCliPath() in claude_version_utils.cjs is quiet (stderr measured empty) and hands back the real binary path. PR2 now bypasses the launcher and spawns claude directly — no DISABLE_AUTOUPDATER, no fetch hijack, no banner line, and nothing to run on your machine.\nThe createRequire idiom already has precedent in this package (src/commands/server.ts:5,14). The §5 diff and the §6 PR2 body are both updated to the new shape."
+    },
+    {
+      "i": 48,
+      "type": "list_item",
+      "tag": "li",
+      "line": 88,
+      "lineEnd": 88,
+      "parent": null,
+      "text": "Whether DISABLE_AUTOUPDATER=1 blocks claude update. See above — moot now."
+    },
+    {
+      "i": 49,
+      "type": "list_item",
+      "tag": "li",
+      "line": 89,
+      "lineEnd": 90,
+      "parent": null,
+      "text": "The --settings error was never reproduced end to end (it would trigger a real update) — only a static chain of reasoning."
+    },
+    {
+      "i": 50,
+      "type": "heading",
+      "tag": "h2",
+      "line": 91,
+      "lineEnd": 91,
+      "parent": null,
+      "level": 2,
+      "text": "5. The two diffs"
+    },
+    {
+      "i": 51,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": null,
+      "text": "PR1 — fix/version-flag-should-not-start-session, touching only packages/happy-cli/src/index.ts:"
+    },
+    {
+      "i": 52,
+      "type": "fence",
+      "tag": "pre",
+      "line": 95,
+      "lineEnd": 103,
+      "parent": null,
+      "info": "diff",
+      "text": "     if (showVersion) {\n       console.log(`happy version: ${packageJson.version}`)\n-      // Don't exit - continue to pass --version to Claude Code\n+      // Exit here, the same way the --help branch above does. Falling through runs\n+      // auth, starts the daemon and opens a session just to answer a version query.\n+      process.exit(0)\n     }"
+    },
+    {
+      "i": 53,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 105,
+      "lineEnd": 105,
+      "parent": null,
+      "text": "PR2 — fix/update-subcommand-passthrough, again a single file:"
+    },
+    {
+      "i": 54,
+      "type": "fence",
+      "tag": "pre",
+      "line": 107,
+      "lineEnd": 162,
+      "parent": null,
+      "info": "diff",
+      "text": "@@ -29,7 +29,11 @@ import { handleSandboxCommand } from './commands/sandbox'\n import { handleServerCommand } from './commands/server'\n import { spawnHappyCLI } from './utils/spawnHappyCLI'\n import { claudeCliPath } from './claude/claudeLocal'\n-import { execFileSync } from 'node:child_process'\n+import { execFileSync, spawnSync } from 'node:child_process'\n+import os from 'node:os'\n+import { join } from 'node:path'\n+import { createRequire } from 'node:module'\n+import { projectPath } from '@/projectPath'\n import { extractNoSandboxFlag } from './utils/sandboxFlags'\n import { handleResumeCommand } from '@/resume/handleResumeCommand'\n import { ensureDaemonRunning } from './daemon/ensureDaemonRunning'\n@@ -125,6 +129,40 @@ Conversation history is preserved on the server, but in-flight tool calls are in\n   } else if (subcommand === 'bye') {\n     console.log('Bye!');\n     process.exit(0);\n+  } else if (subcommand === 'update' || subcommand === 'upgrade') {\n+    // Delegate straight to claude. Without this branch it falls through to the\n+    // session launcher, which appends Happy's hook `--settings` — an option\n+    // claude's update command doesn't accept, so it always fails.\n+    //\n+    // This resolves the claude binary rather than going through\n+    // claude_local_launcher.cjs: the launcher sets DISABLE_AUTOUPDATER=1 and\n+    // replaces global.fetch to report progress over fd 3, and neither belongs in\n+    // a one-shot update that isn't part of a session.\n+    const require_ = createRequire(import.meta.url)\n+    const { findGlobalClaudeCliPath } = require_(join(projectPath(), 'scripts', 'claude_version_utils.cjs'))\n+    const found = findGlobalClaudeCliPath()\n+    if (!found?.path) {\n+      console.error(chalk.red('Error:'), 'Could not find the claude CLI. Install it with: npm install -g @anthropic-ai/claude-code')\n+      process.exit(1)\n+    }\n+    // A JS entrypoint has to go to node; a native binary runs on its own.\n+    const isJsFile = found.path.endsWith('.js') || found.path.endsWith('.cjs')\n+    const rest = [subcommand, ...args.slice(1)]\n+    const result = spawnSync(\n+      isJsFile ? process.execPath : found.path,\n+      isJsFile ? [found.path, ...rest] : rest,\n+      { stdio: 'inherit', windowsHide: true }\n+    )\n+    if (result.error) {\n+      console.error(chalk.red('Error:'), result.error.message)\n+      process.exit(1)\n+    }\n+    if (result.signal) {\n+      // Report the signal the way a shell would, so Ctrl+C stays distinguishable\n+      // from claude exiting 1 on its own.\n+      process.exit(128 + (os.constants.signals[result.signal] ?? 0))\n+    }\n+    process.exit(result.status ?? 1)\n   } else if (subcommand === 'resume') {\n     try {\n       await handleResumeCommand(args.slice(1));"
+    },
+    {
+      "i": 55,
+      "type": "heading",
+      "tag": "h2",
+      "line": 164,
+      "lineEnd": 164,
+      "parent": null,
+      "level": 2,
+      "text": "6. The two PR bodies (the text that ships — please read it line by line)"
+    },
+    {
+      "i": 56,
+      "type": "heading",
+      "tag": "h3",
+      "line": 166,
+      "lineEnd": 166,
+      "parent": null,
+      "level": 3,
+      "text": "PR1 · fix(cli): exit after printing the version instead of opening a session"
+    },
+    {
+      "i": 57,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 168,
+      "lineEnd": 207,
+      "parent": null,
+      "text": "\nFixes #1532\nProblem\n--version prints the Happy version and then deliberately keeps going:\nconsole.log(`happy version: ${packageJson.version}`)\n// Don't exit - continue to pass --version to Claude Code\n\nThat reaches authAndSetupMachineIfNeeded(), ensureDaemonRunning() and runClaude(). Without stored credentials, asking for a version number drops into the interactive login picker:\nhappy version: 1.2.0\n\nHow would you like to authenticate?\n› 1. Mobile App\n  2. Web Browser\n\n  ERROR Raw mode is not supported on the current process.stdin, which Ink uses\n\nThe --help branch above already exits, and its own -h/--help pass-through into unknownArgs has been dead ever since — so --version not exiting reads as an oversight rather than a design choice.\n.github/workflows/cli-smoke-test.yml runs timeout 10s happy --version on Linux and Windows; CI runners have no credentials, so that step is likely surviving on the timeout rather than on the command succeeding.\nWhat changed\nOne line: process.exit(0) after printing.\nThis drops Claude's version from the output. I'd rather add that back as its own change if you want it — doing it here means either swallowing the launcher's Using Claude Code … from … banner on stderr, or turning happy --version into a 12-line \"Claude Code is not installed\" wall for people running codex/gemini/agy without claude.\nThe now-unreachable unknownArgs.push(arg) for --version is left alone, since the -h/--help one next to it is already in the same state.\nTest plan\n\ntsc --noEmit clean\nBuilt and run: happy --version prints one line on stdout, nothing on stderr, exits 0, and never touches auth, the daemon or the session list\nThe unit suite passes 792/792, but that says nothing here — src/index.ts has no test coverage, so nothing in the suite exercises this path\n\n"
+    },
+    {
+      "i": 58,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 168,
+      "lineEnd": 168,
+      "parent": 57,
+      "text": "Fixes #1532"
+    },
+    {
+      "i": 59,
+      "type": "heading",
+      "tag": "h2",
+      "line": 170,
+      "lineEnd": 170,
+      "parent": 57,
+      "level": 2,
+      "text": "Problem"
+    },
+    {
+      "i": 60,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 172,
+      "lineEnd": 172,
+      "parent": 57,
+      "text": "--version prints the Happy version and then deliberately keeps going:"
+    },
+    {
+      "i": 61,
+      "type": "fence",
+      "tag": "code",
+      "line": 174,
+      "lineEnd": 177,
+      "parent": 57,
+      "info": "ts",
+      "text": "console.log(`happy version: ${packageJson.version}`)\n// Don't exit - continue to pass --version to Claude Code\n"
+    },
+    {
+      "i": 62,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 179,
+      "lineEnd": 179,
+      "parent": 57,
+      "text": "That reaches authAndSetupMachineIfNeeded(), ensureDaemonRunning() and runClaude(). Without stored credentials, asking for a version number drops into the interactive login picker:"
+    },
+    {
+      "i": 63,
+      "type": "fence",
+      "tag": "code",
+      "line": 181,
+      "lineEnd": 189,
+      "parent": 57,
+      "info": "",
+      "text": "happy version: 1.2.0\n\nHow would you like to authenticate?\n› 1. Mobile App\n  2. Web Browser\n\n  ERROR Raw mode is not supported on the current process.stdin, which Ink uses\n"
+    },
+    {
+      "i": 64,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 191,
+      "lineEnd": 191,
+      "parent": 57,
+      "text": "The --help branch above already exits, and its own -h/--help pass-through into unknownArgs has been dead ever since — so --version not exiting reads as an oversight rather than a design choice."
+    },
+    {
+      "i": 65,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 193,
+      "lineEnd": 193,
+      "parent": 57,
+      "text": ".github/workflows/cli-smoke-test.yml runs timeout 10s happy --version on Linux and Windows; CI runners have no credentials, so that step is likely surviving on the timeout rather than on the command succeeding."
+    },
+    {
+      "i": 66,
+      "type": "heading",
+      "tag": "h2",
+      "line": 195,
+      "lineEnd": 195,
+      "parent": 57,
+      "level": 2,
+      "text": "What changed"
+    },
+    {
+      "i": 67,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 197,
+      "lineEnd": 197,
+      "parent": 57,
+      "text": "One line: process.exit(0) after printing."
+    },
+    {
+      "i": 68,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 199,
+      "lineEnd": 199,
+      "parent": 57,
+      "text": "This drops Claude's version from the output. I'd rather add that back as its own change if you want it — doing it here means either swallowing the launcher's Using Claude Code … from … banner on stderr, or turning happy --version into a 12-line \"Claude Code is not installed\" wall for people running codex/gemini/agy without claude."
+    },
+    {
+      "i": 69,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 201,
+      "lineEnd": 201,
+      "parent": 57,
+      "text": "The now-unreachable unknownArgs.push(arg) for --version is left alone, since the -h/--help one next to it is already in the same state."
+    },
+    {
+      "i": 70,
+      "type": "heading",
+      "tag": "h2",
+      "line": 203,
+      "lineEnd": 203,
+      "parent": 57,
+      "level": 2,
+      "text": "Test plan"
+    },
+    {
+      "i": 71,
+      "type": "list_item",
+      "tag": "li",
+      "line": 205,
+      "lineEnd": 205,
+      "parent": 57,
+      "text": "tsc --noEmit clean"
+    },
+    {
+      "i": 72,
+      "type": "list_item",
+      "tag": "li",
+      "line": 206,
+      "lineEnd": 206,
+      "parent": 57,
+      "text": "Built and run: happy --version prints one line on stdout, nothing on stderr, exits 0, and never touches auth, the daemon or the session list"
+    },
+    {
+      "i": 73,
+      "type": "list_item",
+      "tag": "li",
+      "line": 207,
+      "lineEnd": 207,
+      "parent": 57,
+      "text": "The unit suite passes 792/792, but that says nothing here — src/index.ts has no test coverage, so nothing in the suite exercises this path"
+    },
+    {
+      "i": 74,
+      "type": "heading",
+      "tag": "h3",
+      "line": 209,
+      "lineEnd": 209,
+      "parent": null,
+      "level": 3,
+      "text": "PR2 · fix(cli): delegate happy update/upgrade to claude"
+    },
+    {
+      "i": 75,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 211,
+      "lineEnd": 238,
+      "parent": null,
+      "text": "\nFixes #1529\nProblem\nNeither update nor its upgrade alias is in the subcommand chain, so both fall through to the session launcher. That path appends Happy's hook settings (claudeLocal.ts: args.push('--settings', opts.hookSettingsPath), and runClaude.ts generates the file unconditionally), and claude rejects the flag:\nerror: unknown option '--settings'\n\nWhat changed\nAn update / upgrade branch that delegates straight to claude with the remaining args — no session wrapper, no hooks, no --settings. Exit status is forwarded, and a signal-terminated child reports 128 + signal so Ctrl+C stays distinguishable from claude exiting 1.\nIt resolves the binary through findGlobalClaudeCliPath() rather than going through claude_local_launcher.cjs. The launcher sets DISABLE_AUTOUPDATER=1 on its first line and replaces global.fetch to report progress over fd 3 — neither has any business in a one-shot update that isn't part of a session, and under stdio: 'inherit' there is no fd 3 to write to anyway.\nScope note: the issue also mentions install. Left out — it isn't reported broken.\nTest plan\n\ntsc --noEmit clean\nBuilt and run: happy update --help and happy upgrade --help both reach claude and print its usage on stdout, nothing on stderr, exit 0\nI did not reproduce the original --settings failure end to end, since that performs a real install; the mechanism is confirmed statically (update absent from the chain → unknownArgs → claudeArgs → --settings appended unconditionally)\nUnit suite 792/792, but src/index.ts has no test coverage, so that isn't evidence for this change\n\nKnown limitation\nLike every other branch in this chain, the match is on args[0], so happy --yolo update still falls through. Consistent with the existing 15 branches; worth fixing separately if you want it.\n"
+    },
+    {
+      "i": 76,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 211,
+      "lineEnd": 211,
+      "parent": 75,
+      "text": "Fixes #1529"
+    },
+    {
+      "i": 77,
+      "type": "heading",
+      "tag": "h2",
+      "line": 213,
+      "lineEnd": 213,
+      "parent": 75,
+      "level": 2,
+      "text": "Problem"
+    },
+    {
+      "i": 78,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 215,
+      "lineEnd": 215,
+      "parent": 75,
+      "text": "Neither update nor its upgrade alias is in the subcommand chain, so both fall through to the session launcher. That path appends Happy's hook settings (claudeLocal.ts: args.push('--settings', opts.hookSettingsPath), and runClaude.ts generates the file unconditionally), and claude rejects the flag:"
+    },
+    {
+      "i": 79,
+      "type": "fence",
+      "tag": "code",
+      "line": 217,
+      "lineEnd": 219,
+      "parent": 75,
+      "info": "",
+      "text": "error: unknown option '--settings'\n"
+    },
+    {
+      "i": 80,
+      "type": "heading",
+      "tag": "h2",
+      "line": 221,
+      "lineEnd": 221,
+      "parent": 75,
+      "level": 2,
+      "text": "What changed"
+    },
+    {
+      "i": 81,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 223,
+      "lineEnd": 223,
+      "parent": 75,
+      "text": "An update / upgrade branch that delegates straight to claude with the remaining args — no session wrapper, no hooks, no --settings. Exit status is forwarded, and a signal-terminated child reports 128 + signal so Ctrl+C stays distinguishable from claude exiting 1."
+    },
+    {
+      "i": 82,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 225,
+      "lineEnd": 225,
+      "parent": 75,
+      "text": "It resolves the binary through findGlobalClaudeCliPath() rather than going through claude_local_launcher.cjs. The launcher sets DISABLE_AUTOUPDATER=1 on its first line and replaces global.fetch to report progress over fd 3 — neither has any business in a one-shot update that isn't part of a session, and under stdio: 'inherit' there is no fd 3 to write to anyway."
+    },
+    {
+      "i": 83,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 227,
+      "lineEnd": 227,
+      "parent": 75,
+      "text": "Scope note: the issue also mentions install. Left out — it isn't reported broken."
+    },
+    {
+      "i": 84,
+      "type": "heading",
+      "tag": "h2",
+      "line": 229,
+      "lineEnd": 229,
+      "parent": 75,
+      "level": 2,
+      "text": "Test plan"
+    },
+    {
+      "i": 85,
+      "type": "list_item",
+      "tag": "li",
+      "line": 231,
+      "lineEnd": 231,
+      "parent": 75,
+      "text": "tsc --noEmit clean"
+    },
+    {
+      "i": 86,
+      "type": "list_item",
+      "tag": "li",
+      "line": 232,
+      "lineEnd": 232,
+      "parent": 75,
+      "text": "Built and run: happy update --help and happy upgrade --help both reach claude and print its usage on stdout, nothing on stderr, exit 0"
+    },
+    {
+      "i": 87,
+      "type": "list_item",
+      "tag": "li",
+      "line": 233,
+      "lineEnd": 233,
+      "parent": 75,
+      "text": "I did not reproduce the original --settings failure end to end, since that performs a real install; the mechanism is confirmed statically (update absent from the chain → unknownArgs → claudeArgs → --settings appended unconditionally)"
+    },
+    {
+      "i": 88,
+      "type": "list_item",
+      "tag": "li",
+      "line": 234,
+      "lineEnd": 235,
+      "parent": 75,
+      "text": "Unit suite 792/792, but src/index.ts has no test coverage, so that isn't evidence for this change"
+    },
+    {
+      "i": 89,
+      "type": "heading",
+      "tag": "h2",
+      "line": 236,
+      "lineEnd": 236,
+      "parent": 75,
+      "level": 2,
+      "text": "Known limitation"
+    },
+    {
+      "i": 90,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 238,
+      "lineEnd": 238,
+      "parent": 75,
+      "text": "Like every other branch in this chain, the match is on args[0], so happy --yolo update still falls through. Consistent with the existing 15 branches; worth fixing separately if you want it."
+    },
+    {
+      "i": 91,
+      "type": "heading",
+      "tag": "h2",
+      "line": 240,
+      "lineEnd": 240,
+      "parent": null,
+      "level": 2,
+      "text": "7. A note on the verification environment"
+    },
+    {
+      "i": 92,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 242,
+      "lineEnd": 242,
+      "parent": null,
+      "text": "All 10 live sessions on this machine run from the dist of the canonical tree ~/Developer/happy-integration, so pnpm install is off-limits there (it would poison them — see the existing writeup). What I did instead was symlink node_modules and tools/unpacked in from an idle worktree."
+    },
+    {
+      "i": 93,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 244,
+      "lineEnd": 244,
+      "parent": null,
+      "text": "Opus verified that this setup happened to be safe (that worktree's git diff --name-only against origin/main is empty) — but it also pointed out that my reasoning at the time was \"the lockfile sha256 matches\", and that doesn't get you to identical trees. Wrong reasoning, right conclusion. Luck, this time."
+    }
+  ]
+}

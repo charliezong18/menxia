@@ -21,14 +21,17 @@ export function computeAnchor(doc) {
   let line = blockLine;
   // 代码块内精确行：fence 的 data-line 在 <code> 上且指向 ``` 行（首行 +1）；
   // 缩进代码块的 data-line 在 <pre> 上、直接是首行（均实测确认）。
+  // ```diff 围栏例外：diffFence（render.js）把 data-line 打在 <pre class="diff-block"> 上，
+  // 但它仍是围栏、data-line 指向 ``` 行，同样要 +1——按标签判会少算一行，涂归呈到上一行（review #182 N0 查出）。
   if (el.tagName === 'CODE' || el.tagName === 'PRE') {
     const container = el.tagName === 'CODE' ? el : (el.querySelector('code') || el);
+    const isFence = el.tagName === 'CODE' || el.classList.contains('diff-block');
     try {
       const r2 = document.createRange();
       r2.selectNodeContents(container);
       r2.setEnd(range.startContainer, range.startOffset);
       const newlines = r2.toString().split('\n').length - 1;
-      line = blockLine + (el.tagName === 'CODE' ? 1 : 0) + newlines;
+      line = blockLine + (isFence ? 1 : 0) + newlines;
     } catch { /* 退回块首行 */ }
   }
   // 块内字符偏移：同块撞重复短语时高亮按它定位（双路评审均命中）

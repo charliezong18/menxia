@@ -1,0 +1,91 @@
+{
+  "format": 1,
+  "fn": "shouldPromptJump",
+  "cases": [
+    {
+      "input": {
+        "remote": {
+          "device": "iPhone",
+          "docPath": "docs/a.zh-CN.md",
+          "anchor": "L42",
+          "time": "2026-10-13T12:00:00.000Z",
+          "v": 1
+        },
+        "opts": {}
+      },
+      "output": true
+    },
+    {
+      "input": {
+        "remote": {
+          "device": "iPhone",
+          "docPath": "docs/a.zh-CN.md",
+          "anchor": "L42",
+          "time": "2026-10-13T12:00:00.000Z",
+          "v": 1
+        },
+        "opts": {
+          "localTime": "2026-10-13T13:00:00.000Z"
+        }
+      },
+      "output": false
+    },
+    {
+      "input": {
+        "remote": {
+          "device": "iPhone",
+          "docPath": "docs/a.zh-CN.md",
+          "anchor": "L42",
+          "time": "2026-10-13T12:00:00.000Z",
+          "v": 1
+        },
+        "opts": {
+          "localTime": "2026-10-13T11:00:00.000Z",
+          "current": {
+            "docPath": "docs/a.md",
+            "anchor": "L42"
+          }
+        }
+      },
+      "output": true
+    },
+    {
+      "input": {
+        "remote": {
+          "device": "iPhone",
+          "docPath": "docs/a.zh-CN.md",
+          "anchor": "L42",
+          "time": "2026-10-13T12:00:00.000Z",
+          "v": 1
+        },
+        "opts": {
+          "current": {
+            "docPath": "docs/a.zh-CN.md",
+            "anchor": "L42"
+          }
+        }
+      },
+      "output": false
+    },
+    {
+      "input": {
+        "remote": null,
+        "opts": {}
+      },
+      "output": false
+    },
+    {
+      "input": {
+        "remote": {
+          "device": "iPhone",
+          "docPath": "",
+          "anchor": "L42",
+          "time": "2026-10-13T12:00:00.000Z",
+          "v": 1
+        },
+        "opts": {}
+      },
+      "output": false
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-code.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "代码块边角",
+      "slug": "代码块边角"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "代码块边角",
+      "slug": "代码块边角"
+    }
+  ]
+}

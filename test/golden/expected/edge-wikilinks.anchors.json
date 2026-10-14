@@ -1,0 +1,466 @@
+{
+  "format": 1,
+  "source": "corpus/edge-wikilinks.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 2,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "双链",
+        "quoteRaw": "双链"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "下一章 → 01",
+        "quoteRaw": "下一章 → 01"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 9,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 6,
+        "quote": "01 这是个什么",
+        "quoteRaw": "01 这是个什么"
+      },
+      "replay": {
+        "block": 1,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 20,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "别名：叫我别名，",
+        "quoteRaw": "别名：叫我别名，"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 23,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 3,
+        "quote": "叫我别名，锚点：",
+        "quoteRaw": "叫我别名，锚点："
+      },
+      "replay": {
+        "block": 2,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 27,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 7,
+        "quote": "，锚点：foo#",
+        "quoteRaw": "，锚点：foo#"
+      },
+      "replay": {
+        "block": 2,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 31,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 11,
+        "quote": "foo#某节，只",
+        "quoteRaw": "foo#某节，只"
+      },
+      "replay": {
+        "block": 2,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 37,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 17,
+        "quote": "，只锚：#本篇某",
+        "quoteRaw": "，只锚：#本篇某"
+      },
+      "replay": {
+        "block": 2,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 21,
+      "length": 8,
+      "docStart": 41,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 21,
+        "quote": "#本篇某节，带扩",
+        "quoteRaw": "#本篇某节，带扩"
+      },
+      "replay": {
+        "block": 2,
+        "start": 21,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 26,
+      "length": 8,
+      "docStart": 46,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 26,
+        "quote": "，带扩展名：a.",
+        "quoteRaw": "，带扩展名：a."
+      },
+      "replay": {
+        "block": 2,
+        "start": 26,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 32,
+      "length": 5,
+      "docStart": 52,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 32,
+        "quote": "a.md。",
+        "quoteRaw": "a.md。"
+      },
+      "replay": {
+        "block": 2,
+        "start": 32,
+        "length": 5
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 36,
+      "length": 1,
+      "docStart": 56,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 58,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "空的 [[]]",
+        "quoteRaw": "空的 [[]]"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 85,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "嵌套 [[嵌套[",
+        "quoteRaw": "嵌套 [[嵌套["
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 122,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 0,
+        "quote": "行内代码 [[f",
+        "quoteRaw": "行内代码 [[f"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 127,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 5,
+        "quote": "[[foo]]",
+        "quoteRaw": "[[foo]]"
+      },
+      "replay": {
+        "block": 5,
+        "start": 5,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 13,
+      "length": 3,
+      "docStart": 135,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 13,
+        "quote": "不认。",
+        "quoteRaw": "不认。"
+      },
+      "replay": {
+        "block": 5,
+        "start": 13,
+        "length": 3
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 139,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "管道两侧有空格",
+        "quoteRaw": "管道两侧有空格"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 147,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 8,
+        "quote": "显示，只有管道",
+        "quoteRaw": "显示，只有管道"
+      },
+      "replay": {
+        "block": 6,
+        "start": 8,
+        "length": 7
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 149,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 10,
+        "quote": "，只有管道 目标",
+        "quoteRaw": "，只有管道 目标"
+      },
+      "replay": {
+        "block": 6,
+        "start": 10,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 16,
+      "length": 3,
+      "docStart": 155,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 16,
+        "quote": "目标。",
+        "quoteRaw": "目标。"
+      },
+      "replay": {
+        "block": 6,
+        "start": 16,
+        "length": 3
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 18,
+      "length": 1,
+      "docStart": 157,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 3,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "双链",
+      "expect": null
+    },
+    {
+      "quote": "下一章 → 01 这是个什么东西",
+      "expect": 3
+    },
+    {
+      "quote": "别名：叫我别名，锚点：foo#某",
+      "expect": 5
+    },
+    {
+      "quote": "空的 [[]] 与只有井号的 [",
+      "expect": 7
+    },
+    {
+      "quote": "嵌套 [[嵌套[方括号]]] 不",
+      "expect": 9
+    },
+    {
+      "quote": "行内代码 [[foo]] 不认。",
+      "expect": 12
+    },
+    {
+      "quote": "管道两侧有空格 显示，只有管道 ",
+      "expect": 14
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "双链"
+    ],
+    [
+      3,
+      "双链"
+    ],
+    [
+      5,
+      "双链"
+    ],
+    [
+      7,
+      "双链"
+    ],
+    [
+      9,
+      "双链"
+    ],
+    [
+      12,
+      "双链"
+    ],
+    [
+      14,
+      "双链"
+    ]
+  ]
+}
