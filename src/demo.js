@@ -535,6 +535,39 @@ if (MOBILE === '1') {
       && Math.abs(Math.round(window.scrollY) - listY) <= 2,
       `asideShown=${shown(document.querySelector('aside'))} listY=${listY} scrollY=${Math.round(window.scrollY)}`);
 
+    // 提示条可见（2026-10-14）：手机上整页随正文滚，提示条原挂页面最顶，读到中段点底栏「画可」
+    // 成功/失败提示都在视口外＝「点了没反应」。滚到中段 → 点画可 → 提示条必须在视口内、且不压底栏。
+    // 先走失败路径（mergePR 抛错），再走成功路径；画可会合掉这一折，所以放在导航断言之后。
+    window.confirm = () => true;
+    document.querySelector('.pr-item')?.click();
+    await sleep(700);
+    const noticeVisible = (tag) => {
+      const n = document.querySelector('.notice:not(.stale-banner)');
+      const bar = document.querySelector('.mobile-bar');
+      if (!n || !bar) { chk(`notice-visible-${tag}`, false, `notice=${Boolean(n)} bar=${Boolean(bar)}`); return; }
+      const r = n.getBoundingClientRect(), b = bar.getBoundingClientRect();
+      const inView = r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth;
+      const overlap = r.bottom > b.top + 0.5;
+      chk(`notice-visible-${tag}`, inView && !overlap && getComputedStyle(n).position === 'fixed',
+        `scrollY=${Math.round(window.scrollY)} rect=[${[r.left, r.top, r.right, r.bottom].map(Math.round)}] barTop=${Math.round(b.top)}`);
+    };
+    window.scrollTo(0, Math.max(600, Math.round(document.documentElement.scrollHeight / 2)));
+    await sleep(200);
+    const origMerge = demoApi.mergePR;
+    demoApi.mergePR = async () => { throw new Error('demo merge boom'); };
+    document.querySelector('.mobile-bar-qinci')?.click();
+    await sleep(500);
+    noticeVisible('on-failure');
+    document.querySelector('.notice-close')?.click();
+    await sleep(200);
+    chk('notice-close-dismisses', !document.querySelector('.notice:not(.stale-banner)'));
+    demoApi.mergePR = origMerge;
+    window.scrollTo(0, Math.max(600, Math.round(document.documentElement.scrollHeight / 2)));
+    await sleep(200);
+    document.querySelector('.mobile-bar-qinci')?.click();
+    await sleep(900);
+    noticeVisible('on-success');
+
     console.log(`[mobile] RESULT pass=${pass} fail=${fail}`);
   }, 1500);
 }

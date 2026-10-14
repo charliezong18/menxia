@@ -1649,6 +1649,7 @@ function App() {
           draftCount=${drafts.length} verifyN=${verifyN} happyUrl=${happyUrl} stale=${stale} notice=${notice}
           carrying=${carrying}
           nextUp=${nextUp} onNextUp=${() => { setTab('open'); openPR(nextUp); }}
+          onNoticeClose=${() => setNotice('')}
           readStep=${readStep} moreOpen=${moreOpen} onMore=${() => setMoreOpen((o) => !o)}
           updating=${updating}
           onUpdate=${() => { setUpdating(true); say(S.stale.updating); hardUpdate([...BUILD_FILES, ...VENDOR_FILES]); }}
