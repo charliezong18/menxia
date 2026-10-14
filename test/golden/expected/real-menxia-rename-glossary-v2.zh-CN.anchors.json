@@ -1,0 +1,1942 @@
+{
+  "format": 1,
+  "source": "corpus/real-menxia-rename-glossary-v2.zh-CN.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "门下：改名与词表",
+        "quoteRaw": "门下：改名与词表"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 33,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "v2 大改，别当",
+        "quoteRaw": "v2 大改，别当"
+      },
+      "replay": {
+        "block": 2,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 46,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 13,
+        "quote": "你批完之后我做了",
+        "quoteRaw": "你批完之后我做了"
+      },
+      "replay": {
+        "block": 2,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 107,
+      "length": 8,
+      "docStart": 140,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 107,
+        "quote": "只走诏敕轨，全套",
+        "quoteRaw": "只走诏敕轨，全套"
+      },
+      "replay": {
+        "block": 2,
+        "start": 108,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 112,
+      "length": 8,
+      "docStart": 145,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 112,
+        "quote": "，全套词各归其位",
+        "quoteRaw": "，全套词各归其位"
+      },
+      "replay": {
+        "block": 2,
+        "start": 113,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 136,
+      "length": 8,
+      "docStart": 169,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 136,
+        "quote": "证据等级。 20",
+        "quoteRaw": "证据等级。\n20"
+      },
+      "replay": {
+        "block": 2,
+        "start": 137,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 140,
+      "length": 8,
+      "docStart": 173,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 140,
+        "quote": "。 2026-0",
+        "quoteRaw": "。\n2026-0"
+      },
+      "replay": {
+        "block": 2,
+        "start": 141,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 252,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 0,
+        "quote": "对你在 #48",
+        "quoteRaw": "对你在 #48"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 271,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 0,
+        "quote": "你在批注的同一秒",
+        "quoteRaw": "你在批注的同一秒"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 276,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 5,
+        "quote": "同一秒把 #48",
+        "quoteRaw": "同一秒把 #48"
+      },
+      "replay": {
+        "block": 5,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 279,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 8,
+        "quote": "把 #48 钦此",
+        "quoteRaw": "把 #48 钦此"
+      },
+      "replay": {
+        "block": 5,
+        "start": 8,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 391,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 0,
+        "quote": "①「判好一点吧」",
+        "quoteRaw": "①「判好一点吧」"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 26,
+      "length": 8,
+      "docStart": 417,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 26,
+        "quote": "「判」在史料里全",
+        "quoteRaw": "「判」在史料里全"
+      },
+      "replay": {
+        "block": 6,
+        "start": 26,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 636,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "②「我是皇帝」—",
+        "quoteRaw": "②「我是皇帝」—"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 658,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 22,
+        "quote": "不是不认这句，是",
+        "quoteRaw": "不是不认这句，是"
+      },
+      "replay": {
+        "block": 7,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 120,
+      "length": 8,
+      "docStart": 756,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 120,
+        "quote": "奏抄轨，与「涂归",
+        "quoteRaw": "奏抄轨，与「涂归"
+      },
+      "replay": {
+        "block": 7,
+        "start": 120,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 123,
+      "length": 8,
+      "docStart": 759,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 123,
+        "quote": "，与「涂归」「封",
+        "quoteRaw": "，与「涂归」「封"
+      },
+      "replay": {
+        "block": 7,
+        "start": 123,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 170,
+      "length": 8,
+      "docStart": 806,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 170,
+        "quote": "你的皇帝位没丢，",
+        "quoteRaw": "你的皇帝位没丢，"
+      },
+      "replay": {
+        "block": 7,
+        "start": 170,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 177,
+      "length": 8,
+      "docStart": 813,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 177,
+        "quote": "，反而被正式写进",
+        "quoteRaw": "，反而被正式写进"
+      },
+      "replay": {
+        "block": 7,
+        "start": 177,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 826,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "③ Q2「接受」",
+        "quoteRaw": "③ Q2「接受」"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 844,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 18,
+        "quote": "门下（阅读台）与",
+        "quoteRaw": "门下（阅读台）与"
+      },
+      "replay": {
+        "block": 8,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 111,
+      "length": 8,
+      "docStart": 937,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 111,
+        "quote": "互相取代的两个制",
+        "quoteRaw": "互相取代的两个制"
+      },
+      "replay": {
+        "block": 8,
+        "start": 111,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 115,
+      "length": 8,
+      "docStart": 941,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 115,
+        "quote": "的两个制度阶段。",
+        "quoteRaw": "的两个制度阶段。"
+      },
+      "replay": {
+        "block": 8,
+        "start": 115,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 960,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "④「全换」——采",
+        "quoteRaw": "④「全换」——采"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 979,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 19,
+        "quote": "两个 revie",
+        "quoteRaw": "两个 revie"
+      },
+      "replay": {
+        "block": 9,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1056,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "v1 错在哪（只",
+        "quoteRaw": "v1 错在哪（只"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1075,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "一处硬伤，是我自",
+        "quoteRaw": "一处硬伤，是我自"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 1093,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 18,
+        "quote": "v1 把你的逐句",
+        "quoteRaw": "v1 把你的逐句"
+      },
+      "replay": {
+        "block": 11,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1138,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 0,
+        "quote": "「凡百司奏抄，侍",
+        "quoteRaw": "「凡百司奏抄，侍"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 1151,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 13,
+        "quote": "驳正违失。诏敕不",
+        "quoteRaw": "驳正违失。诏敕不"
+      },
+      "replay": {
+        "block": 12,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 1155,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 17,
+        "quote": "。诏敕不便者，涂",
+        "quoteRaw": "。诏敕不便者，涂"
+      },
+      "replay": {
+        "block": 12,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 1156,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 18,
+        "quote": "诏敕不便者，涂窜",
+        "quoteRaw": "诏敕不便者，涂窜"
+      },
+      "replay": {
+        "block": 12,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 20,
+      "length": 8,
+      "docStart": 1158,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 20,
+        "quote": "不便者，涂窜而奏",
+        "quoteRaw": "不便者，涂窜而奏"
+      },
+      "replay": {
+        "block": 12,
+        "start": 20,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1175,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 0,
+        "quote": "涂归的对象是诏敕",
+        "quoteRaw": "涂归的对象是诏敕"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 1181,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 6,
+        "quote": "诏敕，不是奏抄；",
+        "quoteRaw": "诏敕，不是奏抄；"
+      },
+      "replay": {
+        "block": 13,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 1183,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 8,
+        "quote": "，不是奏抄；奏抄",
+        "quoteRaw": "，不是奏抄；奏抄"
+      },
+      "replay": {
+        "block": 13,
+        "start": 8,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1272,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 0,
+        "quote": "改到诏敕轨，这些",
+        "quoteRaw": "改到诏敕轨，这些"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 1286,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 14,
+        "quote": "：agent 起",
+        "quoteRaw": "：agent 起"
+      },
+      "replay": {
+        "block": 14,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 87,
+      "length": 8,
+      "docStart": 1359,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 87,
+        "quote": "全部各归其位。代",
+        "quoteRaw": "全部各归其位。代"
+      },
+      "replay": {
+        "block": 14,
+        "start": 87,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 93,
+      "length": 8,
+      "docStart": 1365,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 93,
+        "quote": "。代价只有一个：",
+        "quoteRaw": "。代价只有一个："
+      },
+      "replay": {
+        "block": 14,
+        "start": 93,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1412,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 0,
+        "quote": "一条设定：角色折",
+        "quoteRaw": "一条设定：角色折"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1422,
+      "expect": {
+        "blockLine": 32,
+        "line": 32,
+        "offset": 0,
+        "quote": "你是坐在门下的皇",
+        "quoteRaw": "你是坐在门下的皇"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1441,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 0,
+        "quote": "这句话史无此制，",
+        "quoteRaw": "这句话史无此制，"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 1460,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 19,
+        "quote": "命名系统的自觉设",
+        "quoteRaw": "命名系统的自觉设"
+      },
+      "replay": {
+        "block": 17,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 28,
+      "length": 8,
+      "docStart": 1469,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 28,
+        "quote": "存在，而不是伪装",
+        "quoteRaw": "存在，而不是伪装"
+      },
+      "replay": {
+        "block": 17,
+        "start": 28,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1569,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 0,
+        "quote": "这一条一次性解决",
+        "quoteRaw": "这一条一次性解决"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 1583,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 14,
+        "quote": "，于是你圈的两个",
+        "quoteRaw": "，于是你圈的两个"
+      },
+      "replay": {
+        "block": 18,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1599,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 0,
+        "quote": "「涂归」本是给事",
+        "quoteRaw": "「涂归」本是给事"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1621,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 0,
+        "quote": "「判」本是中书舍",
+        "quoteRaw": "「判」本是中书舍"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1655,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 0,
+        "quote": "不写这条声明，「",
+        "quoteRaw": "不写这条声明，「"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 0,
+      "length": 7,
+      "docStart": 1695,
+      "expect": {
+        "blockLine": 43,
+        "line": 43,
+        "offset": 0,
+        "quote": "词表（诏敕轨）",
+        "quoteRaw": "词表（诏敕轨）"
+      },
+      "replay": {
+        "block": 22,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1703,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 0,
+        "quote": "证据等级四档：原",
+        "quoteRaw": "证据等级四档：原"
+      },
+      "replay": {
+        "block": 23,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1710,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 7,
+        "quote": "原文已核（双查中",
+        "quoteRaw": "原文已核（双查中"
+      },
+      "replay": {
+        "block": 23,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 1714,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 11,
+        "quote": "（双查中有模型当",
+        "quoteRaw": "（双查中有模型当"
+      },
+      "replay": {
+        "block": 23,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 26,
+      "length": 8,
+      "docStart": 1729,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 26,
+        "quote": "通说（学界通行，",
+        "quoteRaw": "通说（学界通行，"
+      },
+      "replay": {
+        "block": 23,
+        "start": 26,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 28,
+      "length": 8,
+      "docStart": 1731,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 28,
+        "quote": "（学界通行，未命",
+        "quoteRaw": "（学界通行，未命"
+      },
+      "replay": {
+        "block": 23,
+        "start": 28,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 42,
+      "length": 8,
+      "docStart": 1745,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 42,
+        "quote": "存疑（两个模型给",
+        "quoteRaw": "存疑（两个模型给"
+      },
+      "replay": {
+        "block": 23,
+        "start": 42,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 44,
+      "length": 8,
+      "docStart": 1747,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 44,
+        "quote": "（两个模型给出相",
+        "quoteRaw": "（两个模型给出相"
+      },
+      "replay": {
+        "block": 23,
+        "start": 44,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 57,
+      "length": 8,
+      "docStart": 1760,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 57,
+        "quote": "推断（无书证，我",
+        "quoteRaw": "推断（无书证，我"
+      },
+      "replay": {
+        "block": 23,
+        "start": 57,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 59,
+      "length": 8,
+      "docStart": 1762,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 59,
+        "quote": "（无书证，我推的",
+        "quoteRaw": "（无书证，我推的"
+      },
+      "replay": {
+        "block": 23,
+        "start": 59,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1776,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 1,
+        "quote": "现在 拟改 证据",
+        "quoteRaw": "现在\n拟改\n证据"
+      },
+      "replay": {
+        "block": 24,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1779,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 4,
+        "quote": "拟改 证据等级",
+        "quoteRaw": "拟改\n证据等级"
+      },
+      "replay": {
+        "block": 24,
+        "start": 6,
+        "length": 7
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1782,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 7,
+        "quote": "证据等级 依据",
+        "quoteRaw": "证据等级\n依据"
+      },
+      "replay": {
+        "block": 24,
+        "start": 9,
+        "length": 7
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 12,
+      "length": 3,
+      "docStart": 1787,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 12,
+        "quote": "依据",
+        "quoteRaw": "依据"
+      },
+      "replay": {
+        "block": 24,
+        "start": 14,
+        "length": 2
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1794,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 1,
+        "quote": "御笔朱批（平台）",
+        "quoteRaw": "御笔朱批（平台）"
+      },
+      "replay": {
+        "block": 26,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 1803,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 10,
+        "quote": "门下 原文已核",
+        "quoteRaw": "门下\n原文已核"
+      },
+      "replay": {
+        "block": 26,
+        "start": 10,
+        "length": 7
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 1806,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 13,
+        "quote": "原文已核 《唐六",
+        "quoteRaw": "原文已核\n《唐六"
+      },
+      "replay": {
+        "block": 26,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 1811,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 18,
+        "quote": "《唐六典》卷八侍",
+        "quoteRaw": "《唐六典》卷八侍"
+      },
+      "replay": {
+        "block": 26,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 71,
+      "length": 8,
+      "docStart": 1864,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 71,
+        "quote": "这条只在诏敕轨上",
+        "quoteRaw": "这条只在诏敕轨上"
+      },
+      "replay": {
+        "block": 26,
+        "start": 71,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 81,
+      "length": 8,
+      "docStart": 1874,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 81,
+        "quote": "，v1 走奏抄轨",
+        "quoteRaw": "，v1 走奏抄轨"
+      },
+      "replay": {
+        "block": 26,
+        "start": 81,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1893,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 1,
+        "quote": "奏折 敕草 推断",
+        "quoteRaw": "奏折\n敕草\n推断"
+      },
+      "replay": {
+        "block": 27,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1896,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 4,
+        "quote": "敕草 推断 唐人",
+        "quoteRaw": "敕草\n推断\n唐人"
+      },
+      "replay": {
+        "block": 27,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1899,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 7,
+        "quote": "推断 唐人有「草",
+        "quoteRaw": "推断\n唐人有「草"
+      },
+      "replay": {
+        "block": 27,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 1902,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 10,
+        "quote": "唐人有「草制」「",
+        "quoteRaw": "唐人有「草制」「"
+      },
+      "replay": {
+        "block": 27,
+        "start": 10,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 38,
+      "length": 7,
+      "docStart": 1930,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 38,
+        "quote": "待你定，见下",
+        "quoteRaw": "待你定，见下"
+      },
+      "replay": {
+        "block": 27,
+        "start": 38,
+        "length": 6
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1939,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 1,
+        "quote": "朱批（逐句批注）",
+        "quoteRaw": "朱批（逐句批注）"
+      },
+      "replay": {
+        "block": 28,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 1948,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 10,
+        "quote": "涂归 原文已核",
+        "quoteRaw": "涂归\n原文已核"
+      },
+      "replay": {
+        "block": 28,
+        "start": 10,
+        "length": 7
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "门下：改名与词表（v2 · 诏敕",
+      "expect": 3
+    },
+    {
+      "quote": "v2 大改，别当增补读。 你批完",
+      "expect": 5
+    },
+    {
+      "quote": "v2 大改，别当增补读。 你批完",
+      "expect": 5
+    },
+    {
+      "quote": "对你在 #48 那四条批注的逐条",
+      "expect": 8
+    },
+    {
+      "quote": "你在批注的同一秒把 #48 钦此",
+      "expect": 10
+    },
+    {
+      "quote": "①「判好一点吧」——采纳，但要配",
+      "expect": 12
+    },
+    {
+      "quote": "②「我是皇帝」——采纳，但你圈的",
+      "expect": 14
+    },
+    {
+      "quote": "③ Q2「接受」——采纳，零改动",
+      "expect": 16
+    },
+    {
+      "quote": "④「全换」——采纳，但四格明标造",
+      "expect": 18
+    },
+    {
+      "quote": "v1 错在哪（只说结论，别重读旧",
+      "expect": 20
+    },
+    {
+      "quote": "一处硬伤，是我自己引的原文自证的",
+      "expect": 22
+    },
+    {
+      "quote": "「凡百司奏抄，侍中既审，则驳正违",
+      "expect": 24
+    },
+    {
+      "quote": "涂归的对象是诏敕，不是奏抄；奏抄",
+      "expect": 26
+    },
+    {
+      "quote": "改到诏敕轨，这些错一次性全消：a",
+      "expect": 28
+    },
+    {
+      "quote": "一条设定：角色折叠",
+      "expect": 30
+    },
+    {
+      "quote": "你是坐在门下的皇帝，亲行给事中之",
+      "expect": 32
+    },
+    {
+      "quote": "这句话史无此制，我明写出来，是要",
+      "expect": 34
+    },
+    {
+      "quote": "这一条一次性解决全部主体错位，于",
+      "expect": 36
+    },
+    {
+      "quote": "「涂归」本是给事中之职 → 你亲",
+      "expect": 38
+    },
+    {
+      "quote": "「判」本是中书舍人之词（五花判事",
+      "expect": 39
+    },
+    {
+      "quote": "不写这条声明，「我是皇帝」和「判",
+      "expect": 41
+    },
+    {
+      "quote": "词表（诏敕轨）",
+      "expect": 43
+    },
+    {
+      "quote": "证据等级四档：原文已核（双查中有",
+      "expect": 45
+    },
+    {
+      "quote": "现在 拟改 证据等级 依据 御笔",
+      "expect": 47
+    },
+    {
+      "quote": "现在 拟改 证据等级 依据",
+      "expect": 47
+    },
+    {
+      "quote": "御笔朱批（平台） 门下 原文已核",
+      "expect": 49
+    },
+    {
+      "quote": "奏折 敕草 推断 唐人有「草制」",
+      "expect": 50
+    },
+    {
+      "quote": "朱批（逐句批注） 涂归 原文已核",
+      "expect": 51
+    },
+    {
+      "quote": "总批（整折总评） 判 原文已核（",
+      "expect": 52
+    },
+    {
+      "quote": "钦此（定稿） 画可 原文已核，顺",
+      "expect": 53
+    },
+    {
+      "quote": "打回重改 封驳 部分成立 「封还",
+      "expect": 54
+    },
+    {
+      "quote": "待批清单 待审 通说 门下审毕方",
+      "expect": 55
+    },
+    {
+      "quote": "已钦此 已画可 同画可",
+      "expect": 56
+    },
+    {
+      "quote": "（现在没有）搁置不办 寝 文言通",
+      "expect": 57
+    },
+    {
+      "quote": "回奏对（会话标记） 印缝 原文已",
+      "expect": 58
+    },
+    {
+      "quote": "唯一待你定的一格：文书叫什么。 ",
+      "expect": 60
+    },
+    {
+      "quote": "敕草（推荐）——两字好认，字面即",
+      "expect": 62
+    },
+    {
+      "quote": "制草——同理，偏正式；制书比敕书",
+      "expect": 63
+    },
+    {
+      "quote": "黄敕——有书证（《太平御览》卷二",
+      "expect": 64
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "门下：改名与词表（v2 · 诏敕轨）"
+    ],
+    [
+      5,
+      "门下：改名与词表（v2 · 诏敕轨）"
+    ],
+    [
+      8,
+      "对你在 #48 那四条批注的逐条回话"
+    ],
+    [
+      10,
+      "对你在 #48 那四条批注的逐条回话"
+    ],
+    [
+      12,
+      "对你在 #48 那四条批注的逐条回话"
+    ],
+    [
+      14,
+      "对你在 #48 那四条批注的逐条回话"
+    ],
+    [
+      16,
+      "对你在 #48 那四条批注的逐条回话"
+    ],
+    [
+      18,
+      "对你在 #48 那四条批注的逐条回话"
+    ],
+    [
+      20,
+      "v1 错在哪（只说结论，别重读旧稿）"
+    ],
+    [
+      22,
+      "v1 错在哪（只说结论，别重读旧稿）"
+    ],
+    [
+      24,
+      "v1 错在哪（只说结论，别重读旧稿）"
+    ],
+    [
+      26,
+      "v1 错在哪（只说结论，别重读旧稿）"
+    ],
+    [
+      28,
+      "v1 错在哪（只说结论，别重读旧稿）"
+    ],
+    [
+      30,
+      "一条设定：角色折叠"
+    ],
+    [
+      32,
+      "一条设定：角色折叠"
+    ],
+    [
+      34,
+      "一条设定：角色折叠"
+    ],
+    [
+      36,
+      "一条设定：角色折叠"
+    ],
+    [
+      38,
+      "一条设定：角色折叠"
+    ],
+    [
+      39,
+      "一条设定：角色折叠"
+    ],
+    [
+      41,
+      "一条设定：角色折叠"
+    ],
+    [
+      43,
+      "词表（诏敕轨）"
+    ],
+    [
+      45,
+      "词表（诏敕轨）"
+    ],
+    [
+      47,
+      "词表（诏敕轨）"
+    ],
+    [
+      49,
+      "词表（诏敕轨）"
+    ],
+    [
+      50,
+      "词表（诏敕轨）"
+    ],
+    [
+      51,
+      "词表（诏敕轨）"
+    ],
+    [
+      52,
+      "词表（诏敕轨）"
+    ],
+    [
+      53,
+      "词表（诏敕轨）"
+    ],
+    [
+      54,
+      "词表（诏敕轨）"
+    ],
+    [
+      55,
+      "词表（诏敕轨）"
+    ],
+    [
+      56,
+      "词表（诏敕轨）"
+    ],
+    [
+      57,
+      "词表（诏敕轨）"
+    ],
+    [
+      58,
+      "词表（诏敕轨）"
+    ],
+    [
+      60,
+      "词表（诏敕轨）"
+    ],
+    [
+      62,
+      "词表（诏敕轨）"
+    ],
+    [
+      63,
+      "词表（诏敕轨）"
+    ],
+    [
+      64,
+      "词表（诏敕轨）"
+    ],
+    [
+      66,
+      "两处我不站队"
+    ],
+    [
+      68,
+      "两处我不站队"
+    ],
+    [
+      70,
+      "两处我不站队"
+    ],
+    [
+      72,
+      "两处我不站队"
+    ],
+    [
+      74,
+      "两处我不站队"
+    ],
+    [
+      76,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      78,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      80,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      82,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      83,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      84,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      85,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      86,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      87,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      88,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      89,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      90,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      91,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      92,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      93,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      94,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      95,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      96,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      97,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      98,
+      "界面词全换（你批的 Q3）"
+    ],
+    [
+      100,
+      "为什么这版有「证据等级」这一列"
+    ],
+    [
+      102,
+      "为什么这版有「证据等级」这一列"
+    ],
+    [
+      104,
+      "为什么这版有「证据等级」这一列"
+    ],
+    [
+      106,
+      "为什么这版有「证据等级」这一列"
+    ],
+    [
+      108,
+      "遗留需核实（我没编，留白在这）"
+    ],
+    [
+      110,
+      "遗留需核实（我没编，留白在这）"
+    ],
+    [
+      112,
+      "工程与断点（与 v1 相同，压缩重述）"
+    ],
+    [
+      114,
+      "工程与断点（与 v1 相同，压缩重述）"
+    ],
+    [
+      116,
+      "工程与断点（与 v1 相同，压缩重述）"
+    ],
+    [
+      118,
+      "工程与断点（与 v1 相同，压缩重述）"
+    ],
+    [
+      120,
+      "工程与断点（与 v1 相同，压缩重述）"
+    ],
+    [
+      122,
+      "分三步，可随时喊停"
+    ],
+    [
+      124,
+      "分三步，可随时喊停"
+    ],
+    [
+      125,
+      "分三步，可随时喊停"
+    ],
+    [
+      126,
+      "分三步，可随时喊停"
+    ],
+    [
+      128,
+      "分三步，可随时喊停"
+    ]
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-cli-two-fixes.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "Two happy-cli upstream fixes: double review cut three down to two",
+      "slug": "two-happy-cli-upstream-fixes-double-review-cut-three-down-to-two"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": "1. Starting point: two genuine low hanging fruit",
+      "slug": "1-starting-point-two-genuine-low-hanging-fruit"
+    },
+    {
+      "line": 20,
+      "level": 2,
+      "text": "2. Double review (Opus and agy, one pass each — two independent model reviews, adversarial prompts, no cross-talk)",
+      "slug": "2-double-review-opus-and-agy-one-pass-each--two-independent-model-reviews-adversarial-prompts-no-cross-talk"
+    },
+    {
+      "line": 24,
+      "level": 3,
+      "text": "Two mistakes that were mine",
+      "slug": "two-mistakes-that-were-mine"
+    },
+    {
+      "line": 44,
+      "level": 3,
+      "text": "Other real problems the reviews caught",
+      "slug": "other-real-problems-the-reviews-caught"
+    },
+    {
+      "line": 52,
+      "level": 3,
+      "text": "The one place the two reviews contradicted each other, and how I ruled",
+      "slug": "the-one-place-the-two-reviews-contradicted-each-other-and-how-i-ruled"
+    },
+    {
+      "line": 58,
+      "level": 3,
+      "text": "One finding only agy reported, which I'm marking unresolved",
+      "slug": "one-finding-only-agy-reported-which-im-marking-unresolved"
+    },
+    {
+      "line": 62,
+      "level": 2,
+      "text": "3. Root cause: I hit playbook ④(b) again",
+      "slug": "3-root-cause-i-hit-playbook-④b-again"
+    },
+    {
+      "line": 73,
+      "level": 2,
+      "text": "4. Where it landed",
+      "slug": "4-where-it-landed"
+    },
+    {
+      "line": 81,
+      "level": 3,
+      "text": "Two things I couldn't verify",
+      "slug": "two-things-i-couldnt-verify"
+    },
+    {
+      "line": 91,
+      "level": 2,
+      "text": "5. The two diffs",
+      "slug": "5-the-two-diffs"
+    },
+    {
+      "line": 164,
+      "level": 2,
+      "text": "6. The two PR bodies (the text that ships — please read it line by line)",
+      "slug": "6-the-two-pr-bodies-the-text-that-ships--please-read-it-line-by-line"
+    },
+    {
+      "line": 166,
+      "level": 3,
+      "text": "PR1 · fix(cli): exit after printing the version instead of opening a session",
+      "slug": "pr1--fixcli-exit-after-printing-the-version-instead-of-opening-a-session"
+    },
+    {
+      "line": 170,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem"
+    },
+    {
+      "line": 195,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed"
+    },
+    {
+      "line": 203,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan"
+    },
+    {
+      "line": 209,
+      "level": 3,
+      "text": "PR2 · fix(cli): delegate happy update/upgrade to claude",
+      "slug": "pr2--fixcli-delegate-happy-updateupgrade-to-claude"
+    },
+    {
+      "line": 213,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem-1"
+    },
+    {
+      "line": 221,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed-1"
+    },
+    {
+      "line": 229,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan-1"
+    },
+    {
+      "line": 236,
+      "level": 2,
+      "text": "Known limitation",
+      "slug": "known-limitation"
+    },
+    {
+      "line": 240,
+      "level": 2,
+      "text": "7. A note on the verification environment",
+      "slug": "7-a-note-on-the-verification-environment"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "Two happy-cli upstream fixes: double review cut three down to two",
+      "slug": "two-happy-cli-upstream-fixes-double-review-cut-three-down-to-two"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": "1. Starting point: two genuine low hanging fruit",
+      "slug": "1-starting-point-two-genuine-low-hanging-fruit"
+    },
+    {
+      "line": 20,
+      "level": 2,
+      "text": "2. Double review (Opus and agy, one pass each — two independent model reviews, adversarial prompts, no cross-talk)",
+      "slug": "2-double-review-opus-and-agy-one-pass-each--two-independent-model-reviews-adversarial-prompts-no-cross-talk"
+    },
+    {
+      "line": 24,
+      "level": 3,
+      "text": "Two mistakes that were mine",
+      "slug": "two-mistakes-that-were-mine"
+    },
+    {
+      "line": 44,
+      "level": 3,
+      "text": "Other real problems the reviews caught",
+      "slug": "other-real-problems-the-reviews-caught"
+    },
+    {
+      "line": 52,
+      "level": 3,
+      "text": "The one place the two reviews contradicted each other, and how I ruled",
+      "slug": "the-one-place-the-two-reviews-contradicted-each-other-and-how-i-ruled"
+    },
+    {
+      "line": 58,
+      "level": 3,
+      "text": "One finding only agy reported, which I'm marking unresolved",
+      "slug": "one-finding-only-agy-reported-which-im-marking-unresolved"
+    },
+    {
+      "line": 62,
+      "level": 2,
+      "text": "3. Root cause: I hit playbook ④(b) again",
+      "slug": "3-root-cause-i-hit-playbook-④b-again"
+    },
+    {
+      "line": 73,
+      "level": 2,
+      "text": "4. Where it landed",
+      "slug": "4-where-it-landed"
+    },
+    {
+      "line": 81,
+      "level": 3,
+      "text": "Two things I couldn't verify",
+      "slug": "two-things-i-couldnt-verify"
+    },
+    {
+      "line": 91,
+      "level": 2,
+      "text": "5. The two diffs",
+      "slug": "5-the-two-diffs"
+    },
+    {
+      "line": 164,
+      "level": 2,
+      "text": "6. The two PR bodies (the text that ships — please read it line by line)",
+      "slug": "6-the-two-pr-bodies-the-text-that-ships--please-read-it-line-by-line"
+    },
+    {
+      "line": 166,
+      "level": 3,
+      "text": "PR1 · fix(cli): exit after printing the version instead of opening a session",
+      "slug": "pr1--fixcli-exit-after-printing-the-version-instead-of-opening-a-session"
+    },
+    {
+      "line": 170,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem"
+    },
+    {
+      "line": 195,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed"
+    },
+    {
+      "line": 203,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan"
+    },
+    {
+      "line": 209,
+      "level": 3,
+      "text": "PR2 · fix(cli): delegate happy update/upgrade to claude",
+      "slug": "pr2--fixcli-delegate-happy-updateupgrade-to-claude"
+    },
+    {
+      "line": 213,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem-1"
+    },
+    {
+      "line": 221,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed-1"
+    },
+    {
+      "line": 229,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan-1"
+    },
+    {
+      "line": 236,
+      "level": 2,
+      "text": "Known limitation",
+      "slug": "known-limitation"
+    },
+    {
+      "line": 240,
+      "level": 2,
+      "text": "7. A note on the verification environment",
+      "slug": "7-a-note-on-the-verification-environment"
+    }
+  ]
+}

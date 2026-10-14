@@ -1,0 +1,546 @@
+{
+  "format": 1,
+  "source": "corpus/edge-images-headings.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "图片与标题",
+        "quoteRaw": "图片与标题"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 7,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "图前文字 图后",
+        "quoteRaw": "图前文字  图后"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 6,
+      "length": 5,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 6,
+        "quote": "图后文字。",
+        "quoteRaw": "图后文字。"
+      },
+      "replay": {
+        "block": 2,
+        "start": 6,
+        "length": 5
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 1,
+      "length": 2,
+      "docStart": 20,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 1,
+        "quote": "介绍",
+        "quoteRaw": "介绍"
+      },
+      "replay": {
+        "block": 3,
+        "start": 1,
+        "length": 2
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 24,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "🚀 起步",
+        "quoteRaw": "🚀 起步"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 2,
+      "docStart": 30,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 0,
+        "quote": "重名",
+        "quoteRaw": "重名"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 2,
+      "docStart": 33,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "重名",
+        "quoteRaw": "重名"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 4,
+      "docStart": 36,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "重名-1",
+        "quoteRaw": "重名-1"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 4
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 41,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "带链接的标题 尾",
+        "quoteRaw": "带链接的标题 尾"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 7,
+      "length": 2,
+      "docStart": 48,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 7,
+        "quote": "尾巴",
+        "quoteRaw": "尾巴"
+      },
+      "replay": {
+        "block": 9,
+        "start": 7,
+        "length": 2
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 51,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "带 code 的",
+        "quoteRaw": "带 code 的"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 2,
+      "length": 8,
+      "docStart": 53,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 2,
+        "quote": "code 的标题",
+        "quoteRaw": "code 的标题"
+      },
+      "replay": {
+        "block": 10,
+        "start": 2,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 7,
+      "length": 3,
+      "docStart": 58,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 7,
+        "quote": "的标题",
+        "quoteRaw": "的标题"
+      },
+      "replay": {
+        "block": 10,
+        "start": 7,
+        "length": 3
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 62,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "四级标题不进大纲",
+        "quoteRaw": "四级标题不进大纲"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 2,
+      "docStart": 71,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 0,
+        "quote": "五级",
+        "quoteRaw": "五级"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 2,
+      "docStart": 74,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 0,
+        "quote": "六级",
+        "quoteRaw": "六级"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 77,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 0,
+        "quote": "Setext 一",
+        "quoteRaw": "Setext 一"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 87,
+      "expect": {
+        "blockLine": 32,
+        "line": 32,
+        "offset": 0,
+        "quote": "Setext 二",
+        "quoteRaw": "Setext 二"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 97,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 0,
+        "quote": "三级：标点〈Hi",
+        "quoteRaw": "三级：标点〈Hi"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 127,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 0,
+        "quote": "前后空格标题",
+        "quoteRaw": "前后空格标题"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "图片与标题",
+      "expect": 1
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "图前文字 图后文字。",
+      "expect": 5
+    },
+    {
+      "quote": "介绍",
+      "expect": null
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "🚀 起步",
+      "expect": 11
+    },
+    {
+      "quote": "重名",
+      "expect": null
+    },
+    {
+      "quote": "重名",
+      "expect": null
+    },
+    {
+      "quote": "重名-1",
+      "expect": 17
+    },
+    {
+      "quote": "带链接的标题 尾巴",
+      "expect": 19
+    },
+    {
+      "quote": "带 code 的标题",
+      "expect": 21
+    },
+    {
+      "quote": "四级标题不进大纲",
+      "expect": 23
+    },
+    {
+      "quote": "五级",
+      "expect": null
+    },
+    {
+      "quote": "六级",
+      "expect": null
+    },
+    {
+      "quote": "Setext 一级",
+      "expect": 29
+    },
+    {
+      "quote": "Setext 二级",
+      "expect": 32
+    },
+    {
+      "quote": "三级：标点〈Highline 日",
+      "expect": 35
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "前后空格标题",
+      "expect": 39
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "图片与标题"
+    ],
+    [
+      3,
+      "图片与标题"
+    ],
+    [
+      5,
+      "图片与标题"
+    ],
+    [
+      7,
+      " 介绍"
+    ],
+    [
+      9,
+      ""
+    ],
+    [
+      11,
+      "🚀 起步"
+    ],
+    [
+      13,
+      "重名"
+    ],
+    [
+      15,
+      "重名"
+    ],
+    [
+      17,
+      "重名-1"
+    ],
+    [
+      19,
+      "带链接的标题 尾巴"
+    ],
+    [
+      21,
+      "带 code 的标题"
+    ],
+    [
+      23,
+      "带 code 的标题"
+    ],
+    [
+      25,
+      "带 code 的标题"
+    ],
+    [
+      27,
+      "带 code 的标题"
+    ],
+    [
+      29,
+      "Setext 一级"
+    ],
+    [
+      32,
+      "Setext 二级"
+    ],
+    [
+      35,
+      "三级：标点〈Highline 日模块〉、「引号」，句号。"
+    ],
+    [
+      37,
+      ""
+    ],
+    [
+      39,
+      "前后空格标题"
+    ]
+  ]
+}

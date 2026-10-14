@@ -1,0 +1,141 @@
+{
+  "format": 1,
+  "source": "corpus/real-menxia-rename-glossary-v2.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "Menxia: the rename and the glossary (v2 · the edict track)",
+      "slug": "menxia-the-rename-and-the-glossary-v2--the-edict-track"
+    },
+    {
+      "line": 8,
+      "level": 2,
+      "text": "Replies to your four annotations on #48",
+      "slug": "replies-to-your-four-annotations-on-48"
+    },
+    {
+      "line": 20,
+      "level": 2,
+      "text": "What v1 got wrong (conclusions only — don't reread the old draft)",
+      "slug": "what-v1-got-wrong-conclusions-only--dont-reread-the-old-draft"
+    },
+    {
+      "line": 30,
+      "level": 2,
+      "text": "One declaration: the role fold",
+      "slug": "one-declaration-the-role-fold"
+    },
+    {
+      "line": 43,
+      "level": 2,
+      "text": "The glossary (edict track)",
+      "slug": "the-glossary-edict-track"
+    },
+    {
+      "line": 66,
+      "level": 2,
+      "text": "Two things I will not adjudicate",
+      "slug": "two-things-i-will-not-adjudicate"
+    },
+    {
+      "line": 76,
+      "level": 2,
+      "text": "Renaming everything (your Q3)",
+      "slug": "renaming-everything-your-q3"
+    },
+    {
+      "line": 100,
+      "level": 2,
+      "text": "Why this version has an evidence column",
+      "slug": "why-this-version-has-an-evidence-column"
+    },
+    {
+      "line": 108,
+      "level": 2,
+      "text": "Outstanding, needs checking (not fabricated — left blank on purpose)",
+      "slug": "outstanding-needs-checking-not-fabricated--left-blank-on-purpose"
+    },
+    {
+      "line": 112,
+      "level": 2,
+      "text": "Engineering and breakage (unchanged from v1, condensed)",
+      "slug": "engineering-and-breakage-unchanged-from-v1-condensed"
+    },
+    {
+      "line": 122,
+      "level": 2,
+      "text": "Three steps, stoppable at any point",
+      "slug": "three-steps-stoppable-at-any-point"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "Menxia: the rename and the glossary (v2 · the edict track)",
+      "slug": "menxia-the-rename-and-the-glossary-v2--the-edict-track"
+    },
+    {
+      "line": 8,
+      "level": 2,
+      "text": "Replies to your four annotations on #48",
+      "slug": "replies-to-your-four-annotations-on-48"
+    },
+    {
+      "line": 20,
+      "level": 2,
+      "text": "What v1 got wrong (conclusions only — don't reread the old draft)",
+      "slug": "what-v1-got-wrong-conclusions-only--dont-reread-the-old-draft"
+    },
+    {
+      "line": 30,
+      "level": 2,
+      "text": "One declaration: the role fold",
+      "slug": "one-declaration-the-role-fold"
+    },
+    {
+      "line": 43,
+      "level": 2,
+      "text": "The glossary (edict track)",
+      "slug": "the-glossary-edict-track"
+    },
+    {
+      "line": 66,
+      "level": 2,
+      "text": "Two things I will not adjudicate",
+      "slug": "two-things-i-will-not-adjudicate"
+    },
+    {
+      "line": 76,
+      "level": 2,
+      "text": "Renaming everything (your Q3)",
+      "slug": "renaming-everything-your-q3"
+    },
+    {
+      "line": 100,
+      "level": 2,
+      "text": "Why this version has an evidence column",
+      "slug": "why-this-version-has-an-evidence-column"
+    },
+    {
+      "line": 108,
+      "level": 2,
+      "text": "Outstanding, needs checking (not fabricated — left blank on purpose)",
+      "slug": "outstanding-needs-checking-not-fabricated--left-blank-on-purpose"
+    },
+    {
+      "line": 112,
+      "level": 2,
+      "text": "Engineering and breakage (unchanged from v1, condensed)",
+      "slug": "engineering-and-breakage-unchanged-from-v1-condensed"
+    },
+    {
+      "line": 122,
+      "level": 2,
+      "text": "Three steps, stoppable at any point",
+      "slug": "three-steps-stoppable-at-any-point"
+    }
+  ]
+}

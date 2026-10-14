@@ -1,0 +1,165 @@
+{
+  "format": 1,
+  "source": "corpus/real-folder-tracking.zh-CN.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "折务追踪：折子的项目归属、依赖与覆盖（今日 9 折已分诊 + F13 设计）",
+      "slug": "折务追踪折子的项目归属依赖与覆盖今日-9-折已分诊--f13-设计"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": "一 · 今日折局（2026-07-31，9 折现成分诊）",
+      "slug": "一--今日折局2026-07-319-折现成分诊"
+    },
+    {
+      "line": 29,
+      "level": 2,
+      "text": "二 · 病根与需求",
+      "slug": "二--病根与需求"
+    },
+    {
+      "line": 46,
+      "level": 2,
+      "text": "三 · 设计",
+      "slug": "三--设计"
+    },
+    {
+      "line": 50,
+      "level": 3,
+      "text": "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨",
+      "slug": "31-数据放哪labels状态-尾行标记关系双轨"
+    },
+    {
+      "line": 76,
+      "level": 3,
+      "text": "3.2 写入侧（menxia-mcp）",
+      "slug": "32-写入侧menxia-mcp"
+    },
+    {
+      "line": 82,
+      "level": 3,
+      "text": "3.3 阅读侧（menxia）",
+      "slug": "33-阅读侧menxia"
+    },
+    {
+      "line": 86,
+      "level": 3,
+      "text": "3.4 闭环（audit_folders 增三类巡检，只报不动手）",
+      "slug": "34-闭环audit_folders-增三类巡检只报不动手"
+    },
+    {
+      "line": 94,
+      "level": 3,
+      "text": "3.5 doorbell / 8-8 结账对接",
+      "slug": "35-doorbell--8-8-结账对接"
+    },
+    {
+      "line": 98,
+      "level": 3,
+      "text": "3.6 与中书门下的关系",
+      "slug": "36-与中书门下的关系"
+    },
+    {
+      "line": 102,
+      "level": 2,
+      "text": "四 · 冻结期怎么切",
+      "slug": "四--冻结期怎么切"
+    },
+    {
+      "line": 109,
+      "level": 2,
+      "text": "五 · 任务拆分",
+      "slug": "五--任务拆分"
+    },
+    {
+      "line": 119,
+      "level": 2,
+      "text": "六 · 待你拍板",
+      "slug": "六--待你拍板"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "折务追踪：折子的项目归属、依赖与覆盖（今日 9 折已分诊 + F13 设计）",
+      "slug": "折务追踪折子的项目归属依赖与覆盖今日-9-折已分诊--f13-设计"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": "一 · 今日折局（2026-07-31，9 折现成分诊）",
+      "slug": "一--今日折局2026-07-319-折现成分诊"
+    },
+    {
+      "line": 29,
+      "level": 2,
+      "text": "二 · 病根与需求",
+      "slug": "二--病根与需求"
+    },
+    {
+      "line": 46,
+      "level": 2,
+      "text": "三 · 设计",
+      "slug": "三--设计"
+    },
+    {
+      "line": 50,
+      "level": 3,
+      "text": "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨",
+      "slug": "31-数据放哪labels状态-尾行标记关系双轨"
+    },
+    {
+      "line": 76,
+      "level": 3,
+      "text": "3.2 写入侧（menxia-mcp）",
+      "slug": "32-写入侧menxia-mcp"
+    },
+    {
+      "line": 82,
+      "level": 3,
+      "text": "3.3 阅读侧（menxia）",
+      "slug": "33-阅读侧menxia"
+    },
+    {
+      "line": 86,
+      "level": 3,
+      "text": "3.4 闭环（audit_folders 增三类巡检，只报不动手）",
+      "slug": "34-闭环audit_folders-增三类巡检只报不动手"
+    },
+    {
+      "line": 94,
+      "level": 3,
+      "text": "3.5 doorbell / 8-8 结账对接",
+      "slug": "35-doorbell--8-8-结账对接"
+    },
+    {
+      "line": 98,
+      "level": 3,
+      "text": "3.6 与中书门下的关系",
+      "slug": "36-与中书门下的关系"
+    },
+    {
+      "line": 102,
+      "level": 2,
+      "text": "四 · 冻结期怎么切",
+      "slug": "四--冻结期怎么切"
+    },
+    {
+      "line": 109,
+      "level": 2,
+      "text": "五 · 任务拆分",
+      "slug": "五--任务拆分"
+    },
+    {
+      "line": 119,
+      "level": 2,
+      "text": "六 · 待你拍板",
+      "slug": "六--待你拍板"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "format": 1,
+  "source": "corpus/edge-unclosed-fence.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "未闭合围栏"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "text": "正文。"
+    },
+    {
+      "i": 2,
+      "type": "fence",
+      "tag": "code",
+      "line": 5,
+      "lineEnd": 7,
+      "parent": null,
+      "info": "js",
+      "text": "const a = 1;\n围栏到文件末尾都没闭合\n"
+    }
+  ]
+}

@@ -1,0 +1,272 @@
+{
+  "format": 1,
+  "source": "corpus/edge-blank-boundaries.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 4,
+        "line": 4,
+        "offset": 0,
+        "quote": "文首有两行空行，",
+        "quoteRaw": "文首有两行空行，"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 7,
+      "docStart": 18,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 0,
+        "quote": "中间三行空行。",
+        "quoteRaw": "中间三行空行。"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 26,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "标题紧贴上一段（",
+        "quoteRaw": "标题紧贴上一段（"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 39,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 0,
+        "quote": "标题后紧贴段落。",
+        "quoteRaw": "标题后紧贴段落。"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 49,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "列表打断段落",
+        "quoteRaw": "列表打断段落"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 56,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 0,
+        "quote": "第二项 段落续在",
+        "quoteRaw": "第二项\n段落续在"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 89,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "上一行只有空白。",
+        "quoteRaw": "上一行只有空白。"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 99,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "引用 懒续行进引",
+        "quoteRaw": "引用\n懒续行进引"
+      },
+      "replay": {
+        "block": 7,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 110,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "最后一行没有换行",
+        "quoteRaw": "最后一行没有换行"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "文首有两行空行，这段在第 3 行",
+      "expect": 4
+    },
+    {
+      "quote": "中间三行空行。",
+      "expect": 8
+    },
+    {
+      "quote": "标题紧贴上一段（无空行）",
+      "expect": 9
+    },
+    {
+      "quote": "标题后紧贴段落。",
+      "expect": 10
+    },
+    {
+      "quote": "列表打断段落",
+      "expect": 11
+    },
+    {
+      "quote": "第二项 段落续在列表项里（laz",
+      "expect": 12
+    },
+    {
+      "quote": "上一行只有空白。",
+      "expect": 16
+    },
+    {
+      "quote": "引用 懒续行进引用",
+      "expect": 17
+    },
+    {
+      "quote": "引用 懒续行进引用",
+      "expect": 17
+    },
+    {
+      "quote": "最后一行没有换行符",
+      "expect": 20
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      4,
+      ""
+    ],
+    [
+      8,
+      ""
+    ],
+    [
+      9,
+      "标题紧贴上一段（无空行）"
+    ],
+    [
+      10,
+      "标题紧贴上一段（无空行）"
+    ],
+    [
+      11,
+      "标题紧贴上一段（无空行）"
+    ],
+    [
+      12,
+      "标题紧贴上一段（无空行）"
+    ],
+    [
+      16,
+      "标题紧贴上一段（无空行）"
+    ],
+    [
+      17,
+      "标题紧贴上一段（无空行）"
+    ],
+    [
+      20,
+      "标题紧贴上一段（无空行）"
+    ]
+  ]
+}

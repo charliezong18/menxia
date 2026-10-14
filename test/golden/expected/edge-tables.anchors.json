@@ -1,0 +1,964 @@
+{
+  "format": 1,
+  "source": "corpus/edge-tables.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 4,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "表格边角",
+        "quoteRaw": "表格边角"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 4
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 1,
+        "quote": "列 A 列 B",
+        "quoteRaw": "列 A\n列 B"
+      },
+      "replay": {
+        "block": 1,
+        "start": 3,
+        "length": 7
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 12,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 5,
+        "quote": "列 B 列 C",
+        "quoteRaw": "列 B\n列 C"
+      },
+      "replay": {
+        "block": 1,
+        "start": 7,
+        "length": 7
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 9,
+      "length": 4,
+      "docStart": 16,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 9,
+        "quote": "列 C",
+        "quoteRaw": "列 C"
+      },
+      "replay": {
+        "block": 1,
+        "start": 11,
+        "length": 3
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 24,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 1,
+        "quote": "普通 粗 cod",
+        "quoteRaw": "普通\n粗\ncod"
+      },
+      "replay": {
+        "block": 3,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 4,
+      "length": 7,
+      "docStart": 27,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 4,
+        "quote": "粗 code",
+        "quoteRaw": "粗\ncode"
+      },
+      "replay": {
+        "block": 3,
+        "start": 4,
+        "length": 6
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 6,
+      "length": 5,
+      "docStart": 29,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 6,
+        "quote": "code",
+        "quoteRaw": "code"
+      },
+      "replay": {
+        "block": 3,
+        "start": 6,
+        "length": 4
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 36,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 1,
+        "quote": "转义管道 a |",
+        "quoteRaw": "转义管道 a |"
+      },
+      "replay": {
+        "block": 4,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 47,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 12,
+        "quote": "x | y 末格",
+        "quoteRaw": "x | y\n末格"
+      },
+      "replay": {
+        "block": 4,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 18,
+      "length": 3,
+      "docStart": 53,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 18,
+        "quote": "末格",
+        "quoteRaw": "末格"
+      },
+      "replay": {
+        "block": 4,
+        "start": 18,
+        "length": 2
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 2,
+      "length": 5,
+      "docStart": 59,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 2,
+        "quote": "空首格",
+        "quoteRaw": "空首格"
+      },
+      "replay": {
+        "block": 5,
+        "start": 2,
+        "length": 3
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 66,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 1,
+        "quote": "中文，标点。 E",
+        "quoteRaw": "中文，标点。\nE"
+      },
+      "replay": {
+        "block": 6,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 73,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 8,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 6,
+        "start": 8,
+        "length": 7
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 25,
+      "length": 4,
+      "docStart": 90,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 25,
+        "quote": "123",
+        "quoteRaw": "123"
+      },
+      "replay": {
+        "block": 6,
+        "start": 25,
+        "length": 3
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 97,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 0,
+        "quote": "段落紧贴表格前一",
+        "quoteRaw": "段落紧贴表格前一"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 1,
+      "length": 6,
+      "docStart": 110,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 1,
+        "quote": "h1 h2",
+        "quoteRaw": "h1\nh2"
+      },
+      "replay": {
+        "block": 8,
+        "start": 3,
+        "length": 5
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 4,
+      "length": 3,
+      "docStart": 113,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 4,
+        "quote": "h2",
+        "quoteRaw": "h2"
+      },
+      "replay": {
+        "block": 8,
+        "start": 6,
+        "length": 2
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 120,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 1,
+        "quote": "不带空行 的表格",
+        "quoteRaw": "不带空行\n的表格"
+      },
+      "replay": {
+        "block": 10,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 6,
+      "length": 4,
+      "docStart": 125,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 6,
+        "quote": "的表格",
+        "quoteRaw": "的表格"
+      },
+      "replay": {
+        "block": 10,
+        "start": 6,
+        "length": 3
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 132,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "无首尾管道：",
+        "quoteRaw": "无首尾管道："
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 1,
+      "length": 4,
+      "docStart": 142,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 1,
+        "quote": "a b",
+        "quoteRaw": "a\nb"
+      },
+      "replay": {
+        "block": 12,
+        "start": 3,
+        "length": 3
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 144,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 14,
+      "blockStart": 1,
+      "length": 4,
+      "docStart": 150,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 1,
+        "quote": "1 2",
+        "quoteRaw": "1\n2"
+      },
+      "replay": {
+        "block": 14,
+        "start": 1,
+        "length": 3
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 152,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 15,
+      "blockStart": 1,
+      "length": 4,
+      "docStart": 156,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 1,
+        "quote": "3 4",
+        "quoteRaw": "3\n4"
+      },
+      "replay": {
+        "block": 15,
+        "start": 1,
+        "length": 3
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 158,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 163,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "单列：",
+        "quoteRaw": "单列："
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 1,
+      "length": 5,
+      "docStart": 170,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 1,
+        "quote": "只有一列",
+        "quoteRaw": "只有一列"
+      },
+      "replay": {
+        "block": 17,
+        "start": 3,
+        "length": 4
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 1,
+      "length": 3,
+      "docStart": 179,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 1,
+        "quote": "行一",
+        "quoteRaw": "行一"
+      },
+      "replay": {
+        "block": 19,
+        "start": 1,
+        "length": 2
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 1,
+      "length": 3,
+      "docStart": 184,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 1,
+        "quote": "行二",
+        "quoteRaw": "行二"
+      },
+      "replay": {
+        "block": 20,
+        "start": 1,
+        "length": 2
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 190,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 0,
+        "quote": "表格里放链接 链",
+        "quoteRaw": "表格里放链接 链"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 7,
+      "length": 7,
+      "docStart": 197,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 7,
+        "quote": "链接 与图片：",
+        "quoteRaw": "链接 与图片："
+      },
+      "replay": {
+        "block": 21,
+        "start": 7,
+        "length": 7
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 10,
+      "length": 4,
+      "docStart": 200,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 10,
+        "quote": "与图片：",
+        "quoteRaw": "与图片："
+      },
+      "replay": {
+        "block": 21,
+        "start": 10,
+        "length": 4
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 1,
+      "length": 4,
+      "docStart": 208,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 1,
+        "quote": "名 图",
+        "quoteRaw": "名\n图"
+      },
+      "replay": {
+        "block": 22,
+        "start": 3,
+        "length": 3
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 210,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 24,
+      "blockStart": 1,
+      "length": 6,
+      "docStart": 216,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 1,
+        "quote": "外链 门下",
+        "quoteRaw": "外链\n门下"
+      },
+      "replay": {
+        "block": 24,
+        "start": 1,
+        "length": 5
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 4,
+      "length": 3,
+      "docStart": 219,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 4,
+        "quote": "门下",
+        "quoteRaw": "门下"
+      },
+      "replay": {
+        "block": 24,
+        "start": 4,
+        "length": 2
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 1,
+      "length": 3,
+      "docStart": 224,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 26,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 229,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 1,
+        "quote": "双链 [[某篇",
+        "quoteRaw": "双链\n[[某篇"
+      },
+      "replay": {
+        "block": 26,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 4,
+      "length": 5,
+      "docStart": 232,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 4,
+        "quote": "[[某篇",
+        "quoteRaw": "[[某篇"
+      },
+      "replay": {
+        "block": 26,
+        "start": 4,
+        "length": 4
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 240,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 0,
+        "quote": "只有表头没有数据",
+        "quoteRaw": "只有表头没有数据"
+      },
+      "replay": {
+        "block": 27,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 1,
+      "length": 4,
+      "docStart": 254,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 1,
+        "quote": "甲 乙",
+        "quoteRaw": "甲\n乙"
+      },
+      "replay": {
+        "block": 28,
+        "start": 3,
+        "length": 3
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 256,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "表格边角",
+      "expect": 1
+    },
+    {
+      "quote": "列 A 列 B 列 C 普通 粗",
+      "expect": 3
+    },
+    {
+      "quote": "列 A 列 B 列 C",
+      "expect": 3
+    },
+    {
+      "quote": "普通 粗 code",
+      "expect": 5
+    },
+    {
+      "quote": "转义管道 a | b x | y",
+      "expect": 6
+    },
+    {
+      "quote": "空首格",
+      "expect": null
+    },
+    {
+      "quote": "中文，标点。 English m",
+      "expect": 8
+    },
+    {
+      "quote": "段落紧贴表格前一行",
+      "expect": 10
+    },
+    {
+      "quote": "h1 h2 不带空行 的表格",
+      "expect": 11
+    },
+    {
+      "quote": "h1 h2",
+      "expect": 11
+    },
+    {
+      "quote": "不带空行 的表格",
+      "expect": 13
+    },
+    {
+      "quote": "无首尾管道：",
+      "expect": 15
+    },
+    {
+      "quote": "a b 1 2 3 4",
+      "expect": 17
+    },
+    {
+      "quote": "a b",
+      "expect": null
+    },
+    {
+      "quote": "1 2",
+      "expect": null
+    },
+    {
+      "quote": "3 4",
+      "expect": null
+    },
+    {
+      "quote": "单列：",
+      "expect": null
+    },
+    {
+      "quote": "只有一列 行一 行二",
+      "expect": 24
+    },
+    {
+      "quote": "只有一列",
+      "expect": 24
+    },
+    {
+      "quote": "行一",
+      "expect": null
+    },
+    {
+      "quote": "行二",
+      "expect": null
+    },
+    {
+      "quote": "表格里放链接 链接 与图片：",
+      "expect": 29
+    },
+    {
+      "quote": "名 图 外链 门下 图 双链 [",
+      "expect": 31
+    },
+    {
+      "quote": "名 图",
+      "expect": null
+    },
+    {
+      "quote": "外链 门下",
+      "expect": 33
+    },
+    {
+      "quote": "图",
+      "expect": null
+    },
+    {
+      "quote": "双链 [[某篇",
+      "expect": 35
+    },
+    {
+      "quote": "只有表头没有数据行：",
+      "expect": 37
+    },
+    {
+      "quote": "甲 乙",
+      "expect": null
+    },
+    {
+      "quote": "甲 乙",
+      "expect": null
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "表格边角"
+    ],
+    [
+      3,
+      "表格边角"
+    ],
+    [
+      5,
+      "表格边角"
+    ],
+    [
+      6,
+      "表格边角"
+    ],
+    [
+      7,
+      "表格边角"
+    ],
+    [
+      8,
+      "表格边角"
+    ],
+    [
+      10,
+      "表格边角"
+    ],
+    [
+      11,
+      "表格边角"
+    ],
+    [
+      13,
+      "表格边角"
+    ],
+    [
+      15,
+      "表格边角"
+    ],
+    [
+      17,
+      "表格边角"
+    ],
+    [
+      19,
+      "表格边角"
+    ],
+    [
+      20,
+      "表格边角"
+    ],
+    [
+      22,
+      "表格边角"
+    ],
+    [
+      24,
+      "表格边角"
+    ],
+    [
+      26,
+      "表格边角"
+    ],
+    [
+      27,
+      "表格边角"
+    ],
+    [
+      29,
+      "表格边角"
+    ],
+    [
+      31,
+      "表格边角"
+    ],
+    [
+      33,
+      "表格边角"
+    ],
+    [
+      34,
+      "表格边角"
+    ],
+    [
+      35,
+      "表格边角"
+    ],
+    [
+      37,
+      "表格边角"
+    ],
+    [
+      39,
+      "表格边角"
+    ]
+  ]
+}

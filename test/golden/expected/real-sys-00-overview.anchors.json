@@ -1,0 +1,1898 @@
+{
+  "format": 1,
+  "source": "corpus/real-sys-00-overview.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "System D",
+        "quoteRaw": "System D"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 42,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "v2 (2026",
+        "quoteRaw": "v2 (2026"
+      },
+      "replay": {
+        "block": 2,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 57,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 15,
+        "quote": ": Absorb",
+        "quoteRaw": ": Absorb"
+      },
+      "replay": {
+        "block": 2,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 616,
+      "length": 8,
+      "docStart": 658,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 616,
+        "quote": "stalled/",
+        "quoteRaw": "stalled/"
+      },
+      "replay": {
+        "block": 2,
+        "start": 617,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 623,
+      "length": 8,
+      "docStart": 665,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 623,
+        "quote": "/source_",
+        "quoteRaw": "/source_"
+      },
+      "replay": {
+        "block": 2,
+        "start": 624,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 624,
+      "length": 8,
+      "docStart": 666,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 624,
+        "quote": "source_g",
+        "quoteRaw": "source_g"
+      },
+      "replay": {
+        "block": 2,
+        "start": 625,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 636,
+      "length": 8,
+      "docStart": 678,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 636,
+        "quote": "(v2 revi",
+        "quoteRaw": "(v2 revi"
+      },
+      "replay": {
+        "block": 2,
+        "start": 637,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 699,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "中书门下 (Se",
+        "quoteRaw": "中书门下 (Se"
+      },
+      "replay": {
+        "block": 4,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 82,
+      "length": 8,
+      "docStart": 781,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 82,
+        "quote": "Happy (2",
+        "quoteRaw": "Happy (2"
+      },
+      "replay": {
+        "block": 4,
+        "start": 83,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 92,
+      "length": 8,
+      "docStart": 791,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 92,
+        "quote": "for pers",
+        "quoteRaw": "for pers"
+      },
+      "replay": {
+        "block": 4,
+        "start": 93,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 120,
+      "length": 8,
+      "docStart": 819,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 120,
+        "quote": "Taking t",
+        "quoteRaw": "Taking t"
+      },
+      "replay": {
+        "block": 4,
+        "start": 121,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 167,
+      "length": 8,
+      "docStart": 866,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 167,
+        "quote": "Previous",
+        "quoteRaw": "Previous"
+      },
+      "replay": {
+        "block": 4,
+        "start": 168,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 185,
+      "length": 8,
+      "docStart": 884,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 185,
+        "quote": "List of",
+        "quoteRaw": "List of"
+      },
+      "replay": {
+        "block": 4,
+        "start": 186,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 211,
+      "length": 8,
+      "docStart": 910,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 211,
+        "quote": "· Base f",
+        "quoteRaw": "· Base f"
+      },
+      "replay": {
+        "block": 4,
+        "start": 212,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 213,
+      "length": 8,
+      "docStart": 912,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 213,
+        "quote": "Base fea",
+        "quoteRaw": "Base fea"
+      },
+      "replay": {
+        "block": 4,
+        "start": 214,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 246,
+      "length": 8,
+      "docStart": 945,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 246,
+        "quote": "· Relati",
+        "quoteRaw": "· Relati"
+      },
+      "replay": {
+        "block": 4,
+        "start": 247,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 248,
+      "length": 8,
+      "docStart": 947,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 248,
+        "quote": "Relation",
+        "quoteRaw": "Relation"
+      },
+      "replay": {
+        "block": 4,
+        "start": 249,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 276,
+      "length": 8,
+      "docStart": 975,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 276,
+        "quote": "· v1 des",
+        "quoteRaw": "· v1 des"
+      },
+      "replay": {
+        "block": 4,
+        "start": 277,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 278,
+      "length": 8,
+      "docStart": 977,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 278,
+        "quote": "v1 desig",
+        "quoteRaw": "v1 desig"
+      },
+      "replay": {
+        "block": 4,
+        "start": 279,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 988,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 0,
+        "quote": "Date: 20",
+        "quoteRaw": "Date: 20"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 992,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 4,
+        "quote": ": 2026-0",
+        "quoteRaw": ": 2026-0"
+      },
+      "replay": {
+        "block": 6,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 1026,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 38,
+        "quote": "Revised:",
+        "quoteRaw": "Revised:"
+      },
+      "replay": {
+        "block": 6,
+        "start": 38,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 45,
+      "length": 8,
+      "docStart": 1033,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 45,
+        "quote": ": 2026-0",
+        "quoteRaw": ": 2026-0"
+      },
+      "replay": {
+        "block": 6,
+        "start": 45,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1052,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "I. What",
+        "quoteRaw": "I. What"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1077,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "In one s",
+        "quoteRaw": "In one s"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 1094,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 17,
+        "quote": "Aggregat",
+        "quoteRaw": "Aggregat"
+      },
+      "replay": {
+        "block": 8,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1232,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "Three-st",
+        "quoteRaw": "Three-st"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 24,
+      "length": 8,
+      "docStart": 1256,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 24,
+        "quote": "收 (inges",
+        "quoteRaw": "收 (inges"
+      },
+      "replay": {
+        "block": 9,
+        "start": 24,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 62,
+      "length": 8,
+      "docStart": 1294,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 62,
+        "quote": ". Upstre",
+        "quoteRaw": ". Upstre"
+      },
+      "replay": {
+        "block": 9,
+        "start": 62,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1372,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "II. Comp",
+        "quoteRaw": "II. Comp"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1394,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 1,
+        "quote": "# Compon",
+        "quoteRaw": "#\nCompon"
+      },
+      "replay": {
+        "block": 11,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1396,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 3,
+        "quote": "Componen",
+        "quoteRaw": "Componen"
+      },
+      "replay": {
+        "block": 11,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 1406,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 13,
+        "quote": "Runs whe",
+        "quoteRaw": "Runs whe"
+      },
+      "replay": {
+        "block": 11,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 24,
+      "length": 8,
+      "docStart": 1417,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 24,
+        "quote": "One-sent",
+        "quoteRaw": "One-sent"
+      },
+      "replay": {
+        "block": 11,
+        "start": 26,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 42,
+      "length": 8,
+      "docStart": 1435,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 42,
+        "quote": "Design d",
+        "quoteRaw": "Design d"
+      },
+      "replay": {
+        "block": 11,
+        "start": 44,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1450,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 1,
+        "quote": "1 Ingest",
+        "quoteRaw": "1\nIngest"
+      },
+      "replay": {
+        "block": 13,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1452,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 3,
+        "quote": "Ingester",
+        "quoteRaw": "Ingester"
+      },
+      "replay": {
+        "block": 13,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 1461,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 12,
+        "quote": "Each per",
+        "quoteRaw": "Each per"
+      },
+      "replay": {
+        "block": 13,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 1487,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 38,
+        "quote": "Scans lo",
+        "quoteRaw": "Scans lo"
+      },
+      "replay": {
+        "block": 13,
+        "start": 38,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 89,
+      "length": 3,
+      "docStart": 1538,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 89,
+        "quote": "01",
+        "quoteRaw": "01"
+      },
+      "replay": {
+        "block": 13,
+        "start": 89,
+        "length": 2
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1543,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 1,
+        "quote": "2 Core P",
+        "quoteRaw": "2\nCore\nP"
+      },
+      "replay": {
+        "block": 14,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1545,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 3,
+        "quote": "Core Plu",
+        "quoteRaw": "Core\nPlu"
+      },
+      "replay": {
+        "block": 14,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 1550,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 8,
+        "quote": "Plugin c",
+        "quoteRaw": "Plugin c"
+      },
+      "replay": {
+        "block": 14,
+        "start": 8,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 1567,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 25,
+        "quote": "The sing",
+        "quoteRaw": "The sing"
+      },
+      "replay": {
+        "block": 14,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 93,
+      "length": 3,
+      "docStart": 1635,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 93,
+        "quote": "02",
+        "quoteRaw": "02"
+      },
+      "replay": {
+        "block": 14,
+        "start": 93,
+        "length": 2
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1640,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 1,
+        "quote": "3 Inbox",
+        "quoteRaw": "3\nInbox"
+      },
+      "replay": {
+        "block": 15,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1642,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 3,
+        "quote": "Inbox Br",
+        "quoteRaw": "Inbox\nBr"
+      },
+      "replay": {
+        "block": 15,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 9,
+      "length": 8,
+      "docStart": 1648,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 9,
+        "quote": "Browser",
+        "quoteRaw": "Browser"
+      },
+      "replay": {
+        "block": 15,
+        "start": 9,
+        "length": 7
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 33,
+      "length": 8,
+      "docStart": 1672,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 33,
+        "quote": "Read, la",
+        "quoteRaw": "Read, la"
+      },
+      "replay": {
+        "block": 15,
+        "start": 33,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 60,
+      "length": 3,
+      "docStart": 1699,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 60,
+        "quote": "03",
+        "quoteRaw": "03"
+      },
+      "replay": {
+        "block": 15,
+        "start": 60,
+        "length": 2
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1704,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 1,
+        "quote": "4 Review",
+        "quoteRaw": "4\nReview"
+      },
+      "replay": {
+        "block": 16,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1706,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 3,
+        "quote": "Review d",
+        "quoteRaw": "Review d"
+      },
+      "replay": {
+        "block": 16,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 1718,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 15,
+        "quote": "Browser",
+        "quoteRaw": "Browser"
+      },
+      "replay": {
+        "block": 16,
+        "start": 15,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 39,
+      "length": 8,
+      "docStart": 1742,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 39,
+        "quote": "Sentence",
+        "quoteRaw": "Sentence"
+      },
+      "replay": {
+        "block": 16,
+        "start": 39,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 81,
+      "length": 3,
+      "docStart": 1784,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 81,
+        "quote": "04",
+        "quoteRaw": "04"
+      },
+      "replay": {
+        "block": 16,
+        "start": 81,
+        "length": 2
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1789,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 1,
+        "quote": "5 Rankin",
+        "quoteRaw": "5\nRankin"
+      },
+      "replay": {
+        "block": 17,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1791,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 3,
+        "quote": "Ranking",
+        "quoteRaw": "Ranking"
+      },
+      "replay": {
+        "block": 17,
+        "start": 3,
+        "length": 7
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 1799,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 11,
+        "quote": "A module",
+        "quoteRaw": "A module"
+      },
+      "replay": {
+        "block": 17,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 36,
+      "length": 8,
+      "docStart": 1824,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 36,
+        "quote": "Decides",
+        "quoteRaw": "Decides"
+      },
+      "replay": {
+        "block": 17,
+        "start": 36,
+        "length": 7
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 61,
+      "length": 3,
+      "docStart": 1849,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 61,
+        "quote": "05",
+        "quoteRaw": "05"
+      },
+      "replay": {
+        "block": 17,
+        "start": 61,
+        "length": 2
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1854,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 1,
+        "quote": "6 Notifi",
+        "quoteRaw": "6\nNotifi"
+      },
+      "replay": {
+        "block": 18,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1856,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 3,
+        "quote": "Notifier",
+        "quoteRaw": "Notifier"
+      },
+      "replay": {
+        "block": 18,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 1865,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 12,
+        "quote": "Backgrou",
+        "quoteRaw": "Backgrou"
+      },
+      "replay": {
+        "block": 18,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 47,
+      "length": 8,
+      "docStart": 1900,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 47,
+        "quote": "Calls th",
+        "quoteRaw": "Calls th"
+      },
+      "replay": {
+        "block": 18,
+        "start": 47,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 83,
+      "length": 3,
+      "docStart": 1936,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 83,
+        "quote": "06",
+        "quoteRaw": "06"
+      },
+      "replay": {
+        "block": 18,
+        "start": 83,
+        "length": 2
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1941,
+      "expect": {
+        "blockLine": 32,
+        "line": 32,
+        "offset": 1,
+        "quote": "7 Dispat",
+        "quoteRaw": "7\nDispat"
+      },
+      "replay": {
+        "block": 19,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1943,
+      "expect": {
+        "blockLine": 32,
+        "line": 32,
+        "offset": 3,
+        "quote": "Dispatch",
+        "quoteRaw": "Dispatch"
+      },
+      "replay": {
+        "block": 19,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 1952,
+      "expect": {
+        "blockLine": 32,
+        "line": 32,
+        "offset": 12,
+        "quote": "Upstream",
+        "quoteRaw": "Upstream"
+      },
+      "replay": {
+        "block": 19,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 33,
+      "length": 8,
+      "docStart": 1973,
+      "expect": {
+        "blockLine": 32,
+        "line": 32,
+        "offset": 33,
+        "quote": "Execute",
+        "quoteRaw": "Execute"
+      },
+      "replay": {
+        "block": 19,
+        "start": 33,
+        "length": 7
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 56,
+      "length": 8,
+      "docStart": 1996,
+      "expect": {
+        "blockLine": 32,
+        "line": 32,
+        "offset": 56,
+        "quote": "1-pager",
+        "quoteRaw": "1-pager"
+      },
+      "replay": {
+        "block": 19,
+        "start": 56,
+        "length": 7
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 2006,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 1,
+        "quote": "8 Runtim",
+        "quoteRaw": "8\nRuntim"
+      },
+      "replay": {
+        "block": 20,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 2008,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 3,
+        "quote": "Runtime",
+        "quoteRaw": "Runtime"
+      },
+      "replay": {
+        "block": 20,
+        "start": 3,
+        "length": 7
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 45,
+      "length": 8,
+      "docStart": 2050,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 45,
+        "quote": "Deployme",
+        "quoteRaw": "Deployme"
+      },
+      "replay": {
+        "block": 20,
+        "start": 45,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 62,
+      "length": 8,
+      "docStart": 2067,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 62,
+        "quote": "How many",
+        "quoteRaw": "How many"
+      },
+      "replay": {
+        "block": 20,
+        "start": 62,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 114,
+      "length": 3,
+      "docStart": 2119,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 114,
+        "quote": "07",
+        "quoteRaw": "07"
+      },
+      "replay": {
+        "block": 20,
+        "start": 114,
+        "length": 2
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2125,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 0,
+        "quote": "Not buil",
+        "quoteRaw": "Not buil"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 2144,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 19,
+        "quote": ": Accoun",
+        "quoteRaw": ": Accoun"
+      },
+      "replay": {
+        "block": 21,
+        "start": 19,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "System Design 00",
+      "expect": 3
+    },
+    {
+      "quote": "v2 (2026-07-31):",
+      "expect": 5
+    },
+    {
+      "quote": "v2 (2026-07-31):",
+      "expect": 5
+    },
+    {
+      "quote": "中书门下 (Secretaria",
+      "expect": 7
+    },
+    {
+      "quote": "中书门下 (Secretaria",
+      "expect": 7
+    },
+    {
+      "quote": "Date: 2026-07-30",
+      "expect": 10
+    },
+    {
+      "quote": "I. What this sys",
+      "expect": 14
+    },
+    {
+      "quote": "In one sentence:",
+      "expect": 16
+    },
+    {
+      "quote": "Three-step close",
+      "expect": 18
+    },
+    {
+      "quote": "II. Component li",
+      "expect": 22
+    },
+    {
+      "quote": "# Component Runs",
+      "expect": 24
+    },
+    {
+      "quote": "# Component Runs",
+      "expect": 24
+    },
+    {
+      "quote": "1 Ingester Each ",
+      "expect": 26
+    },
+    {
+      "quote": "2 Core Plugin co",
+      "expect": 27
+    },
+    {
+      "quote": "3 Inbox Browser ",
+      "expect": 28
+    },
+    {
+      "quote": "4 Review desk Br",
+      "expect": 29
+    },
+    {
+      "quote": "5 Ranking A modu",
+      "expect": 30
+    },
+    {
+      "quote": "6 Notifier Backg",
+      "expect": 31
+    },
+    {
+      "quote": "7 Dispatch Upstr",
+      "expect": 32
+    },
+    {
+      "quote": "8 Runtime and 班子",
+      "expect": 33
+    },
+    {
+      "quote": "Not built oursel",
+      "expect": 35
+    },
+    {
+      "quote": "III. Architectur",
+      "expect": 39
+    },
+    {
+      "quote": "┌───────────────",
+      "expect": 41
+    },
+    {
+      "quote": "Three data strea",
+      "expect": 68
+    },
+    {
+      "quote": "Ingest: worker s",
+      "expect": 70
+    },
+    {
+      "quote": "Fetch back: fron",
+      "expect": 71
+    },
+    {
+      "quote": "Notifier: backgr",
+      "expect": 72
+    },
+    {
+      "quote": "Ingress/egress p",
+      "expect": 74
+    },
+    {
+      "quote": "IV. Four contrac",
+      "expect": 78
+    },
+    {
+      "quote": "These four are t",
+      "expect": 80
+    },
+    {
+      "quote": "Contract 1 · The",
+      "expect": 82
+    },
+    {
+      "quote": "{ id, owner_user",
+      "expect": 84
+    },
+    {
+      "quote": "external_key is ",
+      "expect": 89
+    },
+    {
+      "quote": "body_ref is a po",
+      "expect": 90
+    },
+    {
+      "quote": "tier is declared",
+      "expect": 91
+    },
+    {
+      "quote": "Contract 2 · Sta",
+      "expect": 93
+    },
+    {
+      "quote": "new ──▶ read ───",
+      "expect": 95
+    },
+    {
+      "quote": "Only the core ca",
+      "expect": 106
+    },
+    {
+      "quote": "running does not",
+      "expect": 107
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "System Design 00 · Overview"
+    ],
+    [
+      5,
+      "System Design 00 · Overview"
+    ],
+    [
+      7,
+      "System Design 00 · Overview"
+    ],
+    [
+      10,
+      "System Design 00 · Overview"
+    ],
+    [
+      14,
+      "I. What this system does"
+    ],
+    [
+      16,
+      "I. What this system does"
+    ],
+    [
+      18,
+      "I. What this system does"
+    ],
+    [
+      22,
+      "II. Component list"
+    ],
+    [
+      24,
+      "II. Component list"
+    ],
+    [
+      26,
+      "II. Component list"
+    ],
+    [
+      27,
+      "II. Component list"
+    ],
+    [
+      28,
+      "II. Component list"
+    ],
+    [
+      29,
+      "II. Component list"
+    ],
+    [
+      30,
+      "II. Component list"
+    ],
+    [
+      31,
+      "II. Component list"
+    ],
+    [
+      32,
+      "II. Component list"
+    ],
+    [
+      33,
+      "II. Component list"
+    ],
+    [
+      35,
+      "II. Component list"
+    ],
+    [
+      39,
+      "III. Architecture diagram"
+    ],
+    [
+      41,
+      "III. Architecture diagram"
+    ],
+    [
+      68,
+      "III. Architecture diagram"
+    ],
+    [
+      70,
+      "III. Architecture diagram"
+    ],
+    [
+      71,
+      "III. Architecture diagram"
+    ],
+    [
+      72,
+      "III. Architecture diagram"
+    ],
+    [
+      74,
+      "III. Architecture diagram"
+    ],
+    [
+      78,
+      "IV. Four contracts across components"
+    ],
+    [
+      80,
+      "IV. Four contracts across components"
+    ],
+    [
+      82,
+      "Contract 1 · The shape of an \"item\""
+    ],
+    [
+      84,
+      "Contract 1 · The shape of an \"item\""
+    ],
+    [
+      89,
+      "Contract 1 · The shape of an \"item\""
+    ],
+    [
+      90,
+      "Contract 1 · The shape of an \"item\""
+    ],
+    [
+      91,
+      "Contract 1 · The shape of an \"item\""
+    ],
+    [
+      93,
+      "Contract 2 · State machine"
+    ],
+    [
+      95,
+      "Contract 2 · State machine"
+    ],
+    [
+      106,
+      "Contract 2 · State machine"
+    ],
+    [
+      107,
+      "Contract 2 · State machine"
+    ],
+    [
+      108,
+      "Contract 2 · State machine"
+    ],
+    [
+      110,
+      "Contract 3 · Body never hits the server disk (one exception)"
+    ],
+    [
+      112,
+      "Contract 3 · Body never hits the server disk (one exception)"
+    ],
+    [
+      113,
+      "Contract 3 · Body never hits the server disk (one exception)"
+    ],
+    [
+      115,
+      "Contract 3 · Body never hits the server disk (one exception)"
+    ],
+    [
+      117,
+      "Contract 4 · External input never enters operation tier"
+    ],
+    [
+      119,
+      "Contract 4 · External input never enters operation tier"
+    ],
+    [
+      123,
+      "V. Tech stack selection"
+    ],
+    [
+      125,
+      "V. Tech stack selection"
+    ],
+    [
+      127,
+      "V. Tech stack selection"
+    ],
+    [
+      128,
+      "V. Tech stack selection"
+    ],
+    [
+      129,
+      "V. Tech stack selection"
+    ],
+    [
+      130,
+      "V. Tech stack selection"
+    ],
+    [
+      132,
+      "V. Tech stack selection"
+    ],
+    [
+      136,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      138,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      140,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      141,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      142,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      143,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      144,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      145,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      147,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      149,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      151,
+      "VI. Milestones and corresponding components"
+    ],
+    [
+      155,
+      "VII. Global open items"
+    ],
+    [
+      157,
+      "VII. Global open items"
+    ],
+    [
+      159,
+      "VII. Global open items"
+    ],
+    [
+      160,
+      "VII. Global open items"
+    ],
+    [
+      161,
+      "VII. Global open items"
+    ],
+    [
+      162,
+      "VII. Global open items"
+    ]
+  ]
+}

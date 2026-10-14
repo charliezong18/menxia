@@ -1,0 +1,1887 @@
+{
+  "format": 1,
+  "source": "corpus/real-chinese-official-titles-outline.zh-CN.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "《中国历代官名变迁史》章节要点提纲"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "约 10.8 万字中文教材。专题纵贯为主体，断代速查表作附录。"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "↑ 这是全书第一张图，也是最重要的一张。 上半是机制，下半是史上五轮实例——每一轮的\"新近侍\"，正是上一轮被架空的那个机构的接班人。第 3–6 章分别拆解其中四轮。全书 23 张图都按这个规格出。"
+    },
+    {
+      "i": 5,
+      "type": "heading",
+      "tag": "h2",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": null,
+      "level": 2,
+      "text": "全书主线"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": null,
+      "text": "官名变迁不是名词更替，是皇权与官僚制反复博弈留下的化石。三条机制贯穿全书，每章末尾须明确回扣至少一条："
+    },
+    {
+      "i": 7,
+      "type": "list_item",
+      "tag": "li",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": null,
+      "text": "内朝侵夺外朝 —— 近侍因亲近获权 → 转为正式官署 → 官僚化后与皇帝疏远 → 皇帝再启用新的近侍。链条：尚书台 → 中书门下 → 翰林学士 → 内阁 → 军机处"
+    },
+    {
+      "i": 8,
+      "type": "list_item",
+      "tag": "li",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "差遣侵夺本官 —— 名实分离，官、职、差遣三套系统各走各的。例证：录尚书事、同中书门下平章事、宋代寄禄官"
+    },
+    {
+      "i": 9,
+      "type": "list_item",
+      "tag": "li",
+      "line": 19,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "分权制衡 —— 一职拆多人、多机构互相牵制。例证：二府三司、参知政事、督抚并置"
+    },
+    {
+      "i": 10,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": null,
+      "text": "成功标准：读者读完能拿这三把钥匙，自行解释书中未讲到的任一官名。"
+    },
+    {
+      "i": 11,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": null,
+      "text": "明确不覆盖：西夏、吐蕃、南诏等区域政权的官制；俸禄数额与员额编制；史料版本考异与各家争议。"
+    },
+    {
+      "i": 12,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 25,
+      "lineEnd": 25,
+      "parent": null,
+      "text": "\n2026-07-29 修订：辽金元的官制原定排除，现收回，与清合并为第 15 章《二元官制》。理由见该章开头。收回的是专题而非朝代——不设\"元代章\"，因为那会破坏专题纵贯的体例。\n"
+    },
+    {
+      "i": 13,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 25,
+      "lineEnd": 25,
+      "parent": 12,
+      "text": "2026-07-29 修订：辽金元的官制原定排除，现收回，与清合并为第 15 章《二元官制》。理由见该章开头。收回的是专题而非朝代——不设\"元代章\"，因为那会破坏专题纵贯的体例。"
+    },
+    {
+      "i": 14,
+      "type": "heading",
+      "tag": "h2",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": null,
+      "level": 2,
+      "text": "配图约定"
+    },
+    {
+      "i": 15,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": null,
+      "text": "能出图的地方一律出图。 采用双轨制："
+    },
+    {
+      "i": 16,
+      "type": "list_item",
+      "tag": "li",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": null,
+      "text": "源码：mermaid，存 assets/guanzhi/<图名>.mmd。可 grep、可改、可 diff，改一个官名不必重画"
+    },
+    {
+      "i": 17,
+      "type": "list_item",
+      "tag": "li",
+      "line": 34,
+      "lineEnd": 35,
+      "parent": null,
+      "text": "成品：本地渲染成 PNG，一并提交进 assets/guanzhi/，正文用 ![]() 引用"
+    },
+    {
+      "i": 18,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 36,
+      "lineEnd": 36,
+      "parent": null,
+      "text": "正文引用的是 PNG，所以任何阅读端都能看到图，不依赖它支不支持 mermaid（朱批台目前不支持）。源码留在仓里保证可维护性。渲染命令：npx @mermaid-js/mermaid-cli -i x.mmd -o x.png -b white -s 3。"
+    },
+    {
+      "i": 19,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 38,
+      "lineEnd": 38,
+      "parent": null,
+      "text": "原则：机制出图，名词出表。 凡涉及\"谁管谁\"\"文书往哪走\"\"这一轮谁架空了谁\"，画图；凡是并列的名目清单，用表。每章至少一图。"
+    },
+    {
+      "i": 20,
+      "type": "heading",
+      "tag": "h3",
+      "line": 40,
+      "lineEnd": 40,
+      "parent": null,
+      "level": 3,
+      "text": "逐章配图清单"
+    },
+    {
+      "i": 21,
+      "type": "table",
+      "tag": "table",
+      "line": 42,
+      "lineEnd": 66,
+      "parent": null,
+      "text": "\n\n\n章\n图\n类型\n\n\n\n\n1\n内外朝循环总图 —— 一个循环，五个历史实例标在环上（尚书台/中书门下/翰林学士/内阁/军机处）。全书第一张也是最重要的一张\n循环图\n\n\n1\n本官 / 职事 / 差遣三套系统的关系\n关系图\n\n\n2\n三公演变三段：秦汉（丞相·太尉·御史大夫）→ 西汉末（大司马·大司徒·大司空）→ 东汉（太尉·司徒·司空）\n演变图\n\n\n3\n尚书台文书流转图 —— 章奏上行、诏令下行同走一条通道，画出\"卡口\"何以致命\n流程图\n\n\n4\n三省文书流转：中书出令 → 门下封驳 → 尚书执行（含封驳回退箭头）\n流程图\n\n\n4\n宰相名号演变：三省长官 → 同三品 → 同平章事\n演变图\n\n\n5\n宋代二府三司结构\n结构图\n\n\n5\n官 / 职 / 差遣三分拆解：拿一个真实衔名逐字段标注\n拆解图\n\n\n6\n票拟—批红对掌图 —— 内阁与司礼监如何互为制约\n结构图\n\n\n6\n明清中枢演变：中书省 →（废）→ 内阁 → 军机处\n演变图\n\n\n7\n秦郡三长官分权：守 · 尉 · 监\n结构图\n\n\n8\n监察官行政化四轮循环图 —— 刺史 / 节度使 / 督抚各走一遍同一循环。全书最该出图的一张\n循环图\n\n\n9\n行省层级演变：元行省 → 明三司 → 清督抚凌驾三司\n演变图\n\n\n10\n选官权归属迁移：地方豪族 → 中正官 → 中央考试机构\n演变图\n\n\n11\n一个官员的四套坐标拆解 —— 取一条真实史料衔名，逐字段标出哪个是俸禄、哪个是职务、哪个是荣誉\n拆解图\n\n\n12\n台谏分合：御史（对下）与谏官（对上）两途，及宋代合流\n关系图\n\n\n13\n财政公私二分：大司农 / 少府 → 户部 / 内务府\n结构图\n\n\n13\n宋代调兵与统兵分离：枢密院 ↔ 三衙\n结构图\n\n\n14\n明代内阁—司礼监对掌（与第 6 章同图复用，视角切换到宦官侧）\n结构图\n\n\n15\n二元官制四家对照 —— 辽南北面官 / 金猛安谋克 / 元四等人与达鲁花赤 / 清满汉复职，同一道题的四个答案并排\n对照图\n\n\n15\n元代中书省一省制 vs 唐宋三省\n对照图\n\n\n16\n六部 → 十一部对照\n对照图\n\n\n附录 A\n六张职官结构树：秦汉 / 唐 / 宋 / 元 / 明 / 清\n结构树\n\n\n"
+    },
+    {
+      "i": 22,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 42,
+      "lineEnd": 42,
+      "parent": 21,
+      "text": "\n章\n图\n类型\n"
+    },
+    {
+      "i": 23,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 44,
+      "lineEnd": 44,
+      "parent": 21,
+      "text": "\n1\n内外朝循环总图 —— 一个循环，五个历史实例标在环上（尚书台/中书门下/翰林学士/内阁/军机处）。全书第一张也是最重要的一张\n循环图\n"
+    },
+    {
+      "i": 24,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 45,
+      "lineEnd": 45,
+      "parent": 21,
+      "text": "\n1\n本官 / 职事 / 差遣三套系统的关系\n关系图\n"
+    },
+    {
+      "i": 25,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 46,
+      "lineEnd": 46,
+      "parent": 21,
+      "text": "\n2\n三公演变三段：秦汉（丞相·太尉·御史大夫）→ 西汉末（大司马·大司徒·大司空）→ 东汉（太尉·司徒·司空）\n演变图\n"
+    },
+    {
+      "i": 26,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": 21,
+      "text": "\n3\n尚书台文书流转图 —— 章奏上行、诏令下行同走一条通道，画出\"卡口\"何以致命\n流程图\n"
+    },
+    {
+      "i": 27,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 48,
+      "lineEnd": 48,
+      "parent": 21,
+      "text": "\n4\n三省文书流转：中书出令 → 门下封驳 → 尚书执行（含封驳回退箭头）\n流程图\n"
+    },
+    {
+      "i": 28,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": 21,
+      "text": "\n4\n宰相名号演变：三省长官 → 同三品 → 同平章事\n演变图\n"
+    },
+    {
+      "i": 29,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 50,
+      "lineEnd": 50,
+      "parent": 21,
+      "text": "\n5\n宋代二府三司结构\n结构图\n"
+    },
+    {
+      "i": 30,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 51,
+      "lineEnd": 51,
+      "parent": 21,
+      "text": "\n5\n官 / 职 / 差遣三分拆解：拿一个真实衔名逐字段标注\n拆解图\n"
+    },
+    {
+      "i": 31,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 52,
+      "lineEnd": 52,
+      "parent": 21,
+      "text": "\n6\n票拟—批红对掌图 —— 内阁与司礼监如何互为制约\n结构图\n"
+    },
+    {
+      "i": 32,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 53,
+      "lineEnd": 53,
+      "parent": 21,
+      "text": "\n6\n明清中枢演变：中书省 →（废）→ 内阁 → 军机处\n演变图\n"
+    },
+    {
+      "i": 33,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": 21,
+      "text": "\n7\n秦郡三长官分权：守 · 尉 · 监\n结构图\n"
+    },
+    {
+      "i": 34,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 55,
+      "lineEnd": 55,
+      "parent": 21,
+      "text": "\n8\n监察官行政化四轮循环图 —— 刺史 / 节度使 / 督抚各走一遍同一循环。全书最该出图的一张\n循环图\n"
+    },
+    {
+      "i": 35,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 56,
+      "lineEnd": 56,
+      "parent": 21,
+      "text": "\n9\n行省层级演变：元行省 → 明三司 → 清督抚凌驾三司\n演变图\n"
+    },
+    {
+      "i": 36,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 57,
+      "lineEnd": 57,
+      "parent": 21,
+      "text": "\n10\n选官权归属迁移：地方豪族 → 中正官 → 中央考试机构\n演变图\n"
+    },
+    {
+      "i": 37,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 58,
+      "lineEnd": 58,
+      "parent": 21,
+      "text": "\n11\n一个官员的四套坐标拆解 —— 取一条真实史料衔名，逐字段标出哪个是俸禄、哪个是职务、哪个是荣誉\n拆解图\n"
+    },
+    {
+      "i": 38,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 59,
+      "lineEnd": 59,
+      "parent": 21,
+      "text": "\n12\n台谏分合：御史（对下）与谏官（对上）两途，及宋代合流\n关系图\n"
+    },
+    {
+      "i": 39,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": 21,
+      "text": "\n13\n财政公私二分：大司农 / 少府 → 户部 / 内务府\n结构图\n"
+    },
+    {
+      "i": 40,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 61,
+      "lineEnd": 61,
+      "parent": 21,
+      "text": "\n13\n宋代调兵与统兵分离：枢密院 ↔ 三衙\n结构图\n"
+    },
+    {
+      "i": 41,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": 21,
+      "text": "\n14\n明代内阁—司礼监对掌（与第 6 章同图复用，视角切换到宦官侧）\n结构图\n"
+    },
+    {
+      "i": 42,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 63,
+      "lineEnd": 63,
+      "parent": 21,
+      "text": "\n15\n二元官制四家对照 —— 辽南北面官 / 金猛安谋克 / 元四等人与达鲁花赤 / 清满汉复职，同一道题的四个答案并排\n对照图\n"
+    },
+    {
+      "i": 43,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 64,
+      "lineEnd": 64,
+      "parent": 21,
+      "text": "\n15\n元代中书省一省制 vs 唐宋三省\n对照图\n"
+    },
+    {
+      "i": 44,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 65,
+      "lineEnd": 65,
+      "parent": 21,
+      "text": "\n16\n六部 → 十一部对照\n对照图\n"
+    },
+    {
+      "i": 45,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 66,
+      "lineEnd": 66,
+      "parent": 21,
+      "text": "\n附录 A\n六张职官结构树：秦汉 / 唐 / 宋 / 元 / 明 / 清\n结构树\n"
+    },
+    {
+      "i": 46,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 68,
+      "lineEnd": 68,
+      "parent": null,
+      "text": "成品样例见本文开头那张图（第 1 章内外朝循环总图），源码在 assets/guanzhi/ch01-inner-outer-cycle.zh-CN.mmd。"
+    },
+    {
+      "i": 47,
+      "type": "heading",
+      "tag": "h1",
+      "line": 72,
+      "lineEnd": 72,
+      "parent": null,
+      "level": 1,
+      "text": "第一编 总论"
+    },
+    {
+      "i": 48,
+      "type": "heading",
+      "tag": "h2",
+      "line": 74,
+      "lineEnd": 74,
+      "parent": null,
+      "level": 2,
+      "text": "第 1 章 读官名的三把钥匙（5,000 字）"
+    },
+    {
+      "i": 49,
+      "type": "list_item",
+      "tag": "li",
+      "line": 76,
+      "lineEnd": 76,
+      "parent": null,
+      "text": "三套并行系统：本官（定品秩俸禄）、职事官（定实际职务）、差遣/使职（定临时授权）。用唐宋\"寄禄官 vs 差遣\"说明三者可完全脱钩。举例：宋代\"尚书右仆射\"是本官定俸禄，\"同中书门下平章事\"才是真宰相职权"
+    },
+    {
+      "i": 50,
+      "type": "list_item",
+      "tag": "li",
+      "line": 77,
+      "lineEnd": 77,
+      "parent": null,
+      "text": "内外朝循环：给出完整链条与机制，各环节细节留给第 3–6 章"
+    },
+    {
+      "i": 51,
+      "type": "list_item",
+      "tag": "li",
+      "line": 78,
+      "lineEnd": 78,
+      "parent": null,
+      "text": "名实分离：太尉名为最高军事长官却极少实际掌兵；刺史本为六百石监察官却终成一方行政长官"
+    },
+    {
+      "i": 52,
+      "type": "list_item",
+      "tag": "li",
+      "line": 79,
+      "lineEnd": 80,
+      "parent": null,
+      "text": "四步检查法：这个官名属于哪套系统？内朝还是外朝出身？字面义与实职差多远？旁边有没有被拆分出的同僚？"
+    },
+    {
+      "i": 53,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 81,
+      "lineEnd": 81,
+      "parent": null,
+      "text": "边界：本章是方法论总论，不做任何朝代的制度细述，只举一句话级别的例证。"
+    },
+    {
+      "i": 54,
+      "type": "heading",
+      "tag": "h1",
+      "line": 85,
+      "lineEnd": 85,
+      "parent": null,
+      "level": 1,
+      "text": "第二编 中枢：宰相的一千次死亡"
+    },
+    {
+      "i": 55,
+      "type": "heading",
+      "tag": "h2",
+      "line": 87,
+      "lineEnd": 87,
+      "parent": null,
+      "level": 2,
+      "text": "第 2 章 从家臣到百官之首（7,000 字）"
+    },
+    {
+      "i": 56,
+      "type": "list_item",
+      "tag": "li",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "text": "词源：宰本为家臣，相本为傧相，尹为治事之官。三者都从私人服务转为公共职务——官僚制起源的通例"
+    },
+    {
+      "i": 57,
+      "type": "list_item",
+      "tag": "li",
+      "line": 90,
+      "lineEnd": 90,
+      "parent": null,
+      "text": "春秋战国：齐相、楚令尹、秦庶长与相邦"
+    },
+    {
+      "i": 58,
+      "type": "list_item",
+      "tag": "li",
+      "line": 91,
+      "lineEnd": 91,
+      "parent": null,
+      "text": "秦汉三公：丞相、太尉、御史大夫的分工。太尉时置时废、多为虚衔，实际是丞相与御史大夫的\"二府\"格局"
+    },
+    {
+      "i": 59,
+      "type": "list_item",
+      "tag": "li",
+      "line": 92,
+      "lineEnd": 92,
+      "parent": null,
+      "text": "西汉后期改制：御史大夫改大司空，丞相改大司徒，汉武帝已设大司马冠将军号，形成大司马、大司徒、大司空"
+    },
+    {
+      "i": 60,
+      "type": "list_item",
+      "tag": "li",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": null,
+      "text": "东汉：去\"大\"字定为太尉、司徒、司空。太尉主兵事考课，司徒主民事教化，司空主水土营建"
+    },
+    {
+      "i": 61,
+      "type": "list_item",
+      "tag": "li",
+      "line": 94,
+      "lineEnd": 95,
+      "parent": null,
+      "text": "三公虚化的先声：\"虽置三公，事归台阁\""
+    },
+    {
+      "i": 62,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 96,
+      "lineEnd": 96,
+      "parent": null,
+      "text": "边界：讲到\"三公已被架空\"为止，尚书台机制与录尚书事的权力性质全部留给第 3 章。"
+    },
+    {
+      "i": 63,
+      "type": "heading",
+      "tag": "h2",
+      "line": 98,
+      "lineEnd": 98,
+      "parent": null,
+      "level": 2,
+      "text": "第 3 章 内朝的第一次胜利（7,000 字）"
+    },
+    {
+      "i": 64,
+      "type": "list_item",
+      "tag": "li",
+      "line": 100,
+      "lineEnd": 100,
+      "parent": null,
+      "text": "尚书的出身：少府属官，秩六百石，掌宫中文书。起点极低是关键"
+    },
+    {
+      "i": 65,
+      "type": "list_item",
+      "tag": "li",
+      "line": 101,
+      "lineEnd": 101,
+      "parent": null,
+      "text": "汉武帝的中外朝：为绕开外朝丞相，决策移入中朝"
+    },
+    {
+      "i": 66,
+      "type": "list_item",
+      "tag": "li",
+      "line": 102,
+      "lineEnd": 102,
+      "parent": null,
+      "text": "光武帝定制：\"政不任下，虽置三公，事归台阁\""
+    },
+    {
+      "i": 67,
+      "type": "list_item",
+      "tag": "li",
+      "line": 103,
+      "lineEnd": 103,
+      "parent": null,
+      "text": "权力来源是文书唯一通道：章奏上行必经尚书，诏令下行必经尚书。控制进出口即控制政令——全书反复出现的机制，须讲透"
+    },
+    {
+      "i": 68,
+      "type": "list_item",
+      "tag": "li",
+      "line": 104,
+      "lineEnd": 104,
+      "parent": null,
+      "text": "录尚书事：不是官职，是加官/差遣。本官可为太傅、大将军、三公。源头是霍光以大司马大将军领尚书事辅政"
+    },
+    {
+      "i": 69,
+      "type": "list_item",
+      "tag": "li",
+      "line": 105,
+      "lineEnd": 105,
+      "parent": null,
+      "text": "制度后果：幼主即位 →「太傅录尚书事 + 大将军录尚书事」成为标准配置 → 外戚专权。宦官的对抗方式是用中常侍截断尚书台通向皇帝的通道"
+    },
+    {
+      "i": 70,
+      "type": "list_item",
+      "tag": "li",
+      "line": 106,
+      "lineEnd": 107,
+      "parent": null,
+      "text": "录尚书事与篡位的关联：霍光、梁冀、曹操、司马懿的共同前置步骤"
+    },
+    {
+      "i": 71,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 108,
+      "lineEnd": 108,
+      "parent": null,
+      "text": "边界：不展开三省形成（第 4 章）。不展开宦官制度本身（第 14 章），只讲通道之争。"
+    },
+    {
+      "i": 72,
+      "type": "heading",
+      "tag": "h2",
+      "line": 110,
+      "lineEnd": 110,
+      "parent": null,
+      "level": 2,
+      "text": "第 4 章 三省的形成与政事堂（7,000 字）"
+    },
+    {
+      "i": 73,
+      "type": "list_item",
+      "tag": "li",
+      "line": 112,
+      "lineEnd": 112,
+      "parent": null,
+      "text": "魏晋：中书省从尚书台分出，门下省从侍中寺演化。规律：新的近侍机构再次架空已官僚化的尚书台——内朝侵夺外朝的第二轮"
+    },
+    {
+      "i": 74,
+      "type": "list_item",
+      "tag": "li",
+      "line": 113,
+      "lineEnd": 113,
+      "parent": null,
+      "text": "隋唐定型：中书出令、门下封驳、尚书执行"
+    },
+    {
+      "i": 75,
+      "type": "list_item",
+      "tag": "li",
+      "line": 114,
+      "lineEnd": 114,
+      "parent": null,
+      "text": "政事堂：三省长官议政之所，唐玄宗时张说改为\"中书门下\"并置五房"
+    },
+    {
+      "i": 76,
+      "type": "list_item",
+      "tag": "li",
+      "line": 115,
+      "lineEnd": 115,
+      "parent": null,
+      "text": "宰相名号碎片化：尚书令因太宗曾任而不置；\"同中书门下三品\"因中书令侍中为正三品而得名；后因侍郎入相资历浅，另拟\"同中书门下平章事\""
+    },
+    {
+      "i": 77,
+      "type": "list_item",
+      "tag": "li",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": null,
+      "text": "关键机制：同平章事本身无品秩，品级随本官——位不高而权重，随时可收回。这是\"差遣侵夺本官\"的成熟形态"
+    },
+    {
+      "i": 78,
+      "type": "list_item",
+      "tag": "li",
+      "line": 117,
+      "lineEnd": 118,
+      "parent": null,
+      "text": "与录尚书事的对照：一个是总领一台（集权于一人），一个是入席议政（分权于多人）。这个对照是本章论点核心"
+    },
+    {
+      "i": 79,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 119,
+      "lineEnd": 119,
+      "parent": null,
+      "text": "边界：不讲翰林学士与使职（第 5 章）。不讲科举（第 10 章）。"
+    },
+    {
+      "i": 80,
+      "type": "heading",
+      "tag": "h2",
+      "line": 121,
+      "lineEnd": 121,
+      "parent": null,
+      "level": 2,
+      "text": "第 5 章 使职差遣的时代（7,000 字）"
+    },
+    {
+      "i": 81,
+      "type": "list_item",
+      "tag": "li",
+      "line": 123,
+      "lineEnd": 123,
+      "parent": null,
+      "text": "唐中后期使职兴起：翰林学士称\"内相\"，分中书舍人之权——内朝侵夺外朝的第三轮"
+    },
+    {
+      "i": 82,
+      "type": "list_item",
+      "tag": "li",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": null,
+      "text": "节度使、盐铁使、转运使：使职如何侵蚀常规职官体系"
+    },
+    {
+      "i": 83,
+      "type": "list_item",
+      "tag": "li",
+      "line": 125,
+      "lineEnd": 125,
+      "parent": null,
+      "text": "二府：枢密使掌军政，与中书门下并称东府西府"
+    },
+    {
+      "i": 84,
+      "type": "list_item",
+      "tag": "li",
+      "line": 126,
+      "lineEnd": 126,
+      "parent": null,
+      "text": "三司：盐铁、度支、户部掌财政，长官称\"计相\""
+    },
+    {
+      "i": 85,
+      "type": "list_item",
+      "tag": "li",
+      "line": 127,
+      "lineEnd": 127,
+      "parent": null,
+      "text": "参知政事：为宰相副手。初期\"不宣制、不押班、不知印、不升政事堂\"，俸禄半于宰相；后诏令同升政事堂、轮流押班知印，\"以分宰相之权\""
+    },
+    {
+      "i": 86,
+      "type": "list_item",
+      "tag": "li",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": null,
+      "text": "宋代官、职、差遣三分：本官（寄禄官）定俸禄，职（馆职）为荣衔，差遣才是实际职务。\"知某州军州事\"式命名的由来"
+    },
+    {
+      "i": 87,
+      "type": "list_item",
+      "tag": "li",
+      "line": 129,
+      "lineEnd": 130,
+      "parent": null,
+      "text": "元丰改制：恢复三省本官，参知政事罢；南宋复置"
+    },
+    {
+      "i": 88,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 131,
+      "lineEnd": 131,
+      "parent": null,
+      "text": "边界：不讲财政机构的纵向演变（第 13 章），只讲三司在中枢结构中的位置。"
+    },
+    {
+      "i": 89,
+      "type": "heading",
+      "tag": "h2",
+      "line": 133,
+      "lineEnd": 133,
+      "parent": null,
+      "level": 2,
+      "text": "第 6 章 废丞相之后（7,000 字）"
+    },
+    {
+      "i": 90,
+      "type": "list_item",
+      "tag": "li",
+      "line": 135,
+      "lineEnd": 135,
+      "parent": null,
+      "text": "明太祖废丞相：因胡惟庸案罢中书省，六部直属皇帝。延续一千六百年的宰相制度终结"
+    },
+    {
+      "i": 91,
+      "type": "list_item",
+      "tag": "li",
+      "line": 136,
+      "lineEnd": 136,
+      "parent": null,
+      "text": "内阁的形成：置殿阁大学士备顾问，秩仅五品；永乐时入直文渊阁参预机务。内阁始终无法定宰相名分——以低品近侍行宰相之实，最典型的一轮"
+    },
+    {
+      "i": 92,
+      "type": "list_item",
+      "tag": "li",
+      "line": 137,
+      "lineEnd": 137,
+      "parent": null,
+      "text": "票拟与批红：内阁票拟，司礼监批红。皇权把决策权一分为二互相牵制"
+    },
+    {
+      "i": 93,
+      "type": "list_item",
+      "tag": "li",
+      "line": 138,
+      "lineEnd": 138,
+      "parent": null,
+      "text": "首辅：严嵩、张居正权重，但权力来源仍是皇帝私授，非制度保障——张居正身后被清算即为明证"
+    },
+    {
+      "i": 94,
+      "type": "list_item",
+      "tag": "li",
+      "line": 139,
+      "lineEnd": 139,
+      "parent": null,
+      "text": "清代军机处：因西北用兵而设。无定员、无专署、无属吏，军机大臣为兼职差遣——差遣制的终极形态"
+    },
+    {
+      "i": 95,
+      "type": "list_item",
+      "tag": "li",
+      "line": 140,
+      "lineEnd": 141,
+      "parent": null,
+      "text": "内阁在清代降为处理例行公文的机构"
+    },
+    {
+      "i": 96,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 142,
+      "lineEnd": 142,
+      "parent": null,
+      "text": "边界：不展开宦官制度沿革（第 14 章）。不展开六部职掌（第 13 章）。"
+    },
+    {
+      "i": 97,
+      "type": "heading",
+      "tag": "h1",
+      "line": 146,
+      "lineEnd": 146,
+      "parent": null,
+      "level": 1,
+      "text": "第三编 地方"
+    },
+    {
+      "i": 98,
+      "type": "heading",
+      "tag": "h2",
+      "line": 148,
+      "lineEnd": 148,
+      "parent": null,
+      "level": 2,
+      "text": "第 7 章 郡县与封建之争（7,000 字）"
+    },
+    {
+      "i": 99,
+      "type": "list_item",
+      "tag": "li",
+      "line": 150,
+      "lineEnd": 150,
+      "parent": null,
+      "text": "分封制下的地方：诸侯、卿大夫的采邑，不是行政区"
+    },
+    {
+      "i": 100,
+      "type": "list_item",
+      "tag": "li",
+      "line": 151,
+      "lineEnd": 151,
+      "parent": null,
+      "text": "郡县起源：县多设于新征服之地，直属国君；郡初为边地军管区，地位低于县；战国时郡下辖县"
+    },
+    {
+      "i": 101,
+      "type": "list_item",
+      "tag": "li",
+      "line": 152,
+      "lineEnd": 152,
+      "parent": null,
+      "text": "秦废封建行郡县：李斯与淳于越之争。郡设守、尉、监——行政、军事、监察三分，全书\"分权制衡\"的最早范例"
+    },
+    {
+      "i": 102,
+      "type": "list_item",
+      "tag": "li",
+      "line": 153,
+      "lineEnd": 153,
+      "parent": null,
+      "text": "汉初郡国并行：七国之乱后削藩，推恩令瓦解王国"
+    },
+    {
+      "i": 103,
+      "type": "list_item",
+      "tag": "li",
+      "line": 154,
+      "lineEnd": 154,
+      "parent": null,
+      "text": "县级以下：乡、亭、里与三老、啬夫、游徼"
+    },
+    {
+      "i": 104,
+      "type": "list_item",
+      "tag": "li",
+      "line": 155,
+      "lineEnd": 156,
+      "parent": null,
+      "text": "辟署制：守、令由中央任命，掾属由长官自辟——理解汉代地方权力的关键，也是九品中正制的土壤"
+    },
+    {
+      "i": 105,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 157,
+      "lineEnd": 157,
+      "parent": null,
+      "text": "边界：刺史与监察系统留给第 8 章。选官制度留给第 10 章。"
+    },
+    {
+      "i": 106,
+      "type": "heading",
+      "tag": "h2",
+      "line": 159,
+      "lineEnd": 159,
+      "parent": null,
+      "level": 2,
+      "text": "第 8 章 监察官如何变成行政官（7,000 字）"
+    },
+    {
+      "i": 107,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 161,
+      "lineEnd": 161,
+      "parent": null,
+      "text": "本章是全书最干净的一条纵线，须让读者看到同一规律重复四次：朝廷派出监察官 → 监察官常驻 → 常驻者攫取行政权 → 变成正式地方长官 → 朝廷再派新的监察官。"
+    },
+    {
+      "i": 108,
+      "type": "list_item",
+      "tag": "li",
+      "line": 163,
+      "lineEnd": 163,
+      "parent": null,
+      "text": "刺史：置十三部刺史，秩六百石，以\"六条问事\"监二千石郡守。低秩监高秩是设计的关键"
+    },
+    {
+      "i": 109,
+      "type": "list_item",
+      "tag": "li",
+      "line": 164,
+      "lineEnd": 164,
+      "parent": null,
+      "text": "州牧：改刺史为州牧秩二千石；后议复置州牧、以重臣出任——监察区变成行政区，直接促成东汉末割据"
+    },
+    {
+      "i": 110,
+      "type": "list_item",
+      "tag": "li",
+      "line": 165,
+      "lineEnd": 165,
+      "parent": null,
+      "text": "都督、总管：魏晋至隋，军事职务的地方化"
+    },
+    {
+      "i": 111,
+      "type": "list_item",
+      "tag": "li",
+      "line": 166,
+      "lineEnd": 166,
+      "parent": null,
+      "text": "节度使：兼采访处置使后军政财一把抓，酿成安史之乱与藩镇"
+    },
+    {
+      "i": 112,
+      "type": "list_item",
+      "tag": "li",
+      "line": 167,
+      "lineEnd": 167,
+      "parent": null,
+      "text": "宋代对策：知州加通判牵制；帅（安抚）、漕（转运）、宪（提点刑狱）、仓（提举常平）四司分权互不统属——分权制衡到了极致，代价是行政效率与边防能力"
+    },
+    {
+      "i": 113,
+      "type": "list_item",
+      "tag": "li",
+      "line": 168,
+      "lineEnd": 169,
+      "parent": null,
+      "text": "明清督抚：本为中央临时派出，渐成常设，清代成为固定地方最高长官——同一规律的最后一轮"
+    },
+    {
+      "i": 114,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 170,
+      "lineEnd": 170,
+      "parent": null,
+      "text": "边界：行省制度留给第 9 章。中央御史台制度留给第 12 章。"
+    },
+    {
+      "i": 115,
+      "type": "heading",
+      "tag": "h2",
+      "line": 172,
+      "lineEnd": 172,
+      "parent": null,
+      "level": 2,
+      "text": "第 9 章 行省的诞生（6,000 字）"
+    },
+    {
+      "i": 116,
+      "type": "list_item",
+      "tag": "li",
+      "line": 174,
+      "lineEnd": 174,
+      "parent": null,
+      "text": "\"行省\"本义：全称\"行中书省\"，是中书省的派出机构，是差遣不是政区"
+    },
+    {
+      "i": 117,
+      "type": "list_item",
+      "tag": "li",
+      "line": 175,
+      "lineEnd": 175,
+      "parent": null,
+      "text": "元代行省：长官为丞相、平章政事——中央官名直接下放，是\"派出机构\"性质的直接证据"
+    },
+    {
+      "i": 118,
+      "type": "list_item",
+      "tag": "li",
+      "line": 176,
+      "lineEnd": 176,
+      "parent": null,
+      "text": "从临时到常设：派出机构固化为一级政区，与第 8 章规律同构"
+    },
+    {
+      "i": 119,
+      "type": "list_item",
+      "tag": "li",
+      "line": 177,
+      "lineEnd": 177,
+      "parent": null,
+      "text": "明代三司：改行中书省为承宣布政使司，与提刑按察使司、都指挥使司分掌民政、司法、军事。\"省\"作为俗称保留"
+    },
+    {
+      "i": 120,
+      "type": "list_item",
+      "tag": "li",
+      "line": 178,
+      "lineEnd": 178,
+      "parent": null,
+      "text": "明清督抚凌驾三司之上——第 8 章的结论在此收口"
+    },
+    {
+      "i": 121,
+      "type": "list_item",
+      "tag": "li",
+      "line": 179,
+      "lineEnd": 180,
+      "parent": null,
+      "text": "犬牙相入：元代行省划界故意打破山川形便以防割据"
+    },
+    {
+      "i": 122,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 181,
+      "lineEnd": 181,
+      "parent": null,
+      "text": "边界：督抚制度的演变主线在第 8 章，本章只讲三司与督抚的层级关系。"
+    },
+    {
+      "i": 123,
+      "type": "heading",
+      "tag": "h1",
+      "line": 185,
+      "lineEnd": 185,
+      "parent": null,
+      "level": 1,
+      "text": "第四编 选官与身份"
+    },
+    {
+      "i": 124,
+      "type": "heading",
+      "tag": "h2",
+      "line": 187,
+      "lineEnd": 187,
+      "parent": null,
+      "level": 2,
+      "text": "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    },
+    {
+      "i": 125,
+      "type": "list_item",
+      "tag": "li",
+      "line": 189,
+      "lineEnd": 189,
+      "parent": null,
+      "text": "世官制与\"世卿世禄\"，军功爵（商鞅二十等爵）的冲击"
+    },
+    {
+      "i": 126,
+      "type": "list_item",
+      "tag": "li",
+      "line": 190,
+      "lineEnd": 190,
+      "parent": null,
+      "text": "察举：诏举贤良方正 → 令郡国举孝廉成为常制。科目有孝廉、茂才、贤良方正、明经等。弊病：举主与被举者结成故吏关系，形成门生故吏网络"
+    },
+    {
+      "i": 127,
+      "type": "list_item",
+      "tag": "li",
+      "line": 191,
+      "lineEnd": 191,
+      "parent": null,
+      "text": "九品中正：陈群创议，州郡设中正评人物为九品，吏部据以授官。本意是战乱中乡评失效的补救，结果是\"上品无寒门，下品无势族\"——门阀制度的制度基础"
+    },
+    {
+      "i": 128,
+      "type": "list_item",
+      "tag": "li",
+      "line": 192,
+      "lineEnd": 192,
+      "parent": null,
+      "text": "科举：始建进士科（确切年份学界有争议，须注明）。唐代常科与制科；宋代确立殿试、糊名、誊录——把选官权彻底收归皇帝"
+    },
+    {
+      "i": 129,
+      "type": "list_item",
+      "tag": "li",
+      "line": 193,
+      "lineEnd": 193,
+      "parent": null,
+      "text": "明清八股与三级考试（乡试、会试、殿试），清末废止"
+    },
+    {
+      "i": 130,
+      "type": "list_item",
+      "tag": "li",
+      "line": 194,
+      "lineEnd": 195,
+      "parent": null,
+      "text": "贯穿逻辑：选官权从地方豪族 → 中正官 → 中央考试机构，是皇权对官僚再生产渠道的逐步收编"
+    },
+    {
+      "i": 131,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 196,
+      "lineEnd": 196,
+      "parent": null,
+      "text": "边界：品阶勋爵留给第 11 章。清末新政留给第 16 章，本章只写到废科举这一事件本身。元代的\"根脚\"与族属门槛留给第 15 章。"
+    },
+    {
+      "i": 132,
+      "type": "heading",
+      "tag": "h2",
+      "line": 198,
+      "lineEnd": 198,
+      "parent": null,
+      "level": 2,
+      "text": "第 11 章 品、阶、勋、爵（7,000 字）"
+    },
+    {
+      "i": 133,
+      "type": "list_item",
+      "tag": "li",
+      "line": 200,
+      "lineEnd": 200,
+      "parent": null,
+      "text": "秩石制（汉）：以俸禄粮食计量等级——二千石、六百石"
+    },
+    {
+      "i": 134,
+      "type": "list_item",
+      "tag": "li",
+      "line": 201,
+      "lineEnd": 201,
+      "parent": null,
+      "text": "九品制（曹魏起）：正从九品十八级，唐定为九品三十级"
+    },
+    {
+      "i": 135,
+      "type": "list_item",
+      "tag": "li",
+      "line": 202,
+      "lineEnd": 202,
+      "parent": null,
+      "text": "散官：文散官、武散官，定阶不任事"
+    },
+    {
+      "i": 136,
+      "type": "list_item",
+      "tag": "li",
+      "line": 203,
+      "lineEnd": 203,
+      "parent": null,
+      "text": "职事官：实际职务"
+    },
+    {
+      "i": 137,
+      "type": "list_item",
+      "tag": "li",
+      "line": 204,
+      "lineEnd": 204,
+      "parent": null,
+      "text": "勋官：酬军功，唐十二转"
+    },
+    {
+      "i": 138,
+      "type": "list_item",
+      "tag": "li",
+      "line": 205,
+      "lineEnd": 205,
+      "parent": null,
+      "text": "爵：王、公、侯、伯、子、男"
+    },
+    {
+      "i": 139,
+      "type": "list_item",
+      "tag": "li",
+      "line": 206,
+      "lineEnd": 206,
+      "parent": null,
+      "text": "宋代寄禄官：本官阶只定俸禄，与实职完全脱钩，名实分离的极端形态。元丰改制以阶易官"
+    },
+    {
+      "i": 140,
+      "type": "list_item",
+      "tag": "li",
+      "line": 207,
+      "lineEnd": 207,
+      "parent": null,
+      "text": "清代：品级 + 加衔 + 世职"
+    },
+    {
+      "i": 141,
+      "type": "list_item",
+      "tag": "li",
+      "line": 208,
+      "lineEnd": 209,
+      "parent": null,
+      "text": "本章要害：一个官员同时挂在四套坐标上，读史料时必须分清哪个字段是俸禄、哪个是职务、哪个是荣誉。给读者一张拆解范例"
+    },
+    {
+      "i": 142,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 210,
+      "lineEnd": 210,
+      "parent": null,
+      "text": "边界：不讲具体机构。不讲选官（第 10 章）。"
+    },
+    {
+      "i": 143,
+      "type": "heading",
+      "tag": "h1",
+      "line": 214,
+      "lineEnd": 214,
+      "parent": null,
+      "level": 1,
+      "text": "第五编 专门系统"
+    },
+    {
+      "i": 144,
+      "type": "heading",
+      "tag": "h2",
+      "line": 216,
+      "lineEnd": 216,
+      "parent": null,
+      "level": 2,
+      "text": "第 12 章 监察（6,000 字）"
+    },
+    {
+      "i": 145,
+      "type": "list_item",
+      "tag": "li",
+      "line": 218,
+      "lineEnd": 218,
+      "parent": null,
+      "text": "御史的起源：本为记事之官，秦汉转为监察。御史大夫—御史中丞—侍御史"
+    },
+    {
+      "i": 146,
+      "type": "list_item",
+      "tag": "li",
+      "line": 219,
+      "lineEnd": 219,
+      "parent": null,
+      "text": "独立地位：东汉御史中丞与尚书令、司隶校尉朝会独坐，称\"三独坐\""
+    },
+    {
+      "i": 147,
+      "type": "list_item",
+      "tag": "li",
+      "line": 220,
+      "lineEnd": 220,
+      "parent": null,
+      "text": "唐御史台三院：台院、殿院、察院"
+    },
+    {
+      "i": 148,
+      "type": "list_item",
+      "tag": "li",
+      "line": 221,
+      "lineEnd": 221,
+      "parent": null,
+      "text": "台谏分合：御史监察百官（对下）与谏官谏诤君主（对上）本为两途；宋代台谏合流，谏官也转向纠弹百官——皇权把向上的批评通道关小了"
+    },
+    {
+      "i": 149,
+      "type": "list_item",
+      "tag": "li",
+      "line": 222,
+      "lineEnd": 222,
+      "parent": null,
+      "text": "明代科道：都察院 + 六科给事中。给事中掌封驳六部，品秩仅七品——低品制高官的又一例"
+    },
+    {
+      "i": 150,
+      "type": "list_item",
+      "tag": "li",
+      "line": 223,
+      "lineEnd": 223,
+      "parent": null,
+      "text": "清代六科并入都察院，独立封驳权终结"
+    },
+    {
+      "i": 151,
+      "type": "list_item",
+      "tag": "li",
+      "line": 224,
+      "lineEnd": 225,
+      "parent": null,
+      "text": "论点：中央监察官始终未能行政化，因为它没有辖区、没有属民、没有钱粮——与第 8 章的刺史形成对照，说明\"常驻 + 资源\"才是行政化的条件"
+    },
+    {
+      "i": 152,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 226,
+      "lineEnd": 226,
+      "parent": null,
+      "text": "边界：地方监察演变在第 8 章，本章只作对照。"
+    },
+    {
+      "i": 153,
+      "type": "heading",
+      "tag": "h2",
+      "line": 228,
+      "lineEnd": 228,
+      "parent": null,
+      "level": 2,
+      "text": "第 13 章 财政与军事（7,000 字）"
+    },
+    {
+      "i": 154,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 230,
+      "lineEnd": 230,
+      "parent": null,
+      "text": "财政线"
+    },
+    {
+      "i": 155,
+      "type": "list_item",
+      "tag": "li",
+      "line": 232,
+      "lineEnd": 232,
+      "parent": null,
+      "text": "秦汉治粟内史 → 大司农（国家财政）与少府（皇室私财）二分——国库与内帑之分是理解古代财政的第一原则"
+    },
+    {
+      "i": 156,
+      "type": "list_item",
+      "tag": "li",
+      "line": 233,
+      "lineEnd": 233,
+      "parent": null,
+      "text": "唐代户部与使职并行（度支使、盐铁转运使）"
+    },
+    {
+      "i": 157,
+      "type": "list_item",
+      "tag": "li",
+      "line": 234,
+      "lineEnd": 234,
+      "parent": null,
+      "text": "宋三司，三司使称\"计相\"；元丰改制归户部"
+    },
+    {
+      "i": 158,
+      "type": "list_item",
+      "tag": "li",
+      "line": 235,
+      "lineEnd": 236,
+      "parent": null,
+      "text": "明清户部；清代内务府掌皇室财政（回到公私二分）"
+    },
+    {
+      "i": 159,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 237,
+      "lineEnd": 237,
+      "parent": null,
+      "text": "军事线"
+    },
+    {
+      "i": 160,
+      "type": "list_item",
+      "tag": "li",
+      "line": 239,
+      "lineEnd": 239,
+      "parent": null,
+      "text": "秦汉：太尉/大司马（虚）、卫尉（宫门）、中尉执金吾（京师）、郡国兵与更卒"
+    },
+    {
+      "i": 161,
+      "type": "list_item",
+      "tag": "li",
+      "line": 240,
+      "lineEnd": 240,
+      "parent": null,
+      "text": "魏晋南北朝：都督诸州军事、世兵制"
+    },
+    {
+      "i": 162,
+      "type": "list_item",
+      "tag": "li",
+      "line": 241,
+      "lineEnd": 241,
+      "parent": null,
+      "text": "隋唐府兵制（十二卫—折冲府），废弛后改募兵，酿成藩镇"
+    },
+    {
+      "i": 163,
+      "type": "list_item",
+      "tag": "li",
+      "line": 242,
+      "lineEnd": 242,
+      "parent": null,
+      "text": "宋：枢密院掌调兵、三衙掌统兵，调发与统领分离——分权制衡的教科书案例，代价是\"兵不知将，将不知兵\""
+    },
+    {
+      "i": 164,
+      "type": "list_item",
+      "tag": "li",
+      "line": 243,
+      "lineEnd": 243,
+      "parent": null,
+      "text": "明卫所制与五军都督府（都督府掌兵籍、兵部掌调发，同样分离）"
+    },
+    {
+      "i": 165,
+      "type": "list_item",
+      "tag": "li",
+      "line": 244,
+      "lineEnd": 245,
+      "parent": null,
+      "text": "清八旗与绿营，兵部实为文书机构"
+    },
+    {
+      "i": 166,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 246,
+      "lineEnd": 246,
+      "parent": null,
+      "text": "边界：不讲具体战役。不讲督抚的军事权（第 8 章）。"
+    },
+    {
+      "i": 167,
+      "type": "heading",
+      "tag": "h2",
+      "line": 248,
+      "lineEnd": 248,
+      "parent": null,
+      "level": 2,
+      "text": "第 14 章 宫廷与宦官（5,000 字）"
+    },
+    {
+      "i": 168,
+      "type": "list_item",
+      "tag": "li",
+      "line": 250,
+      "lineEnd": 250,
+      "parent": null,
+      "text": "权力来源：宦官本是宫廷服务系统的一部分，其权力全部来自\"距离皇帝最近\"——内朝机制的纯粹形态"
+    },
+    {
+      "i": 169,
+      "type": "list_item",
+      "tag": "li",
+      "line": 251,
+      "lineEnd": 251,
+      "parent": null,
+      "text": "东汉：中常侍、黄门侍郎；宦官参与政变，五侯封侯，党锢之祸"
+    },
+    {
+      "i": 170,
+      "type": "list_item",
+      "tag": "li",
+      "line": 252,
+      "lineEnd": 252,
+      "parent": null,
+      "text": "唐：内侍省；肃宗后枢密使、神策军中尉由宦官充任——宦官掌禁军是唐后期废立皇帝的物质基础"
+    },
+    {
+      "i": 171,
+      "type": "list_item",
+      "tag": "li",
+      "line": 253,
+      "lineEnd": 253,
+      "parent": null,
+      "text": "宋：入内内侍省与内侍省，制度性压制，宦官之祸最轻"
+    },
+    {
+      "i": 172,
+      "type": "list_item",
+      "tag": "li",
+      "line": 254,
+      "lineEnd": 254,
+      "parent": null,
+      "text": "明：二十四衙门，司礼监掌批红、东厂提督——与内阁票拟形成对掌（回扣第 6 章）"
+    },
+    {
+      "i": 173,
+      "type": "list_item",
+      "tag": "li",
+      "line": 255,
+      "lineEnd": 255,
+      "parent": null,
+      "text": "清：内务府取代宦官体系，敬事房，立铁牌禁宦官干政"
+    },
+    {
+      "i": 174,
+      "type": "list_item",
+      "tag": "li",
+      "line": 256,
+      "lineEnd": 257,
+      "parent": null,
+      "text": "论点：宦官之权与皇权强度成正比而非反比——宦官强盛的朝代恰是皇权集中的朝代，因为宦官是皇权的延伸而非对手"
+    },
+    {
+      "i": 175,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 258,
+      "lineEnd": 258,
+      "parent": null,
+      "text": "边界：不讲后妃外戚制度。不讲具体政变经过，只讲制度位置。"
+    },
+    {
+      "i": 176,
+      "type": "heading",
+      "tag": "h2",
+      "line": 260,
+      "lineEnd": 260,
+      "parent": null,
+      "level": 2,
+      "text": "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    },
+    {
+      "i": 177,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 262,
+      "lineEnd": 262,
+      "parent": null,
+      "text": "为什么是专题而不是\"元代章\"：辽、金、元、清面对的是同一道题——少数族群如何统治农耕多数。四家给出四个不同答案，横着比才看得出这是一类制度设计，竖着按朝代切就散了。元只是其中答得最系统的一家。清的八旗在第 13 章是作为兵制出现的，本章讲它的另一面——族群统治工具。"
+    },
+    {
+      "i": 178,
+      "type": "list_item",
+      "tag": "li",
+      "line": 264,
+      "lineEnd": 264,
+      "parent": null,
+      "text": "共同难题：既要保住本族的军事组织优势，又要接管一套成熟的汉式官僚机器。两套人马、两套法则，必然产生双轨"
+    },
+    {
+      "i": 179,
+      "type": "list_item",
+      "tag": "li",
+      "line": 265,
+      "lineEnd": 265,
+      "parent": null,
+      "text": "辽：南北面官 —— 北面官治宫帐部族，南面官治汉人州县，\"以国制治契丹，以汉制待汉人\"。捺钵（四时行营）才是真正的权力中心，南面官署反倒是摆设——这是\"内朝侵夺外朝\"的族群版"
+    },
+    {
+      "i": 180,
+      "type": "list_item",
+      "tag": "li",
+      "line": 266,
+      "lineEnd": 266,
+      "parent": null,
+      "text": "金：猛安谋克（军事—行政—生产合一的部族编制）与汉式州县并行；海陵王迁都后逐步汉化，双轨渐并为一轨"
+    },
+    {
+      "i": 181,
+      "type": "list_item",
+      "tag": "li",
+      "line": 267,
+      "lineEnd": 273,
+      "parent": null,
+      "text": "元（本章主体）\n\n怯薛（宿卫）：草原版的内朝。中书省要员多出自怯薛，皇帝的家臣直接转为国家重臣——回扣第 2 章\"从家臣到百官之首\"，一千五百年后重演一遍\n中书省一省制：废门下、罢尚书（一度复置又废），三省合一。与唐宋三省相互制衡的设计正好相反——征服王朝要的是效率不是制衡\n行省：详见第 9 章，此处只讲它与一省制的关系\n四等人与\"根脚\"：族属与出身决定官职上限，是九品中正制之外另一种血统门槛\n达鲁花赤：各级衙门置蒙古或色目监临官，压在汉人正官之上。这是全书最赤裸的\"分权制衡\"——制衡的对象不是权力过大的官僚，而是被统治的多数\n宣政院、宣慰司：宗教与边地的另设系统\n\n"
+    },
+    {
+      "i": 182,
+      "type": "list_item",
+      "tag": "li",
+      "line": 268,
+      "lineEnd": 268,
+      "parent": 181,
+      "text": "怯薛（宿卫）：草原版的内朝。中书省要员多出自怯薛，皇帝的家臣直接转为国家重臣——回扣第 2 章\"从家臣到百官之首\"，一千五百年后重演一遍"
+    },
+    {
+      "i": 183,
+      "type": "list_item",
+      "tag": "li",
+      "line": 269,
+      "lineEnd": 269,
+      "parent": 181,
+      "text": "中书省一省制：废门下、罢尚书（一度复置又废），三省合一。与唐宋三省相互制衡的设计正好相反——征服王朝要的是效率不是制衡"
+    },
+    {
+      "i": 184,
+      "type": "list_item",
+      "tag": "li",
+      "line": 270,
+      "lineEnd": 270,
+      "parent": 181,
+      "text": "行省：详见第 9 章，此处只讲它与一省制的关系"
+    },
+    {
+      "i": 185,
+      "type": "list_item",
+      "tag": "li",
+      "line": 271,
+      "lineEnd": 271,
+      "parent": 181,
+      "text": "四等人与\"根脚\"：族属与出身决定官职上限，是九品中正制之外另一种血统门槛"
+    },
+    {
+      "i": 186,
+      "type": "list_item",
+      "tag": "li",
+      "line": 272,
+      "lineEnd": 272,
+      "parent": 181,
+      "text": "达鲁花赤：各级衙门置蒙古或色目监临官，压在汉人正官之上。这是全书最赤裸的\"分权制衡\"——制衡的对象不是权力过大的官僚，而是被统治的多数"
+    },
+    {
+      "i": 187,
+      "type": "list_item",
+      "tag": "li",
+      "line": 273,
+      "lineEnd": 273,
+      "parent": 181,
+      "text": "宣政院、宣慰司：宗教与边地的另设系统"
+    },
+    {
+      "i": 188,
+      "type": "list_item",
+      "tag": "li",
+      "line": 274,
+      "lineEnd": 274,
+      "parent": null,
+      "text": "清：满汉复职（六部尚书、侍郎满汉各一）、八旗制度、理藩院、军机处的满文文书通道。表面对等，实权在满"
+    },
+    {
+      "i": 189,
+      "type": "list_item",
+      "tag": "li",
+      "line": 275,
+      "lineEnd": 276,
+      "parent": null,
+      "text": "论点：二元官制把\"分权制衡\"从权力维度平移到了族群维度。它同样有效，同样有代价——制度性地把一半人口排除在最高职位之外，也就制度性地放弃了他们的效忠"
+    },
+    {
+      "i": 190,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 277,
+      "lineEnd": 277,
+      "parent": null,
+      "text": "边界：行省制度详见第 9 章。八旗兵制详见第 13 章。军机处详见第 6 章。本章不讲这些机构本身，只讲它们的族群双轨属性。不讲西夏、吐蕃、南诏。"
+    },
+    {
+      "i": 191,
+      "type": "heading",
+      "tag": "h1",
+      "line": 281,
+      "lineEnd": 281,
+      "parent": null,
+      "level": 1,
+      "text": "第六编 尾声"
+    },
+    {
+      "i": 192,
+      "type": "heading",
+      "tag": "h2",
+      "line": 283,
+      "lineEnd": 283,
+      "parent": null,
+      "level": 2,
+      "text": "第 16 章 清末新政与官制终结（7,000 字）"
+    },
+    {
+      "i": 193,
+      "type": "list_item",
+      "tag": "li",
+      "line": 285,
+      "lineEnd": 285,
+      "parent": null,
+      "text": "传统官制的最后形态：中枢（军机处—内阁—六部）与地方（督抚—布按二司）"
+    },
+    {
+      "i": 194,
+      "type": "list_item",
+      "tag": "li",
+      "line": 286,
+      "lineEnd": 286,
+      "parent": null,
+      "text": "总理各国事务衙门：第一个不合传统体例的机构，本身也是\"差遣\"性质（大臣皆兼职）"
+    },
+    {
+      "i": 195,
+      "type": "list_item",
+      "tag": "li",
+      "line": 287,
+      "lineEnd": 287,
+      "parent": null,
+      "text": "改总理衙门为外务部，班列六部之前"
+    },
+    {
+      "i": 196,
+      "type": "list_item",
+      "tag": "li",
+      "line": 288,
+      "lineEnd": 288,
+      "parent": null,
+      "text": "丙午官制改革：六部改组为十一部，大理寺改大理院"
+    },
+    {
+      "i": 197,
+      "type": "list_item",
+      "tag": "li",
+      "line": 289,
+      "lineEnd": 289,
+      "parent": null,
+      "text": "责任内阁（\"皇族内阁\"）成立，军机处与旧内阁同时裁撤——延续二千年的官制体系在制度上终结"
+    },
+    {
+      "i": 198,
+      "type": "list_item",
+      "tag": "li",
+      "line": 290,
+      "lineEnd": 290,
+      "parent": null,
+      "text": "名词的转换：从\"尚书/侍郎\"到\"大臣/次官\"再到\"部长/次长\"。官名从\"皇帝的什么人\"变为\"某项事务的负责人\"——这是全书主线的终点：官僚制终于摆脱了对皇权私人关系的依附"
+    },
+    {
+      "i": 199,
+      "type": "list_item",
+      "tag": "li",
+      "line": 291,
+      "lineEnd": 292,
+      "parent": null,
+      "text": "结语：三条主线在现代官僚制中的残留形态"
+    },
+    {
+      "i": 200,
+      "type": "heading",
+      "tag": "h1",
+      "line": 295,
+      "lineEnd": 295,
+      "parent": null,
+      "level": 1,
+      "text": "附录"
+    },
+    {
+      "i": 201,
+      "type": "list_item",
+      "tag": "li",
+      "line": 297,
+      "lineEnd": 297,
+      "parent": null,
+      "text": "A 各朝职官结构图 —— 秦汉 / 唐 / 宋 / 元 / 明 / 清，每朝一张 mermaid 结构树，旁附品秩表"
+    },
+    {
+      "i": 202,
+      "type": "list_item",
+      "tag": "li",
+      "line": 298,
+      "lineEnd": 298,
+      "parent": null,
+      "text": "B 品级对照表 —— 秩石（汉）— 九品（唐）— 宋 — 明 — 清 横向对照"
+    },
+    {
+      "i": 203,
+      "type": "list_item",
+      "tag": "li",
+      "line": 299,
+      "lineEnd": 299,
+      "parent": null,
+      "text": "C 官名索引 —— 官名 / 所属朝代 / 章节位置 / 前身后继"
+    },
+    {
+      "i": 204,
+      "type": "list_item",
+      "tag": "li",
+      "line": 300,
+      "lineEnd": 300,
+      "parent": null,
+      "text": "D 常见误读辨正 —— 太尉是最高军事长官？刺史是大官？宰相是官名？尚书省长官是尚书令？内阁大学士是宰相？九品中正制是品级制度？军机处是正式衙门？"
+    },
+    {
+      "i": 205,
+      "type": "list_item",
+      "tag": "li",
+      "line": 301,
+      "lineEnd": 301,
+      "parent": null,
+      "text": "E 史料与参考文献指引 —— 原始史料 / 今人通论 / 工具书"
+    }
+  ]
+}

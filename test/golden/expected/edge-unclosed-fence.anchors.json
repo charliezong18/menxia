@@ -1,0 +1,130 @@
+{
+  "format": 1,
+  "source": "corpus/edge-unclosed-fence.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "未闭合围栏",
+        "quoteRaw": "未闭合围栏"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 6,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "正文。",
+        "quoteRaw": "正文。"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 5,
+        "line": 6,
+        "offset": 0,
+        "quote": "const a",
+        "quoteRaw": "const a"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 13,
+      "length": 6,
+      "docStart": 23,
+      "expect": {
+        "blockLine": 5,
+        "line": 7,
+        "offset": 13,
+        "quote": "围栏到文件末",
+        "quoteRaw": "围栏到文件末"
+      },
+      "replay": {
+        "block": 2,
+        "start": 13,
+        "length": 6
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "未闭合围栏",
+      "expect": 1
+    },
+    {
+      "quote": "正文。",
+      "expect": null
+    },
+    {
+      "quote": "const a = 1; 围栏到",
+      "expect": 5
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "未闭合围栏"
+    ],
+    [
+      3,
+      "未闭合围栏"
+    ],
+    [
+      5,
+      "未闭合围栏"
+    ]
+  ]
+}

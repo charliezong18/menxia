@@ -1,0 +1,273 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-cli-two-fixes.zh-CN.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "两个 happy-cli 上游修复：双查把三个砍成两个",
+      "slug": "两个-happy-cli-上游修复双查把三个砍成两个"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": "1. 起点：两个真·low hanging fruit",
+      "slug": "1-起点两个真low-hanging-fruit"
+    },
+    {
+      "line": 20,
+      "level": 2,
+      "text": "2. 双查（Opus + agy 各一路，对抗性 prompt，互不透风）",
+      "slug": "2-双查opus--agy-各一路对抗性-prompt互不透风"
+    },
+    {
+      "line": 24,
+      "level": 3,
+      "text": "我自己犯的两个错",
+      "slug": "我自己犯的两个错"
+    },
+    {
+      "line": 44,
+      "level": 3,
+      "text": "review 抓到的其他硬伤",
+      "slug": "review-抓到的其他硬伤"
+    },
+    {
+      "line": 52,
+      "level": 3,
+      "text": "两路矛盾的一处，我判了",
+      "slug": "两路矛盾的一处我判了"
+    },
+    {
+      "line": 58,
+      "level": 3,
+      "text": "agy 单独报的一条，我判为存疑",
+      "slug": "agy-单独报的一条我判为存疑"
+    },
+    {
+      "line": 62,
+      "level": 2,
+      "text": "3. 病根：我又犯了 playbook ④(b)",
+      "slug": "3-病根我又犯了-playbook-④b"
+    },
+    {
+      "line": 73,
+      "level": 2,
+      "text": "4. 最终形态",
+      "slug": "4-最终形态"
+    },
+    {
+      "line": 81,
+      "level": 3,
+      "text": "两处我没能验证",
+      "slug": "两处我没能验证"
+    },
+    {
+      "line": 91,
+      "level": 2,
+      "text": "5. 两个 diff",
+      "slug": "5-两个-diff"
+    },
+    {
+      "line": 164,
+      "level": 2,
+      "text": "6. 两份 PR 正文（要发出去的原文，请逐句看）",
+      "slug": "6-两份-pr-正文要发出去的原文请逐句看"
+    },
+    {
+      "line": 166,
+      "level": 3,
+      "text": "PR1 · fix(cli): exit after printing the version instead of opening a session",
+      "slug": "pr1--fixcli-exit-after-printing-the-version-instead-of-opening-a-session"
+    },
+    {
+      "line": 170,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem"
+    },
+    {
+      "line": 195,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed"
+    },
+    {
+      "line": 203,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan"
+    },
+    {
+      "line": 209,
+      "level": 3,
+      "text": "PR2 · fix(cli): delegate happy update/upgrade to claude",
+      "slug": "pr2--fixcli-delegate-happy-updateupgrade-to-claude"
+    },
+    {
+      "line": 213,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem-1"
+    },
+    {
+      "line": 221,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed-1"
+    },
+    {
+      "line": 229,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan-1"
+    },
+    {
+      "line": 236,
+      "level": 2,
+      "text": "Known limitation",
+      "slug": "known-limitation"
+    },
+    {
+      "line": 240,
+      "level": 2,
+      "text": "7. 验证环境的一处交代",
+      "slug": "7-验证环境的一处交代"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "两个 happy-cli 上游修复：双查把三个砍成两个",
+      "slug": "两个-happy-cli-上游修复双查把三个砍成两个"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": "1. 起点：两个真·low hanging fruit",
+      "slug": "1-起点两个真low-hanging-fruit"
+    },
+    {
+      "line": 20,
+      "level": 2,
+      "text": "2. 双查（Opus + agy 各一路，对抗性 prompt，互不透风）",
+      "slug": "2-双查opus--agy-各一路对抗性-prompt互不透风"
+    },
+    {
+      "line": 24,
+      "level": 3,
+      "text": "我自己犯的两个错",
+      "slug": "我自己犯的两个错"
+    },
+    {
+      "line": 44,
+      "level": 3,
+      "text": "review 抓到的其他硬伤",
+      "slug": "review-抓到的其他硬伤"
+    },
+    {
+      "line": 52,
+      "level": 3,
+      "text": "两路矛盾的一处，我判了",
+      "slug": "两路矛盾的一处我判了"
+    },
+    {
+      "line": 58,
+      "level": 3,
+      "text": "agy 单独报的一条，我判为存疑",
+      "slug": "agy-单独报的一条我判为存疑"
+    },
+    {
+      "line": 62,
+      "level": 2,
+      "text": "3. 病根：我又犯了 playbook ④(b)",
+      "slug": "3-病根我又犯了-playbook-④b"
+    },
+    {
+      "line": 73,
+      "level": 2,
+      "text": "4. 最终形态",
+      "slug": "4-最终形态"
+    },
+    {
+      "line": 81,
+      "level": 3,
+      "text": "两处我没能验证",
+      "slug": "两处我没能验证"
+    },
+    {
+      "line": 91,
+      "level": 2,
+      "text": "5. 两个 diff",
+      "slug": "5-两个-diff"
+    },
+    {
+      "line": 164,
+      "level": 2,
+      "text": "6. 两份 PR 正文（要发出去的原文，请逐句看）",
+      "slug": "6-两份-pr-正文要发出去的原文请逐句看"
+    },
+    {
+      "line": 166,
+      "level": 3,
+      "text": "PR1 · fix(cli): exit after printing the version instead of opening a session",
+      "slug": "pr1--fixcli-exit-after-printing-the-version-instead-of-opening-a-session"
+    },
+    {
+      "line": 170,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem"
+    },
+    {
+      "line": 195,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed"
+    },
+    {
+      "line": 203,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan"
+    },
+    {
+      "line": 209,
+      "level": 3,
+      "text": "PR2 · fix(cli): delegate happy update/upgrade to claude",
+      "slug": "pr2--fixcli-delegate-happy-updateupgrade-to-claude"
+    },
+    {
+      "line": 213,
+      "level": 2,
+      "text": "Problem",
+      "slug": "problem-1"
+    },
+    {
+      "line": 221,
+      "level": 2,
+      "text": "What changed",
+      "slug": "what-changed-1"
+    },
+    {
+      "line": 229,
+      "level": 2,
+      "text": "Test plan",
+      "slug": "test-plan-1"
+    },
+    {
+      "line": 236,
+      "level": 2,
+      "text": "Known limitation",
+      "slug": "known-limitation"
+    },
+    {
+      "line": 240,
+      "level": 2,
+      "text": "7. 验证环境的一处交代",
+      "slug": "7-验证环境的一处交代"
+    }
+  ]
+}

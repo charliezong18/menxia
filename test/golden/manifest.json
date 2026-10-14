@@ -1,0 +1,292 @@
+{
+  "format": 1,
+  "corpus": {
+    "corpus/edge-bare-anchors.md": "23eb08fea1cd7fa24e8da8ee2dc68de9b14a6cc87086e7f827f74faf8e7cba73",
+    "corpus/edge-blank-boundaries.md": "3dfb55f44b6a6abce8a9b1c7bb7b90af2b1db0785237e4223fe7373d8a369571",
+    "corpus/edge-code.md": "beb343318adbf05d50d671b7520cc7ef66e0c379e95748dceead2af0e3209aab",
+    "corpus/edge-crlf.md": "018bc0787acdf5acb71bf0a8c34ae1887bcb81738dc847de917e16e61b3ffa29",
+    "corpus/edge-diff.md": "d87b5729cfb1bde6b1ef050ac7cd3812a81e67dc297d11260518c2bae85b11ec",
+    "corpus/edge-frontmatter.md": "fe18f38414ce0fa1b09e2e7fc6c61e75cc34c332ba71247cb4e736256dc344f8",
+    "corpus/edge-images-headings.md": "020947ee4c9b5c7b3e06b75456edb1129473c1f67a6d2da0c98e64287d26cb4e",
+    "corpus/edge-linkify.md": "8534433458af27f3f0416df06f378075e7f04ca8f686b6198edcc4575bb369da",
+    "corpus/edge-lists.md": "c24c7172523a33e534ba8c96811c6a0477e31308d48c5d891c875d9640f976dc",
+    "corpus/edge-mixed.md": "bfa9344a58355a7aab771d6fd0d8523b7379d46951d5cdf87e4eca1779fc0035",
+    "corpus/edge-raw-html.md": "fd161b37a57be02aabc3fa4084e98190382b3875d48a53958368c58e21551c8e",
+    "corpus/edge-tables.md": "c48f89136e8387a0c6adecdc7fbb4398eb40ec17e1b2f33c0998de8f3304210b",
+    "corpus/edge-unclosed-fence.md": "d56fd7eb4e2b2790c0b4a9987fd016a8db2fddfd72082bf1df93ae3a9e7e9ccf",
+    "corpus/edge-wikilinks.md": "40170e85f190b5bcf5dce9f65775a2efdeb53e22f822a8f34cd8d8aa2228920b",
+    "corpus/real-chinese-official-titles-outline.md": "9974bdc27c365dad8587711400b69969ee8f6cda16fa9b33e85c0e49e8f6f70b",
+    "corpus/real-chinese-official-titles-outline.zh-CN.md": "1d53b19fa1d7b7fbcf4c37d5aa926b8c9a5e5bbc0b03ff3cf3725832ac7d6305",
+    "corpus/real-folder-tracking.zh-CN.md": "ff512c366f3faf97d4817cc6bbf59cc0b7f257823ea868b03f9bd382666c89c9",
+    "corpus/real-happy-cli-two-fixes.md": "d870cc4eb625b8a0980fb69d18b6c6a6c17b30c253eebb28808610b1e1896b72",
+    "corpus/real-happy-cli-two-fixes.zh-CN.md": "8e5fb3876ee510f1a388ccb471b350ab1b12ec935fa1642a2a0aa474738eff90",
+    "corpus/real-happy-contrib-tracker.md": "728ca1ef5442ebc5b8617077c182f0190e6c7bf1b4b91ef876dba8538b8c3406",
+    "corpus/real-happy-pr-wave-retro.md": "65f5f97bf9e6687a332529cd342fadbab1573d20ce558af3550039f7bbd4390e",
+    "corpus/real-menxia-rename-glossary-v2.md": "5ccd1a452209edd1dd7155420db24f65bbe1440a1ef31233ce7c512f59bf1723",
+    "corpus/real-menxia-rename-glossary-v2.zh-CN.md": "6d212cb22061573352b52047e4301ca36ec3c1a38e847c1316a777565ca6e92c",
+    "corpus/real-reader-v0-spec.md": "21d8f0e53226bf136cb02542c9dc3330254c17a57bb35077f80162896bcabd61",
+    "corpus/real-reader-v0-spec.zh-CN.md": "5e0282bff6ba66364bc7e2d0f2725f52b19e32ad897b616eb510ce462b37c64c",
+    "corpus/real-sys-00-overview.md": "fab4e9e88148699967c2c7b672651f401dec243ef1e7b9f480e5f98ff61a9d82",
+    "corpus/real-zhongshumenxia-infra-design.md": "afe3c6192ae2da6e95d0c60ff9e736ead885a417ab036c40b0b8636ac8712090",
+    "corpus/real-zhupi-mcp-design.md": "26b1ba0ab5275baed5df824cc213108338ce5f02a0d476dbb9b6246c86467d85",
+    "corpus/real-zhupi-migration-reviews.md": "dbe78dba826300e0fd7e8aaca752d772df2ff31f2fffa70d5b6d788126fbae31",
+    "corpus/real-zhupi-spec.md": "d1f02fbf0b0fa2d8f02c260d784e5fc247898be442c6d160dd814bcc58cde955"
+  },
+  "expected": {
+    "expected/edge-bare-anchors.anchors.json": "d13a49965137f67712f4ffdab7c841c6c69de033fd7f20dc7c1dd3a6294b5091",
+    "expected/edge-bare-anchors.blocks.json": "eb399a17e5c342b206396a89cd97949d3c255ef274272287d3402dcf248856fe",
+    "expected/edge-bare-anchors.toc.json": "a29383022e3148c6edca541c9040677ed72d10ecc686f45f02dba09a42c05f43",
+    "expected/edge-blank-boundaries.anchors.json": "dcecbd25f24b75524eadac110e3d1abec83f3c99d7d135859cbfea9725596dba",
+    "expected/edge-blank-boundaries.blocks.json": "1a823a476695fdab3c3f9dfb520235cdeae61ca14ada3963962d122f5a562655",
+    "expected/edge-blank-boundaries.toc.json": "df7d6f636fea60fda73427c1fa93abb9c834bb8697d4b5cb84236bc7f68632f9",
+    "expected/edge-code.anchors.json": "5989998ac6bd3282b3e16ae90a55c656318418ad5ab580d408bfb480af64a0b7",
+    "expected/edge-code.blocks.json": "2edf0489ec4c86974758eef248c5c7014f0195faf4aa6b68a4a3fb3e9f5dbf64",
+    "expected/edge-code.toc.json": "152689bd757405b03ea192df3a8ee651dbdc379f40d1b84acf8ecd721a2116d4",
+    "expected/edge-crlf.anchors.json": "8563881cde354601026bbf007c6f66c062e3ec50ba9de5fad9ee2d8ca49a9ea8",
+    "expected/edge-crlf.blocks.json": "163c0f106e4f7caaa927de5088c771b6af468b895dee5e83d27414c18c2a531a",
+    "expected/edge-crlf.toc.json": "342202379a846f2a070bb438eb6aff6db7d8a45bf9f15a3340e72c4e2ac7bf15",
+    "expected/edge-diff.anchors.json": "81329fe05d3b933aadc5aebc258ed2aa5e056b95da171b53a756ffa22c05fe6a",
+    "expected/edge-diff.blocks.json": "d567bb261a88c8d9de3054bcd2071b1e453289ed225aff0498a780b7e28872c6",
+    "expected/edge-diff.toc.json": "e8169471f1b57b9ce927591c0313dcedb330b8b38199b20fe784fdfeb3f11a54",
+    "expected/edge-frontmatter.anchors.json": "8e1d95ccf54588aa5961d1255c22cd7c13c483ed0ae49f771b5648ee8e6a1472",
+    "expected/edge-frontmatter.blocks.json": "cead766ddb37065f3671bf1e884950e44375ac5f82f907b1f1aebaa4d1cddb44",
+    "expected/edge-frontmatter.toc.json": "5f2ac20e8d7b398e5a0d6e1a91b257b1919fc8f0870db649b69bba8598f85b6c",
+    "expected/edge-images-headings.anchors.json": "368c3590ddc9ada9dd945bb5dfc798923238259e018c466e7dfb32ff59c00d4b",
+    "expected/edge-images-headings.blocks.json": "22b327fd799e6d5b8b9893008dc66cd2f589fce34fc2fb807e5927d774f940ce",
+    "expected/edge-images-headings.toc.json": "7820baaf86df9975f1bfe38b81641b73f40591d03f0fb108e8ff1d219e1d87c7",
+    "expected/edge-linkify.anchors.json": "fb5ccb7fa444375dc3472b2479613d3dee611b21ab2298371a1e26931188b5b2",
+    "expected/edge-linkify.blocks.json": "cc966cec8759523ca89369782c6fd0978508c5d63f675129a7b3dff1fd294eb4",
+    "expected/edge-linkify.toc.json": "4e4823646f666384579b62d257e82622463898909d8c3906f597ef9437ba9284",
+    "expected/edge-lists.anchors.json": "8aee0dd919aae915782db10c161e785dd2d239141613b34542d1fd902bcc6911",
+    "expected/edge-lists.blocks.json": "0f68371c26f6c9210b46832fa21f291e6304d1082a7c4cb33c6c2e2e3f6b4d2b",
+    "expected/edge-lists.toc.json": "f2235e358f41aa06868f26c30770fa913a8217c4e089679019e786a9ad16eca9",
+    "expected/edge-mixed.anchors.json": "1e972cd2b642b92f919e180ee00fb017afdc220e4623113a8f4f3b3fc398af36",
+    "expected/edge-mixed.blocks.json": "1ce77051565c3fdbabf887a1631fe72617b740207e2623d387e17b8198a1694b",
+    "expected/edge-mixed.toc.json": "0d02a474a5395925c32a02a921243a7ab66fa4ad9bb74b34eb3d7a7262930831",
+    "expected/edge-raw-html.anchors.json": "07a16efcabdf73a5186855589a69a216c8ee69c73ce17a9b11e0805adb5f31a0",
+    "expected/edge-raw-html.blocks.json": "026f1f6f99a731dd9f37180c225096d96afae436153231241ca509dfb8a0fb31",
+    "expected/edge-raw-html.toc.json": "104a2700d3c3d5ac36cbd0634617c6f75552f0c798c55088c836eaf661c8500a",
+    "expected/edge-tables.anchors.json": "52eda22612000241b2825b96b8e4490ad81b2495b00c508a370f8ed5def521d4",
+    "expected/edge-tables.blocks.json": "37e5dcc5aae0cfc27c48a733d9d3c83b6be3e2435e997e50dd18fe50d04ffe1c",
+    "expected/edge-tables.toc.json": "b3f28806dcade0b1645e15355e219b4e92c963632acdfc8cdec33bbca528ca90",
+    "expected/edge-unclosed-fence.anchors.json": "94e6344f889ae3b35afc5d8639d3d04deb21ae3dd1af098d7598a43d0813ea48",
+    "expected/edge-unclosed-fence.blocks.json": "3db7b0447b92a20bda7468a744b1acf20c20aa4cdab3b9407eb9946ee84df318",
+    "expected/edge-unclosed-fence.toc.json": "745f481c602f029cb98de89a68e3556ece40d93729e65f5415bfb004f8a45f4a",
+    "expected/edge-wikilinks.anchors.json": "3950ef699450a0e6dceea9bf5f7d1e2f14e96ecf90076b71746220cd217bd324",
+    "expected/edge-wikilinks.blocks.json": "cbe44f4e00c4f5ee8c4f6fdc608d75bfa9719257bede50c8aec9e656e917867f",
+    "expected/edge-wikilinks.toc.json": "91a61411c95cf0d904ad71295e4ad6978c64382d1caea45ac133312e932a12a7",
+    "expected/functions/buildReadStateBody.json": "1b3fdd2f9703aeb64f99fa461243f762d154a9e20427d7f5368496719cc74e68",
+    "expected/functions/fmtDraft.json": "beb8109bee577bdea6648a81914d95f3f0ce79440e6e626a9bc690a19575c600",
+    "expected/functions/isReadStateComment.json": "e4ed6a56e683d30677dfb5865b1b857c54ad90b8068e2cf0ae433f81a34b2b04",
+    "expected/functions/makeSlugger.json": "82569e960679c6f50e8b00b43315d1cf8e93a6067fadfe56a0b33d47d5fa5cf8",
+    "expected/functions/matchAnchor.json": "858325b458f037a3562f39c6ad5f5febcba55330205c54177fd3426c142a6dc9",
+    "expected/functions/parseCommentBody.json": "791c43de9ace5da758bdf453f14fc4478648a32bf348d33903dd4cf5ffc22e32",
+    "expected/functions/parseReadState.json": "2e2ba6f8c833e41d3aa0387c60574a959b69a7b18dcc18bbb0eacb34618bc4a5",
+    "expected/functions/shouldPromptJump.json": "55b2251525c3e993e9e60b5e02acfb94550cfefb8fa9f1d0ac0772c9aa05e102",
+    "expected/functions/slugify.json": "189a7798df3026552f1d17491b9da1084ece85276132ccde7e6d3616fdcf1c43",
+    "expected/functions/stripBareAnchors.json": "7c4b591720c19b99f7ec5de2a99ca2441b8d67fb442adbf5ceae14dc62516c64",
+    "expected/functions/stripFrontmatter.json": "fa13064a82df885685b86fbb5fcfb6a345df94f275866e1a6fa9286ec4a86aed",
+    "expected/functions/threadComments.json": "8ace14e71d5a2c52122ff73c3f141b99dd24d0ab32c4ea921ce49a2e82bb7e60",
+    "expected/functions/validRightLines.json": "01de535f1595fb3e20a84b763047ae347fd924541b3aa33a37b2accb50da911f",
+    "expected/real-chinese-official-titles-outline.anchors.json": "521027d01db6680bb66f14c1a8a42d8371764f75b7ad0c32beb7493110a60227",
+    "expected/real-chinese-official-titles-outline.blocks.json": "eb7409fe63b67b643f839f6a73bfb25cdd0794f74571005a4e15601e4f4c7e9b",
+    "expected/real-chinese-official-titles-outline.toc.json": "ba57c47b22ad8f3e5c6884b915282fc03dcbdd06c8b4f73062a20a1047febe4f",
+    "expected/real-chinese-official-titles-outline.zh-CN.anchors.json": "c8067b012b7150aa7ce7b01f75d8cfecae6521aa3ce9a798d33b9649492d95a9",
+    "expected/real-chinese-official-titles-outline.zh-CN.blocks.json": "844575966f0d14e8513950c9bd75ab35208317fa96616ba6c14861b1e59ca888",
+    "expected/real-chinese-official-titles-outline.zh-CN.toc.json": "b8587cc1fba706d219d80c9ca869b57f05e519198b918f7a6432eba6f9edd563",
+    "expected/real-folder-tracking.zh-CN.anchors.json": "aac8934c3c198d438bdfdea76b619a78cbde11b64240cb29b717f2857504dd5e",
+    "expected/real-folder-tracking.zh-CN.blocks.json": "5231603522fdab9d6454b1df9b6d9d1923cf6d0116c6782af6cb07ee2de3c3d9",
+    "expected/real-folder-tracking.zh-CN.toc.json": "6ce7a3c6581373b6308f6b0797ec41b9ac4c5f3a78ba700581882a276f3fc4ff",
+    "expected/real-happy-cli-two-fixes.anchors.json": "afe49b8dc8ab61e618cd5ef5e46b13bd831b8f43efece153f3d373f41d022186",
+    "expected/real-happy-cli-two-fixes.blocks.json": "213b12449f701df7193bcfb0144dfb557de1f25ec555fa2a97dd04f58de8da36",
+    "expected/real-happy-cli-two-fixes.toc.json": "6bf98d036bcc018f640805553a3d4714737d9e9251fbaf8c989987240bb1b12e",
+    "expected/real-happy-cli-two-fixes.zh-CN.anchors.json": "6dda896b42b2a2ff49f21106eb34195df55290d91ef0264b85ed89102a194204",
+    "expected/real-happy-cli-two-fixes.zh-CN.blocks.json": "e2c977799199412290ee0c6f4bb6e87104cb47d7b02fdbf39c51968ca60ac9e6",
+    "expected/real-happy-cli-two-fixes.zh-CN.toc.json": "82dabedf3f0249551d36972b78b7cfe4e4266be0d6824a2b186b5d9e227be50c",
+    "expected/real-happy-contrib-tracker.anchors.json": "53b35a08441412a7e5750542b0b086b414e5a617633d8f4e592b9b2624873bae",
+    "expected/real-happy-contrib-tracker.blocks.json": "8d66722c335d89932b81b685425939d109561e8b012e868a2f1a550952a056fe",
+    "expected/real-happy-contrib-tracker.toc.json": "06eba3cff0f29cb3bf2e8f9d7823838f913696a332f9d4db393f6ce63a431adc",
+    "expected/real-happy-pr-wave-retro.anchors.json": "09f745e9c7661c94bb05b492f09038e7b9fbfb7b6c3b70718dec945e4c5626b8",
+    "expected/real-happy-pr-wave-retro.blocks.json": "dbdaf001d2975680bdc8050e821bb0d2a5ce94b3c4292525533352dba5f281c8",
+    "expected/real-happy-pr-wave-retro.toc.json": "a9c1ad0deb7c496c532dc5fe441a99414983e2656996d9651e042b4f9b7d497d",
+    "expected/real-menxia-rename-glossary-v2.anchors.json": "13ae934cc1d246b5898d9116fc191b3cc4ecf1354c54eb9784143c2de37fa224",
+    "expected/real-menxia-rename-glossary-v2.blocks.json": "96dceb8da227a3ab8ac5d4ee409e23268b0610c885651f023dc8d4b10d03d685",
+    "expected/real-menxia-rename-glossary-v2.toc.json": "d78d5ed2c83a2f1e09f2f68d98e8cf6aaa3f95c4945dd437134b57fc99d1b040",
+    "expected/real-menxia-rename-glossary-v2.zh-CN.anchors.json": "59733ec1af0d25074cbcc1d0cee9fc51cbb5e9653de4121aa5696bd8e94ecf66",
+    "expected/real-menxia-rename-glossary-v2.zh-CN.blocks.json": "410e1a0cf137b470825b48a88cda9b3acba2846706a6f97aa9093837b32539a0",
+    "expected/real-menxia-rename-glossary-v2.zh-CN.toc.json": "e4ebd30842fa2a196d2e1fb17d40968a4a466fd688b36ac342bd8a3113f86f39",
+    "expected/real-reader-v0-spec.anchors.json": "e74d73fce571e110aed63f3a27cc563e19ce0afde71a985bef1b65f9fa850673",
+    "expected/real-reader-v0-spec.blocks.json": "89c8e2e44c91620227e282315344c2e0b3afbf2252a27726dd0d1fa107bade89",
+    "expected/real-reader-v0-spec.toc.json": "ffd414b8be8dfb80b3b3cbfef28239924a7b0d7430f07addd5c92636401b970e",
+    "expected/real-reader-v0-spec.zh-CN.anchors.json": "093bf14a98d6329dc58c38b40362dd2c140c40fe3834f5517deded65ebb263db",
+    "expected/real-reader-v0-spec.zh-CN.blocks.json": "bcf0b54e4fa5e76c97e961fd7180fcf3eb16250f808888cc196c0f43dbd904b3",
+    "expected/real-reader-v0-spec.zh-CN.toc.json": "bcc00a4304e13cf29130a7a96b9a0187c4fc4001efb7ed55d7f8e6242c6161e2",
+    "expected/real-sys-00-overview.anchors.json": "b57ed192937672ae28b0780cab1aa4e3ffac63cd652f44505e7ec7db09e3fb05",
+    "expected/real-sys-00-overview.blocks.json": "d5532fb1da840d56c7038274848fd7bcc5a5a9e183c9783ac8bbd18ad3fe9950",
+    "expected/real-sys-00-overview.toc.json": "f13384416012ab3337b66e7b80ffa9e696fa625595a1b7d3b9fed039c1f477f7",
+    "expected/real-zhongshumenxia-infra-design.anchors.json": "f67dc0ab7d03f098a2150e6b91213bd5cc2e85b5688328701d672a2cd678bce9",
+    "expected/real-zhongshumenxia-infra-design.blocks.json": "66a4ad2e3cc1e674acd69c0eba30e525119e576d3480815e93f41e28d4633669",
+    "expected/real-zhongshumenxia-infra-design.toc.json": "1bbc4842750e7baab73017f50ceecb4bf72716714721a225ef3ee3eba789724c",
+    "expected/real-zhupi-mcp-design.anchors.json": "2b396b89c19e875781362b25e5233e46b08654e7e2166b1f17b0b2912d7fd777",
+    "expected/real-zhupi-mcp-design.blocks.json": "19715686894ec690a9532ec2d38c64ecae5f1c62b70904d2cde8645931d12543",
+    "expected/real-zhupi-mcp-design.toc.json": "816684f3abe7f2d8255e0bcc6260fe9a24add1d75ee4cafb20d1ade667c1bfe0",
+    "expected/real-zhupi-migration-reviews.anchors.json": "46a75dec27810fe6352c9264af50e9835ea6c9f09818cfca30d32802128653f6",
+    "expected/real-zhupi-migration-reviews.blocks.json": "dd87ca79cafbc0646d6f0ea3525372770a0223885bc66ca247d728fb06e5d107",
+    "expected/real-zhupi-migration-reviews.toc.json": "42154859b07c27fcb7e4ab6beba12225fcca2178a0c0a96a50e1686cf1115cc2",
+    "expected/real-zhupi-spec.anchors.json": "9bc08c10901e5254f36fd0e37009455e42d021ed49e07897c9898584a1ea27aa",
+    "expected/real-zhupi-spec.blocks.json": "2812a812dfc37a81460825cf599152bf2de4b557f4dc1bcb887943573273cee0",
+    "expected/real-zhupi-spec.toc.json": "bce9de92bcdd391691d191ff002339d032be80218c97bab734abb62ec969ff53"
+  },
+  "docs": [
+    {
+      "name": "edge-bare-anchors.md",
+      "blocks": 8,
+      "crlf": false
+    },
+    {
+      "name": "edge-blank-boundaries.md",
+      "blocks": 10,
+      "crlf": false
+    },
+    {
+      "name": "edge-code.md",
+      "blocks": 18,
+      "crlf": false
+    },
+    {
+      "name": "edge-crlf.md",
+      "blocks": 10,
+      "crlf": true
+    },
+    {
+      "name": "edge-diff.md",
+      "blocks": 7,
+      "crlf": false
+    },
+    {
+      "name": "edge-frontmatter.md",
+      "blocks": 5,
+      "crlf": false
+    },
+    {
+      "name": "edge-images-headings.md",
+      "blocks": 19,
+      "crlf": false
+    },
+    {
+      "name": "edge-linkify.md",
+      "blocks": 10,
+      "crlf": false
+    },
+    {
+      "name": "edge-lists.md",
+      "blocks": 30,
+      "crlf": false
+    },
+    {
+      "name": "edge-mixed.md",
+      "blocks": 15,
+      "crlf": false
+    },
+    {
+      "name": "edge-raw-html.md",
+      "blocks": 10,
+      "crlf": false
+    },
+    {
+      "name": "edge-tables.md",
+      "blocks": 30,
+      "crlf": false
+    },
+    {
+      "name": "edge-unclosed-fence.md",
+      "blocks": 3,
+      "crlf": false
+    },
+    {
+      "name": "edge-wikilinks.md",
+      "blocks": 7,
+      "crlf": false
+    },
+    {
+      "name": "real-chinese-official-titles-outline.md",
+      "blocks": 207,
+      "crlf": false
+    },
+    {
+      "name": "real-chinese-official-titles-outline.zh-CN.md",
+      "blocks": 206,
+      "crlf": false
+    },
+    {
+      "name": "real-folder-tracking.zh-CN.md",
+      "blocks": 85,
+      "crlf": false
+    },
+    {
+      "name": "real-happy-cli-two-fixes.md",
+      "blocks": 94,
+      "crlf": false
+    },
+    {
+      "name": "real-happy-cli-two-fixes.zh-CN.md",
+      "blocks": 94,
+      "crlf": false
+    },
+    {
+      "name": "real-happy-contrib-tracker.md",
+      "blocks": 129,
+      "crlf": false
+    },
+    {
+      "name": "real-happy-pr-wave-retro.md",
+      "blocks": 80,
+      "crlf": false
+    },
+    {
+      "name": "real-menxia-rename-glossary-v2.md",
+      "blocks": 82,
+      "crlf": false
+    },
+    {
+      "name": "real-menxia-rename-glossary-v2.zh-CN.md",
+      "blocks": 82,
+      "crlf": false
+    },
+    {
+      "name": "real-reader-v0-spec.md",
+      "blocks": 144,
+      "crlf": false
+    },
+    {
+      "name": "real-reader-v0-spec.zh-CN.md",
+      "blocks": 144,
+      "crlf": false
+    },
+    {
+      "name": "real-sys-00-overview.md",
+      "blocks": 74,
+      "crlf": false
+    },
+    {
+      "name": "real-zhongshumenxia-infra-design.md",
+      "blocks": 91,
+      "crlf": false
+    },
+    {
+      "name": "real-zhupi-mcp-design.md",
+      "blocks": 145,
+      "crlf": false
+    },
+    {
+      "name": "real-zhupi-migration-reviews.md",
+      "blocks": 82,
+      "crlf": false
+    },
+    {
+      "name": "real-zhupi-spec.md",
+      "blocks": 158,
+      "crlf": false
+    }
+  ]
+}

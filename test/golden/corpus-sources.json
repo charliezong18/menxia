@@ -1,0 +1,24 @@
+{
+  "note": "真折语料来源：charliezong18/review 仓 main 上 docs/ 下已画可的敕草，逐字节拷贝（含原换行）。拷贝工具 test/golden/import-corpus.mjs。挑选口径：重表格 / diff 块 / 长书 / 中英对照；财务、证件、健康、住址、移民、法律、凭据类一律不选。",
+  "repo": "charliezong18/review",
+  "commit": "0f72f9254cccc46131dab46b93fbf4484f7f2f53",
+  "commitNote": "取自本地克隆 .git/packed-refs 的 refs/heads/main；拷贝读的是工作树文件，工作树是否与该 commit 完全一致未用 git 核（执行环境无 git -C 权限）",
+  "files": [
+    { "name": "real-happy-cli-two-fixes.md", "source": "docs/happy-cli-two-fixes.md", "why": "diff 块 + 表格" },
+    { "name": "real-happy-cli-two-fixes.zh-CN.md", "source": "docs/happy-cli-two-fixes.zh-CN.md", "why": "diff 块中文版（中英对照）" },
+    { "name": "real-zhupi-migration-reviews.md", "source": "docs/zhupi-migration-reviews.md", "why": "重表格评审汇总" },
+    { "name": "real-happy-contrib-tracker.md", "source": "docs/happy-contrib-tracker.md", "why": "重表格 + 大量链接" },
+    { "name": "real-zhupi-spec.md", "source": "docs/zhupi-spec.md", "why": "长规范、表格、代码块" },
+    { "name": "real-reader-v0-spec.md", "source": "docs/reader-v0-spec.md", "why": "规范 + 表格（英）" },
+    { "name": "real-reader-v0-spec.zh-CN.md", "source": "docs/reader-v0-spec.zh-CN.md", "why": "同篇中文（中英对照）" },
+    { "name": "real-chinese-official-titles-outline.md", "source": "docs/chinese-official-titles-outline.md", "why": "长书大纲（英）" },
+    { "name": "real-chinese-official-titles-outline.zh-CN.md", "source": "docs/chinese-official-titles-outline.zh-CN.md", "why": "长书大纲（中，CJK 标点密集）" },
+    { "name": "real-zhongshumenxia-infra-design.md", "source": "docs/zhongshumenxia-infra-design.md", "why": "设计长文 + 表格 + 代码块" },
+    { "name": "real-menxia-rename-glossary-v2.md", "source": "docs/menxia-rename-glossary-v2.md", "why": "中英混排术语表" },
+    { "name": "real-menxia-rename-glossary-v2.zh-CN.md", "source": "docs/menxia-rename-glossary-v2.zh-CN.md", "why": "术语表中文版" },
+    { "name": "real-happy-pr-wave-retro.md", "source": "docs/happy-pr-wave-retro.md", "why": "复盘：表格 + 列表" },
+    { "name": "real-sys-00-overview.md", "source": "docs/sys-00-overview.md", "why": "系统总览：表格 + 嵌套列表" },
+    { "name": "real-zhupi-mcp-design.md", "source": "docs/zhupi-mcp-design.md", "why": "设计文档：代码块 + 表格" },
+    { "name": "real-folder-tracking.zh-CN.md", "source": "docs/folder-tracking.zh-CN.md", "why": "中文设计：表格 + 列表" }
+  ]
+}

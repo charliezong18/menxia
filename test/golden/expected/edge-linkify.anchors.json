@@ -1,0 +1,580 @@
+{
+  "format": 1,
+  "source": "corpus/edge-linkify.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "linkify",
+        "quoteRaw": "linkify"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 12,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "裸网址 http",
+        "quoteRaw": "裸网址 http"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 16,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 4,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 1,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 37,
+      "length": 5,
+      "docStart": 49,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 37,
+        "quote": "后面有字。",
+        "quoteRaw": "后面有字。"
+      },
+      "replay": {
+        "block": 1,
+        "start": 37,
+        "length": 5
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 55,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "句末带句号 ht",
+        "quoteRaw": "句末带句号 ht"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 61,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 6,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 2,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 27,
+      "length": 6,
+      "docStart": 82,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 27,
+        "quote": ". 下一句。",
+        "quoteRaw": ". 下一句。"
+      },
+      "replay": {
+        "block": 2,
+        "start": 27,
+        "length": 6
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 89,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "中文紧贴：见ht",
+        "quoteRaw": "中文紧贴：见ht"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 95,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 6,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 3,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 123,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "括号里 (htt",
+        "quoteRaw": "括号里 (htt"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 128,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 5,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 4,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 26,
+      "length": 8,
+      "docStart": 149,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 26,
+        "quote": ") 与全角括号（",
+        "quoteRaw": ") 与全角括号（"
+      },
+      "replay": {
+        "block": 4,
+        "start": 26,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 34,
+      "length": 8,
+      "docStart": 157,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 34,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 4,
+        "start": 34,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 181,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "www.exam",
+        "quoteRaw": "www.exam"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 16,
+      "length": 5,
+      "docStart": 197,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 16,
+        "quote": "不带协议。",
+        "quoteRaw": "不带协议。"
+      },
+      "replay": {
+        "block": 5,
+        "start": 16,
+        "length": 5
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 203,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 0,
+        "quote": "邮箱 someo",
+        "quoteRaw": "邮箱 someo"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 206,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 3,
+        "quote": "someone@",
+        "quoteRaw": "someone@"
+      },
+      "replay": {
+        "block": 6,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 23,
+      "length": 1,
+      "docStart": 226,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 228,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "尖括号自动链接",
+        "quoteRaw": "尖括号自动链接"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 236,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 8,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 7,
+        "start": 8,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 33,
+      "length": 8,
+      "docStart": 261,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 33,
+        "quote": "与 mailto",
+        "quoteRaw": "与 mailto"
+      },
+      "replay": {
+        "block": 7,
+        "start": 33,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 35,
+      "length": 8,
+      "docStart": 263,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 35,
+        "quote": "mailto:a",
+        "quoteRaw": "mailto:a"
+      },
+      "replay": {
+        "block": 7,
+        "start": 35,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 55,
+      "length": 1,
+      "docStart": 283,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 285,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "行内代码 htt",
+        "quoteRaw": "行内代码 htt"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 290,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 5,
+        "quote": "https://",
+        "quoteRaw": "https://"
+      },
+      "replay": {
+        "block": 8,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 28,
+      "length": 4,
+      "docStart": 313,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 28,
+        "quote": "不链接。",
+        "quoteRaw": "不链接。"
+      },
+      "replay": {
+        "block": 8,
+        "start": 28,
+        "length": 4
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 318,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "已经是链接 ht",
+        "quoteRaw": "已经是链接 ht"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "linkify 裸网址",
+      "expect": 1
+    },
+    {
+      "quote": "裸网址 https://exam",
+      "expect": 3
+    },
+    {
+      "quote": "句末带句号 https://ex",
+      "expect": 5
+    },
+    {
+      "quote": "中文紧贴：见https://ex",
+      "expect": 7
+    },
+    {
+      "quote": "括号里 (https://exa",
+      "expect": 9
+    },
+    {
+      "quote": "www.example.com ",
+      "expect": 11
+    },
+    {
+      "quote": "邮箱 someone@examp",
+      "expect": 13
+    },
+    {
+      "quote": "尖括号自动链接 https://",
+      "expect": 15
+    },
+    {
+      "quote": "行内代码 https://exa",
+      "expect": 17
+    },
+    {
+      "quote": "已经是链接 https://ex",
+      "expect": 19
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "linkify 裸网址"
+    ],
+    [
+      3,
+      "linkify 裸网址"
+    ],
+    [
+      5,
+      "linkify 裸网址"
+    ],
+    [
+      7,
+      "linkify 裸网址"
+    ],
+    [
+      9,
+      "linkify 裸网址"
+    ],
+    [
+      11,
+      "linkify 裸网址"
+    ],
+    [
+      13,
+      "linkify 裸网址"
+    ],
+    [
+      15,
+      "linkify 裸网址"
+    ],
+    [
+      17,
+      "linkify 裸网址"
+    ],
+    [
+      19,
+      "linkify 裸网址"
+    ]
+  ]
+}

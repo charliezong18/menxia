@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "fn": "parseCommentBody",
+  "cases": [
+    {
+      "input": "> 引文\n\n批注",
+      "output": {
+        "quote": "引文",
+        "body": "批注"
+      }
+    },
+    {
+      "input": "> 第一行\n> 第二行\n\n\n正文\n\n第二段",
+      "output": {
+        "quote": "第一行\n第二行",
+        "body": "正文\n\n第二段"
+      }
+    },
+    {
+      "input": ">没空格\n正文紧贴",
+      "output": {
+        "quote": "没空格",
+        "body": "正文紧贴"
+      }
+    },
+    {
+      "input": "纯回话没有引文",
+      "output": {
+        "quote": "",
+        "body": "纯回话没有引文"
+      }
+    },
+    {
+      "input": "> 只有引文",
+      "output": {
+        "quote": "只有引文",
+        "body": ""
+      }
+    },
+    {
+      "input": "  > 前导空格不算引文",
+      "output": {
+        "quote": "",
+        "body": "> 前导空格不算引文"
+      }
+    },
+    {
+      "input": "> a\r\n\r\nCRLF",
+      "output": {
+        "quote": "a",
+        "body": "CRLF"
+      }
+    },
+    {
+      "input": "",
+      "output": {
+        "quote": "",
+        "body": ""
+      }
+    },
+    {
+      "input": null,
+      "output": {
+        "quote": "",
+        "body": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,2182 @@
+{
+  "format": 1,
+  "source": "corpus/real-reader-v0-spec.zh-CN.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "朱批 v0 sp",
+        "quoteRaw": "朱批 v0 sp"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 37,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "一句话：AI（臣",
+        "quoteRaw": "一句话：AI（臣"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 51,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 14,
+        "quote": "奏折呈上来，你（",
+        "quoteRaw": "奏折呈上来，你（"
+      },
+      "replay": {
+        "block": 2,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 53,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 16,
+        "quote": "呈上来，你（御）",
+        "quoteRaw": "呈上来，你（御）"
+      },
+      "replay": {
+        "block": 2,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 32,
+      "length": 8,
+      "docStart": 69,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 32,
+        "quote": "划句朱批，批完一",
+        "quoteRaw": "划句朱批，批完一"
+      },
+      "replay": {
+        "block": 2,
+        "start": 32,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 36,
+      "length": 8,
+      "docStart": 73,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 36,
+        "quote": "，批完一键呈回，",
+        "quoteRaw": "，批完一键呈回，"
+      },
+      "replay": {
+        "block": 2,
+        "start": 36,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 63,
+      "length": 8,
+      "docStart": 100,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 63,
+        "quote": "钦此（merge",
+        "quoteRaw": "钦此（merge"
+      },
+      "replay": {
+        "block": 2,
+        "start": 63,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 65,
+      "length": 8,
+      "docStart": 102,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 65,
+        "quote": "（merge 定",
+        "quoteRaw": "（merge 定"
+      },
+      "replay": {
+        "block": 2,
+        "start": 65,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 157,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "依批修订（v2）",
+        "quoteRaw": "依批修订（v2）"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 107,
+      "length": 8,
+      "docStart": 264,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 107,
+        "quote": "桌面网页优先，移",
+        "quoteRaw": "桌面网页优先，移"
+      },
+      "replay": {
+        "block": 3,
+        "start": 107,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 113,
+      "length": 8,
+      "docStart": 270,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 113,
+        "quote": "，移动端挪 v1",
+        "quoteRaw": "，移动端挪 v1"
+      },
+      "replay": {
+        "block": 3,
+        "start": 113,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 339,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "v2.5（202",
+        "quoteRaw": "v2.5（202"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 2,
+      "docStart": 437,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "目录",
+        "quoteRaw": "目录"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 441,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 0,
+        "quote": "§1 设计渲染图",
+        "quoteRaw": "§1 设计渲染图"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 450,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "§2 名字与用语",
+        "quoteRaw": "§2 名字与用语"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 459,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "§3 目标 /",
+        "quoteRaw": "§3 目标 /"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 471,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "§4 形态",
+        "quoteRaw": "§4 形态"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 477,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "§5 数据与认证",
+        "quoteRaw": "§5 数据与认证"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 486,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "§6 页面与交互",
+        "quoteRaw": "§6 页面与交互"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 495,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "§7 待拍板 ②",
+        "quoteRaw": "§7 待拍板 ②"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 520,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "§8 待拍板 ③",
+        "quoteRaw": "§8 待拍板 ③"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 535,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "§9 待拍板 ④",
+        "quoteRaw": "§9 待拍板 ④"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 7,
+      "docStart": 554,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "§10 里程碑",
+        "quoteRaw": "§10 里程碑"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 562,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "§11 风险与兜",
+        "quoteRaw": "§11 风险与兜"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 7,
+      "docStart": 572,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 0,
+        "quote": "§12 名词表",
+        "quoteRaw": "§12 名词表"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 580,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 0,
+        "quote": "§13 参考",
+        "quoteRaw": "§13 参考"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 588,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 0,
+        "quote": "§1 设计渲染图",
+        "quoteRaw": "§1 设计渲染图"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 597,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 0,
+        "quote": "设计语言：宣纸底",
+        "quoteRaw": "设计语言：宣纸底"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 675,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 0,
+        "quote": "① 桌面主界面（",
+        "quoteRaw": "① 桌面主界面（"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 691,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 16,
+        "quote": "—— 左奏折列表",
+        "quoteRaw": "—— 左奏折列表"
+      },
+      "replay": {
+        "block": 21,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 775,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 0,
+        "quote": "以下三张为移动端",
+        "quoteRaw": "以下三张为移动端"
+      },
+      "replay": {
+        "block": 23,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 799,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 0,
+        "quote": "② 清单页「待批",
+        "quoteRaw": "② 清单页「待批"
+      },
+      "replay": {
+        "block": 24,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 811,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 12,
+        "quote": "—— 每折一张卡",
+        "quoteRaw": "—— 每折一张卡"
+      },
+      "replay": {
+        "block": 24,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 842,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 0,
+        "quote": "③ 阅读页 ——",
+        "quoteRaw": "③ 阅读页 ——"
+      },
+      "replay": {
+        "block": 26,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 848,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 6,
+        "quote": "—— 渲染态正文",
+        "quoteRaw": "—— 渲染态正文"
+      },
+      "replay": {
+        "block": 26,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 883,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 0,
+        "quote": "④ 批注输入（移",
+        "quoteRaw": "④ 批注输入（移"
+      },
+      "replay": {
+        "block": 28,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 895,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 12,
+        "quote": "—— 划选后底部",
+        "quoteRaw": "—— 划选后底部"
+      },
+      "replay": {
+        "block": 28,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 933,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 0,
+        "quote": "（mockup",
+        "quoteRaw": "（mockup"
+      },
+      "replay": {
+        "block": 30,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 945,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 12,
+        "quote": "assets/m",
+        "quoteRaw": "assets/m"
+      },
+      "replay": {
+        "block": 30,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 31,
+      "length": 8,
+      "docStart": 964,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 31,
+        "quote": "，正式开发以此为",
+        "quoteRaw": "，正式开发以此为"
+      },
+      "replay": {
+        "block": 30,
+        "start": 31,
+        "length": 8
+      }
+    },
+    {
+      "block": 31,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 978,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 0,
+        "quote": "§2 名字与用语",
+        "quoteRaw": "§2 名字与用语"
+      },
+      "replay": {
+        "block": 31,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 987,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 0,
+        "quote": "按你的方向定名",
+        "quoteRaw": "按你的方向定名"
+      },
+      "replay": {
+        "block": 32,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 995,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 8,
+        "quote": "朱批（产品全称「",
+        "quoteRaw": "朱批（产品全称「"
+      },
+      "replay": {
+        "block": 32,
+        "start": 8,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 997,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 10,
+        "quote": "（产品全称「御笔",
+        "quoteRaw": "（产品全称「御笔"
+      },
+      "replay": {
+        "block": 32,
+        "start": 10,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 28,
+      "length": 8,
+      "docStart": 1015,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 28,
+        "quote": "zhupi，站点",
+        "quoteRaw": "zhupi，站点"
+      },
+      "replay": {
+        "block": 32,
+        "start": 28,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 33,
+      "length": 8,
+      "docStart": 1020,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 33,
+        "quote": "，站点 char",
+        "quoteRaw": "，站点 char"
+      },
+      "replay": {
+        "block": 32,
+        "start": 33,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 37,
+      "length": 8,
+      "docStart": 1024,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 37,
+        "quote": "charliez",
+        "quoteRaw": "charliez"
+      },
+      "replay": {
+        "block": 32,
+        "start": 37,
+        "length": 8
+      }
+    },
+    {
+      "block": 32,
+      "blockStart": 66,
+      "length": 8,
+      "docStart": 1053,
+      "expect": {
+        "blockLine": 53,
+        "line": 53,
+        "offset": 66,
+        "quote": "，PWA 主屏名",
+        "quoteRaw": "，PWA 主屏名"
+      },
+      "replay": {
+        "block": 32,
+        "start": 66,
+        "length": 8
+      }
+    },
+    {
+      "block": 33,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1118,
+      "expect": {
+        "blockLine": 55,
+        "line": 55,
+        "offset": 0,
+        "quote": "界面用语与技术底",
+        "quoteRaw": "界面用语与技术底"
+      },
+      "replay": {
+        "block": 33,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 35,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1153,
+      "expect": {
+        "blockLine": 57,
+        "line": 57,
+        "offset": 1,
+        "quote": "界面词 底层动作",
+        "quoteRaw": "界面词\n底层动作"
+      },
+      "replay": {
+        "block": 34,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 35,
+      "blockStart": 5,
+      "length": 5,
+      "docStart": 1157,
+      "expect": {
+        "blockLine": 57,
+        "line": 57,
+        "offset": 5,
+        "quote": "底层动作",
+        "quoteRaw": "底层动作"
+      },
+      "replay": {
+        "block": 34,
+        "start": 7,
+        "length": 4
+      }
+    },
+    {
+      "block": 36,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1166,
+      "expect": {
+        "blockLine": 59,
+        "line": 59,
+        "offset": 1,
+        "quote": "奏折 revie",
+        "quoteRaw": "奏折\nrevie"
+      },
+      "replay": {
+        "block": 36,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 36,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1169,
+      "expect": {
+        "blockLine": 59,
+        "line": 59,
+        "offset": 4,
+        "quote": "review r",
+        "quoteRaw": "review r"
+      },
+      "replay": {
+        "block": 36,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 37,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1199,
+      "expect": {
+        "blockLine": 60,
+        "line": 60,
+        "offset": 1,
+        "quote": "朱批 inlin",
+        "quoteRaw": "朱批\ninlin"
+      },
+      "replay": {
+        "block": 37,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 37,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1202,
+      "expect": {
+        "blockLine": 60,
+        "line": 60,
+        "offset": 4,
+        "quote": "inline r",
+        "quoteRaw": "inline r"
+      },
+      "replay": {
+        "block": 37,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 38,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1235,
+      "expect": {
+        "blockLine": 61,
+        "line": 61,
+        "offset": 1,
+        "quote": "总批 conve",
+        "quoteRaw": "总批\nconve"
+      },
+      "replay": {
+        "block": 38,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 38,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1238,
+      "expect": {
+        "blockLine": 61,
+        "line": 61,
+        "offset": 4,
+        "quote": "conversa",
+        "quoteRaw": "conversa"
+      },
+      "replay": {
+        "block": 38,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 39,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1278,
+      "expect": {
+        "blockLine": 62,
+        "line": 62,
+        "offset": 1,
+        "quote": "提交朱批 把攒的",
+        "quoteRaw": "提交朱批\n把攒的"
+      },
+      "replay": {
+        "block": 39,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 39,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 1283,
+      "expect": {
+        "blockLine": 62,
+        "line": 62,
+        "offset": 6,
+        "quote": "把攒的批注一次性",
+        "quoteRaw": "把攒的批注一次性"
+      },
+      "replay": {
+        "block": 39,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 40,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1308,
+      "expect": {
+        "blockLine": 63,
+        "line": 63,
+        "offset": 1,
+        "quote": "钦此 squas",
+        "quoteRaw": "钦此\nsquas"
+      },
+      "replay": {
+        "block": 40,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 40,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1311,
+      "expect": {
+        "blockLine": 63,
+        "line": 63,
+        "offset": 4,
+        "quote": "squash m",
+        "quoteRaw": "squash m"
+      },
+      "replay": {
+        "block": 40,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 41,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1329,
+      "expect": {
+        "blockLine": 64,
+        "line": 64,
+        "offset": 1,
+        "quote": "作罢 丢弃这条未",
+        "quoteRaw": "作罢\n丢弃这条未"
+      },
+      "replay": {
+        "block": 41,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 41,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1332,
+      "expect": {
+        "blockLine": 64,
+        "line": 64,
+        "offset": 4,
+        "quote": "丢弃这条未写完的",
+        "quoteRaw": "丢弃这条未写完的"
+      },
+      "replay": {
+        "block": 41,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 42,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1346,
+      "expect": {
+        "blockLine": 66,
+        "line": 66,
+        "offset": 0,
+        "quote": "「总批」是 v2",
+        "quoteRaw": "「总批」是 v2"
+      },
+      "replay": {
+        "block": 42,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 43,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1404,
+      "expect": {
+        "blockLine": 68,
+        "line": 68,
+        "offset": 0,
+        "quote": "§3 目标 /",
+        "quoteRaw": "§3 目标 /"
+      },
+      "replay": {
+        "block": 43,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 44,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1416,
+      "expect": {
+        "blockLine": 70,
+        "line": 70,
+        "offset": 0,
+        "quote": "目标（v0 全部",
+        "quoteRaw": "目标（v0 全部"
+      },
+      "replay": {
+        "block": 44,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 45,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1428,
+      "expect": {
+        "blockLine": 72,
+        "line": 72,
+        "offset": 0,
+        "quote": "手机上舒服地读",
+        "quoteRaw": "手机上舒服地读"
+      },
+      "replay": {
+        "block": 45,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 46,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1469,
+      "expect": {
+        "blockLine": 73,
+        "line": 73,
+        "offset": 0,
+        "quote": "一路读一路划句朱",
+        "quoteRaw": "一路读一路划句朱"
+      },
+      "replay": {
+        "block": 46,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 47,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1494,
+      "expect": {
+        "blockLine": 74,
+        "line": 74,
+        "offset": 0,
+        "quote": "一个真正能按的「",
+        "quoteRaw": "一个真正能按的「"
+      },
+      "replay": {
+        "block": 47,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 48,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1506,
+      "expect": {
+        "blockLine": 75,
+        "line": 75,
+        "offset": 0,
+        "quote": "逐条消掉已知 P",
+        "quoteRaw": "逐条消掉已知 P"
+      },
+      "replay": {
+        "block": 48,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 50,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1523,
+      "expect": {
+        "blockLine": 77,
+        "line": 77,
+        "offset": 1,
+        "quote": "PAIN（试点实",
+        "quoteRaw": "PAIN（试点实"
+      },
+      "replay": {
+        "block": 49,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 50,
+      "blockStart": 12,
+      "length": 5,
+      "docStart": 1534,
+      "expect": {
+        "blockLine": 77,
+        "line": 77,
+        "offset": 12,
+        "quote": "朱批解法",
+        "quoteRaw": "朱批解法"
+      },
+      "replay": {
+        "block": 49,
+        "start": 14,
+        "length": 4
+      }
+    },
+    {
+      "block": 51,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1543,
+      "expect": {
+        "blockLine": 79,
+        "line": 79,
+        "offset": 1,
+        "quote": "approve",
+        "quoteRaw": "approve"
+      },
+      "replay": {
+        "block": 51,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 51,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 1559,
+      "expect": {
+        "blockLine": 79,
+        "line": 79,
+        "offset": 17,
+        "quote": "自带「钦此」=",
+        "quoteRaw": "自带「钦此」="
+      },
+      "replay": {
+        "block": 51,
+        "start": 17,
+        "length": 7
+      }
+    },
+    {
+      "block": 52,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1575,
+      "expect": {
+        "blockLine": 80,
+        "line": 80,
+        "offset": 1,
+        "quote": "批注入口不自发现",
+        "quoteRaw": "批注入口不自发现"
+      },
+      "replay": {
+        "block": 52,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 52,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 1584,
+      "expect": {
+        "blockLine": 80,
+        "line": 80,
+        "offset": 10,
+        "quote": "划选即批，唯一主",
+        "quoteRaw": "划选即批，唯一主"
+      },
+      "replay": {
+        "block": 52,
+        "start": 10,
+        "length": 8
+      }
+    },
+    {
+      "block": 53,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1597,
+      "expect": {
+        "blockLine": 81,
+        "line": 81,
+        "offset": 1,
+        "quote": "markdown",
+        "quoteRaw": "markdown"
+      },
+      "replay": {
+        "block": 53,
+        "start": 1,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "朱批 v0 spec —「御笔朱",
+      "expect": 3
+    },
+    {
+      "quote": "一句话：AI（臣）把长文档当奏折",
+      "expect": 5
+    },
+    {
+      "quote": "依批修订（v2）：新增设计渲染图",
+      "expect": 7
+    },
+    {
+      "quote": "v2.5（2026-07-26）",
+      "expect": 9
+    },
+    {
+      "quote": "目录",
+      "expect": null
+    },
+    {
+      "quote": "§1 设计渲染图",
+      "expect": 13
+    },
+    {
+      "quote": "§2 名字与用语",
+      "expect": 14
+    },
+    {
+      "quote": "§3 目标 / 非目标",
+      "expect": 15
+    },
+    {
+      "quote": "§4 形态",
+      "expect": 16
+    },
+    {
+      "quote": "§5 数据与认证",
+      "expect": 17
+    },
+    {
+      "quote": "§6 页面与交互",
+      "expect": 18
+    },
+    {
+      "quote": "§7 待拍板 ②：v1→v2 对",
+      "expect": 19
+    },
+    {
+      "quote": "§8 待拍板 ③：技术栈对比",
+      "expect": 20
+    },
+    {
+      "quote": "§9 待拍板 ④：批注锚定（讲人",
+      "expect": 21
+    },
+    {
+      "quote": "§10 里程碑",
+      "expect": 22
+    },
+    {
+      "quote": "§11 风险与兜底",
+      "expect": 23
+    },
+    {
+      "quote": "§12 名词表",
+      "expect": 24
+    },
+    {
+      "quote": "§13 参考",
+      "expect": 25
+    },
+    {
+      "quote": "§1 设计渲染图",
+      "expect": 13
+    },
+    {
+      "quote": "设计语言：宣纸底 + 墨字 + ",
+      "expect": 29
+    },
+    {
+      "quote": "① 桌面主界面（v0 主战场） ",
+      "expect": 31
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "以下三张为移动端设计（v1 再做",
+      "expect": 35
+    },
+    {
+      "quote": "② 清单页「待批奏折」 —— 每",
+      "expect": 37
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "③ 阅读页 —— 渲染态正文，划",
+      "expect": 41
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "④ 批注输入（移动端） —— 划",
+      "expect": 45
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "（mockup 源码在 asse",
+      "expect": 49
+    },
+    {
+      "quote": "§2 名字与用语",
+      "expect": 14
+    },
+    {
+      "quote": "按你的方向定名 朱批（产品全称「",
+      "expect": 53
+    },
+    {
+      "quote": "界面用语与技术底层的对照（全 a",
+      "expect": 55
+    },
+    {
+      "quote": "界面词 底层动作 奏折 revi",
+      "expect": 57
+    },
+    {
+      "quote": "界面词 底层动作",
+      "expect": 57
+    },
+    {
+      "quote": "奏折 review repo 里",
+      "expect": 59
+    },
+    {
+      "quote": "朱批 inline review",
+      "expect": 60
+    },
+    {
+      "quote": "总批 conversation ",
+      "expect": 61
+    },
+    {
+      "quote": "提交朱批 把攒的批注一次性 su",
+      "expect": 62
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "朱批 v0 spec —「御笔朱批」阅读批注器"
+    ],
+    [
+      5,
+      "朱批 v0 spec —「御笔朱批」阅读批注器"
+    ],
+    [
+      7,
+      "朱批 v0 spec —「御笔朱批」阅读批注器"
+    ],
+    [
+      9,
+      "朱批 v0 spec —「御笔朱批」阅读批注器"
+    ],
+    [
+      11,
+      "目录"
+    ],
+    [
+      13,
+      "目录"
+    ],
+    [
+      14,
+      "目录"
+    ],
+    [
+      15,
+      "目录"
+    ],
+    [
+      16,
+      "目录"
+    ],
+    [
+      17,
+      "目录"
+    ],
+    [
+      18,
+      "目录"
+    ],
+    [
+      19,
+      "目录"
+    ],
+    [
+      20,
+      "目录"
+    ],
+    [
+      21,
+      "目录"
+    ],
+    [
+      22,
+      "目录"
+    ],
+    [
+      23,
+      "目录"
+    ],
+    [
+      24,
+      "目录"
+    ],
+    [
+      25,
+      "目录"
+    ],
+    [
+      27,
+      "§1 设计渲染图"
+    ],
+    [
+      29,
+      "§1 设计渲染图"
+    ],
+    [
+      31,
+      "§1 设计渲染图"
+    ],
+    [
+      33,
+      "§1 设计渲染图"
+    ],
+    [
+      35,
+      "§1 设计渲染图"
+    ],
+    [
+      37,
+      "§1 设计渲染图"
+    ],
+    [
+      39,
+      "§1 设计渲染图"
+    ],
+    [
+      41,
+      "§1 设计渲染图"
+    ],
+    [
+      43,
+      "§1 设计渲染图"
+    ],
+    [
+      45,
+      "§1 设计渲染图"
+    ],
+    [
+      47,
+      "§1 设计渲染图"
+    ],
+    [
+      49,
+      "§1 设计渲染图"
+    ],
+    [
+      51,
+      "§2 名字与用语"
+    ],
+    [
+      53,
+      "§2 名字与用语"
+    ],
+    [
+      55,
+      "§2 名字与用语"
+    ],
+    [
+      57,
+      "§2 名字与用语"
+    ],
+    [
+      59,
+      "§2 名字与用语"
+    ],
+    [
+      60,
+      "§2 名字与用语"
+    ],
+    [
+      61,
+      "§2 名字与用语"
+    ],
+    [
+      62,
+      "§2 名字与用语"
+    ],
+    [
+      63,
+      "§2 名字与用语"
+    ],
+    [
+      64,
+      "§2 名字与用语"
+    ],
+    [
+      66,
+      "§2 名字与用语"
+    ],
+    [
+      68,
+      "§3 目标 / 非目标"
+    ],
+    [
+      70,
+      "§3 目标 / 非目标"
+    ],
+    [
+      72,
+      "§3 目标 / 非目标"
+    ],
+    [
+      73,
+      "§3 目标 / 非目标"
+    ],
+    [
+      74,
+      "§3 目标 / 非目标"
+    ],
+    [
+      75,
+      "§3 目标 / 非目标"
+    ],
+    [
+      77,
+      "§3 目标 / 非目标"
+    ],
+    [
+      79,
+      "§3 目标 / 非目标"
+    ],
+    [
+      80,
+      "§3 目标 / 非目标"
+    ],
+    [
+      81,
+      "§3 目标 / 非目标"
+    ],
+    [
+      82,
+      "§3 目标 / 非目标"
+    ],
+    [
+      84,
+      "§3 目标 / 非目标"
+    ],
+    [
+      86,
+      "§4 形态"
+    ],
+    [
+      88,
+      "§4 形态"
+    ],
+    [
+      89,
+      "§4 形态"
+    ],
+    [
+      90,
+      "§4 形态"
+    ],
+    [
+      91,
+      "§4 形态"
+    ],
+    [
+      93,
+      "§5 数据与认证"
+    ],
+    [
+      95,
+      "§5 数据与认证"
+    ],
+    [
+      96,
+      "§5 数据与认证"
+    ],
+    [
+      97,
+      "§5 数据与认证"
+    ],
+    [
+      99,
+      "§6 页面与交互"
+    ],
+    [
+      101,
+      "§6 页面与交互"
+    ],
+    [
+      103,
+      "§6 页面与交互"
+    ],
+    [
+      105,
+      "§6 页面与交互"
+    ],
+    [
+      107,
+      "§6 页面与交互"
+    ],
+    [
+      109,
+      "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    ],
+    [
+      111,
+      "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    ],
+    [
+      113,
+      "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    ],
+    [
+      114,
+      "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    ],
+    [
+      116,
+      "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    ],
+    [
+      118,
+      "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    ],
+    [
+      120,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      122,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      124,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      125,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      126,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      127,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      128,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      130,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      132,
+      "§8 待拍板 ③：技术栈对比"
+    ],
+    [
+      134,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      136,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      138,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      140,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      141,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      142,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      143,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      144,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      145,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      146,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      148,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      150,
+      "§8.1 架构切换 breakpoint（量化闸门）"
+    ],
+    [
+      152,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      154,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      156,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      158,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      160,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      162,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      163,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      165,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      167,
+      "§9 待拍板 ④：批注锚定（讲人话）"
+    ],
+    [
+      169,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      171,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      172,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      173,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      175,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      177,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      179,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      181,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      183,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      185,
+      "§10 里程碑（每步交付试玩链接）"
+    ],
+    [
+      187,
+      "§11 风险与兜底"
+    ],
+    [
+      189,
+      "§11 风险与兜底"
+    ],
+    [
+      190,
+      "§11 风险与兜底"
+    ],
+    [
+      191,
+      "§11 风险与兜底"
+    ],
+    [
+      192,
+      "§11 风险与兜底"
+    ],
+    [
+      194,
+      "§12 名词表"
+    ],
+    [
+      196,
+      "§12 名词表"
+    ],
+    [
+      198,
+      "§12 名词表"
+    ],
+    [
+      199,
+      "§12 名词表"
+    ],
+    [
+      200,
+      "§12 名词表"
+    ],
+    [
+      201,
+      "§12 名词表"
+    ],
+    [
+      202,
+      "§12 名词表"
+    ],
+    [
+      203,
+      "§12 名词表"
+    ],
+    [
+      204,
+      "§12 名词表"
+    ],
+    [
+      205,
+      "§12 名词表"
+    ],
+    [
+      206,
+      "§12 名词表"
+    ],
+    [
+      207,
+      "§12 名词表"
+    ],
+    [
+      209,
+      "§13 参考"
+    ],
+    [
+      211,
+      "§13 参考"
+    ],
+    [
+      212,
+      "§13 参考"
+    ],
+    [
+      213,
+      "§13 参考"
+    ],
+    [
+      214,
+      "§13 参考"
+    ],
+    [
+      215,
+      "§13 参考"
+    ],
+    [
+      216,
+      "§13 参考"
+    ],
+    [
+      217,
+      "§13 参考"
+    ]
+  ]
+}

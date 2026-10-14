@@ -1,0 +1,42 @@
+{
+  "format": 1,
+  "fn": "stripBareAnchors",
+  "cases": [
+    {
+      "input": "前文\n\n<a id=\"daily\"></a>\n\n后文",
+      "output": "前文\n\n                  \n\n后文"
+    },
+    {
+      "input": "<a name='x'/>后",
+      "output": "             后"
+    },
+    {
+      "input": "<a id=bare>",
+      "output": "           "
+    },
+    {
+      "input": "<A ID=\"Upper\"></A>",
+      "output": "                  "
+    },
+    {
+      "input": "<a  id = \"sp\" >  </a>",
+      "output": "                     "
+    },
+    {
+      "input": "<a href=\"x\">看得见的链接文字</a>",
+      "output": "<a href=\"x\">看得见的链接文字</a>"
+    },
+    {
+      "input": "<a id=\"x\" class=\"y\"></a>",
+      "output": "<a id=\"x\" class=\"y\"></a>"
+    },
+    {
+      "input": "<a id=\"x\">有字</a>",
+      "output": "          有字</a>"
+    },
+    {
+      "input": "一行里 <a id=\"a\"></a> 两个 <a name=\"b\"></a> 裸锚",
+      "output": "一行里                两个                  裸锚"
+    }
+  ]
+}

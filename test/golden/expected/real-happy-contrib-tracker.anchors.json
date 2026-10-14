@@ -1,0 +1,2110 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-contrib-tracker.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "Happy 贡献",
+        "quoteRaw": "Happy 贡献"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 17,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "上游 = slo",
+        "quoteRaw": "上游 = slo"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 22,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 5,
+        "quote": "slopus/h",
+        "quoteRaw": "slopus/h"
+      },
+      "replay": {
+        "block": 1,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 35,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 18,
+        "quote": "fork = c",
+        "quoteRaw": "fork = c"
+      },
+      "replay": {
+        "block": 1,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 81,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 0,
+        "quote": "这份是贡献状态的",
+        "quoteRaw": "这份是贡献状态的"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 96,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 15,
+        "quote": "流程规矩看 Ha",
+        "quoteRaw": "流程规矩看 Ha"
+      },
+      "replay": {
+        "block": 2,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 21,
+      "length": 8,
+      "docStart": 102,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 21,
+        "quote": "Happy 贡献",
+        "quoteRaw": "Happy 贡献"
+      },
+      "replay": {
+        "block": 2,
+        "start": 21,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 40,
+      "length": 8,
+      "docStart": 121,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 40,
+        "quote": "，本地环境/自建",
+        "quoteRaw": "，本地环境/自建"
+      },
+      "replay": {
+        "block": 2,
+        "start": 40,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 51,
+      "length": 8,
+      "docStart": 132,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 51,
+        "quote": "Happy 自建",
+        "quoteRaw": "Happy 自建"
+      },
+      "replay": {
+        "block": 2,
+        "start": 51,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 63,
+      "length": 8,
+      "docStart": 144,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 63,
+        "quote": "。 一条 PR",
+        "quoteRaw": "。\n一条 PR"
+      },
+      "replay": {
+        "block": 2,
+        "start": 63,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 208,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "👀 待 rev",
+        "quoteRaw": "👀 待 rev"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 231,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 1,
+        "quote": "PR 标题 发出",
+        "quoteRaw": "PR\n标题\n发出"
+      },
+      "replay": {
+        "block": 4,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 234,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 4,
+        "quote": "标题 发出 CI",
+        "quoteRaw": "标题\n发出\nCI"
+      },
+      "replay": {
+        "block": 4,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 237,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 7,
+        "quote": "发出 CI 状态",
+        "quoteRaw": "发出\nCI\n状态"
+      },
+      "replay": {
+        "block": 4,
+        "start": 9,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 10,
+      "length": 6,
+      "docStart": 240,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 10,
+        "quote": "CI 状态",
+        "quoteRaw": "CI\n状态"
+      },
+      "replay": {
+        "block": 4,
+        "start": 12,
+        "length": 5
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 13,
+      "length": 3,
+      "docStart": 243,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 13,
+        "quote": "状态",
+        "quoteRaw": "状态"
+      },
+      "replay": {
+        "block": 4,
+        "start": 15,
+        "length": 2
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 250,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 1,
+        "quote": "#1596 fi",
+        "quoteRaw": "#1596\nfi"
+      },
+      "replay": {
+        "block": 6,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 256,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 7,
+        "quote": "fix: kee",
+        "quoteRaw": "fix: kee"
+      },
+      "replay": {
+        "block": 6,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 61,
+      "length": 8,
+      "docStart": 310,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 61,
+        "quote": "07-26 单测",
+        "quoteRaw": "07-26\n单测"
+      },
+      "replay": {
+        "block": 6,
+        "start": 61,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 67,
+      "length": 8,
+      "docStart": 316,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 67,
+        "quote": "单测 red→g",
+        "quoteRaw": "单测 red→g"
+      },
+      "replay": {
+        "block": 6,
+        "start": 67,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 135,
+      "length": 8,
+      "docStart": 384,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 135,
+        "quote": "OPEN；Fix",
+        "quoteRaw": "OPEN；Fix"
+      },
+      "replay": {
+        "block": 6,
+        "start": 135,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 255,
+      "length": 8,
+      "docStart": 504,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 255,
+        "quote": "EVIDENCE",
+        "quoteRaw": "EVIDENCE"
+      },
+      "replay": {
+        "block": 6,
+        "start": 255,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 278,
+      "length": 8,
+      "docStart": 527,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 278,
+        "quote": "（未提交）；双",
+        "quoteRaw": "（未提交）；双"
+      },
+      "replay": {
+        "block": 6,
+        "start": 278,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 601,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 1,
+        "quote": "#1567 fi",
+        "quoteRaw": "#1567\nfi"
+      },
+      "replay": {
+        "block": 7,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 607,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 7,
+        "quote": "fix(app)",
+        "quoteRaw": "fix(app)"
+      },
+      "replay": {
+        "block": 7,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 78,
+      "length": 8,
+      "docStart": 678,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 78,
+        "quote": "07-24 21",
+        "quoteRaw": "07-24 21"
+      },
+      "replay": {
+        "block": 7,
+        "start": 78,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 91,
+      "length": 8,
+      "docStart": 691,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 91,
+        "quote": "typechec",
+        "quoteRaw": "typechec"
+      },
+      "replay": {
+        "block": 7,
+        "start": 91,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 103,
+      "length": 8,
+      "docStart": 703,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 103,
+        "quote": "OPEN，非 d",
+        "quoteRaw": "OPEN，非 d"
+      },
+      "replay": {
+        "block": 7,
+        "start": 103,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 742,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 1,
+        "quote": "#1568 fi",
+        "quoteRaw": "#1568\nfi"
+      },
+      "replay": {
+        "block": 8,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 748,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 7,
+        "quote": "fix(app)",
+        "quoteRaw": "fix(app)"
+      },
+      "replay": {
+        "block": 8,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 60,
+      "length": 8,
+      "docStart": 801,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 60,
+        "quote": "07-25 01",
+        "quoteRaw": "07-25 01"
+      },
+      "replay": {
+        "block": 8,
+        "start": 60,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 73,
+      "length": 8,
+      "docStart": 814,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 73,
+        "quote": "784/784",
+        "quoteRaw": "784/784"
+      },
+      "replay": {
+        "block": 8,
+        "start": 73,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 97,
+      "length": 8,
+      "docStart": 838,
+      "expect": {
+        "blockLine": 24,
+        "line": 24,
+        "offset": 97,
+        "quote": "OPEN；分支",
+        "quoteRaw": "OPEN；分支"
+      },
+      "replay": {
+        "block": 8,
+        "start": 97,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 913,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 1,
+        "quote": "#1569 fi",
+        "quoteRaw": "#1569\nfi"
+      },
+      "replay": {
+        "block": 9,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 919,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 7,
+        "quote": "fix(app)",
+        "quoteRaw": "fix(app)"
+      },
+      "replay": {
+        "block": 9,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 73,
+      "length": 8,
+      "docStart": 985,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 73,
+        "quote": "07-25 03",
+        "quoteRaw": "07-25 03"
+      },
+      "replay": {
+        "block": 9,
+        "start": 73,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 86,
+      "length": 8,
+      "docStart": 998,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 86,
+        "quote": "787/787",
+        "quoteRaw": "787/787"
+      },
+      "replay": {
+        "block": 9,
+        "start": 86,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 110,
+      "length": 8,
+      "docStart": 1022,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 110,
+        "quote": "OPEN；叠在",
+        "quoteRaw": "OPEN；叠在"
+      },
+      "replay": {
+        "block": 9,
+        "start": 110,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 115,
+      "length": 8,
+      "docStart": 1027,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 115,
+        "quote": "叠在 #1568",
+        "quoteRaw": "叠在 #1568"
+      },
+      "replay": {
+        "block": 9,
+        "start": 115,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 125,
+      "length": 8,
+      "docStart": 1037,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 125,
+        "quote": "（分支 feat",
+        "quoteRaw": "（分支 feat"
+      },
+      "replay": {
+        "block": 9,
+        "start": 125,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1123,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 1,
+        "quote": "#1570 fe",
+        "quoteRaw": "#1570\nfe"
+      },
+      "replay": {
+        "block": 10,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1129,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 7,
+        "quote": "feat(cli",
+        "quoteRaw": "feat(cli"
+      },
+      "replay": {
+        "block": 10,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 64,
+      "length": 8,
+      "docStart": 1186,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 64,
+        "quote": "07-25 06",
+        "quoteRaw": "07-25 06"
+      },
+      "replay": {
+        "block": 10,
+        "start": 64,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 80,
+      "length": 8,
+      "docStart": 1202,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 80,
+        "quote": "typechec",
+        "quoteRaw": "typechec"
+      },
+      "replay": {
+        "block": 10,
+        "start": 80,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 118,
+      "length": 8,
+      "docStart": 1240,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 118,
+        "quote": "OPEN，MER",
+        "quoteRaw": "OPEN，MER"
+      },
+      "replay": {
+        "block": 10,
+        "start": 118,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 184,
+      "length": 8,
+      "docStart": 1306,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 184,
+        "quote": "2066e102",
+        "quoteRaw": "2066e102"
+      },
+      "replay": {
+        "block": 10,
+        "start": 184,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 192,
+      "length": 8,
+      "docStart": 1314,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 192,
+        "quote": "→7d08759",
+        "quoteRaw": "→7d08759"
+      },
+      "replay": {
+        "block": 10,
+        "start": 192,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 193,
+      "length": 8,
+      "docStart": 1315,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 193,
+        "quote": "7d08759b",
+        "quoteRaw": "7d08759b"
+      },
+      "replay": {
+        "block": 10,
+        "start": 193,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 201,
+      "length": 8,
+      "docStart": 1323,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 201,
+        "quote": "）；Fixes",
+        "quoteRaw": "）；Fixes"
+      },
+      "replay": {
+        "block": 10,
+        "start": 201,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1380,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 1,
+        "quote": "#1571 fe",
+        "quoteRaw": "#1571\nfe"
+      },
+      "replay": {
+        "block": 11,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1386,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 7,
+        "quote": "feat(cli",
+        "quoteRaw": "feat(cli"
+      },
+      "replay": {
+        "block": 11,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 80,
+      "length": 8,
+      "docStart": 1459,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 80,
+        "quote": "07-25 07",
+        "quoteRaw": "07-25 07"
+      },
+      "replay": {
+        "block": 11,
+        "start": 80,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 96,
+      "length": 8,
+      "docStart": 1475,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 96,
+        "quote": "本地 CLI 8",
+        "quoteRaw": "本地 CLI 8"
+      },
+      "replay": {
+        "block": 11,
+        "start": 96,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 141,
+      "length": 8,
+      "docStart": 1520,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 141,
+        "quote": "OPEN；分支",
+        "quoteRaw": "OPEN；分支"
+      },
+      "replay": {
+        "block": 11,
+        "start": 141,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 176,
+      "length": 8,
+      "docStart": 1555,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 176,
+        "quote": "771b7018",
+        "quoteRaw": "771b7018"
+      },
+      "replay": {
+        "block": 11,
+        "start": 176,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 184,
+      "length": 8,
+      "docStart": 1563,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 184,
+        "quote": "）；截图复用 #",
+        "quoteRaw": "）；截图复用 #"
+      },
+      "replay": {
+        "block": 11,
+        "start": 184,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1650,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 1,
+        "quote": "#1572 do",
+        "quoteRaw": "#1572\ndo"
+      },
+      "replay": {
+        "block": 12,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1656,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 7,
+        "quote": "docs(cli",
+        "quoteRaw": "docs(cli"
+      },
+      "replay": {
+        "block": 12,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 80,
+      "length": 8,
+      "docStart": 1729,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 80,
+        "quote": "07-25 do",
+        "quoteRaw": "07-25\ndo"
+      },
+      "replay": {
+        "block": 12,
+        "start": 80,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 86,
+      "length": 8,
+      "docStart": 1735,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 86,
+        "quote": "docs-onl",
+        "quoteRaw": "docs-onl"
+      },
+      "replay": {
+        "block": 12,
+        "start": 86,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 108,
+      "length": 8,
+      "docStart": 1757,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 108,
+        "quote": "OPEN；分支",
+        "quoteRaw": "OPEN；分支"
+      },
+      "replay": {
+        "block": 12,
+        "start": 108,
+        "length": 7
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 142,
+      "length": 8,
+      "docStart": 1791,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 142,
+        "quote": "94ecd533",
+        "quoteRaw": "94ecd533"
+      },
+      "replay": {
+        "block": 12,
+        "start": 142,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 150,
+      "length": 8,
+      "docStart": 1799,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 150,
+        "quote": "）；Opus 实",
+        "quoteRaw": "）；Opus 实"
+      },
+      "replay": {
+        "block": 12,
+        "start": 150,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1834,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 1,
+        "quote": "#1573 fe",
+        "quoteRaw": "#1573\nfe"
+      },
+      "replay": {
+        "block": 13,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 1840,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 7,
+        "quote": "feat(app",
+        "quoteRaw": "feat(app"
+      },
+      "replay": {
+        "block": 13,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 65,
+      "length": 8,
+      "docStart": 1898,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 65,
+        "quote": "07-25 ap",
+        "quoteRaw": "07-25\nap"
+      },
+      "replay": {
+        "block": 13,
+        "start": 65,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 71,
+      "length": 8,
+      "docStart": 1904,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 71,
+        "quote": "app 779/",
+        "quoteRaw": "app 779/"
+      },
+      "replay": {
+        "block": 13,
+        "start": 71,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 97,
+      "length": 8,
+      "docStart": 1930,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 97,
+        "quote": "OPEN；分支",
+        "quoteRaw": "OPEN；分支"
+      },
+      "replay": {
+        "block": 13,
+        "start": 97,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 119,
+      "length": 8,
+      "docStart": 1952,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 119,
+        "quote": "40f77bf5",
+        "quoteRaw": "40f77bf5"
+      },
+      "replay": {
+        "block": 13,
+        "start": 119,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 127,
+      "length": 8,
+      "docStart": 1960,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 127,
+        "quote": "）；3 PNG",
+        "quoteRaw": "）；3 PNG"
+      },
+      "replay": {
+        "block": 13,
+        "start": 127,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 160,
+      "length": 8,
+      "docStart": 1993,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 160,
+        "quote": "agy 键（原头",
+        "quoteRaw": "agy 键（原头"
+      },
+      "replay": {
+        "block": 13,
+        "start": 160,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 164,
+      "length": 8,
+      "docStart": 1997,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 164,
+        "quote": "键（原头像 fa",
+        "quoteRaw": "键（原头像 fa"
+      },
+      "replay": {
+        "block": 13,
+        "start": 164,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 2053,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 1,
+        "quote": "#1574 fe",
+        "quoteRaw": "#1574\nfe"
+      },
+      "replay": {
+        "block": 14,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 2059,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 7,
+        "quote": "feat(cli",
+        "quoteRaw": "feat(cli"
+      },
+      "replay": {
+        "block": 14,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 67,
+      "length": 8,
+      "docStart": 2119,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 67,
+        "quote": "07-25 CL",
+        "quoteRaw": "07-25\nCL"
+      },
+      "replay": {
+        "block": 14,
+        "start": 67,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 73,
+      "length": 8,
+      "docStart": 2125,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 73,
+        "quote": "CLI 785/",
+        "quoteRaw": "CLI 785/"
+      },
+      "replay": {
+        "block": 14,
+        "start": 73,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 99,
+      "length": 8,
+      "docStart": 2151,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 99,
+        "quote": "OPEN；分支",
+        "quoteRaw": "OPEN；分支"
+      },
+      "replay": {
+        "block": 14,
+        "start": 99,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 131,
+      "length": 8,
+      "docStart": 2183,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 131,
+        "quote": "4ae74854",
+        "quoteRaw": "4ae74854"
+      },
+      "replay": {
+        "block": 14,
+        "start": 131,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 139,
+      "length": 8,
+      "docStart": 2191,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 139,
+        "quote": "）；Part o",
+        "quoteRaw": "）；Part o"
+      },
+      "replay": {
+        "block": 14,
+        "start": 139,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 2285,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 1,
+        "quote": "#1575 ch",
+        "quoteRaw": "#1575\nch"
+      },
+      "replay": {
+        "block": 15,
+        "start": 1,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "Happy 贡献 Tracker",
+      "expect": 9
+    },
+    {
+      "quote": "上游 = slopus/happ",
+      "expect": 11
+    },
+    {
+      "quote": "这份是贡献状态的 SSOT。 流",
+      "expect": 13
+    },
+    {
+      "quote": "👀 待 review（已发，等",
+      "expect": 18
+    },
+    {
+      "quote": "PR 标题 发出 CI 状态 #",
+      "expect": 20
+    },
+    {
+      "quote": "PR 标题 发出 CI 状态",
+      "expect": 20
+    },
+    {
+      "quote": "#1596 fix: keep ",
+      "expect": 22
+    },
+    {
+      "quote": "#1567 fix(app): ",
+      "expect": 23
+    },
+    {
+      "quote": "#1568 fix(app): ",
+      "expect": 24
+    },
+    {
+      "quote": "#1569 fix(app): ",
+      "expect": 25
+    },
+    {
+      "quote": "#1570 feat(cli,a",
+      "expect": 26
+    },
+    {
+      "quote": "#1571 feat(cli,a",
+      "expect": 27
+    },
+    {
+      "quote": "#1572 docs(cli):",
+      "expect": 28
+    },
+    {
+      "quote": "#1573 feat(app):",
+      "expect": 29
+    },
+    {
+      "quote": "#1574 feat(cli):",
+      "expect": 30
+    },
+    {
+      "quote": "#1575 chore(app,",
+      "expect": 31
+    },
+    {
+      "quote": "#1576 feat(cli,a",
+      "expect": 32
+    },
+    {
+      "quote": "#1577 feat(app):",
+      "expect": 33
+    },
+    {
+      "quote": "#1578 fix(cli): ",
+      "expect": 34
+    },
+    {
+      "quote": "#1579 fix(app): ",
+      "expect": 35
+    },
+    {
+      "quote": "📊 批次总览（07-26 更新",
+      "expect": 37
+    },
+    {
+      "quote": "评分口径：重要＝对用户/上游价值",
+      "expect": 39
+    },
+    {
+      "quote": "PR 重要 紧急 易合 体量 冲",
+      "expect": 41
+    },
+    {
+      "quote": "PR 重要 紧急 易合 体量 冲",
+      "expect": 41
+    },
+    {
+      "quote": "#1567 unread bad",
+      "expect": 43
+    },
+    {
+      "quote": "#1579 thinking 状",
+      "expect": 44
+    },
+    {
+      "quote": "#1596 abort 后丢 m",
+      "expect": 45
+    },
+    {
+      "quote": "#1573 agy 真图标 🟡",
+      "expect": 46
+    },
+    {
+      "quote": "#1572 agy 放行披露 \ud83d",
+      "expect": 47
+    },
+    {
+      "quote": "#1578 launch 错误透",
+      "expect": 48
+    },
+    {
+      "quote": "#1575 gemini 退役收",
+      "expect": 49
+    },
+    {
+      "quote": "#1568 per-agent ",
+      "expect": 50
+    },
+    {
+      "quote": "#1569 清 stale dr",
+      "expect": 51
+    },
+    {
+      "quote": "#1574 agy resume",
+      "expect": 52
+    },
+    {
+      "quote": "#1570 agy 图片 🟠中",
+      "expect": 53
+    },
+    {
+      "quote": "#1576 agy effort",
+      "expect": 54
+    },
+    {
+      "quote": "#1577 紫色未读 🟡中 \ud83d",
+      "expect": 55
+    },
+    {
+      "quote": "#1571 agy 配额 chi",
+      "expect": 56
+    },
+    {
+      "quote": "建议合并顺序（给 maintai",
+      "expect": 58
+    },
+    {
+      "quote": "秒合组（零冲突、零风险）：#15",
+      "expect": 59
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      9,
+      "Happy 贡献 Tracker"
+    ],
+    [
+      11,
+      "Happy 贡献 Tracker"
+    ],
+    [
+      13,
+      "Happy 贡献 Tracker"
+    ],
+    [
+      18,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      20,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      22,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      23,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      24,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      25,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      26,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      27,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      28,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      29,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      30,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      31,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      32,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      33,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      34,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      35,
+      "👀 待 review（已发，等上游）"
+    ],
+    [
+      37,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      39,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      41,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      43,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      44,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      45,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      46,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      47,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      48,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      49,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      50,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      51,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      52,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      53,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      54,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      55,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      56,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      58,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      59,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      60,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      61,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      62,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      63,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      65,
+      "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    ],
+    [
+      67,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      69,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      71,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      73,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      74,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      75,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      76,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      77,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      78,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      79,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      81,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      83,
+      "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    ],
+    [
+      87,
+      "📦 待发 PR（代码好了，还没开）"
+    ],
+    [
+      89,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      91,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      93,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      95,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      97,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      99,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      100,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      101,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      102,
+      "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    ],
+    [
+      106,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      108,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      110,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      111,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      112,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      113,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      114,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      115,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      116,
+      "🔨 在开发 / 待收拾"
+    ],
+    [
+      120,
+      "💡 Backlog 点子"
+    ],
+    [
+      122,
+      "💡 Backlog 点子"
+    ],
+    [
+      124,
+      "📝 待发 issue（草稿好了，等 Charlie 点头）"
+    ],
+    [
+      126,
+      "📝 待发 issue（草稿好了，等 Charlie 点头）"
+    ],
+    [
+      128,
+      "我提的 issue，还开着（可自己接手）"
+    ],
+    [
+      130,
+      "我提的 issue，还开着（可自己接手）"
+    ],
+    [
+      132,
+      "我提的 issue，还开着（可自己接手）"
+    ],
+    [
+      133,
+      "我提的 issue，还开着（可自己接手）"
+    ],
+    [
+      134,
+      "我提的 issue，还开着（可自己接手）"
+    ],
+    [
+      135,
+      "我提的 issue，还开着（可自己接手）"
+    ],
+    [
+      136,
+      "我提的 issue，还开着（可自己接手）"
+    ],
+    [
+      138,
+      "别人的 issue，可以捡（reliability 线，对 NIW 有用）"
+    ],
+    [
+      140,
+      "别人的 issue，可以捡（reliability 线，对 NIW 有用）"
+    ],
+    [
+      142,
+      "别人的 issue，可以捡（reliability 线，对 NIW 有用）"
+    ],
+    [
+      143,
+      "别人的 issue，可以捡（reliability 线，对 NIW 有用）"
+    ],
+    [
+      145,
+      "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉"
+    ],
+    [
+      147,
+      "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉"
+    ],
+    [
+      148,
+      "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉"
+    ],
+    [
+      149,
+      "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉"
+    ],
+    [
+      150,
+      "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉"
+    ],
+    [
+      154,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      156,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      158,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      159,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      160,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      161,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      162,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      163,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      164,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      165,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      166,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      167,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      169,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      172,
+      "✅ 已 merged（10 个）"
+    ],
+    [
+      176,
+      "铁律（别再踩）"
+    ],
+    [
+      178,
+      "铁律（别再踩）"
+    ],
+    [
+      179,
+      "铁律（别再踩）"
+    ],
+    [
+      180,
+      "铁律（别再踩）"
+    ],
+    [
+      181,
+      "铁律（别再踩）"
+    ],
+    [
+      182,
+      "铁律（别再踩）"
+    ],
+    [
+      183,
+      "铁律（别再踩）"
+    ],
+    [
+      184,
+      "铁律（别再踩）"
+    ],
+    [
+      185,
+      "铁律（别再踩）"
+    ],
+    [
+      187,
+      "相关"
+    ],
+    [
+      189,
+      "相关"
+    ],
+    [
+      190,
+      "相关"
+    ],
+    [
+      191,
+      "相关"
+    ]
+  ]
+}

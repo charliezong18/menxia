@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "source": "corpus/edge-frontmatter.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 6,
+      "level": 1,
+      "text": "标题在第 6 行",
+      "slug": "标题在第-6-行"
+    },
+    {
+      "line": 15,
+      "level": 2,
+      "text": "这一段夹在两条 --- 之间",
+      "slug": "这一段夹在两条-----之间"
+    }
+  ],
+  "headings": [
+    {
+      "line": 6,
+      "level": 1,
+      "text": "标题在第 6 行",
+      "slug": "标题在第-6-行"
+    },
+    {
+      "line": 15,
+      "level": 2,
+      "text": "这一段夹在两条 --- 之间",
+      "slug": "这一段夹在两条-----之间"
+    }
+  ]
+}

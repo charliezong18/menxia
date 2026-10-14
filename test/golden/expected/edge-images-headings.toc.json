@@ -1,0 +1,183 @@
+{
+  "format": 1,
+  "source": "corpus/edge-images-headings.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "图片与标题",
+      "slug": "图片与标题"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": "介绍",
+      "slug": "-介绍"
+    },
+    {
+      "line": 11,
+      "level": 2,
+      "text": "🚀 起步",
+      "slug": "-起步"
+    },
+    {
+      "line": 13,
+      "level": 2,
+      "text": "重名",
+      "slug": "重名"
+    },
+    {
+      "line": 15,
+      "level": 2,
+      "text": "重名",
+      "slug": "重名-1"
+    },
+    {
+      "line": 17,
+      "level": 2,
+      "text": "重名-1",
+      "slug": "重名-1-1"
+    },
+    {
+      "line": 19,
+      "level": 2,
+      "text": "带链接的标题 尾巴",
+      "slug": "带链接的标题-尾巴"
+    },
+    {
+      "line": 21,
+      "level": 2,
+      "text": "带 code 的标题",
+      "slug": "带-code-的标题"
+    },
+    {
+      "line": 29,
+      "level": 1,
+      "text": "Setext 一级",
+      "slug": "setext-一级"
+    },
+    {
+      "line": 32,
+      "level": 2,
+      "text": "Setext 二级",
+      "slug": "setext-二级"
+    },
+    {
+      "line": 35,
+      "level": 3,
+      "text": "三级：标点〈Highline 日模块〉、「引号」，句号。",
+      "slug": "三级标点highline-日模块引号句号"
+    },
+    {
+      "line": 39,
+      "level": 1,
+      "text": "前后空格标题",
+      "slug": "前后空格标题"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "图片与标题",
+      "slug": "图片与标题"
+    },
+    {
+      "line": 7,
+      "level": 2,
+      "text": " 介绍",
+      "slug": "-介绍"
+    },
+    {
+      "line": 9,
+      "level": 2,
+      "text": "",
+      "slug": ""
+    },
+    {
+      "line": 11,
+      "level": 2,
+      "text": "🚀 起步",
+      "slug": "-起步"
+    },
+    {
+      "line": 13,
+      "level": 2,
+      "text": "重名",
+      "slug": "重名"
+    },
+    {
+      "line": 15,
+      "level": 2,
+      "text": "重名",
+      "slug": "重名-1"
+    },
+    {
+      "line": 17,
+      "level": 2,
+      "text": "重名-1",
+      "slug": "重名-1-1"
+    },
+    {
+      "line": 19,
+      "level": 2,
+      "text": "带链接的标题 尾巴",
+      "slug": "带链接的标题-尾巴"
+    },
+    {
+      "line": 21,
+      "level": 2,
+      "text": "带 code 的标题",
+      "slug": "带-code-的标题"
+    },
+    {
+      "line": 23,
+      "level": 4,
+      "text": "四级标题不进大纲",
+      "slug": "四级标题不进大纲"
+    },
+    {
+      "line": 25,
+      "level": 5,
+      "text": "五级",
+      "slug": "五级"
+    },
+    {
+      "line": 27,
+      "level": 6,
+      "text": "六级",
+      "slug": "六级"
+    },
+    {
+      "line": 29,
+      "level": 1,
+      "text": "Setext 一级",
+      "slug": "setext-一级"
+    },
+    {
+      "line": 32,
+      "level": 2,
+      "text": "Setext 二级",
+      "slug": "setext-二级"
+    },
+    {
+      "line": 35,
+      "level": 3,
+      "text": "三级：标点〈Highline 日模块〉、「引号」，句号。",
+      "slug": "三级标点highline-日模块引号句号"
+    },
+    {
+      "line": 37,
+      "level": 1,
+      "text": "",
+      "slug": ""
+    },
+    {
+      "line": 39,
+      "level": 1,
+      "text": "前后空格标题",
+      "slug": "前后空格标题"
+    }
+  ]
+}

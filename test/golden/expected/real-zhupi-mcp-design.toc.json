@@ -1,0 +1,297 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhupi-mcp-design.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "zhupi-mcp — the agent-side MCP server for zhupi, the annotation desk",
+      "slug": "zhupi-mcp--the-agent-side-mcp-server-for-zhupi-the-annotation-desk"
+    },
+    {
+      "line": 11,
+      "level": 2,
+      "text": "1. Why do this",
+      "slug": "1-why-do-this"
+    },
+    {
+      "line": 31,
+      "level": 2,
+      "text": "2. Scope",
+      "slug": "2-scope"
+    },
+    {
+      "line": 43,
+      "level": 2,
+      "text": "3. Tool surface",
+      "slug": "3-tool-surface"
+    },
+    {
+      "line": 47,
+      "level": 3,
+      "text": "3.1 open_folder — open a folder",
+      "slug": "31-open_folder--open-a-folder"
+    },
+    {
+      "line": 73,
+      "level": 3,
+      "text": "3.2 lint_folder — self-check before you open a folder",
+      "slug": "32-lint_folder--self-check-before-you-open-a-folder"
+    },
+    {
+      "line": 84,
+      "level": 3,
+      "text": "3.3 audit_folders — audit of folders already open",
+      "slug": "33-audit_folders--audit-of-folders-already-open"
+    },
+    {
+      "line": 93,
+      "level": 3,
+      "text": "3.4 list_folders — list folders / \"has he reviewed it?\"",
+      "slug": "34-list_folders--list-folders--has-he-reviewed-it"
+    },
+    {
+      "line": 101,
+      "level": 3,
+      "text": "3.5 read_comments — read comments",
+      "slug": "35-read_comments--read-comments"
+    },
+    {
+      "line": 120,
+      "level": 3,
+      "text": "3.6 reply_comment — reply",
+      "slug": "36-reply_comment--reply"
+    },
+    {
+      "line": 132,
+      "level": 2,
+      "text": "4. Architecture",
+      "slug": "4-architecture"
+    },
+    {
+      "line": 136,
+      "level": 3,
+      "text": "4.1 Installation method",
+      "slug": "41-installation-method"
+    },
+    {
+      "line": 148,
+      "level": 3,
+      "text": "4.2 Concurrency: file lock, not single process",
+      "slug": "42-concurrency-file-lock-not-single-process"
+    },
+    {
+      "line": 160,
+      "level": 3,
+      "text": "4.3 GitHub integration",
+      "slug": "43-github-integration"
+    },
+    {
+      "line": 166,
+      "level": 3,
+      "text": "4.4 Detection of the \"session backlink\" marker",
+      "slug": "44-detection-of-the-session-backlink-marker"
+    },
+    {
+      "line": 181,
+      "level": 3,
+      "text": "4.5 Module slicing",
+      "slug": "45-module-slicing"
+    },
+    {
+      "line": 196,
+      "level": 2,
+      "text": "5. Porting acceptance",
+      "slug": "5-porting-acceptance"
+    },
+    {
+      "line": 200,
+      "level": 3,
+      "text": "5.1 Port according to implementation, not documentation",
+      "slug": "51-port-according-to-implementation-not-documentation"
+    },
+    {
+      "line": 220,
+      "level": 3,
+      "text": "5.2 Differential test",
+      "slug": "52-differential-test"
+    },
+    {
+      "line": 228,
+      "level": 3,
+      "text": "5.3 Decided (Charlie's call, 2026-07-28)",
+      "slug": "53-decided-charlies-call-2026-07-28"
+    },
+    {
+      "line": 236,
+      "level": 2,
+      "text": "6. Testing",
+      "slug": "6-testing"
+    },
+    {
+      "line": 246,
+      "level": 2,
+      "text": "7. Hook (Phase 0, shipped 2026-07-28)",
+      "slug": "7-hook-phase-0-shipped-2026-07-28"
+    },
+    {
+      "line": 273,
+      "level": 2,
+      "text": "8. Rollout sequence",
+      "slug": "8-rollout-sequence"
+    },
+    {
+      "line": 287,
+      "level": 2,
+      "text": "9. Risks",
+      "slug": "9-risks"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "zhupi-mcp — the agent-side MCP server for zhupi, the annotation desk",
+      "slug": "zhupi-mcp--the-agent-side-mcp-server-for-zhupi-the-annotation-desk"
+    },
+    {
+      "line": 11,
+      "level": 2,
+      "text": "1. Why do this",
+      "slug": "1-why-do-this"
+    },
+    {
+      "line": 31,
+      "level": 2,
+      "text": "2. Scope",
+      "slug": "2-scope"
+    },
+    {
+      "line": 43,
+      "level": 2,
+      "text": "3. Tool surface",
+      "slug": "3-tool-surface"
+    },
+    {
+      "line": 47,
+      "level": 3,
+      "text": "3.1 open_folder — open a folder",
+      "slug": "31-open_folder--open-a-folder"
+    },
+    {
+      "line": 73,
+      "level": 3,
+      "text": "3.2 lint_folder — self-check before you open a folder",
+      "slug": "32-lint_folder--self-check-before-you-open-a-folder"
+    },
+    {
+      "line": 84,
+      "level": 3,
+      "text": "3.3 audit_folders — audit of folders already open",
+      "slug": "33-audit_folders--audit-of-folders-already-open"
+    },
+    {
+      "line": 93,
+      "level": 3,
+      "text": "3.4 list_folders — list folders / \"has he reviewed it?\"",
+      "slug": "34-list_folders--list-folders--has-he-reviewed-it"
+    },
+    {
+      "line": 101,
+      "level": 3,
+      "text": "3.5 read_comments — read comments",
+      "slug": "35-read_comments--read-comments"
+    },
+    {
+      "line": 120,
+      "level": 3,
+      "text": "3.6 reply_comment — reply",
+      "slug": "36-reply_comment--reply"
+    },
+    {
+      "line": 132,
+      "level": 2,
+      "text": "4. Architecture",
+      "slug": "4-architecture"
+    },
+    {
+      "line": 136,
+      "level": 3,
+      "text": "4.1 Installation method",
+      "slug": "41-installation-method"
+    },
+    {
+      "line": 148,
+      "level": 3,
+      "text": "4.2 Concurrency: file lock, not single process",
+      "slug": "42-concurrency-file-lock-not-single-process"
+    },
+    {
+      "line": 160,
+      "level": 3,
+      "text": "4.3 GitHub integration",
+      "slug": "43-github-integration"
+    },
+    {
+      "line": 166,
+      "level": 3,
+      "text": "4.4 Detection of the \"session backlink\" marker",
+      "slug": "44-detection-of-the-session-backlink-marker"
+    },
+    {
+      "line": 181,
+      "level": 3,
+      "text": "4.5 Module slicing",
+      "slug": "45-module-slicing"
+    },
+    {
+      "line": 196,
+      "level": 2,
+      "text": "5. Porting acceptance",
+      "slug": "5-porting-acceptance"
+    },
+    {
+      "line": 200,
+      "level": 3,
+      "text": "5.1 Port according to implementation, not documentation",
+      "slug": "51-port-according-to-implementation-not-documentation"
+    },
+    {
+      "line": 220,
+      "level": 3,
+      "text": "5.2 Differential test",
+      "slug": "52-differential-test"
+    },
+    {
+      "line": 228,
+      "level": 3,
+      "text": "5.3 Decided (Charlie's call, 2026-07-28)",
+      "slug": "53-decided-charlies-call-2026-07-28"
+    },
+    {
+      "line": 236,
+      "level": 2,
+      "text": "6. Testing",
+      "slug": "6-testing"
+    },
+    {
+      "line": 246,
+      "level": 2,
+      "text": "7. Hook (Phase 0, shipped 2026-07-28)",
+      "slug": "7-hook-phase-0-shipped-2026-07-28"
+    },
+    {
+      "line": 273,
+      "level": 2,
+      "text": "8. Rollout sequence",
+      "slug": "8-rollout-sequence"
+    },
+    {
+      "line": 287,
+      "level": 2,
+      "text": "9. Risks",
+      "slug": "9-risks"
+    }
+  ]
+}

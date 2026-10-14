@@ -1,0 +1,2422 @@
+{
+  "format": 1,
+  "source": "corpus/real-chinese-official-titles-outline.zh-CN.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "《中国历代官名变",
+        "quoteRaw": "《中国历代官名变"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 31,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "约 10.8 万",
+        "quoteRaw": "约 10.8 万"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 64,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "↑ 这是全书第一",
+        "quoteRaw": "↑ 这是全书第一"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 21,
+      "length": 8,
+      "docStart": 85,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 21,
+        "quote": "上半是机制，下半",
+        "quoteRaw": "上半是机制，下半"
+      },
+      "replay": {
+        "block": 4,
+        "start": 21,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 4,
+      "docStart": 164,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 0,
+        "quote": "全书主线",
+        "quoteRaw": "全书主线"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 4
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 169,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "官名变迁不是名词",
+        "quoteRaw": "官名变迁不是名词"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 181,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 12,
+        "quote": "皇权与官僚制反复",
+        "quoteRaw": "皇权与官僚制反复"
+      },
+      "replay": {
+        "block": 6,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 27,
+      "length": 8,
+      "docStart": 196,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 27,
+        "quote": "。三条机制贯穿全",
+        "quoteRaw": "。三条机制贯穿全"
+      },
+      "replay": {
+        "block": 6,
+        "start": 27,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 222,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "内朝侵夺外朝 —",
+        "quoteRaw": "内朝侵夺外朝 —"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 229,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 7,
+        "quote": "—— 近侍因亲近",
+        "quoteRaw": "—— 近侍因亲近"
+      },
+      "replay": {
+        "block": 7,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 305,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "差遣侵夺本官 —",
+        "quoteRaw": "差遣侵夺本官 —"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 7,
+      "length": 8,
+      "docStart": 312,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 7,
+        "quote": "—— 名实分离，",
+        "quoteRaw": "—— 名实分离，"
+      },
+      "replay": {
+        "block": 8,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 358,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "分权制衡 ——",
+        "quoteRaw": "分权制衡 ——"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 363,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 5,
+        "quote": "—— 一职拆多人",
+        "quoteRaw": "—— 一职拆多人"
+      },
+      "replay": {
+        "block": 9,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 399,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "成功标准：读者读",
+        "quoteRaw": "成功标准：读者读"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 403,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 4,
+        "quote": "：读者读完能拿这",
+        "quoteRaw": "：读者读完能拿这"
+      },
+      "replay": {
+        "block": 10,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 432,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "明确不覆盖：西夏",
+        "quoteRaw": "明确不覆盖：西夏"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 437,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 5,
+        "quote": "：西夏、吐蕃、南",
+        "quoteRaw": "：西夏、吐蕃、南"
+      },
+      "replay": {
+        "block": 11,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 479,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 0,
+        "quote": "2026-07-",
+        "quoteRaw": "2026-07-"
+      },
+      "replay": {
+        "block": 12,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 492,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 13,
+        "quote": "：辽金元的官制原",
+        "quoteRaw": "：辽金元的官制原"
+      },
+      "replay": {
+        "block": 12,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 59,
+      "length": 8,
+      "docStart": 538,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 59,
+        "quote": "专题而非朝代——",
+        "quoteRaw": "专题而非朝代——"
+      },
+      "replay": {
+        "block": 12,
+        "start": 60,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 61,
+      "length": 8,
+      "docStart": 540,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 61,
+        "quote": "而非朝代——不设",
+        "quoteRaw": "而非朝代——不设"
+      },
+      "replay": {
+        "block": 12,
+        "start": 62,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 63,
+      "length": 8,
+      "docStart": 542,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 63,
+        "quote": "朝代——不设\"元",
+        "quoteRaw": "朝代——不设\"元"
+      },
+      "replay": {
+        "block": 12,
+        "start": 64,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 65,
+      "length": 8,
+      "docStart": 544,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 65,
+        "quote": "——不设\"元代章",
+        "quoteRaw": "——不设\"元代章"
+      },
+      "replay": {
+        "block": 12,
+        "start": 66,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 4,
+      "docStart": 571,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 0,
+        "quote": "配图约定",
+        "quoteRaw": "配图约定"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 4
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 576,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 0,
+        "quote": "能出图的地方一律",
+        "quoteRaw": "能出图的地方一律"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 12,
+      "length": 6,
+      "docStart": 588,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 12,
+        "quote": "采用双轨制：",
+        "quoteRaw": "采用双轨制："
+      },
+      "replay": {
+        "block": 15,
+        "start": 12,
+        "length": 6
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 14,
+      "length": 4,
+      "docStart": 590,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 14,
+        "quote": "双轨制：",
+        "quoteRaw": "双轨制："
+      },
+      "replay": {
+        "block": 15,
+        "start": 14,
+        "length": 4
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 17,
+      "length": 1,
+      "docStart": 593,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 596,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 0,
+        "quote": "源码：merma",
+        "quoteRaw": "源码：merma"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 2,
+      "length": 8,
+      "docStart": 598,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 2,
+        "quote": "：mermaid",
+        "quoteRaw": "：mermaid"
+      },
+      "replay": {
+        "block": 16,
+        "start": 2,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 609,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 13,
+        "quote": "assets/g",
+        "quoteRaw": "assets/g"
+      },
+      "replay": {
+        "block": 16,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 36,
+      "length": 8,
+      "docStart": 632,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 36,
+        "quote": "。可 grep、",
+        "quoteRaw": "。可 grep、"
+      },
+      "replay": {
+        "block": 16,
+        "start": 36,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 660,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 0,
+        "quote": "成品：本地渲染成",
+        "quoteRaw": "成品：本地渲染成"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 2,
+      "length": 8,
+      "docStart": 662,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 2,
+        "quote": "：本地渲染成 P",
+        "quoteRaw": "：本地渲染成 P"
+      },
+      "replay": {
+        "block": 17,
+        "start": 2,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 679,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 19,
+        "quote": "assets/g",
+        "quoteRaw": "assets/g"
+      },
+      "replay": {
+        "block": 17,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 34,
+      "length": 8,
+      "docStart": 694,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 34,
+        "quote": "，正文用 ![]",
+        "quoteRaw": "，正文用 ![]"
+      },
+      "replay": {
+        "block": 17,
+        "start": 34,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 39,
+      "length": 8,
+      "docStart": 699,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 39,
+        "quote": "![]() 引用",
+        "quoteRaw": "![]() 引用"
+      },
+      "replay": {
+        "block": 17,
+        "start": 39,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 45,
+      "length": 2,
+      "docStart": 705,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 45,
+        "quote": "引用",
+        "quoteRaw": "引用"
+      },
+      "replay": {
+        "block": 17,
+        "start": 45,
+        "length": 2
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 709,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 0,
+        "quote": "正文引用的是 P",
+        "quoteRaw": "正文引用的是 P"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 722,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 13,
+        "quote": "任何阅读端都能看",
+        "quoteRaw": "任何阅读端都能看"
+      },
+      "replay": {
+        "block": 18,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 732,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 23,
+        "quote": "，不依赖它支不支",
+        "quoteRaw": "，不依赖它支不支"
+      },
+      "replay": {
+        "block": 18,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 69,
+      "length": 8,
+      "docStart": 778,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 69,
+        "quote": "npx @mer",
+        "quoteRaw": "npx @mer"
+      },
+      "replay": {
+        "block": 18,
+        "start": 69,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 128,
+      "length": 1,
+      "docStart": 837,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 839,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 0,
+        "quote": "原则：机制出图，",
+        "quoteRaw": "原则：机制出图，"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 842,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 3,
+        "quote": "机制出图，名词出",
+        "quoteRaw": "机制出图，名词出"
+      },
+      "replay": {
+        "block": 19,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 853,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 14,
+        "quote": "凡涉及\"谁管谁\"",
+        "quoteRaw": "凡涉及\"谁管谁\""
+      },
+      "replay": {
+        "block": 19,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 903,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 0,
+        "quote": "逐章配图清单",
+        "quoteRaw": "逐章配图清单"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 1,
+      "length": 7,
+      "docStart": 913,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 1,
+        "quote": "章 图 类型",
+        "quoteRaw": "章\n图\n类型"
+      },
+      "replay": {
+        "block": 21,
+        "start": 3,
+        "length": 6
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 3,
+      "length": 5,
+      "docStart": 915,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 3,
+        "quote": "图 类型",
+        "quoteRaw": "图\n类型"
+      },
+      "replay": {
+        "block": 21,
+        "start": 5,
+        "length": 4
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 5,
+      "length": 3,
+      "docStart": 917,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 5,
+        "quote": "类型",
+        "quoteRaw": "类型"
+      },
+      "replay": {
+        "block": 21,
+        "start": 7,
+        "length": 2
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 924,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 1,
+        "quote": "1 内外朝循环总",
+        "quoteRaw": "1\n内外朝循环总"
+      },
+      "replay": {
+        "block": 23,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 926,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 3,
+        "quote": "内外朝循环总图",
+        "quoteRaw": "内外朝循环总图"
+      },
+      "replay": {
+        "block": 23,
+        "start": 3,
+        "length": 7
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 934,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 11,
+        "quote": "—— 一个循环，",
+        "quoteRaw": "—— 一个循环，"
+      },
+      "replay": {
+        "block": 23,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 66,
+      "length": 4,
+      "docStart": 989,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 66,
+        "quote": "循环图",
+        "quoteRaw": "循环图"
+      },
+      "replay": {
+        "block": 23,
+        "start": 66,
+        "length": 3
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 995,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 1,
+        "quote": "1 本官 / 职",
+        "quoteRaw": "1\n本官 / 职"
+      },
+      "replay": {
+        "block": 24,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 997,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 3,
+        "quote": "本官 / 职事",
+        "quoteRaw": "本官 / 职事"
+      },
+      "replay": {
+        "block": 24,
+        "start": 3,
+        "length": 7
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 23,
+      "length": 4,
+      "docStart": 1017,
+      "expect": {
+        "blockLine": 45,
+        "line": 45,
+        "offset": 23,
+        "quote": "关系图",
+        "quoteRaw": "关系图"
+      },
+      "replay": {
+        "block": 24,
+        "start": 23,
+        "length": 3
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1023,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 1,
+        "quote": "2 三公演变三段",
+        "quoteRaw": "2\n三公演变三段"
+      },
+      "replay": {
+        "block": 25,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1025,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 3,
+        "quote": "三公演变三段：秦",
+        "quoteRaw": "三公演变三段：秦"
+      },
+      "replay": {
+        "block": 25,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 57,
+      "length": 4,
+      "docStart": 1079,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 57,
+        "quote": "演变图",
+        "quoteRaw": "演变图"
+      },
+      "replay": {
+        "block": 25,
+        "start": 57,
+        "length": 3
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1085,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 1,
+        "quote": "3 尚书台文书流",
+        "quoteRaw": "3\n尚书台文书流"
+      },
+      "replay": {
+        "block": 26,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1087,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 3,
+        "quote": "尚书台文书流转图",
+        "quoteRaw": "尚书台文书流转图"
+      },
+      "replay": {
+        "block": 26,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 1096,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 12,
+        "quote": "—— 章奏上行、",
+        "quoteRaw": "—— 章奏上行、"
+      },
+      "replay": {
+        "block": 26,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 42,
+      "length": 4,
+      "docStart": 1126,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 42,
+        "quote": "流程图",
+        "quoteRaw": "流程图"
+      },
+      "replay": {
+        "block": 26,
+        "start": 42,
+        "length": 3
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1132,
+      "expect": {
+        "blockLine": 48,
+        "line": 48,
+        "offset": 1,
+        "quote": "4 三省文书流转",
+        "quoteRaw": "4\n三省文书流转"
+      },
+      "replay": {
+        "block": 27,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1134,
+      "expect": {
+        "blockLine": 48,
+        "line": 48,
+        "offset": 3,
+        "quote": "三省文书流转：中",
+        "quoteRaw": "三省文书流转：中"
+      },
+      "replay": {
+        "block": 27,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 38,
+      "length": 4,
+      "docStart": 1169,
+      "expect": {
+        "blockLine": 48,
+        "line": 48,
+        "offset": 38,
+        "quote": "流程图",
+        "quoteRaw": "流程图"
+      },
+      "replay": {
+        "block": 27,
+        "start": 38,
+        "length": 3
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1175,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 1,
+        "quote": "4 宰相名号演变",
+        "quoteRaw": "4\n宰相名号演变"
+      },
+      "replay": {
+        "block": 28,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1177,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 3,
+        "quote": "宰相名号演变：三",
+        "quoteRaw": "宰相名号演变：三"
+      },
+      "replay": {
+        "block": 28,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 28,
+      "length": 4,
+      "docStart": 1202,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 28,
+        "quote": "演变图",
+        "quoteRaw": "演变图"
+      },
+      "replay": {
+        "block": 28,
+        "start": 28,
+        "length": 3
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1208,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 1,
+        "quote": "5 宋代二府三司",
+        "quoteRaw": "5\n宋代二府三司"
+      },
+      "replay": {
+        "block": 29,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1210,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 3,
+        "quote": "宋代二府三司结构",
+        "quoteRaw": "宋代二府三司结构"
+      },
+      "replay": {
+        "block": 29,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 12,
+      "length": 4,
+      "docStart": 1219,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 12,
+        "quote": "结构图",
+        "quoteRaw": "结构图"
+      },
+      "replay": {
+        "block": 29,
+        "start": 12,
+        "length": 3
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 1225,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 1,
+        "quote": "5 官 / 职",
+        "quoteRaw": "5\n官 / 职"
+      },
+      "replay": {
+        "block": 30,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 1227,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 3,
+        "quote": "官 / 职 /",
+        "quoteRaw": "官 / 职 /"
+      },
+      "replay": {
+        "block": 30,
+        "start": 3,
+        "length": 7
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 31,
+      "length": 4,
+      "docStart": 1255,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 31,
+        "quote": "拆解图",
+        "quoteRaw": "拆解图"
+      },
+      "replay": {
+        "block": 30,
+        "start": 31,
+        "length": 3
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "《中国历代官名变迁史》章节要点提",
+      "expect": 3
+    },
+    {
+      "quote": "约 10.8 万字中文教材。专题",
+      "expect": 5
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "↑ 这是全书第一张图，也是最重要",
+      "expect": 9
+    },
+    {
+      "quote": "全书主线",
+      "expect": 13
+    },
+    {
+      "quote": "官名变迁不是名词更替，是皇权与官",
+      "expect": 15
+    },
+    {
+      "quote": "内朝侵夺外朝 —— 近侍因亲近获",
+      "expect": 17
+    },
+    {
+      "quote": "差遣侵夺本官 —— 名实分离，官",
+      "expect": 18
+    },
+    {
+      "quote": "分权制衡 —— 一职拆多人、多机",
+      "expect": 19
+    },
+    {
+      "quote": "成功标准：读者读完能拿这三把钥匙",
+      "expect": 21
+    },
+    {
+      "quote": "明确不覆盖：西夏、吐蕃、南诏等区",
+      "expect": 23
+    },
+    {
+      "quote": "2026-07-29 修订：辽金",
+      "expect": 25
+    },
+    {
+      "quote": "2026-07-29 修订：辽金",
+      "expect": 25
+    },
+    {
+      "quote": "配图约定",
+      "expect": 29
+    },
+    {
+      "quote": "能出图的地方一律出图。 采用双轨",
+      "expect": 31
+    },
+    {
+      "quote": "源码：mermaid，存 ass",
+      "expect": 33
+    },
+    {
+      "quote": "成品：本地渲染成 PNG，一并提",
+      "expect": 34
+    },
+    {
+      "quote": "正文引用的是 PNG，所以任何阅",
+      "expect": 36
+    },
+    {
+      "quote": "原则：机制出图，名词出表。 凡涉",
+      "expect": 38
+    },
+    {
+      "quote": "逐章配图清单",
+      "expect": 40
+    },
+    {
+      "quote": "章 图 类型 1 内外朝循环总图",
+      "expect": 42
+    },
+    {
+      "quote": "章 图 类型",
+      "expect": 42
+    },
+    {
+      "quote": "1 内外朝循环总图 —— 一个循",
+      "expect": 44
+    },
+    {
+      "quote": "1 本官 / 职事 / 差遣三套",
+      "expect": 45
+    },
+    {
+      "quote": "2 三公演变三段：秦汉（丞相·太",
+      "expect": 46
+    },
+    {
+      "quote": "3 尚书台文书流转图 —— 章奏",
+      "expect": 47
+    },
+    {
+      "quote": "4 三省文书流转：中书出令 → ",
+      "expect": 48
+    },
+    {
+      "quote": "4 宰相名号演变：三省长官 → ",
+      "expect": 49
+    },
+    {
+      "quote": "5 宋代二府三司结构 结构图",
+      "expect": 50
+    },
+    {
+      "quote": "5 官 / 职 / 差遣三分拆解",
+      "expect": 51
+    },
+    {
+      "quote": "6 票拟—批红对掌图 —— 内阁",
+      "expect": 52
+    },
+    {
+      "quote": "6 明清中枢演变：中书省 →（废",
+      "expect": 53
+    },
+    {
+      "quote": "7 秦郡三长官分权：守 · 尉 ",
+      "expect": 54
+    },
+    {
+      "quote": "8 监察官行政化四轮循环图 ——",
+      "expect": 55
+    },
+    {
+      "quote": "9 行省层级演变：元行省 → 明",
+      "expect": 56
+    },
+    {
+      "quote": "10 选官权归属迁移：地方豪族 ",
+      "expect": 57
+    },
+    {
+      "quote": "11 一个官员的四套坐标拆解 —",
+      "expect": 58
+    },
+    {
+      "quote": "12 台谏分合：御史（对下）与谏",
+      "expect": 59
+    },
+    {
+      "quote": "13 财政公私二分：大司农 / ",
+      "expect": 60
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "《中国历代官名变迁史》章节要点提纲"
+    ],
+    [
+      5,
+      "《中国历代官名变迁史》章节要点提纲"
+    ],
+    [
+      7,
+      "《中国历代官名变迁史》章节要点提纲"
+    ],
+    [
+      9,
+      "《中国历代官名变迁史》章节要点提纲"
+    ],
+    [
+      13,
+      "全书主线"
+    ],
+    [
+      15,
+      "全书主线"
+    ],
+    [
+      17,
+      "全书主线"
+    ],
+    [
+      18,
+      "全书主线"
+    ],
+    [
+      19,
+      "全书主线"
+    ],
+    [
+      21,
+      "全书主线"
+    ],
+    [
+      23,
+      "全书主线"
+    ],
+    [
+      25,
+      "全书主线"
+    ],
+    [
+      29,
+      "配图约定"
+    ],
+    [
+      31,
+      "配图约定"
+    ],
+    [
+      33,
+      "配图约定"
+    ],
+    [
+      34,
+      "配图约定"
+    ],
+    [
+      36,
+      "配图约定"
+    ],
+    [
+      38,
+      "配图约定"
+    ],
+    [
+      40,
+      "逐章配图清单"
+    ],
+    [
+      42,
+      "逐章配图清单"
+    ],
+    [
+      44,
+      "逐章配图清单"
+    ],
+    [
+      45,
+      "逐章配图清单"
+    ],
+    [
+      46,
+      "逐章配图清单"
+    ],
+    [
+      47,
+      "逐章配图清单"
+    ],
+    [
+      48,
+      "逐章配图清单"
+    ],
+    [
+      49,
+      "逐章配图清单"
+    ],
+    [
+      50,
+      "逐章配图清单"
+    ],
+    [
+      51,
+      "逐章配图清单"
+    ],
+    [
+      52,
+      "逐章配图清单"
+    ],
+    [
+      53,
+      "逐章配图清单"
+    ],
+    [
+      54,
+      "逐章配图清单"
+    ],
+    [
+      55,
+      "逐章配图清单"
+    ],
+    [
+      56,
+      "逐章配图清单"
+    ],
+    [
+      57,
+      "逐章配图清单"
+    ],
+    [
+      58,
+      "逐章配图清单"
+    ],
+    [
+      59,
+      "逐章配图清单"
+    ],
+    [
+      60,
+      "逐章配图清单"
+    ],
+    [
+      61,
+      "逐章配图清单"
+    ],
+    [
+      62,
+      "逐章配图清单"
+    ],
+    [
+      63,
+      "逐章配图清单"
+    ],
+    [
+      64,
+      "逐章配图清单"
+    ],
+    [
+      65,
+      "逐章配图清单"
+    ],
+    [
+      66,
+      "逐章配图清单"
+    ],
+    [
+      68,
+      "逐章配图清单"
+    ],
+    [
+      72,
+      "第一编 总论"
+    ],
+    [
+      74,
+      "第 1 章 读官名的三把钥匙（5,000 字）"
+    ],
+    [
+      76,
+      "第 1 章 读官名的三把钥匙（5,000 字）"
+    ],
+    [
+      77,
+      "第 1 章 读官名的三把钥匙（5,000 字）"
+    ],
+    [
+      78,
+      "第 1 章 读官名的三把钥匙（5,000 字）"
+    ],
+    [
+      79,
+      "第 1 章 读官名的三把钥匙（5,000 字）"
+    ],
+    [
+      81,
+      "第 1 章 读官名的三把钥匙（5,000 字）"
+    ],
+    [
+      85,
+      "第二编 中枢：宰相的一千次死亡"
+    ],
+    [
+      87,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      89,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      90,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      91,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      92,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      93,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      94,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      96,
+      "第 2 章 从家臣到百官之首（7,000 字）"
+    ],
+    [
+      98,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      100,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      101,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      102,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      103,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      104,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      105,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      106,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      108,
+      "第 3 章 内朝的第一次胜利（7,000 字）"
+    ],
+    [
+      110,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      112,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      113,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      114,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      115,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      116,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      117,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      119,
+      "第 4 章 三省的形成与政事堂（7,000 字）"
+    ],
+    [
+      121,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      123,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      124,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      125,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      126,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      127,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      128,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      129,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      131,
+      "第 5 章 使职差遣的时代（7,000 字）"
+    ],
+    [
+      133,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      135,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      136,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      137,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      138,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      139,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      140,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      142,
+      "第 6 章 废丞相之后（7,000 字）"
+    ],
+    [
+      146,
+      "第三编 地方"
+    ],
+    [
+      148,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      150,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      151,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      152,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      153,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      154,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      155,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      157,
+      "第 7 章 郡县与封建之争（7,000 字）"
+    ],
+    [
+      159,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      161,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      163,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      164,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      165,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      166,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      167,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      168,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      170,
+      "第 8 章 监察官如何变成行政官（7,000 字）"
+    ],
+    [
+      172,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      174,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      175,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      176,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      177,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      178,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      179,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      181,
+      "第 9 章 行省的诞生（6,000 字）"
+    ],
+    [
+      185,
+      "第四编 选官与身份"
+    ],
+    [
+      187,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      189,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      190,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      191,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      192,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      193,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      194,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      196,
+      "第 10 章 世官 · 察举 · 九品中正 · 科举（8,000 字）"
+    ],
+    [
+      198,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      200,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      201,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      202,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      203,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      204,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      205,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      206,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      207,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      208,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      210,
+      "第 11 章 品、阶、勋、爵（7,000 字）"
+    ],
+    [
+      214,
+      "第五编 专门系统"
+    ],
+    [
+      216,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      218,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      219,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      220,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      221,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      222,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      223,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      224,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      226,
+      "第 12 章 监察（6,000 字）"
+    ],
+    [
+      228,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      230,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      232,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      233,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      234,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      235,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      237,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      239,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      240,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      241,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      242,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      243,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      244,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      246,
+      "第 13 章 财政与军事（7,000 字）"
+    ],
+    [
+      248,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      250,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      251,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      252,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      253,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      254,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      255,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      256,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      258,
+      "第 14 章 宫廷与宦官（5,000 字）"
+    ],
+    [
+      260,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      262,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      264,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      265,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      266,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      267,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      268,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      269,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      270,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      271,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      272,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      273,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      274,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      275,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      277,
+      "第 15 章 二元官制：征服王朝的双轨统治（8,000 字）"
+    ],
+    [
+      281,
+      "第六编 尾声"
+    ],
+    [
+      283,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      285,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      286,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      287,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      288,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      289,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      290,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      291,
+      "第 16 章 清末新政与官制终结（7,000 字）"
+    ],
+    [
+      295,
+      "附录"
+    ],
+    [
+      297,
+      "附录"
+    ],
+    [
+      298,
+      "附录"
+    ],
+    [
+      299,
+      "附录"
+    ],
+    [
+      300,
+      "附录"
+    ],
+    [
+      301,
+      "附录"
+    ]
+  ]
+}

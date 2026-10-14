@@ -1,0 +1,164 @@
+{
+  "format": 1,
+  "source": "corpus/edge-frontmatter.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 0,
+        "quote": "标题在第 6 行",
+        "quoteRaw": "标题在第 6 行"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 9,
+      "expect": {
+        "blockLine": 8,
+        "line": 8,
+        "offset": 0,
+        "quote": "正文第 8 行。",
+        "quoteRaw": "正文第 8 行。"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 19,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 0,
+        "quote": "上面是分隔线，不",
+        "quoteRaw": "上面是分隔线，不"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 43,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "这一段夹在两条",
+        "quoteRaw": "这一段夹在两条"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 58,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "结尾。",
+        "quoteRaw": "结尾。"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "标题在第 6 行",
+      "expect": 6
+    },
+    {
+      "quote": "正文第 8 行。",
+      "expect": 8
+    },
+    {
+      "quote": "上面是分隔线，不是 frontm",
+      "expect": 12
+    },
+    {
+      "quote": "这一段夹在两条 --- 之间",
+      "expect": 15
+    },
+    {
+      "quote": "结尾。",
+      "expect": null
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      6,
+      "标题在第 6 行"
+    ],
+    [
+      8,
+      "标题在第 6 行"
+    ],
+    [
+      12,
+      "标题在第 6 行"
+    ],
+    [
+      15,
+      "这一段夹在两条 --- 之间"
+    ],
+    [
+      18,
+      "这一段夹在两条 --- 之间"
+    ]
+  ]
+}

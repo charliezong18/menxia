@@ -1,0 +1,277 @@
+{
+  "format": 1,
+  "source": "corpus/edge-tables.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h2",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 2,
+      "text": "表格边角"
+    },
+    {
+      "i": 1,
+      "type": "table",
+      "tag": "table",
+      "line": 3,
+      "lineEnd": 8,
+      "parent": null,
+      "text": "\n\n\n列 A\n列 B\n列 C\n\n\n\n\n普通\n粗\ncode\n\n\n转义管道 a | b\nx | y\n末格\n\n\n\n空首格\n\n\n\n中文，标点。\nEnglish mixed 中文\n123\n\n\n"
+    },
+    {
+      "i": 2,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": 1,
+      "text": "\n列 A\n列 B\n列 C\n"
+    },
+    {
+      "i": 3,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": 1,
+      "text": "\n普通\n粗\ncode\n"
+    },
+    {
+      "i": 4,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 6,
+      "lineEnd": 6,
+      "parent": 1,
+      "text": "\n转义管道 a | b\nx | y\n末格\n"
+    },
+    {
+      "i": 5,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": 1,
+      "text": "\n\n空首格\n\n"
+    },
+    {
+      "i": 6,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 8,
+      "lineEnd": 8,
+      "parent": 1,
+      "text": "\n中文，标点。\nEnglish mixed 中文\n123\n"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 10,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "段落紧贴表格前一行"
+    },
+    {
+      "i": 8,
+      "type": "table",
+      "tag": "table",
+      "line": 11,
+      "lineEnd": 13,
+      "parent": null,
+      "text": "\n\n\nh1\nh2\n\n\n\n\n不带空行\n的表格\n\n\n"
+    },
+    {
+      "i": 9,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": 8,
+      "text": "\nh1\nh2\n"
+    },
+    {
+      "i": 10,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": 8,
+      "text": "\n不带空行\n的表格\n"
+    },
+    {
+      "i": 11,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": null,
+      "text": "无首尾管道："
+    },
+    {
+      "i": 12,
+      "type": "table",
+      "tag": "table",
+      "line": 17,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "\n\n\na\nb\n\n\n\n\n1\n2\n\n\n3\n4\n\n\n"
+    },
+    {
+      "i": 13,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": 12,
+      "text": "\na\nb\n"
+    },
+    {
+      "i": 14,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": 12,
+      "text": "\n1\n2\n"
+    },
+    {
+      "i": 15,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": 12,
+      "text": "\n3\n4\n"
+    },
+    {
+      "i": 16,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "单列："
+    },
+    {
+      "i": 17,
+      "type": "table",
+      "tag": "table",
+      "line": 24,
+      "lineEnd": 27,
+      "parent": null,
+      "text": "\n\n\n只有一列\n\n\n\n\n行一\n\n\n行二\n\n\n"
+    },
+    {
+      "i": 18,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": 17,
+      "text": "\n只有一列\n"
+    },
+    {
+      "i": 19,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": 17,
+      "text": "\n行一\n"
+    },
+    {
+      "i": 20,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": 17,
+      "text": "\n行二\n"
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": null,
+      "text": "表格里放链接 链接 与图片："
+    },
+    {
+      "i": 22,
+      "type": "table",
+      "tag": "table",
+      "line": 31,
+      "lineEnd": 35,
+      "parent": null,
+      "text": "\n\n\n名\n图\n\n\n\n\n外链\n门下\n\n\n图\n\n\n\n双链\n[[某篇\n\n\n"
+    },
+    {
+      "i": 23,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": 22,
+      "text": "\n名\n图\n"
+    },
+    {
+      "i": 24,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": 22,
+      "text": "\n外链\n门下\n"
+    },
+    {
+      "i": 25,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 34,
+      "lineEnd": 34,
+      "parent": 22,
+      "text": "\n图\n\n"
+    },
+    {
+      "i": 26,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": 22,
+      "text": "\n双链\n[[某篇\n"
+    },
+    {
+      "i": 27,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": null,
+      "text": "只有表头没有数据行："
+    },
+    {
+      "i": 28,
+      "type": "table",
+      "tag": "table",
+      "line": 39,
+      "lineEnd": 40,
+      "parent": null,
+      "text": "\n\n\n甲\n乙\n\n\n"
+    },
+    {
+      "i": 29,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": 28,
+      "text": "\n甲\n乙\n"
+    }
+  ]
+}

@@ -212,6 +212,12 @@ the anchoring line math (fence `+1`, indented block `+0`, per-table-row), commen
 API request assembly (`commit_id`, merge `sha`, 401-vs-403 triage), and an end-to-end pass
 that annotates a demo document through real browser events and checks the old-rev read-only state.
 
+**Golden files for the native reader** (`test/golden/`, review #182 N0): 29 corpus docs rendered by the
+real `src/` code into per-block `{type, line, lineEnd, text}`, TOC, anchor and pure-function samples.
+`test/golden.test.js` (part of `test/run.sh unit`) regenerates them and byte-compares — change a
+rendering/anchoring rule and it goes red. After an intentional change: `node test/golden/export.mjs`,
+update [docs/ANCHOR-SPEC.md](docs/ANCHOR-SPEC.md), and flag the PR "native must follow".
+
 Total app code is about 900 lines. Still **zero-build** — push is deploy — but no longer framework-less: the [architecture switch gate](MIGRATION-WATCH.md) tripped on 2026-07-26 (two indicators over threshold, both review-confirmed as event/async-timing bug factories), so the view layer moved to Preact in its no-build form. The gate said so, in numbers; we obeyed.
 
 ## License

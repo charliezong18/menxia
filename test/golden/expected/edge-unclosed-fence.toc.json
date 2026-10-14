@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-unclosed-fence.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "未闭合围栏",
+      "slug": "未闭合围栏"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "未闭合围栏",
+      "slug": "未闭合围栏"
+    }
+  ]
+}

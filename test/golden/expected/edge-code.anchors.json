@@ -1,0 +1,700 @@
+{
+  "format": 1,
+  "source": "corpus/edge-code.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "代码块边角",
+        "quoteRaw": "代码块边角"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 7,
+      "docStart": 6,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "带语言的围栏：",
+        "quoteRaw": "带语言的围栏："
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 14,
+      "expect": {
+        "blockLine": 5,
+        "line": 6,
+        "offset": 0,
+        "quote": "const a",
+        "quoteRaw": "const a"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 51,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "无语言围栏，内含",
+        "quoteRaw": "无语言围栏，内含"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 82,
+      "expect": {
+        "blockLine": 13,
+        "line": 14,
+        "offset": 0,
+        "quote": "# 不是标题 -",
+        "quoteRaw": "# 不是标题\n-"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 125,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "波浪线围栏，内含",
+        "quoteRaw": "波浪线围栏，内含"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 140,
+      "expect": {
+        "blockLine": 22,
+        "line": 23,
+        "offset": 0,
+        "quote": "``` inne",
+        "quoteRaw": "```\ninne"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 155,
+      "expect": {
+        "blockLine": 28,
+        "line": 28,
+        "offset": 0,
+        "quote": "四个反引号围栏：",
+        "quoteRaw": "四个反引号围栏："
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 164,
+      "expect": {
+        "blockLine": 30,
+        "line": 31,
+        "offset": 0,
+        "quote": "```js x",
+        "quoteRaw": "```js\nx"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 177,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 0,
+        "quote": "缩进代码块：",
+        "quoteRaw": "缩进代码块："
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 184,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 0,
+        "quote": "第一行 第二行",
+        "quoteRaw": "第一行\n第二行"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 203,
+      "expect": {
+        "blockLine": 43,
+        "line": 43,
+        "offset": 0,
+        "quote": "段落之后紧跟围栏",
+        "quoteRaw": "段落之后紧跟围栏"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 220,
+      "expect": {
+        "blockLine": 44,
+        "line": 45,
+        "offset": 0,
+        "quote": "紧跟",
+        "quoteRaw": "紧跟"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 2
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 224,
+      "expect": {
+        "blockLine": 48,
+        "line": 48,
+        "offset": 0,
+        "quote": "围栏 info",
+        "quoteRaw": "围栏 info"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 238,
+      "expect": {
+        "blockLine": 50,
+        "line": 51,
+        "offset": 0,
+        "quote": "print(\"h",
+        "quoteRaw": "print(\"h"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 4,
+      "docStart": 251,
+      "expect": {
+        "blockLine": 54,
+        "line": 54,
+        "offset": 0,
+        "quote": "空围栏：",
+        "quoteRaw": "空围栏："
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 4
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 257,
+      "expect": {
+        "blockLine": 59,
+        "line": 59,
+        "offset": 0,
+        "quote": "结尾。",
+        "quoteRaw": "结尾。"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 13,
+      "length": 6,
+      "docStart": 27,
+      "expect": {
+        "blockLine": 5,
+        "line": 7,
+        "offset": 13,
+        "quote": "const",
+        "quoteRaw": "const"
+      },
+      "replay": {
+        "block": 2,
+        "start": 14,
+        "length": 5
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 14,
+      "length": 6,
+      "docStart": 28,
+      "expect": {
+        "blockLine": 5,
+        "line": 8,
+        "offset": 14,
+        "quote": "const",
+        "quoteRaw": "const"
+      },
+      "replay": {
+        "block": 2,
+        "start": 14,
+        "length": 5
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 7,
+      "length": 6,
+      "docStart": 89,
+      "expect": {
+        "blockLine": 13,
+        "line": 15,
+        "offset": 7,
+        "quote": "- 不是列表",
+        "quoteRaw": "- 不是列表"
+      },
+      "replay": {
+        "block": 4,
+        "start": 7,
+        "length": 6
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 14,
+      "length": 6,
+      "docStart": 96,
+      "expect": {
+        "blockLine": 13,
+        "line": 16,
+        "offset": 14,
+        "quote": "[[不是双链",
+        "quoteRaw": "[[不是双链"
+      },
+      "replay": {
+        "block": 4,
+        "start": 14,
+        "length": 6
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 23,
+      "length": 6,
+      "docStart": 105,
+      "expect": {
+        "blockLine": 13,
+        "line": 17,
+        "offset": 23,
+        "quote": "<div>不",
+        "quoteRaw": "<div>不"
+      },
+      "replay": {
+        "block": 4,
+        "start": 23,
+        "length": 6
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 4,
+      "length": 6,
+      "docStart": 144,
+      "expect": {
+        "blockLine": 22,
+        "line": 24,
+        "offset": 4,
+        "quote": "inner",
+        "quoteRaw": "inner"
+      },
+      "replay": {
+        "block": 6,
+        "start": 4,
+        "length": 5
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 10,
+      "length": 4,
+      "docStart": 150,
+      "expect": {
+        "blockLine": 22,
+        "line": 25,
+        "offset": 10,
+        "quote": "```",
+        "quoteRaw": "```"
+      },
+      "replay": {
+        "block": 6,
+        "start": 10,
+        "length": 3
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 6,
+      "length": 6,
+      "docStart": 170,
+      "expect": {
+        "blockLine": 30,
+        "line": 32,
+        "offset": 6,
+        "quote": "x ```",
+        "quoteRaw": "x\n```"
+      },
+      "replay": {
+        "block": 8,
+        "start": 6,
+        "length": 5
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 172,
+      "expect": {
+        "blockLine": 30,
+        "line": 33,
+        "offset": 8,
+        "quote": "```",
+        "quoteRaw": "```"
+      },
+      "replay": {
+        "block": 8,
+        "start": 8,
+        "length": 3
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 4,
+      "length": 6,
+      "docStart": 188,
+      "expect": {
+        "blockLine": 38,
+        "line": 39,
+        "offset": 4,
+        "quote": "第二行 空",
+        "quoteRaw": "第二行\n\n空"
+      },
+      "replay": {
+        "block": 10,
+        "start": 4,
+        "length": 6
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 8,
+      "length": 6,
+      "docStart": 192,
+      "expect": {
+        "blockLine": 38,
+        "line": 40,
+        "offset": 8,
+        "quote": "空行之后的",
+        "quoteRaw": "空行之后的"
+      },
+      "replay": {
+        "block": 10,
+        "start": 9,
+        "length": 5
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 9,
+      "length": 6,
+      "docStart": 193,
+      "expect": {
+        "blockLine": 38,
+        "line": 41,
+        "offset": 9,
+        "quote": "空行之后的第",
+        "quoteRaw": "空行之后的第"
+      },
+      "replay": {
+        "block": 10,
+        "start": 9,
+        "length": 6
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "代码块边角",
+      "expect": 1
+    },
+    {
+      "quote": "带语言的围栏：",
+      "expect": 3
+    },
+    {
+      "quote": "const a = 1; con",
+      "expect": 5
+    },
+    {
+      "quote": "无语言围栏，内含 markdow",
+      "expect": 11
+    },
+    {
+      "quote": "# 不是标题 - 不是列表 [[",
+      "expect": 13
+    },
+    {
+      "quote": "波浪线围栏，内含反引号围栏：",
+      "expect": 20
+    },
+    {
+      "quote": "``` inner ```",
+      "expect": 22
+    },
+    {
+      "quote": "四个反引号围栏：",
+      "expect": 28
+    },
+    {
+      "quote": "```js x ```",
+      "expect": 30
+    },
+    {
+      "quote": "缩进代码块：",
+      "expect": 36
+    },
+    {
+      "quote": "第一行 第二行 空行之后的第三行",
+      "expect": 38
+    },
+    {
+      "quote": "段落之后紧跟围栏（不需要空行）：",
+      "expect": 43
+    },
+    {
+      "quote": "紧跟",
+      "expect": null
+    },
+    {
+      "quote": "围栏 info 带多个词：",
+      "expect": 48
+    },
+    {
+      "quote": "print(\"hi\")",
+      "expect": 50
+    },
+    {
+      "quote": "空围栏：",
+      "expect": 54
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "结尾。",
+      "expect": null
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "代码块边角"
+    ],
+    [
+      3,
+      "代码块边角"
+    ],
+    [
+      5,
+      "代码块边角"
+    ],
+    [
+      11,
+      "代码块边角"
+    ],
+    [
+      13,
+      "代码块边角"
+    ],
+    [
+      20,
+      "代码块边角"
+    ],
+    [
+      22,
+      "代码块边角"
+    ],
+    [
+      28,
+      "代码块边角"
+    ],
+    [
+      30,
+      "代码块边角"
+    ],
+    [
+      36,
+      "代码块边角"
+    ],
+    [
+      38,
+      "代码块边角"
+    ],
+    [
+      43,
+      "代码块边角"
+    ],
+    [
+      44,
+      "代码块边角"
+    ],
+    [
+      48,
+      "代码块边角"
+    ],
+    [
+      50,
+      "代码块边角"
+    ],
+    [
+      54,
+      "代码块边角"
+    ],
+    [
+      56,
+      "代码块边角"
+    ],
+    [
+      59,
+      "代码块边角"
+    ]
+  ]
+}

@@ -1,0 +1,1940 @@
+{
+  "format": 1,
+  "source": "corpus/real-folder-tracking.zh-CN.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "折务追踪：折子的",
+        "quoteRaw": "折务追踪：折子的"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 53,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "你今天的原话：「",
+        "quoteRaw": "你今天的原话：「"
+      },
+      "replay": {
+        "block": 2,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 73,
+      "length": 8,
+      "docStart": 126,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 73,
+        "quote": "①把今天的 9",
+        "quoteRaw": "①把今天的 9"
+      },
+      "replay": {
+        "block": 2,
+        "start": 74,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 141,
+      "length": 8,
+      "docStart": 194,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 141,
+        "quote": "。留档要点：#5",
+        "quoteRaw": "。留档要点：#5"
+      },
+      "replay": {
+        "block": 2,
+        "start": 142,
+        "length": 8
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 295,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "一 · 今日折局",
+        "quoteRaw": "一 · 今日折局"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 328,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 1,
+        "quote": "折 项目 等谁",
+        "quoteRaw": "折\n项目\n等谁"
+      },
+      "replay": {
+        "block": 6,
+        "start": 3,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 330,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 3,
+        "quote": "项目 等谁 状态",
+        "quoteRaw": "项目\n等谁\n状态"
+      },
+      "replay": {
+        "block": 6,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 333,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 6,
+        "quote": "等谁 状态 /",
+        "quoteRaw": "等谁\n状态 /"
+      },
+      "replay": {
+        "block": 6,
+        "start": 8,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 9,
+      "length": 8,
+      "docStart": 336,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 9,
+        "quote": "状态 / 关系",
+        "quoteRaw": "状态 / 关系"
+      },
+      "replay": {
+        "block": 6,
+        "start": 11,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 17,
+      "length": 3,
+      "docStart": 344,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 17,
+        "quote": "建议",
+        "quoteRaw": "建议"
+      },
+      "replay": {
+        "block": 6,
+        "start": 19,
+        "length": 2
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 351,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 1,
+        "quote": "#41 NIW",
+        "quoteRaw": "#41 NIW"
+      },
+      "replay": {
+        "block": 8,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 364,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 14,
+        "quote": "NIW 等你拍",
+        "quoteRaw": "NIW\n等你拍"
+      },
+      "replay": {
+        "block": 8,
+        "start": 14,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 368,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 18,
+        "quote": "等你拍 gate",
+        "quoteRaw": "等你拍\ngate"
+      },
+      "replay": {
+        "block": 8,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 372,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 22,
+        "quote": "gate 对外提",
+        "quoteRaw": "gate 对外提"
+      },
+      "replay": {
+        "block": 8,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 49,
+      "length": 6,
+      "docStart": 399,
+      "expect": {
+        "blockLine": 13,
+        "line": 13,
+        "offset": 49,
+        "quote": "第 1 读",
+        "quoteRaw": "第 1 读"
+      },
+      "replay": {
+        "block": 8,
+        "start": 49,
+        "length": 5
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 407,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 1,
+        "quote": "#57 拍板收尾",
+        "quoteRaw": "#57 拍板收尾"
+      },
+      "replay": {
+        "block": 9,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 421,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 15,
+        "quote": "中书门下 等你拍",
+        "quoteRaw": "中书门下\n等你拍"
+      },
+      "replay": {
+        "block": 9,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 20,
+      "length": 8,
+      "docStart": 426,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 20,
+        "quote": "等你拍（残余 D",
+        "quoteRaw": "等你拍（残余 D"
+      },
+      "replay": {
+        "block": 9,
+        "start": 20,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 429,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 23,
+        "quote": "（残余 D 项）",
+        "quoteRaw": "（残余 D 项）"
+      },
+      "replay": {
+        "block": 9,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 32,
+      "length": 8,
+      "docStart": 438,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 32,
+        "quote": "⚠️ 两条涂归修",
+        "quoteRaw": "⚠️ 两条涂归修"
+      },
+      "replay": {
+        "block": 9,
+        "start": 32,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 76,
+      "length": 6,
+      "docStart": 482,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 76,
+        "quote": "第 2 读",
+        "quoteRaw": "第 2 读"
+      },
+      "replay": {
+        "block": 9,
+        "start": 76,
+        "length": 5
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 490,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 1,
+        "quote": "#44 全量补审",
+        "quoteRaw": "#44 全量补审"
+      },
+      "replay": {
+        "block": 10,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 499,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 10,
+        "quote": "门下＋中书门下",
+        "quoteRaw": "门下＋中书门下"
+      },
+      "replay": {
+        "block": 10,
+        "start": 10,
+        "length": 7
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 507,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 18,
+        "quote": "等你读 审 #4",
+        "quoteRaw": "等你读\n审 #4"
+      },
+      "replay": {
+        "block": 10,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 511,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 22,
+        "quote": "审 #43 设计",
+        "quoteRaw": "审 #43 设计"
+      },
+      "replay": {
+        "block": 10,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 41,
+      "length": 6,
+      "docStart": 530,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 41,
+        "quote": "第 3 读",
+        "quoteRaw": "第 3 读"
+      },
+      "replay": {
+        "block": 10,
+        "start": 41,
+        "length": 5
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 538,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 1,
+        "quote": "#60 差异化评",
+        "quoteRaw": "#60 差异化评"
+      },
+      "replay": {
+        "block": 11,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 548,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 11,
+        "quote": "门下 等你读 与",
+        "quoteRaw": "门下\n等你读\n与"
+      },
+      "replay": {
+        "block": 11,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 551,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 14,
+        "quote": "等你读 与本折同",
+        "quoteRaw": "等你读\n与本折同"
+      },
+      "replay": {
+        "block": 11,
+        "start": 14,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 555,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 18,
+        "quote": "与本折同源——t",
+        "quoteRaw": "与本折同源——t"
+      },
+      "replay": {
+        "block": 11,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 52,
+      "length": 6,
+      "docStart": 589,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 52,
+        "quote": "第 4 读",
+        "quoteRaw": "第 4 读"
+      },
+      "replay": {
+        "block": 11,
+        "start": 52,
+        "length": 5
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 597,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 1,
+        "quote": "#55 项目 w",
+        "quoteRaw": "#55 项目 w"
+      },
+      "replay": {
+        "block": 12,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 609,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 13,
+        "quote": "门下 等你读 定",
+        "quoteRaw": "门下\n等你读\n定"
+      },
+      "replay": {
+        "block": 12,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 612,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 16,
+        "quote": "等你读 定稿后作",
+        "quoteRaw": "等你读\n定稿后作"
+      },
+      "replay": {
+        "block": 12,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 20,
+      "length": 8,
+      "docStart": 616,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 20,
+        "quote": "定稿后作项目入口",
+        "quoteRaw": "定稿后作项目入口"
+      },
+      "replay": {
+        "block": 12,
+        "start": 20,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 29,
+      "length": 6,
+      "docStart": 625,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 29,
+        "quote": "第 5 读",
+        "quoteRaw": "第 5 读"
+      },
+      "replay": {
+        "block": 12,
+        "start": 29,
+        "length": 5
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 633,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 1,
+        "quote": "#31 官名书全",
+        "quoteRaw": "#31 官名书全"
+      },
+      "replay": {
+        "block": 13,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 643,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 11,
+        "quote": "读物 闲读 连载",
+        "quoteRaw": "读物\n闲读\n连载"
+      },
+      "replay": {
+        "block": 13,
+        "start": 11,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 646,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 14,
+        "quote": "闲读 连载，不",
+        "quoteRaw": "闲读\n连载，不"
+      },
+      "replay": {
+        "block": 13,
+        "start": 14,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 649,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 17,
+        "quote": "连载，不 gat",
+        "quoteRaw": "连载，不 gat"
+      },
+      "replay": {
+        "block": 13,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 31,
+      "length": 3,
+      "docStart": 663,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 31,
+        "quote": "随缘",
+        "quoteRaw": "随缘"
+      },
+      "replay": {
+        "block": 13,
+        "start": 31,
+        "length": 2
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 668,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 1,
+        "quote": "#58 服务器选",
+        "quoteRaw": "#58 服务器选"
+      },
+      "replay": {
+        "block": 14,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 11,
+      "length": 8,
+      "docStart": 678,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 11,
+        "quote": "中书门下 无人",
+        "quoteRaw": "中书门下\n无人"
+      },
+      "replay": {
+        "block": 14,
+        "start": 11,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 16,
+      "length": 8,
+      "docStart": 683,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 16,
+        "quote": "无人 僵尸折：两",
+        "quoteRaw": "无人\n僵尸折：两"
+      },
+      "replay": {
+        "block": 14,
+        "start": 16,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 686,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 19,
+        "quote": "僵尸折：两项拍板",
+        "quoteRaw": "僵尸折：两项拍板"
+      },
+      "replay": {
+        "block": 14,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 689,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 22,
+        "quote": "：两项拍板（主选",
+        "quoteRaw": "：两项拍板（主选"
+      },
+      "replay": {
+        "block": 14,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 55,
+      "length": 8,
+      "docStart": 722,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 55,
+        "quote": "不用读；一句「归",
+        "quoteRaw": "不用读；一句「归"
+      },
+      "replay": {
+        "block": 14,
+        "start": 55,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 742,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 1,
+        "quote": "#43 系统设计",
+        "quoteRaw": "#43 系统设计"
+      },
+      "replay": {
+        "block": 15,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 14,
+      "length": 8,
+      "docStart": 755,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 14,
+        "quote": "中书门下 无人",
+        "quoteRaw": "中书门下\n无人"
+      },
+      "replay": {
+        "block": 15,
+        "start": 14,
+        "length": 7
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 760,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 19,
+        "quote": "无人 与 #57",
+        "quoteRaw": "无人\n与 #57"
+      },
+      "replay": {
+        "block": 15,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 763,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 22,
+        "quote": "与 #57 冲突",
+        "quoteRaw": "与 #57 冲突"
+      },
+      "replay": {
+        "block": 15,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 68,
+      "length": 8,
+      "docStart": 809,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 68,
+        "quote": "不用逐篇读；建议",
+        "quoteRaw": "不用逐篇读；建议"
+      },
+      "replay": {
+        "block": 15,
+        "start": 68,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 824,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 1,
+        "quote": "#35 归档双语",
+        "quoteRaw": "#35 归档双语"
+      },
+      "replay": {
+        "block": 16,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 12,
+      "length": 8,
+      "docStart": 835,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 12,
+        "quote": "门下 等 age",
+        "quoteRaw": "门下\n等 age"
+      },
+      "replay": {
+        "block": 16,
+        "start": 12,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 838,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 15,
+        "quote": "等 agent",
+        "quoteRaw": "等 agent"
+      },
+      "replay": {
+        "block": 16,
+        "start": 15,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 846,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 23,
+        "quote": "你 21:52",
+        "quoteRaw": "你 21:52"
+      },
+      "replay": {
+        "block": 16,
+        "start": 23,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 62,
+      "length": 5,
+      "docStart": 885,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 62,
+        "quote": "你不用动",
+        "quoteRaw": "你不用动"
+      },
+      "replay": {
+        "block": 16,
+        "start": 62,
+        "length": 4
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 893,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "三个发现：",
+        "quoteRaw": "三个发现："
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 900,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 0,
+        "quote": "9 折里真要你从",
+        "quoteRaw": "9 折里真要你从"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 917,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 17,
+        "quote": "（#41→#57",
+        "quoteRaw": "（#41→#57"
+      },
+      "replay": {
+        "block": 18,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 954,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 0,
+        "quote": "#58 的批不在",
+        "quoteRaw": "#58 的批不在"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 15,
+      "length": 8,
+      "docStart": 969,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 15,
+        "quote": "「主选 Hetz",
+        "quoteRaw": "「主选 Hetz"
+      },
+      "replay": {
+        "block": 19,
+        "start": 15,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1057,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 0,
+        "quote": "中书门下现在真正",
+        "quoteRaw": "中书门下现在真正"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 1075,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 18,
+        "quote": "：#59 批完后",
+        "quoteRaw": "：#59 批完后"
+      },
+      "replay": {
+        "block": 20,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1126,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 0,
+        "quote": "二 · 病根与需",
+        "quoteRaw": "二 · 病根与需"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1136,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 0,
+        "quote": "速度失配：7/2",
+        "quoteRaw": "速度失配：7/2"
+      },
+      "replay": {
+        "block": 22,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 4,
+      "length": 8,
+      "docStart": 1140,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 4,
+        "quote": "：7/29 至今",
+        "quoteRaw": "：7/29 至今"
+      },
+      "replay": {
+        "block": 22,
+        "start": 4,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 1296,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 0,
+        "quote": "病根三条：",
+        "quoteRaw": "病根三条："
+      },
+      "replay": {
+        "block": 23,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 4,
+      "length": 1,
+      "docStart": 1300,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 24,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1303,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 0,
+        "quote": "呈折不声明——项",
+        "quoteRaw": "呈折不声明——项"
+      },
+      "replay": {
+        "block": 24,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 1308,
+      "expect": {
+        "blockLine": 34,
+        "line": 34,
+        "offset": 5,
+        "quote": "——项目归属与关",
+        "quoteRaw": "——项目归属与关"
+      },
+      "replay": {
+        "block": 24,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1359,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 0,
+        "quote": "拍板不落面——会",
+        "quoteRaw": "拍板不落面——会"
+      },
+      "replay": {
+        "block": 25,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 1364,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 5,
+        "quote": "——会话里批的决",
+        "quoteRaw": "——会话里批的决"
+      },
+      "replay": {
+        "block": 25,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1387,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 0,
+        "quote": "画可不闭环——#",
+        "quoteRaw": "画可不闭环——#"
+      },
+      "replay": {
+        "block": 26,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 1392,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 5,
+        "quote": "——#59 画可",
+        "quoteRaw": "——#59 画可"
+      },
+      "replay": {
+        "block": 26,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 1418,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 0,
+        "quote": "需求：",
+        "quoteRaw": "需求："
+      },
+      "replay": {
+        "block": 27,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1423,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 0,
+        "quote": "R1 呈折时由",
+        "quoteRaw": "R1 呈折时由"
+      },
+      "replay": {
+        "block": 28,
+        "start": 0,
+        "length": 7
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "折务追踪：折子的项目归属、依赖与",
+      "expect": 3
+    },
+    {
+      "quote": "你今天的原话：「一堆折子等着我读",
+      "expect": 5
+    },
+    {
+      "quote": "你今天的原话：「一堆折子等着我读",
+      "expect": 5
+    },
+    {
+      "quote": "一 · 今日折局（2026-07",
+      "expect": 7
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "折 项目 等谁 状态 / 关系 ",
+      "expect": 11
+    },
+    {
+      "quote": "折 项目 等谁 状态 / 关系 ",
+      "expect": 11
+    },
+    {
+      "quote": "#41 NIW 表单提案 NIW",
+      "expect": 13
+    },
+    {
+      "quote": "#57 拍板收尾 SSOT 中书",
+      "expect": 14
+    },
+    {
+      "quote": "#44 全量补审 门下＋中书门下",
+      "expect": 15
+    },
+    {
+      "quote": "#60 差异化评估 门下 等你读",
+      "expect": 16
+    },
+    {
+      "quote": "#55 项目 wiki 门下 等",
+      "expect": 17
+    },
+    {
+      "quote": "#31 官名书全书 读物 闲读 ",
+      "expect": 18
+    },
+    {
+      "quote": "#58 服务器选型 中书门下 无",
+      "expect": 19
+    },
+    {
+      "quote": "#43 系统设计 8 组 中书门",
+      "expect": 20
+    },
+    {
+      "quote": "#35 归档双语补齐 门下 等 ",
+      "expect": 21
+    },
+    {
+      "quote": "三个发现：",
+      "expect": 23
+    },
+    {
+      "quote": "9 折里真要你从头读的只有 5 ",
+      "expect": 25
+    },
+    {
+      "quote": "#58 的批不在任何折面上。 「",
+      "expect": 26
+    },
+    {
+      "quote": "中书门下现在真正卡住的不是折，是",
+      "expect": 27
+    },
+    {
+      "quote": "二 · 病根与需求",
+      "expect": 29
+    },
+    {
+      "quote": "速度失配：7/29 至今画可 3",
+      "expect": 31
+    },
+    {
+      "quote": "病根三条：",
+      "expect": 33
+    },
+    {
+      "quote": "呈折不声明——项目归属与关系全埋",
+      "expect": 34
+    },
+    {
+      "quote": "拍板不落面——会话里批的决定，折",
+      "expect": 35
+    },
+    {
+      "quote": "画可不闭环——#59 画可时，没",
+      "expect": 36
+    },
+    {
+      "quote": "需求：",
+      "expect": null
+    },
+    {
+      "quote": "R1 呈折时由 agent 声明",
+      "expect": 39
+    },
+    {
+      "quote": "R2 待审清单按项目分组，折卡带",
+      "expect": 40
+    },
+    {
+      "quote": "R3 「等谁」四态可见：等你拍 ",
+      "expect": 41
+    },
+    {
+      "quote": "R4 覆盖闭环：画可带 supe",
+      "expect": 42
+    },
+    {
+      "quote": "R5 存量 9 折立即可用（ba",
+      "expect": 43
+    },
+    {
+      "quote": "R6 数据全长在 GitHub ",
+      "expect": 44
+    },
+    {
+      "quote": "三 · 设计",
+      "expect": 46
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "3.1 数据放哪：labels（",
+      "expect": 50
+    },
+    {
+      "quote": "labels——可变状态，Git",
+      "expect": 52
+    },
+    {
+      "quote": "前缀 取值 说明 proj: z",
+      "expect": 54
+    },
+    {
+      "quote": "前缀 取值 说明",
+      "expect": 54
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "折务追踪：折子的项目归属、依赖与覆盖（今日 9 折已分诊 + F13 设计）"
+    ],
+    [
+      5,
+      "折务追踪：折子的项目归属、依赖与覆盖（今日 9 折已分诊 + F13 设计）"
+    ],
+    [
+      7,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      9,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      11,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      13,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      14,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      15,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      16,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      17,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      18,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      19,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      20,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      21,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      23,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      25,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      26,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      27,
+      "一 · 今日折局（2026-07-31，9 折现成分诊）"
+    ],
+    [
+      29,
+      "二 · 病根与需求"
+    ],
+    [
+      31,
+      "二 · 病根与需求"
+    ],
+    [
+      33,
+      "二 · 病根与需求"
+    ],
+    [
+      34,
+      "二 · 病根与需求"
+    ],
+    [
+      35,
+      "二 · 病根与需求"
+    ],
+    [
+      36,
+      "二 · 病根与需求"
+    ],
+    [
+      38,
+      "二 · 病根与需求"
+    ],
+    [
+      39,
+      "二 · 病根与需求"
+    ],
+    [
+      40,
+      "二 · 病根与需求"
+    ],
+    [
+      41,
+      "二 · 病根与需求"
+    ],
+    [
+      42,
+      "二 · 病根与需求"
+    ],
+    [
+      43,
+      "二 · 病根与需求"
+    ],
+    [
+      44,
+      "二 · 病根与需求"
+    ],
+    [
+      46,
+      "三 · 设计"
+    ],
+    [
+      48,
+      "三 · 设计"
+    ],
+    [
+      50,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      52,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      54,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      56,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      57,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      58,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      60,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      62,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      64,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      65,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      66,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      67,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      69,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      71,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      72,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      73,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      74,
+      "3.1 数据放哪：labels（状态）＋ 尾行标记（关系），双轨"
+    ],
+    [
+      76,
+      "3.2 写入侧（menxia-mcp）"
+    ],
+    [
+      78,
+      "3.2 写入侧（menxia-mcp）"
+    ],
+    [
+      80,
+      "3.2 写入侧（menxia-mcp）"
+    ],
+    [
+      82,
+      "3.3 阅读侧（menxia）"
+    ],
+    [
+      84,
+      "3.3 阅读侧（menxia）"
+    ],
+    [
+      86,
+      "3.4 闭环（audit_folders 增三类巡检，只报不动手）"
+    ],
+    [
+      88,
+      "3.4 闭环（audit_folders 增三类巡检，只报不动手）"
+    ],
+    [
+      89,
+      "3.4 闭环（audit_folders 增三类巡检，只报不动手）"
+    ],
+    [
+      90,
+      "3.4 闭环（audit_folders 增三类巡检，只报不动手）"
+    ],
+    [
+      92,
+      "3.4 闭环（audit_folders 增三类巡检，只报不动手）"
+    ],
+    [
+      94,
+      "3.5 doorbell / 8-8 结账对接"
+    ],
+    [
+      96,
+      "3.5 doorbell / 8-8 结账对接"
+    ],
+    [
+      98,
+      "3.6 与中书门下的关系"
+    ],
+    [
+      100,
+      "3.6 与中书门下的关系"
+    ],
+    [
+      102,
+      "四 · 冻结期怎么切"
+    ],
+    [
+      104,
+      "四 · 冻结期怎么切"
+    ],
+    [
+      106,
+      "四 · 冻结期怎么切"
+    ],
+    [
+      107,
+      "四 · 冻结期怎么切"
+    ],
+    [
+      109,
+      "五 · 任务拆分"
+    ],
+    [
+      111,
+      "五 · 任务拆分"
+    ],
+    [
+      113,
+      "五 · 任务拆分"
+    ],
+    [
+      114,
+      "五 · 任务拆分"
+    ],
+    [
+      115,
+      "五 · 任务拆分"
+    ],
+    [
+      116,
+      "五 · 任务拆分"
+    ],
+    [
+      117,
+      "五 · 任务拆分"
+    ],
+    [
+      119,
+      "六 · 待你拍板"
+    ],
+    [
+      121,
+      "六 · 待你拍板"
+    ],
+    [
+      122,
+      "六 · 待你拍板"
+    ],
+    [
+      123,
+      "六 · 待你拍板"
+    ],
+    [
+      124,
+      "六 · 待你拍板"
+    ]
+  ]
+}

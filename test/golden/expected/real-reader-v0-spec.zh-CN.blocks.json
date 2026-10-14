@@ -1,0 +1,1318 @@
+{
+  "format": 1,
+  "source": "corpus/real-reader-v0-spec.zh-CN.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "heading",
+      "tag": "h1",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "level": 1,
+      "text": "朱批 v0 spec —「御笔朱批」阅读批注器"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "一句话：AI（臣）把长文档当奏折呈上来，你（御）在渲染好的正文上划句朱批，批完一键呈回，agent 逐条回话改出下一版，满意则钦此（merge 定稿）。数据、版本、批注循环全部留在 GitHub，这个 app 只是一片可以随时摘掉的镜片。"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "text": "依批修订（v2）：新增设计渲染图（§1）、名字改「朱批」（§2）、v1→v2 对比视图讲人话（§7）、技术栈对比表（§8）、锚定通俗版（§9）、名词表（§12）、参考（§13）。v2.2（7/26 口头输入）：改为桌面网页优先，移动端挪 v1（§1 / §4 / §6 / §10）。v2.3–2.4：diff 奏折概念图 + 左右分栏视图（§10 / §1）。"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "v2.5（2026-07-26）：三问全部拍板 —— ②不做对比视图 ③技术栈 A（零构建）④接受宽松锚定；新增 §8.1 架构切换 breakpoint 量化闸门。spec 定稿，开工 M1。"
+    },
+    {
+      "i": 5,
+      "type": "heading",
+      "tag": "h2",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": null,
+      "level": 2,
+      "text": "目录"
+    },
+    {
+      "i": 6,
+      "type": "list_item",
+      "tag": "li",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": null,
+      "text": "§1 设计渲染图"
+    },
+    {
+      "i": 7,
+      "type": "list_item",
+      "tag": "li",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "§2 名字与用语"
+    },
+    {
+      "i": 8,
+      "type": "list_item",
+      "tag": "li",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": null,
+      "text": "§3 目标 / 非目标"
+    },
+    {
+      "i": 9,
+      "type": "list_item",
+      "tag": "li",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "§4 形态"
+    },
+    {
+      "i": 10,
+      "type": "list_item",
+      "tag": "li",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": null,
+      "text": "§5 数据与认证"
+    },
+    {
+      "i": 11,
+      "type": "list_item",
+      "tag": "li",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "§6 页面与交互"
+    },
+    {
+      "i": 12,
+      "type": "list_item",
+      "tag": "li",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": null,
+      "text": "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    },
+    {
+      "i": 13,
+      "type": "list_item",
+      "tag": "li",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "§8 待拍板 ③：技术栈对比"
+    },
+    {
+      "i": 14,
+      "type": "list_item",
+      "tag": "li",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": null,
+      "text": "§9 待拍板 ④：批注锚定（讲人话）"
+    },
+    {
+      "i": 15,
+      "type": "list_item",
+      "tag": "li",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "§10 里程碑"
+    },
+    {
+      "i": 16,
+      "type": "list_item",
+      "tag": "li",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": null,
+      "text": "§11 风险与兜底"
+    },
+    {
+      "i": 17,
+      "type": "list_item",
+      "tag": "li",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": null,
+      "text": "§12 名词表"
+    },
+    {
+      "i": 18,
+      "type": "list_item",
+      "tag": "li",
+      "line": 25,
+      "lineEnd": 26,
+      "parent": null,
+      "text": "§13 参考"
+    },
+    {
+      "i": 19,
+      "type": "heading",
+      "tag": "h2",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": null,
+      "level": 2,
+      "text": "§1 设计渲染图"
+    },
+    {
+      "i": 20,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": null,
+      "text": "设计语言：宣纸底 + 墨字 + 朱砂红只留给「批」的动作；背景有极淡的朱丝栏（奏折纸的竖界栏）纹理；标题与按钮用宋体（御的声音），正文用苹方（现代阅读）。"
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": null,
+      "text": "① 桌面主界面（v0 主战场） —— 左奏折列表、中渲染正文、右缘朱批栏：批注与原文并排常驻（Docs 式 margin comments），批注卡里能看到「御批 → 臣回」的循环；右上「钦此」："
+    },
+    {
+      "i": 22,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 23,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": null,
+      "text": "以下三张为移动端设计（v1 再做，先留底稿）："
+    },
+    {
+      "i": 24,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": null,
+      "text": "② 清单页「待批奏折」 —— 每折一张卡，左侧朱砂书脊 = 等你批；方印章标状态："
+    },
+    {
+      "i": 25,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 26,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": null,
+      "text": "③ 阅读页 —— 渲染态正文，划过的句子带朱砂笔道，底部常驻「提交朱批·n」："
+    },
+    {
+      "i": 27,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 28,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 45,
+      "lineEnd": 45,
+      "parent": null,
+      "text": "④ 批注输入（移动端） —— 划选后底部弹批注单：引文（带出处行号）+ 输入框 + 存批/作罢："
+    },
+    {
+      "i": 29,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 30,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": null,
+      "text": "（mockup 源码在 assets/mockups/src/，正式开发以此为准微调。）"
+    },
+    {
+      "i": 31,
+      "type": "heading",
+      "tag": "h2",
+      "line": 51,
+      "lineEnd": 51,
+      "parent": null,
+      "level": 2,
+      "text": "§2 名字与用语"
+    },
+    {
+      "i": 32,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 53,
+      "lineEnd": 53,
+      "parent": null,
+      "text": "按你的方向定名 朱批（产品全称「御笔朱批」）：repo zhupi，站点 charliezong18.github.io/zhupi，PWA 主屏名「朱批」。备选想过 批红（明制司礼监代批，有太监代笔梗，弃）、奏对、御览——「朱批」最准：动作就是你干的这件事。"
+    },
+    {
+      "i": 33,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 55,
+      "lineEnd": 55,
+      "parent": null,
+      "text": "界面用语与技术底层的对照（全 app 词汇一致，学一次就会）："
+    },
+    {
+      "i": 34,
+      "type": "table",
+      "tag": "table",
+      "line": 57,
+      "lineEnd": 64,
+      "parent": null,
+      "text": "\n\n\n界面词\n底层动作\n\n\n\n\n奏折\nreview repo 里一个 open PR 的文档\n\n\n朱批\ninline review comment（锚在原文某句上）\n\n\n总批\nconversation comment（整折的总评，比如你的序号式回答）\n\n\n提交朱批\n把攒的批注一次性 submit review\n\n\n钦此\nsquash merge，定稿\n\n\n作罢\n丢弃这条未写完的批注\n\n\n"
+    },
+    {
+      "i": 35,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 57,
+      "lineEnd": 57,
+      "parent": 34,
+      "text": "\n界面词\n底层动作\n"
+    },
+    {
+      "i": 36,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 59,
+      "lineEnd": 59,
+      "parent": 34,
+      "text": "\n奏折\nreview repo 里一个 open PR 的文档\n"
+    },
+    {
+      "i": 37,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": 34,
+      "text": "\n朱批\ninline review comment（锚在原文某句上）\n"
+    },
+    {
+      "i": 38,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 61,
+      "lineEnd": 61,
+      "parent": 34,
+      "text": "\n总批\nconversation comment（整折的总评，比如你的序号式回答）\n"
+    },
+    {
+      "i": 39,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": 34,
+      "text": "\n提交朱批\n把攒的批注一次性 submit review\n"
+    },
+    {
+      "i": 40,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 63,
+      "lineEnd": 63,
+      "parent": 34,
+      "text": "\n钦此\nsquash merge，定稿\n"
+    },
+    {
+      "i": 41,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 64,
+      "lineEnd": 64,
+      "parent": 34,
+      "text": "\n作罢\n丢弃这条未写完的批注\n"
+    },
+    {
+      "i": 42,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 66,
+      "lineEnd": 66,
+      "parent": null,
+      "text": "「总批」是 v2 新提的一等公民：两轮实测你都自发用了「序号列意见」的总评式批注，这个习惯直接进产品，不只当兜底。"
+    },
+    {
+      "i": 43,
+      "type": "heading",
+      "tag": "h2",
+      "line": 68,
+      "lineEnd": 68,
+      "parent": null,
+      "level": 2,
+      "text": "§3 目标 / 非目标"
+    },
+    {
+      "i": 44,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 70,
+      "lineEnd": 70,
+      "parent": null,
+      "text": "目标（v0 全部）："
+    },
+    {
+      "i": 45,
+      "type": "list_item",
+      "tag": "li",
+      "line": 72,
+      "lineEnd": 72,
+      "parent": null,
+      "text": "手机上舒服地读 AI 产出的 markdown——渲染态，不是 diff 源码态"
+    },
+    {
+      "i": 46,
+      "type": "list_item",
+      "tag": "li",
+      "line": 73,
+      "lineEnd": 73,
+      "parent": null,
+      "text": "一路读一路划句朱批 + 随时写总批，最后一键呈回"
+    },
+    {
+      "i": 47,
+      "type": "list_item",
+      "tag": "li",
+      "line": 74,
+      "lineEnd": 74,
+      "parent": null,
+      "text": "一个真正能按的「钦此」"
+    },
+    {
+      "i": 48,
+      "type": "list_item",
+      "tag": "li",
+      "line": 75,
+      "lineEnd": 76,
+      "parent": null,
+      "text": "逐条消掉已知 PAIN："
+    },
+    {
+      "i": 49,
+      "type": "table",
+      "tag": "table",
+      "line": 77,
+      "lineEnd": 82,
+      "parent": null,
+      "text": "\n\n\nPAIN（试点实录）\n朱批解法\n\n\n\n\napprove 被作者身份堵死\n自带「钦此」= merge\n\n\n批注入口不自发现\n划选即批，唯一主交互\n\n\nmarkdown diff 不渲染\n只展示渲染态\n\n\n外链掉登录态 404\n自带渲染 + PWA，不跳任何外链\n\n\n"
+    },
+    {
+      "i": 50,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 77,
+      "lineEnd": 77,
+      "parent": 49,
+      "text": "\nPAIN（试点实录）\n朱批解法\n"
+    },
+    {
+      "i": 51,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 79,
+      "lineEnd": 79,
+      "parent": 49,
+      "text": "\napprove 被作者身份堵死\n自带「钦此」= merge\n"
+    },
+    {
+      "i": 52,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 80,
+      "lineEnd": 80,
+      "parent": 49,
+      "text": "\n批注入口不自发现\n划选即批，唯一主交互\n"
+    },
+    {
+      "i": 53,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 81,
+      "lineEnd": 81,
+      "parent": 49,
+      "text": "\nmarkdown diff 不渲染\n只展示渲染态\n"
+    },
+    {
+      "i": 54,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 82,
+      "lineEnd": 82,
+      "parent": 49,
+      "text": "\n外链掉登录态 404\n自带渲染 + PWA，不跳任何外链\n"
+    },
+    {
+      "i": 55,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 84,
+      "lineEnd": 84,
+      "parent": null,
+      "text": "非目标（v0 冻结，提了也不做）：feed 排序 / 未读管理 / 通知推送（被否掉的 attention inbox）；多 repo 浏览与代码 diff（v0 不做，但已列为 v1 北极星，见 §10）；AI 集成（agent 侧由 review-loop skill 全权负责，朱批不知道 AI 存在）；编辑文档（只读 + 批）。"
+    },
+    {
+      "i": 56,
+      "type": "heading",
+      "tag": "h2",
+      "line": 86,
+      "lineEnd": 86,
+      "parent": null,
+      "level": 2,
+      "text": "§4 形态"
+    },
+    {
+      "i": 57,
+      "type": "list_item",
+      "tag": "li",
+      "line": 88,
+      "lineEnd": 88,
+      "parent": null,
+      "text": "纯静态单页应用，GitHub Pages 托管：新公开 repo zhupi"
+    },
+    {
+      "i": 58,
+      "type": "list_item",
+      "tag": "li",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "text": "代码公开、内容私有：页面不含任何数据与密钥，文档由浏览器用你的 token 现拉"
+    },
+    {
+      "i": 59,
+      "type": "list_item",
+      "tag": "li",
+      "line": 90,
+      "lineEnd": 90,
+      "parent": null,
+      "text": "桌面网页优先（v0）：宽屏两栏布局（奏折列表 + 阅读区）+ 右缘朱批栏；⌘Enter 呈回等快捷键"
+    },
+    {
+      "i": 60,
+      "type": "list_item",
+      "tag": "li",
+      "line": 91,
+      "lineEnd": 92,
+      "parent": null,
+      "text": "移动端 + PWA 挪到 v1（手机设计已备，见 §1 图②③④）"
+    },
+    {
+      "i": 61,
+      "type": "heading",
+      "tag": "h2",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": null,
+      "level": 2,
+      "text": "§5 数据与认证"
+    },
+    {
+      "i": 62,
+      "type": "list_item",
+      "tag": "li",
+      "line": 95,
+      "lineEnd": 95,
+      "parent": null,
+      "text": "唯一数据源：charliezong18/review（私有），浏览器直连 api.github.com（官方开 CORS）"
+    },
+    {
+      "i": 63,
+      "type": "list_item",
+      "tag": "li",
+      "line": 96,
+      "lineEnd": 96,
+      "parent": null,
+      "text": "认证讲人话：GitHub 后台生成一个只对 review 这一个仓库有效的钥匙（fine-grained PAT，权限只勾 Contents 和 Pull requests 两项），第一次打开 app 粘贴一次，存在手机浏览器本地（localStorage）。钥匙不经过任何服务器、不发给任何人；手机丢了去 GitHub 一键作废即可"
+    },
+    {
+      "i": 64,
+      "type": "list_item",
+      "tag": "li",
+      "line": 97,
+      "lineEnd": 98,
+      "parent": null,
+      "text": "无后端、无第三方请求、无统计埋点"
+    },
+    {
+      "i": 65,
+      "type": "heading",
+      "tag": "h2",
+      "line": 99,
+      "lineEnd": 99,
+      "parent": null,
+      "level": 2,
+      "text": "§6 页面与交互"
+    },
+    {
+      "i": 66,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 101,
+      "lineEnd": 101,
+      "parent": null,
+      "text": "清单页：open PR 列表（标题 / 呈递时间 / 已批数 / 状态印章）；手动下拉刷新（无后端无推送，v0 接受）。"
+    },
+    {
+      "i": 67,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 103,
+      "lineEnd": 103,
+      "parent": null,
+      "text": "阅读页：拉 PR head 分支的 docs/*.md，markdown-it 渲染（表格、代码块、任务列表全支持）；阅读排版=正文 17px、行宽上限、1.8 行高、暗色跟随系统；顶部「钦此」、底部「提交朱批·n」。"
+    },
+    {
+      "i": 68,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 105,
+      "lineEnd": 105,
+      "parent": null,
+      "text": "批注：划选文字 → 右缘朱批栏落卡（§1 图①，与原文并排；移动端 v1 用底部批注单，图④）；批注先攒本地草稿（localStorage 防写一半丢），已批句子淡朱高亮；「提交朱批」一次性写回该 PR 的 inline comments；总批入口常驻顶栏。"
+    },
+    {
+      "i": 69,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 107,
+      "lineEnd": 107,
+      "parent": null,
+      "text": "循环闭环：阅读页展示已有批注串 + agent 的逐条回话（v2 回来对着看每条怎么处理的）；「钦此」弹一次确认后 squash merge，折子从清单消失。"
+    },
+    {
+      "i": 70,
+      "type": "heading",
+      "tag": "h2",
+      "line": 109,
+      "lineEnd": 109,
+      "parent": null,
+      "level": 2,
+      "text": "§7 待拍板 ②：v1→v2 对比视图（讲人话）"
+    },
+    {
+      "i": 71,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 111,
+      "lineEnd": 111,
+      "parent": null,
+      "text": "场景：你在 v1 上批了 10 条，我改出 v2 呈回。你重读 v2 时，有两种姿势——"
+    },
+    {
+      "i": 72,
+      "type": "list_item",
+      "tag": "li",
+      "line": 113,
+      "lineEnd": 113,
+      "parent": null,
+      "text": "A. 不做对比视图（v0 打算这样）：你直接重读渲染版；每条朱批下面有我的回话（「已改，第 3 节重写」），你按批注串定位到改动点。成本=你要重读或按回话跳读。"
+    },
+    {
+      "i": 73,
+      "type": "list_item",
+      "tag": "li",
+      "line": 114,
+      "lineEnd": 115,
+      "parent": null,
+      "text": "B. 做对比视图：v2 里相对 v1 变过的段落自动高亮（类似 Word 修订模式）。爽，但要在渲染态上做段落级 diff 算法 + UI，是 v0 里最贵的一块。"
+    },
+    {
+      "i": 74,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": null,
+      "text": "拍板问题就是：A 够不够你用？ 我的推荐：v0 用 A，真觉得缺再在 v0.5 上 B——那时有真实使用数据，知道你重读时到底怎么找改动。"
+    },
+    {
+      "i": 75,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 118,
+      "lineEnd": 118,
+      "parent": null,
+      "text": "✅ 已拍板（2026-07-26）：v0 用 A（不做对比视图），B 留待真实使用后按需追加。"
+    },
+    {
+      "i": 76,
+      "type": "heading",
+      "tag": "h2",
+      "line": 120,
+      "lineEnd": 120,
+      "parent": null,
+      "level": 2,
+      "text": "§8 待拍板 ③：技术栈对比"
+    },
+    {
+      "i": 77,
+      "type": "table",
+      "tag": "table",
+      "line": 122,
+      "lineEnd": 128,
+      "parent": null,
+      "text": "\n\n\n\nA. 零构建：vanilla JS + markdown-it（推荐）\nB. Preact + Vite\nC. React + Next\n\n\n\n\n是什么\n不用框架，手写几个 JS 文件，渲染库直接打包进 repo\n迷你版 React（3KB）+ 现代打包器\n全家桶\n\n\n开发速度\n中（交互手写，但 v0 状态很少）\n快（组件化顺手）\n快但杀鸡牛刀\n\n\n维护成本\n最低：零依赖链，两年后打开还能跑\n中：依赖要跟版本\n高\n\n\n部署\npush 即上线（Pages 直接托管源文件）\n要 build 步骤（Actions 里跑）\n要 build + 体积大\n\n\n适配本项目\nv0 三个页面、状态极少，正合适\nv1 若长出复杂交互再迁不迟\n否决\n\n\n"
+    },
+    {
+      "i": 78,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 122,
+      "lineEnd": 122,
+      "parent": 77,
+      "text": "\n\nA. 零构建：vanilla JS + markdown-it（推荐）\nB. Preact + Vite\nC. React + Next\n"
+    },
+    {
+      "i": 79,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": 77,
+      "text": "\n是什么\n不用框架，手写几个 JS 文件，渲染库直接打包进 repo\n迷你版 React（3KB）+ 现代打包器\n全家桶\n"
+    },
+    {
+      "i": 80,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 125,
+      "lineEnd": 125,
+      "parent": 77,
+      "text": "\n开发速度\n中（交互手写，但 v0 状态很少）\n快（组件化顺手）\n快但杀鸡牛刀\n"
+    },
+    {
+      "i": 81,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 126,
+      "lineEnd": 126,
+      "parent": 77,
+      "text": "\n维护成本\n最低：零依赖链，两年后打开还能跑\n中：依赖要跟版本\n高\n"
+    },
+    {
+      "i": 82,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 127,
+      "lineEnd": 127,
+      "parent": 77,
+      "text": "\n部署\npush 即上线（Pages 直接托管源文件）\n要 build 步骤（Actions 里跑）\n要 build + 体积大\n"
+    },
+    {
+      "i": 83,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": 77,
+      "text": "\n适配本项目\nv0 三个页面、状态极少，正合适\nv1 若长出复杂交互再迁不迟\n否决\n"
+    },
+    {
+      "i": 84,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 130,
+      "lineEnd": 130,
+      "parent": null,
+      "text": "推荐 A 的核心理由：这是个你私人用十年的小工具，不是要招人协作的工程——依赖越少，越不会有「两年后 npm install 装不动」的坟场问题。代价：交互代码写起来比组件化啰嗦一点，多花的是我的时间不是你的。"
+    },
+    {
+      "i": 85,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 132,
+      "lineEnd": 132,
+      "parent": null,
+      "text": "✅ 已拍板（2026-07-26）：A。B/C 保留为未来选项，按下面的 breakpoint 触发。"
+    },
+    {
+      "i": 86,
+      "type": "heading",
+      "tag": "h3",
+      "line": 134,
+      "lineEnd": 134,
+      "parent": null,
+      "level": 3,
+      "text": "§8.1 架构切换 breakpoint（量化闸门）"
+    },
+    {
+      "i": 87,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 136,
+      "lineEnd": 136,
+      "parent": null,
+      "text": "零构建方案的失效有明确征兆。触发任意两条即认定 A 已到顶，暂停功能开发，先做 A→B（Preact + Vite）迁移；只触发一条则记录观察，不动架构。每次开发结束顺手对照一遍，超标的写进 MIGRATION-WATCH.md。"
+    },
+    {
+      "i": 88,
+      "type": "table",
+      "tag": "table",
+      "line": 138,
+      "lineEnd": 146,
+      "parent": null,
+      "text": "\n\n\n#\n指标\n阈值（触发线）\n为什么是这个数\n\n\n\n\n1\n单个 JS 文件行数\n任一文件 > 800 行\n超过这个量，手写 DOM 更新的分支就压不住了\n\n\n2\n应用总代码量\n> 2500 行（不含 vendored 库）\n三个页面写到这个体量，说明状态复杂度已越界\n\n\n3\n手写 DOM 更新点\n单页 > 25 处 innerHTML / appendChild / 属性同步\n这是「该上响应式框架」最直接的信号\n\n\n4\n状态源数量\n需要跨页面同步的独立状态 > 6 个\n手写订阅开始比框架更费脑子\n\n\n5\n同类渲染 bug 复发\n同一类「界面没跟上数据」bug 修 ≥ 3 次\n症状级信号，比代码量更硬\n\n\n6\n单次改动波及面\n加一个小功能要改 ≥ 4 个文件\n说明缺少组件边界\n\n\n7\n首屏加载\n> 1.5s（本地网络，冷缓存）\n无构建=无 tree-shaking/压缩，体积到顶的信号\n\n\n"
+    },
+    {
+      "i": 89,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 138,
+      "lineEnd": 138,
+      "parent": 88,
+      "text": "\n#\n指标\n阈值（触发线）\n为什么是这个数\n"
+    },
+    {
+      "i": 90,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 140,
+      "lineEnd": 140,
+      "parent": 88,
+      "text": "\n1\n单个 JS 文件行数\n任一文件 > 800 行\n超过这个量，手写 DOM 更新的分支就压不住了\n"
+    },
+    {
+      "i": 91,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 141,
+      "lineEnd": 141,
+      "parent": 88,
+      "text": "\n2\n应用总代码量\n> 2500 行（不含 vendored 库）\n三个页面写到这个体量，说明状态复杂度已越界\n"
+    },
+    {
+      "i": 92,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 142,
+      "lineEnd": 142,
+      "parent": 88,
+      "text": "\n3\n手写 DOM 更新点\n单页 > 25 处 innerHTML / appendChild / 属性同步\n这是「该上响应式框架」最直接的信号\n"
+    },
+    {
+      "i": 93,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 143,
+      "lineEnd": 143,
+      "parent": 88,
+      "text": "\n4\n状态源数量\n需要跨页面同步的独立状态 > 6 个\n手写订阅开始比框架更费脑子\n"
+    },
+    {
+      "i": 94,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 144,
+      "lineEnd": 144,
+      "parent": 88,
+      "text": "\n5\n同类渲染 bug 复发\n同一类「界面没跟上数据」bug 修 ≥ 3 次\n症状级信号，比代码量更硬\n"
+    },
+    {
+      "i": 95,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 145,
+      "lineEnd": 145,
+      "parent": 88,
+      "text": "\n6\n单次改动波及面\n加一个小功能要改 ≥ 4 个文件\n说明缺少组件边界\n"
+    },
+    {
+      "i": 96,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 146,
+      "lineEnd": 146,
+      "parent": 88,
+      "text": "\n7\n首屏加载\n> 1.5s（本地网络，冷缓存）\n无构建=无 tree-shaking/压缩，体积到顶的信号\n"
+    },
+    {
+      "i": 97,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 148,
+      "lineEnd": 148,
+      "parent": null,
+      "text": "触发后的迁移成本预估：锚定算法、GitHub API 封装、样式全部可原样搬（这三块占代码量大头），只有视图层重写，估半天到一天。所以 A 不是死路，是一条可控退路的起点。"
+    },
+    {
+      "i": 98,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 150,
+      "lineEnd": 150,
+      "parent": null,
+      "text": "C（React + Next）的触发线单列：只有当朱批需要服务端（推送通知、多人协作、非 GitHub 数据源）时才考虑——那时是产品形态变了，不是架构撑不住了。v0/v1 内不评估。"
+    },
+    {
+      "i": 99,
+      "type": "heading",
+      "tag": "h2",
+      "line": 152,
+      "lineEnd": 152,
+      "parent": null,
+      "level": 2,
+      "text": "§9 待拍板 ④：批注锚定（讲人话）"
+    },
+    {
+      "i": 100,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 154,
+      "lineEnd": 154,
+      "parent": null,
+      "text": "先答一个 §8 的延伸问题：A（零构建）做得了划句批注吗？ 做得了——划句批注的全部能力（选中文字、拿到选区位置、注入高亮、右缘卡片定位）来自浏览器原生的 Selection API 和 DOM 操作，框架并不提供这层能力；标杆产品 Hypothesis 的批注层本身就是原生 DOM 注入实现的。框架帮的忙是「复杂状态下的界面自动刷新」，而朱批的状态只有一个草稿列表。真正难的是下面的锚定算法——那段代码在 A/B 两个方案里一字不差。"
+    },
+    {
+      "i": 101,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 156,
+      "lineEnd": 156,
+      "parent": null,
+      "text": "「锚定」= 你在渲染页上划了一句话，系统要算出它对应源 markdown 文件的第几行，才能写成 GitHub 的 inline comment（GitHub 的批注钉在行号上）。"
+    },
+    {
+      "i": 102,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 158,
+      "lineEnd": 158,
+      "parent": null,
+      "text": "流程举例：你划了「镜片随时可以摘掉」→ 系统拿这句原文去源文件里搜 → 唯一匹配在第 3 行 → 批注钉在第 3 行。"
+    },
+    {
+      "i": 103,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 160,
+      "lineEnd": 160,
+      "parent": null,
+      "text": "两种失败场景和兜底："
+    },
+    {
+      "i": 104,
+      "type": "list_item",
+      "tag": "li",
+      "line": 162,
+      "lineEnd": 162,
+      "parent": null,
+      "text": "这句话在文中出现两次 → 钉到离你阅读位置最近的那处；"
+    },
+    {
+      "i": 105,
+      "type": "list_item",
+      "tag": "li",
+      "line": 163,
+      "lineEnd": 164,
+      "parent": null,
+      "text": "完全定位不到（比如跨了好几个元素划选）→ 钉到该段落最近的标题行。"
+    },
+    {
+      "i": 106,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 165,
+      "lineEnd": 165,
+      "parent": null,
+      "text": "不管钉得准不准，批注正文里都自动带上「> 你划的原句」——哪怕行号钉歪，你和 agent 看批注都知道批的是哪句，语义永远不丢。这就是「宽松锚定 + 引文兜底」。拍板问题：接受这个精度吗？（像素级精准要重得多，v0 不值。）"
+    },
+    {
+      "i": 107,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 167,
+      "lineEnd": 167,
+      "parent": null,
+      "text": "✅ 已拍板（2026-07-26）：接受。"
+    },
+    {
+      "i": 108,
+      "type": "heading",
+      "tag": "h2",
+      "line": 169,
+      "lineEnd": 169,
+      "parent": null,
+      "level": 2,
+      "text": "§10 里程碑（每步交付试玩链接）"
+    },
+    {
+      "i": 109,
+      "type": "list_item",
+      "tag": "li",
+      "line": 171,
+      "lineEnd": 171,
+      "parent": null,
+      "text": "M1 骨架：token 设置页 + 桌面两栏布局（奏折列表 + 阅读区）+ 渲染阅读——先把「读」做舒服"
+    },
+    {
+      "i": 110,
+      "type": "list_item",
+      "tag": "li",
+      "line": 172,
+      "lineEnd": 172,
+      "parent": null,
+      "text": "M2 朱批：划选 → 右缘批注栏攒批 → 一键呈回（含总批）"
+    },
+    {
+      "i": 111,
+      "type": "list_item",
+      "tag": "li",
+      "line": 173,
+      "lineEnd": 174,
+      "parent": null,
+      "text": "M3 闭环：批注串与回话展示、钦此"
+    },
+    {
+      "i": 112,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 175,
+      "lineEnd": 175,
+      "parent": null,
+      "text": "v1：移动端 + PWA（2026-07-26 输入：review 主战场在电脑，桌面先行；§1 图②③④的手机设计留作底稿）。"
+    },
+    {
+      "i": 113,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 177,
+      "lineEnd": 177,
+      "parent": null,
+      "text": "北极星（v1 之后再排）：diff 奏折——真代码 PR 也进同一个清单，同一套朱批/总批/钦此语义。这是「design 跟 diff 统一入口、统一格式」的完全体（2026-07-26 口头总批补充的主诉求）；先把 markdown 文档这半做扎实。概念图（同一个右缘朱批栏落在代码行上；配色规矩：朱砂只属于御批，增行用茶青、删行用墨划，不与批注抢红）："
+    },
+    {
+      "i": 114,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 179,
+      "lineEnd": 179,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 115,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 181,
+      "lineEnd": 181,
+      "parent": null,
+      "text": "左右分栏（split view）为桌面默认，顶栏「并排 / 左右」一键切（2026-07-26 输入：Charlie 读 diff 偏好左右对照）。左旧右新，删行墨划、增行茶青，占位段用斜纹表示\"这边没有对应行\"；朱批仍落在新版那一侧的行上（GitHub 的 inline comment 只认新文件行号），右缘朱批栏不变："
+    },
+    {
+      "i": 116,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 183,
+      "lineEnd": 183,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 117,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 185,
+      "lineEnd": 185,
+      "parent": null,
+      "text": "窄屏（<1280px）自动退回并排视图——左右分栏挤两栏代码 + 批注栏会把代码压到没法读；这是 v1 移动端天然只有并排视图的原因。"
+    },
+    {
+      "i": 118,
+      "type": "heading",
+      "tag": "h2",
+      "line": 187,
+      "lineEnd": 187,
+      "parent": null,
+      "level": 2,
+      "text": "§11 风险与兜底"
+    },
+    {
+      "i": 119,
+      "type": "list_item",
+      "tag": "li",
+      "line": 189,
+      "lineEnd": 189,
+      "parent": null,
+      "text": "锚定精度是最大技术风险 → §9 的宽松锚定 + 引文兜底"
+    },
+    {
+      "i": 120,
+      "type": "list_item",
+      "tag": "li",
+      "line": 190,
+      "lineEnd": 190,
+      "parent": null,
+      "text": "PAT 在 localStorage → 手机丢失去 GitHub 一键 revoke，爆炸半径 = 一个私有 repo"
+    },
+    {
+      "i": 121,
+      "type": "list_item",
+      "tag": "li",
+      "line": 191,
+      "lineEnd": 191,
+      "parent": null,
+      "text": "API 配额：认证后 5000 次/时，个人阅读量级毫无压力"
+    },
+    {
+      "i": 122,
+      "type": "list_item",
+      "tag": "li",
+      "line": 192,
+      "lineEnd": 193,
+      "parent": null,
+      "text": "朱批本身挂了 → 退回 GitHub 网页，数据零损失"
+    },
+    {
+      "i": 123,
+      "type": "heading",
+      "tag": "h2",
+      "line": 194,
+      "lineEnd": 194,
+      "parent": null,
+      "level": 2,
+      "text": "§12 名词表"
+    },
+    {
+      "i": 124,
+      "type": "table",
+      "tag": "table",
+      "line": 196,
+      "lineEnd": 207,
+      "parent": null,
+      "text": "\n\n\n词\n意思\n\n\n\n\nPAT\nPersonal Access Token，GitHub 的个人密钥；fine-grained = 只授权单个仓库的细粒度版本\n\n\nCORS\n浏览器的跨域许可机制；GitHub API 开了它，网页 JS 才能直连\n\n\nlocalStorage\n浏览器自带的本地小仓库，数据只存这台设备的这个浏览器\n\n\nPWA\n能「添加到主屏幕」当 app 用的网页\n\n\nmarkdown-it\n把 markdown 文本渲染成 HTML 的 JS 库，兼容 GitHub 同款语法（GFM）\n\n\nvanilla JS\n「原生 JS」，不用任何框架\n\n\nPreact / Vite\n迷你版 React / 现代前端打包器\n\n\nsquash merge\n把一个 PR 的所有提交压成一个并入 main\n\n\ninline comment\nGitHub 里钉在具体某一行上的批注\n\n\n锚定\n把你划的句子换算成源文件行号的过程（§9）\n\n\n"
+    },
+    {
+      "i": 125,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 196,
+      "lineEnd": 196,
+      "parent": 124,
+      "text": "\n词\n意思\n"
+    },
+    {
+      "i": 126,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 198,
+      "lineEnd": 198,
+      "parent": 124,
+      "text": "\nPAT\nPersonal Access Token，GitHub 的个人密钥；fine-grained = 只授权单个仓库的细粒度版本\n"
+    },
+    {
+      "i": 127,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 199,
+      "lineEnd": 199,
+      "parent": 124,
+      "text": "\nCORS\n浏览器的跨域许可机制；GitHub API 开了它，网页 JS 才能直连\n"
+    },
+    {
+      "i": 128,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 200,
+      "lineEnd": 200,
+      "parent": 124,
+      "text": "\nlocalStorage\n浏览器自带的本地小仓库，数据只存这台设备的这个浏览器\n"
+    },
+    {
+      "i": 129,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 201,
+      "lineEnd": 201,
+      "parent": 124,
+      "text": "\nPWA\n能「添加到主屏幕」当 app 用的网页\n"
+    },
+    {
+      "i": 130,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 202,
+      "lineEnd": 202,
+      "parent": 124,
+      "text": "\nmarkdown-it\n把 markdown 文本渲染成 HTML 的 JS 库，兼容 GitHub 同款语法（GFM）\n"
+    },
+    {
+      "i": 131,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 203,
+      "lineEnd": 203,
+      "parent": 124,
+      "text": "\nvanilla JS\n「原生 JS」，不用任何框架\n"
+    },
+    {
+      "i": 132,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 204,
+      "lineEnd": 204,
+      "parent": 124,
+      "text": "\nPreact / Vite\n迷你版 React / 现代前端打包器\n"
+    },
+    {
+      "i": 133,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 205,
+      "lineEnd": 205,
+      "parent": 124,
+      "text": "\nsquash merge\n把一个 PR 的所有提交压成一个并入 main\n"
+    },
+    {
+      "i": 134,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 206,
+      "lineEnd": 206,
+      "parent": 124,
+      "text": "\ninline comment\nGitHub 里钉在具体某一行上的批注\n"
+    },
+    {
+      "i": 135,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 207,
+      "lineEnd": 207,
+      "parent": 124,
+      "text": "\n锚定\n把你划的句子换算成源文件行号的过程（§9）\n"
+    },
+    {
+      "i": 136,
+      "type": "heading",
+      "tag": "h2",
+      "line": 209,
+      "lineEnd": 209,
+      "parent": null,
+      "level": 2,
+      "text": "§13 参考"
+    },
+    {
+      "i": 137,
+      "type": "list_item",
+      "tag": "li",
+      "line": 211,
+      "lineEnd": 211,
+      "parent": null,
+      "text": "GitHub REST API：PR 批注 / PR review"
+    },
+    {
+      "i": 138,
+      "type": "list_item",
+      "tag": "li",
+      "line": 212,
+      "lineEnd": 212,
+      "parent": null,
+      "text": "GitHub Pages 文档"
+    },
+    {
+      "i": 139,
+      "type": "list_item",
+      "tag": "li",
+      "line": 213,
+      "lineEnd": 213,
+      "parent": null,
+      "text": "markdown-it（渲染库）"
+    },
+    {
+      "i": 140,
+      "type": "list_item",
+      "tag": "li",
+      "line": 214,
+      "lineEnd": 214,
+      "parent": null,
+      "text": "Hypothesis: Fuzzy Anchoring——网页批注锚定的经典先例，§9 思路来源"
+    },
+    {
+      "i": 141,
+      "type": "list_item",
+      "tag": "li",
+      "line": 215,
+      "lineEnd": 215,
+      "parent": null,
+      "text": "W3C Web Annotation Data Model——批注数据的标准形状，v0 只借概念不照搬"
+    },
+    {
+      "i": 142,
+      "type": "list_item",
+      "tag": "li",
+      "line": 216,
+      "lineEnd": 216,
+      "parent": null,
+      "text": "MDN Selection API——「划选文字」用的浏览器原生能力"
+    },
+    {
+      "i": 143,
+      "type": "list_item",
+      "tag": "li",
+      "line": 217,
+      "lineEnd": 217,
+      "parent": null,
+      "text": "Preact / Vite（§8 的 B 方案）"
+    }
+  ]
+}

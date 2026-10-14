@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-tables.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 1,
+      "level": 2,
+      "text": "表格边角",
+      "slug": "表格边角"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 2,
+      "text": "表格边角",
+      "slug": "表格边角"
+    }
+  ]
+}

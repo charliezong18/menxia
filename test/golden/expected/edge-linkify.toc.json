@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-linkify.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "linkify 裸网址",
+      "slug": "linkify-裸网址"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "linkify 裸网址",
+      "slug": "linkify-裸网址"
+    }
+  ]
+}

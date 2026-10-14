@@ -1,0 +1,558 @@
+{
+  "format": 1,
+  "source": "corpus/edge-diff.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "diff 块",
+        "quoteRaw": "diff 块"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 6
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 7,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "@@ -1,4",
+        "quoteRaw": "@@ -1,4"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 24,
+      "expect": {
+        "blockLine": 3,
+        "line": 4,
+        "offset": 17,
+        "quote": "上下文行 -删掉",
+        "quoteRaw": "上下文行\n-删掉"
+      },
+      "replay": {
+        "block": 1,
+        "start": 17,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 29,
+      "expect": {
+        "blockLine": 3,
+        "line": 5,
+        "offset": 22,
+        "quote": "-删掉的行 +新",
+        "quoteRaw": "-删掉的行\n+新"
+      },
+      "replay": {
+        "block": 1,
+        "start": 22,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 28,
+      "length": 8,
+      "docStart": 35,
+      "expect": {
+        "blockLine": 3,
+        "line": 6,
+        "offset": 28,
+        "quote": "+新增的行 +<",
+        "quoteRaw": "+新增的行\n+<"
+      },
+      "replay": {
+        "block": 1,
+        "start": 28,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 34,
+      "length": 8,
+      "docStart": 41,
+      "expect": {
+        "blockLine": 3,
+        "line": 7,
+        "offset": 34,
+        "quote": "+<script",
+        "quoteRaw": "+<script"
+      },
+      "replay": {
+        "block": 1,
+        "start": 34,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 64,
+      "length": 8,
+      "docStart": 71,
+      "expect": {
+        "blockLine": 3,
+        "line": 9,
+        "offset": 64,
+        "quote": "空行之后的上下文",
+        "quoteRaw": "空行之后的上下文"
+      },
+      "replay": {
+        "block": 1,
+        "start": 64,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 73,
+      "length": 8,
+      "docStart": 80,
+      "expect": {
+        "blockLine": 3,
+        "line": 10,
+        "offset": 73,
+        "quote": "@@ -20,2",
+        "quoteRaw": "@@ -20,2"
+      },
+      "replay": {
+        "block": 1,
+        "start": 73,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 108,
+      "length": 8,
+      "docStart": 115,
+      "expect": {
+        "blockLine": 3,
+        "line": 11,
+        "offset": 108,
+        "quote": "- retur",
+        "quoteRaw": "-  retur"
+      },
+      "replay": {
+        "block": 1,
+        "start": 108,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 121,
+      "length": 8,
+      "docStart": 128,
+      "expect": {
+        "blockLine": 3,
+        "line": 12,
+        "offset": 121,
+        "quote": "+ retur",
+        "quoteRaw": "+  retur"
+      },
+      "replay": {
+        "block": 1,
+        "start": 121,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 140,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "info 首词是",
+        "quoteRaw": "info 首词是"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 162,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "-a +b",
+        "quoteRaw": "-a\n+b"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 165,
+      "expect": {
+        "blockLine": 18,
+        "line": 19,
+        "offset": 3,
+        "quote": "+b",
+        "quoteRaw": "+b"
+      },
+      "replay": {
+        "block": 3,
+        "start": 3,
+        "length": 2
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 167,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "不是 diff",
+        "quoteRaw": "不是 diff"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 6,
+      "docStart": 187,
+      "expect": {
+        "blockLine": 25,
+        "line": 26,
+        "offset": 0,
+        "quote": "-a +b",
+        "quoteRaw": "-a\n+b"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 194,
+      "expect": {
+        "blockLine": 30,
+        "line": 30,
+        "offset": 0,
+        "quote": "结尾段落。",
+        "quoteRaw": "结尾段落。"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 16,
+      "length": 6,
+      "docStart": 23,
+      "expect": {
+        "blockLine": 3,
+        "line": 4,
+        "offset": 16,
+        "quote": "上下文行",
+        "quoteRaw": "上下文行"
+      },
+      "replay": {
+        "block": 1,
+        "start": 17,
+        "length": 4
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 22,
+      "length": 6,
+      "docStart": 29,
+      "expect": {
+        "blockLine": 3,
+        "line": 5,
+        "offset": 22,
+        "quote": "-删掉的行",
+        "quoteRaw": "-删掉的行"
+      },
+      "replay": {
+        "block": 1,
+        "start": 22,
+        "length": 5
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 28,
+      "length": 6,
+      "docStart": 35,
+      "expect": {
+        "blockLine": 3,
+        "line": 6,
+        "offset": 28,
+        "quote": "+新增的行",
+        "quoteRaw": "+新增的行"
+      },
+      "replay": {
+        "block": 1,
+        "start": 28,
+        "length": 5
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 34,
+      "length": 6,
+      "docStart": 41,
+      "expect": {
+        "blockLine": 3,
+        "line": 7,
+        "offset": 34,
+        "quote": "+<scri",
+        "quoteRaw": "+<scri"
+      },
+      "replay": {
+        "block": 1,
+        "start": 34,
+        "length": 6
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 61,
+      "length": 6,
+      "docStart": 68,
+      "expect": {
+        "blockLine": 3,
+        "line": 8,
+        "offset": 61,
+        "quote": "空行之",
+        "quoteRaw": "空行之"
+      },
+      "replay": {
+        "block": 1,
+        "start": 64,
+        "length": 3
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 63,
+      "length": 6,
+      "docStart": 70,
+      "expect": {
+        "blockLine": 3,
+        "line": 9,
+        "offset": 63,
+        "quote": "空行之后的",
+        "quoteRaw": "空行之后的"
+      },
+      "replay": {
+        "block": 1,
+        "start": 64,
+        "length": 5
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 73,
+      "length": 6,
+      "docStart": 80,
+      "expect": {
+        "blockLine": 3,
+        "line": 10,
+        "offset": 73,
+        "quote": "@@ -20",
+        "quoteRaw": "@@ -20"
+      },
+      "replay": {
+        "block": 1,
+        "start": 73,
+        "length": 6
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 108,
+      "length": 6,
+      "docStart": 115,
+      "expect": {
+        "blockLine": 3,
+        "line": 11,
+        "offset": 108,
+        "quote": "- ret",
+        "quoteRaw": "-  ret"
+      },
+      "replay": {
+        "block": 1,
+        "start": 108,
+        "length": 6
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 121,
+      "length": 6,
+      "docStart": 128,
+      "expect": {
+        "blockLine": 3,
+        "line": 12,
+        "offset": 121,
+        "quote": "+ ret",
+        "quoteRaw": "+  ret"
+      },
+      "replay": {
+        "block": 1,
+        "start": 121,
+        "length": 6
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 3,
+      "length": 3,
+      "docStart": 190,
+      "expect": {
+        "blockLine": 25,
+        "line": 27,
+        "offset": 3,
+        "quote": "+b",
+        "quoteRaw": "+b"
+      },
+      "replay": {
+        "block": 5,
+        "start": 3,
+        "length": 2
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "diff 块",
+      "expect": 1
+    },
+    {
+      "quote": "@@ -1,4 +1,5 @@ ",
+      "expect": 3
+    },
+    {
+      "quote": "info 首词是 diff、后面",
+      "expect": 16
+    },
+    {
+      "quote": "-a +b",
+      "expect": 18
+    },
+    {
+      "quote": "不是 diff 的 patch ",
+      "expect": 23
+    },
+    {
+      "quote": "-a +b",
+      "expect": 18
+    },
+    {
+      "quote": "结尾段落。",
+      "expect": 30
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "diff 块"
+    ],
+    [
+      3,
+      "diff 块"
+    ],
+    [
+      16,
+      "diff 块"
+    ],
+    [
+      18,
+      "diff 块"
+    ],
+    [
+      23,
+      "diff 块"
+    ],
+    [
+      25,
+      "diff 块"
+    ],
+    [
+      30,
+      "diff 块"
+    ]
+  ]
+}

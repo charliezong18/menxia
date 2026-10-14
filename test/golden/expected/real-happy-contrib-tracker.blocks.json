@@ -1,0 +1,1182 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-contrib-tracker.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "level": 1,
+      "text": "Happy 贡献 Tracker"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": null,
+      "text": "上游 = slopus/happy　fork = charliezong18/happy　我 = @charliezong18"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 13,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "这份是贡献状态的 SSOT。 流程规矩看 Happy 贡献流程 Playbook，本地环境/自建版看 Happy 自建版说明书。\n一条 PR 从右往左走：💡 点子 → 🔨 在开发 → 📦 待发 → 👀 待 review → ✅ merged。"
+    },
+    {
+      "i": 3,
+      "type": "heading",
+      "tag": "h2",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "level": 2,
+      "text": "👀 待 review（已发，等上游）"
+    },
+    {
+      "i": 4,
+      "type": "table",
+      "tag": "table",
+      "line": 20,
+      "lineEnd": 35,
+      "parent": null,
+      "text": "\n\n\nPR\n标题\n发出\nCI\n状态\n\n\n\n\n#1596\nfix: keep the picked model and effort across an abort\n07-26\n单测 red→green ✅ + codex 单测 118 ✅ + typecheck ✅ + e2e before/after 日志\nOPEN；Fixes #1595；分支 fix/preserve-model-on-abort（worktree happy-wt-model-abort）；Charlie 亲历 bug（abort 后 Fable→Opus4.8）；证据 EVIDENCE-model-abort.md（未提交）；双 review：/code-review 无 blocker + agy APPROVE；等 Codex auto-review\n\n\n#1567\nfix(app): keep unread badges when saving a draft or removing a machine\n07-24 21:55Z\ntypecheck ✅\nOPEN，非 draft，MERGEABLE，0 评论，未 review\n\n\n#1568\nfix(app): keep new-session mode selections per agent\n07-25 01:35Z\n784/784 ✅ + typecheck ✅\nOPEN；分支 feat/per-agent-draft-modes（worktree happy-wt-draft-modes）；⏳ 待补截图\n\n\n#1569\nfix(app): clear stale draft selections when agent defaults change\n07-25 03:05Z\n787/787 ✅ + typecheck ✅\nOPEN；叠在 #1568 上（分支 feat/clear-stale-draft-on-default-change），#1568 合并后需 rebase；这才是「设了默认还是 4.8」的对症修\n\n\n#1570\nfeat(cli,app): support image attachments in agy sessions\n07-25 06:30Z 前后\ntypecheck ✅，smoke×4 跑着（本地 792+779 全绿）\nOPEN，MERGEABLE；截图已贴 ✅；干净分支 feat/agy-image-attachments（cherry-pick 2066e102→7d08759b）；Fixes #1559；等 Codex auto-review → resolve 后请人 review\n\n\n#1571\nfeat(cli,app): surface Antigravity (agy) quota in the session status bar\n07-25 07:00Z 前后\n本地 CLI 800/800 + app 780/780 + 双 typecheck ✅\nOPEN；分支 feat/agy-usage-quota-chips（771b7018）；截图复用 #1570 附件（右下角 agy 100% chip）；body 如实披露 OAuth client 从 agy 二进制扫取，reviewer 问了由我答\n\n\n#1572\ndocs(cli): disclose that the agy backend never prompts for tool approval\n07-25\ndocs-only，typecheck ✅\nOPEN；分支 docs/agy-print-disclosure（94ecd533）；Opus 实现→Fable review→措辞精修流水线产物\n\n\n#1573\nfeat(app): use the real Antigravity icon for agy sessions\n07-25\napp 779/779 + typecheck ✅\nOPEN；分支 feat/agy-icon（40f77bf5）；3 PNG 提自官方 icns + Avatar.tsx 补 agy 键（原头像 fallback 到 claude）；视觉证据=GitHub 二进制 rich diff 自带\n\n\n#1574\nfeat(cli): resume agy conversations across session restarts\n07-25\nCLI 785/785 + typecheck ✅\nOPEN；分支 feat/agy-session-resume（4ae74854）；Part of #1558（CLI 侧全通；app 侧 4 处 follow-up + reconnect-in-place 是后续）；review 抓到的一跳即断 bug 已修\n\n\n#1575\nchore(app,cli): finish deprecating the remaining gemini surfaces\n07-25\napp 779/779 + 双 typecheck ✅\nOPEN；分支 chore/gemini-deprecate-remaining-surfaces（1501e8c6，origin/main 重切零冲突）；Part of #1540；截图✅（raw 链接挂 fork assets/pr-screenshots 分支——Chrome 没登 GitHub 走不了 web 上传，API 建 orphan 分支绕的）\n\n\n#1576\nfeat(cli,app): per-model effort levels and current model slugs for agy\n07-25\ncli agy 22/22 + app 780/780 + 双 typecheck ✅\nOPEN；分支 feat/agy-effort-and-model-slugs（b92f2183，重解掉 #1570 的 add-dirs 测试冲突）；截图✅×2；body 写明不接 --mode（print 模式不 enforce，实测）\n\n\n#1577\nfeat(app): optional purple unread indicator + fix unread masking running state\n07-25\napp settings 34/34 + typecheck ✅\nOPEN；分支 feat/unread-purple-indicator（worktree happy-wt-unread-upstream，2 commits：fix 遮盖 + 开关默认关）；fork 版默认开已上线自用（fork PR #4/#6）；截图✅×2（07-25 已补）\n\n\n#1578\nfix(cli): surface the real launch error instead of a bare notice\n07-25 08:16Z\nsmoke×4 ✅\nOPEN，MERGEABLE；Claude launcher 失败只报固定文案 \"Process exited unexpectedly\"，真错误只躺 CLI log；实战踩到（切 model 触发 relaunch 失败 → session 假死无提示）；新增 launchFailureMessage helper + 测试，local/remote 两个 launcher 都接上；纯 CLI，与其他 open PR 零文件重叠\n\n\n#1579\nfix(app): keep live thinking state across a full session refetch\n07-25\napp 793/793 + typecheck ✅\nOPEN；分支 fix/preserve-thinking-on-session-refetch（worktree happy-wt-thinking-refetch，+9/−2 单文件 sync.ts）；这是紫点闪烁的根因：fetchSessions() 写死 thinking: false，新建会话触发全量 refetch → 所有正在跑的会话呼吸灯冻住 + 被误判「刚跑完」打上未读。#1577 只是把症状压住；无截图（症状是动画停顿，静帧拍不出，body 里已写明）；fork 侧已修并上线（5a0e5550，Charlie 已实机验证）\n\n\n"
+    },
+    {
+      "i": 5,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": 4,
+      "text": "\nPR\n标题\n发出\nCI\n状态\n"
+    },
+    {
+      "i": 6,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": 4,
+      "text": "\n#1596\nfix: keep the picked model and effort across an abort\n07-26\n单测 red→green ✅ + codex 单测 118 ✅ + typecheck ✅ + e2e before/after 日志\nOPEN；Fixes #1595；分支 fix/preserve-model-on-abort（worktree happy-wt-model-abort）；Charlie 亲历 bug（abort 后 Fable→Opus4.8）；证据 EVIDENCE-model-abort.md（未提交）；双 review：/code-review 无 blocker + agy APPROVE；等 Codex auto-review\n"
+    },
+    {
+      "i": 7,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": 4,
+      "text": "\n#1567\nfix(app): keep unread badges when saving a draft or removing a machine\n07-24 21:55Z\ntypecheck ✅\nOPEN，非 draft，MERGEABLE，0 评论，未 review\n"
+    },
+    {
+      "i": 8,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 24,
+      "lineEnd": 24,
+      "parent": 4,
+      "text": "\n#1568\nfix(app): keep new-session mode selections per agent\n07-25 01:35Z\n784/784 ✅ + typecheck ✅\nOPEN；分支 feat/per-agent-draft-modes（worktree happy-wt-draft-modes）；⏳ 待补截图\n"
+    },
+    {
+      "i": 9,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 25,
+      "lineEnd": 25,
+      "parent": 4,
+      "text": "\n#1569\nfix(app): clear stale draft selections when agent defaults change\n07-25 03:05Z\n787/787 ✅ + typecheck ✅\nOPEN；叠在 #1568 上（分支 feat/clear-stale-draft-on-default-change），#1568 合并后需 rebase；这才是「设了默认还是 4.8」的对症修\n"
+    },
+    {
+      "i": 10,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 26,
+      "lineEnd": 26,
+      "parent": 4,
+      "text": "\n#1570\nfeat(cli,app): support image attachments in agy sessions\n07-25 06:30Z 前后\ntypecheck ✅，smoke×4 跑着（本地 792+779 全绿）\nOPEN，MERGEABLE；截图已贴 ✅；干净分支 feat/agy-image-attachments（cherry-pick 2066e102→7d08759b）；Fixes #1559；等 Codex auto-review → resolve 后请人 review\n"
+    },
+    {
+      "i": 11,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": 4,
+      "text": "\n#1571\nfeat(cli,app): surface Antigravity (agy) quota in the session status bar\n07-25 07:00Z 前后\n本地 CLI 800/800 + app 780/780 + 双 typecheck ✅\nOPEN；分支 feat/agy-usage-quota-chips（771b7018）；截图复用 #1570 附件（右下角 agy 100% chip）；body 如实披露 OAuth client 从 agy 二进制扫取，reviewer 问了由我答\n"
+    },
+    {
+      "i": 12,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 28,
+      "lineEnd": 28,
+      "parent": 4,
+      "text": "\n#1572\ndocs(cli): disclose that the agy backend never prompts for tool approval\n07-25\ndocs-only，typecheck ✅\nOPEN；分支 docs/agy-print-disclosure（94ecd533）；Opus 实现→Fable review→措辞精修流水线产物\n"
+    },
+    {
+      "i": 13,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": 4,
+      "text": "\n#1573\nfeat(app): use the real Antigravity icon for agy sessions\n07-25\napp 779/779 + typecheck ✅\nOPEN；分支 feat/agy-icon（40f77bf5）；3 PNG 提自官方 icns + Avatar.tsx 补 agy 键（原头像 fallback 到 claude）；视觉证据=GitHub 二进制 rich diff 自带\n"
+    },
+    {
+      "i": 14,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 30,
+      "lineEnd": 30,
+      "parent": 4,
+      "text": "\n#1574\nfeat(cli): resume agy conversations across session restarts\n07-25\nCLI 785/785 + typecheck ✅\nOPEN；分支 feat/agy-session-resume（4ae74854）；Part of #1558（CLI 侧全通；app 侧 4 处 follow-up + reconnect-in-place 是后续）；review 抓到的一跳即断 bug 已修\n"
+    },
+    {
+      "i": 15,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": 4,
+      "text": "\n#1575\nchore(app,cli): finish deprecating the remaining gemini surfaces\n07-25\napp 779/779 + 双 typecheck ✅\nOPEN；分支 chore/gemini-deprecate-remaining-surfaces（1501e8c6，origin/main 重切零冲突）；Part of #1540；截图✅（raw 链接挂 fork assets/pr-screenshots 分支——Chrome 没登 GitHub 走不了 web 上传，API 建 orphan 分支绕的）\n"
+    },
+    {
+      "i": 16,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 32,
+      "lineEnd": 32,
+      "parent": 4,
+      "text": "\n#1576\nfeat(cli,app): per-model effort levels and current model slugs for agy\n07-25\ncli agy 22/22 + app 780/780 + 双 typecheck ✅\nOPEN；分支 feat/agy-effort-and-model-slugs（b92f2183，重解掉 #1570 的 add-dirs 测试冲突）；截图✅×2；body 写明不接 --mode（print 模式不 enforce，实测）\n"
+    },
+    {
+      "i": 17,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": 4,
+      "text": "\n#1577\nfeat(app): optional purple unread indicator + fix unread masking running state\n07-25\napp settings 34/34 + typecheck ✅\nOPEN；分支 feat/unread-purple-indicator（worktree happy-wt-unread-upstream，2 commits：fix 遮盖 + 开关默认关）；fork 版默认开已上线自用（fork PR #4/#6）；截图✅×2（07-25 已补）\n"
+    },
+    {
+      "i": 18,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 34,
+      "lineEnd": 34,
+      "parent": 4,
+      "text": "\n#1578\nfix(cli): surface the real launch error instead of a bare notice\n07-25 08:16Z\nsmoke×4 ✅\nOPEN，MERGEABLE；Claude launcher 失败只报固定文案 \"Process exited unexpectedly\"，真错误只躺 CLI log；实战踩到（切 model 触发 relaunch 失败 → session 假死无提示）；新增 launchFailureMessage helper + 测试，local/remote 两个 launcher 都接上；纯 CLI，与其他 open PR 零文件重叠\n"
+    },
+    {
+      "i": 19,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": 4,
+      "text": "\n#1579\nfix(app): keep live thinking state across a full session refetch\n07-25\napp 793/793 + typecheck ✅\nOPEN；分支 fix/preserve-thinking-on-session-refetch（worktree happy-wt-thinking-refetch，+9/−2 单文件 sync.ts）；这是紫点闪烁的根因：fetchSessions() 写死 thinking: false，新建会话触发全量 refetch → 所有正在跑的会话呼吸灯冻住 + 被误判「刚跑完」打上未读。#1577 只是把症状压住；无截图（症状是动画停顿，静帧拍不出，body 里已写明）；fork 侧已修并上线（5a0e5550，Charlie 已实机验证）\n"
+    },
+    {
+      "i": 20,
+      "type": "heading",
+      "tag": "h3",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": null,
+      "level": 3,
+      "text": "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）"
+    },
+    {
+      "i": 21,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "text": "评分口径：重要＝对用户/上游价值；紧急＝不合会持续掉东西吗；易合＝体量 × 冲突面 × 需不需要 maintainer 拍板。"
+    },
+    {
+      "i": 22,
+      "type": "table",
+      "tag": "table",
+      "line": 41,
+      "lineEnd": 56,
+      "parent": null,
+      "text": "\n\n\nPR\n重要\n紧急\n易合\n体量\n冲突面\n\n\n\n\n#1567 unread badge 修\n🔴高\n🔴高\n🟢极易\n+7/−4，1 文件\n无\n\n\n#1579 thinking 状态修\n🔴高\n🔴高\n🟢极易\n+20/−3，1 文件\n无（sync.ts，与 #1567 的 storage.ts 不重叠）\n\n\n#1596 abort 后丢 model/effort\n🔴高\n🔴高\n🟢极易\n+37/−5，3 文件\n无（runClaude/runCodex，零重叠）；Fixes #1595，带 red→green 测试 + e2e 日志\n\n\n#1573 agy 真图标\n🟡中\n🟡中\n🟢极易\n+1，4 文件\n无\n\n\n#1572 agy 放行披露\n🟡中\n🟡中\n🟢极易\n+9，README\n无\n\n\n#1578 launch 错误透传\n🟠中高\n🟡中\n🟢易\n+127/−2，5 文件\n无（纯 CLI launcher，零重叠）\n\n\n#1575 gemini 退役收尾\n🟡中\n🟢低\n🟢易\n+11/−7\nHomeDock(#1568/69)、agents.tsx(#1569)、machine(#1576)、cli index(#1574)\n\n\n#1568 per-agent draft\n🔴高\n🔴高\n🟡中\n+230/−63\n#1569 叠在其上\n\n\n#1569 清 stale draft\n🔴高\n🔴高\n🟡中\n+311/−64\n必须 #1568 先合再 rebase\n\n\n#1574 agy resume\n🟠中高\n🟡中\n🟡中\n+179/−4\nrunAgy/AgyBackend（#1570/71/76）\n\n\n#1570 agy 图片\n🟠中高\n🟡中\n🟡中\n+335/−11\nrunAgy/AgyBackend\n\n\n#1576 agy effort+slugs\n🟠中高\n🟠中高\n🟡中\n+152/−26\nrunAgy/AgyBackend、machine\n\n\n#1577 紫色未读\n🟡中\n🟢低\n🟠中偏难\n+59/−10，16 文件\n无，但一个 PR 两件事 + 新增设置项要拍板\n\n\n#1571 agy 配额 chips\n🟠中高\n🟡中\n🔴难\n+754，9 文件\nrunAgy；OAuth client 扫二进制需 maintainer 拍政策\n\n\n"
+    },
+    {
+      "i": 23,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": 22,
+      "text": "\nPR\n重要\n紧急\n易合\n体量\n冲突面\n"
+    },
+    {
+      "i": 24,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": 22,
+      "text": "\n#1567 unread badge 修\n🔴高\n🔴高\n🟢极易\n+7/−4，1 文件\n无\n"
+    },
+    {
+      "i": 25,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 44,
+      "lineEnd": 44,
+      "parent": 22,
+      "text": "\n#1579 thinking 状态修\n🔴高\n🔴高\n🟢极易\n+20/−3，1 文件\n无（sync.ts，与 #1567 的 storage.ts 不重叠）\n"
+    },
+    {
+      "i": 26,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 45,
+      "lineEnd": 45,
+      "parent": 22,
+      "text": "\n#1596 abort 后丢 model/effort\n🔴高\n🔴高\n🟢极易\n+37/−5，3 文件\n无（runClaude/runCodex，零重叠）；Fixes #1595，带 red→green 测试 + e2e 日志\n"
+    },
+    {
+      "i": 27,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 46,
+      "lineEnd": 46,
+      "parent": 22,
+      "text": "\n#1573 agy 真图标\n🟡中\n🟡中\n🟢极易\n+1，4 文件\n无\n"
+    },
+    {
+      "i": 28,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": 22,
+      "text": "\n#1572 agy 放行披露\n🟡中\n🟡中\n🟢极易\n+9，README\n无\n"
+    },
+    {
+      "i": 29,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 48,
+      "lineEnd": 48,
+      "parent": 22,
+      "text": "\n#1578 launch 错误透传\n🟠中高\n🟡中\n🟢易\n+127/−2，5 文件\n无（纯 CLI launcher，零重叠）\n"
+    },
+    {
+      "i": 30,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": 22,
+      "text": "\n#1575 gemini 退役收尾\n🟡中\n🟢低\n🟢易\n+11/−7\nHomeDock(#1568/69)、agents.tsx(#1569)、machine(#1576)、cli index(#1574)\n"
+    },
+    {
+      "i": 31,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 50,
+      "lineEnd": 50,
+      "parent": 22,
+      "text": "\n#1568 per-agent draft\n🔴高\n🔴高\n🟡中\n+230/−63\n#1569 叠在其上\n"
+    },
+    {
+      "i": 32,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 51,
+      "lineEnd": 51,
+      "parent": 22,
+      "text": "\n#1569 清 stale draft\n🔴高\n🔴高\n🟡中\n+311/−64\n必须 #1568 先合再 rebase\n"
+    },
+    {
+      "i": 33,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 52,
+      "lineEnd": 52,
+      "parent": 22,
+      "text": "\n#1574 agy resume\n🟠中高\n🟡中\n🟡中\n+179/−4\nrunAgy/AgyBackend（#1570/71/76）\n"
+    },
+    {
+      "i": 34,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 53,
+      "lineEnd": 53,
+      "parent": 22,
+      "text": "\n#1570 agy 图片\n🟠中高\n🟡中\n🟡中\n+335/−11\nrunAgy/AgyBackend\n"
+    },
+    {
+      "i": 35,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": 22,
+      "text": "\n#1576 agy effort+slugs\n🟠中高\n🟠中高\n🟡中\n+152/−26\nrunAgy/AgyBackend、machine\n"
+    },
+    {
+      "i": 36,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 55,
+      "lineEnd": 55,
+      "parent": 22,
+      "text": "\n#1577 紫色未读\n🟡中\n🟢低\n🟠中偏难\n+59/−10，16 文件\n无，但一个 PR 两件事 + 新增设置项要拍板\n"
+    },
+    {
+      "i": 37,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 56,
+      "lineEnd": 56,
+      "parent": 22,
+      "text": "\n#1571 agy 配额 chips\n🟠中高\n🟡中\n🔴难\n+754，9 文件\nrunAgy；OAuth client 扫二进制需 maintainer 拍政策\n"
+    },
+    {
+      "i": 38,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 58,
+      "lineEnd": 58,
+      "parent": null,
+      "text": "建议合并顺序（给 maintainer 的）："
+    },
+    {
+      "i": 39,
+      "type": "list_item",
+      "tag": "li",
+      "line": 59,
+      "lineEnd": 59,
+      "parent": null,
+      "text": "秒合组（零冲突、零风险）：#1567 → #1579 → #1596 → #1573 → #1572（#1579 是 #1577 症状的根因修，先合）"
+    },
+    {
+      "i": 40,
+      "type": "list_item",
+      "tag": "li",
+      "line": 60,
+      "lineEnd": 60,
+      "parent": null,
+      "text": "draft 线：#1568 → #1569（严格顺序，#1569 合前需 rebase）"
+    },
+    {
+      "i": 41,
+      "type": "list_item",
+      "tag": "li",
+      "line": 61,
+      "lineEnd": 61,
+      "parent": null,
+      "text": "agy 线（共享 runAgy.ts/AgyBackend.ts，先合谁后面谁 rebase）：#1574 → #1570 → #1576"
+    },
+    {
+      "i": 42,
+      "type": "list_item",
+      "tag": "li",
+      "line": 62,
+      "lineEnd": 62,
+      "parent": null,
+      "text": "独立随时可合：#1578（纯 CLI，零重叠）；#1575 排在 #1569/#1576 之后省一次 rebase"
+    },
+    {
+      "i": 43,
+      "type": "list_item",
+      "tag": "li",
+      "line": 63,
+      "lineEnd": 64,
+      "parent": null,
+      "text": "需要讨论后再动：#1571（OAuth 政策）、#1577（要不要加这个设置项；截图已补）"
+    },
+    {
+      "i": 44,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 65,
+      "lineEnd": 65,
+      "parent": null,
+      "text": "Charlie 待办：#1568 补截图（铁律：PR 必须有端到端视觉证据）。#1577 已补✅；#1579 无静帧可拍，body 已说明。"
+    },
+    {
+      "i": 45,
+      "type": "heading",
+      "tag": "h3",
+      "line": 67,
+      "lineEnd": 67,
+      "parent": null,
+      "level": 3,
+      "text": "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）"
+    },
+    {
+      "i": 46,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 69,
+      "lineEnd": 69,
+      "parent": null,
+      "text": "结论：2 真 BLOCKER + 1 准 BLOCKER + 4 组 SHOULD-FIX，5 个干净（#1568/#1569/#1572/#1573/#1575 代码零改动，只有 body 措辞项）。修复已全部落地，07-25 Charlie 放行后已全部 commit+push（293f1df1/65e9c173/f45dbe2b/a6119cc5/eaef9d03/35a010d6/f6fbe1d8），7 条修订说明评论 + #1568 sequencing + #1569 局限说明已发，#1570/#1572 body 已修订。各自 targeted tests + typecheck 全绿："
+    },
+    {
+      "i": 47,
+      "type": "table",
+      "tag": "table",
+      "line": 71,
+      "lineEnd": 79,
+      "parent": null,
+      "text": "\n\n\nPR\n修了什么\n验证\n\n\n\n\n#1576\nBLOCKER：MessageMetaSchema 缺 effort，zod 剥掉 → Effort 控件纯装饰。补字段 + runAgy 去 cast + 新 types.test.ts 3 测试（顺带解锁 codex 中途改 effort）\n23/23 ✅\n\n\n#1567\nBLOCKER：applyMachines 第三处漏传 unread set（触发最频繁）；并把参数改必填绝后患\ntypecheck ✅（storage.ts 不可单测）\n\n\n#1574\n准 BLOCKER：stale seeded id 静默失忆永不自愈 → close handler 加「turn 中 cache 变化且≠pin 才收养」自愈（比 reviewer 原方案多 ≠preTurnCacheId guard，保住 cross-resume 防线）+ 新测试；daemon resume 的 --model/--permission-mode 透传\n24/24 ✅\n\n\n#1579\nthinking 保留改为 gate on active（死 session 不保留）+ 挪到 apply 时同步解析（关 TOCTOU 窗口）\ntypecheck ✅\n\n\n#1570\nSIGTERM/SIGINT 清理 + 启动时 7 天龄期 sweep + --add-dir latch 跨 turn + offlineSessionStub 补 sendSessionProtocolMessage + 2 测试\n12/12 ✅\n\n\n#1571\ncreds 缓存 0600 + 缓存写失败不丢 token（+测试）+ 双 fetch 10s 超时 + execFileSync 平台化查找\n20/20 ✅\n\n\n#1578\nANSI/C0 控制字符剥离 + 2 测试\n12/12 ✅\n\n\n"
+    },
+    {
+      "i": 48,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 71,
+      "lineEnd": 71,
+      "parent": 47,
+      "text": "\nPR\n修了什么\n验证\n"
+    },
+    {
+      "i": 49,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 73,
+      "lineEnd": 73,
+      "parent": 47,
+      "text": "\n#1576\nBLOCKER：MessageMetaSchema 缺 effort，zod 剥掉 → Effort 控件纯装饰。补字段 + runAgy 去 cast + 新 types.test.ts 3 测试（顺带解锁 codex 中途改 effort）\n23/23 ✅\n"
+    },
+    {
+      "i": 50,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 74,
+      "lineEnd": 74,
+      "parent": 47,
+      "text": "\n#1567\nBLOCKER：applyMachines 第三处漏传 unread set（触发最频繁）；并把参数改必填绝后患\ntypecheck ✅（storage.ts 不可单测）\n"
+    },
+    {
+      "i": 51,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 75,
+      "lineEnd": 75,
+      "parent": 47,
+      "text": "\n#1574\n准 BLOCKER：stale seeded id 静默失忆永不自愈 → close handler 加「turn 中 cache 变化且≠pin 才收养」自愈（比 reviewer 原方案多 ≠preTurnCacheId guard，保住 cross-resume 防线）+ 新测试；daemon resume 的 --model/--permission-mode 透传\n24/24 ✅\n"
+    },
+    {
+      "i": 52,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 76,
+      "lineEnd": 76,
+      "parent": 47,
+      "text": "\n#1579\nthinking 保留改为 gate on active（死 session 不保留）+ 挪到 apply 时同步解析（关 TOCTOU 窗口）\ntypecheck ✅\n"
+    },
+    {
+      "i": 53,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 77,
+      "lineEnd": 77,
+      "parent": 47,
+      "text": "\n#1570\nSIGTERM/SIGINT 清理 + 启动时 7 天龄期 sweep + --add-dir latch 跨 turn + offlineSessionStub 补 sendSessionProtocolMessage + 2 测试\n12/12 ✅\n"
+    },
+    {
+      "i": 54,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 78,
+      "lineEnd": 78,
+      "parent": 47,
+      "text": "\n#1571\ncreds 缓存 0600 + 缓存写失败不丢 token（+测试）+ 双 fetch 10s 超时 + execFileSync 平台化查找\n20/20 ✅\n"
+    },
+    {
+      "i": 55,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 79,
+      "lineEnd": 79,
+      "parent": 47,
+      "text": "\n#1578\nANSI/C0 控制字符剥离 + 2 测试\n12/12 ✅\n"
+    },
+    {
+      "i": 56,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 81,
+      "lineEnd": 81,
+      "parent": null,
+      "text": "✅ push 后收尾已全做完（07-25）：#1570 body 测试数改口 + 评论记录与 #1574 的 resume 交互；#1569 局限说明评论；#1568 sequencing 评论；#1572 body 措辞。剩余唯一待办＝Charlie 给 #1568 补截图；CI 由 push 自动重跑，绿了无需动作。"
+    },
+    {
+      "i": 57,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 83,
+      "lineEnd": 83,
+      "parent": null,
+      "text": "给 @bra1nDump 的 Discord 消息：07-26 已按「先发 free-to-merge fixes」策略重构成两条（第一条=六个零决策 fix：#1567/#1579/#1596/#1573/#1572/#1578；第二条=其余八个压缩版），⏳ 待 Charlie 发出。07-27 定策略：循序渐进——权限请求（triage/write）和 rig proposal 都等 Kirill 回复、first batch 合掉之后再提，proposal 存档在 rig Antigravity proposal 草稿。"
+    },
+    {
+      "i": 58,
+      "type": "heading",
+      "tag": "h2",
+      "line": 87,
+      "lineEnd": 87,
+      "parent": null,
+      "level": 2,
+      "text": "📦 待发 PR（代码好了，还没开）"
+    },
+    {
+      "i": 59,
+      "type": "heading",
+      "tag": "h3",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "level": 3,
+      "text": "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）"
+    },
+    {
+      "i": 60,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 91,
+      "lineEnd": 91,
+      "parent": null,
+      "text": "0cb4290d，app 侧 +67/−8，app 796/796 + typecheck ✅，已 merge 进 charlie-main 自用上线（23abc680，纯 app 改动无需 relink CLI/daemon）。"
+    },
+    {
+      "i": 61,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": null,
+      "text": "上游 SDK 少报 context window：claude-opus-5 / claude-fable-5 被报成 200000，实际走的是 1M 档。于是 contextSize（实测单次 prompt 到 355,199）超过分母，百分比 clamp 成 100%，指示器永久钉死在「0% left」再也回不来——连\"这次真的快满了\"的告警一起废掉。修法沿用 #1561 立的规矩「分母不诚实就别画」：新增 isContextWindowUsable()（写成 type predicate，两处守卫共用），判据是 contextSize > contextWindow 在物理上不可能（超窗口的请求会被 API 先拒），出现即说明分母不可信 → 圈和 \"0% left\" 都不显示。"
+    },
+    {
+      "i": 62,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 95,
+      "lineEnd": 95,
+      "parent": null,
+      "text": "⚠️ 发 upstream 前想清楚：根因在 Anthropic 的 SDK，不在 Happy，这只是防御。上游 bug = anthropics/claude-code#63447（同一 bug 已被报 6 次，#35214 已定位到 has1mContext() 仍被 closed NOT_PLANNED）。07-25 我已补评论：同一 model id 会在同一 session 内报出两个不同值（opus-5/fable-5 都观察到 [200000, 1000000]），是现有报告都没有的线索——说明不是\"名单漏了一项\"，而是解析本身不稳定。"
+    },
+    {
+      "i": 63,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 97,
+      "lineEnd": 97,
+      "parent": null,
+      "text": "（quota chips 已于 07-25 作为 #1571 发出，见上。）"
+    },
+    {
+      "i": 64,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 99,
+      "lineEnd": 102,
+      "parent": null,
+      "text": "\n⚠️ 收敛留档（已完成，坑位记录）：#1571 的分支是从 feat/agy-usage-chip（happy-wt-agy-chip，基座是 charlie-main）收敛出来的干净分支。别再直接拿原分支发 PR。 收敛时踩的三个坑：\n\nagyQuotaClient.ts 里 dedup key 的分隔符写成了字面 NUL 字节而不是 \\0 转义 → 运行时无害，但 git 把 .ts 当二进制、GitHub 渲染不出 diff。\n载体选错：charlie-main 那版挂 metadata.usageLimits，上游 #1556 最终合的是挂 agentState.usageLimits（session.updateAgentState）。\napp 侧直接 diff 会回退 #1561（把 190K 硬编码和 fallback chip 逻辑改回来），只能挑 agy: 'agy' 那一条 label + 新测试。\n\n"
+    },
+    {
+      "i": 65,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 99,
+      "lineEnd": 99,
+      "parent": 64,
+      "text": "⚠️ 收敛留档（已完成，坑位记录）：#1571 的分支是从 feat/agy-usage-chip（happy-wt-agy-chip，基座是 charlie-main）收敛出来的干净分支。别再直接拿原分支发 PR。 收敛时踩的三个坑："
+    },
+    {
+      "i": 66,
+      "type": "list_item",
+      "tag": "li",
+      "line": 100,
+      "lineEnd": 100,
+      "parent": 64,
+      "text": "agyQuotaClient.ts 里 dedup key 的分隔符写成了字面 NUL 字节而不是 \\0 转义 → 运行时无害，但 git 把 .ts 当二进制、GitHub 渲染不出 diff。"
+    },
+    {
+      "i": 67,
+      "type": "list_item",
+      "tag": "li",
+      "line": 101,
+      "lineEnd": 101,
+      "parent": 64,
+      "text": "载体选错：charlie-main 那版挂 metadata.usageLimits，上游 #1556 最终合的是挂 agentState.usageLimits（session.updateAgentState）。"
+    },
+    {
+      "i": 68,
+      "type": "list_item",
+      "tag": "li",
+      "line": 102,
+      "lineEnd": 102,
+      "parent": 64,
+      "text": "app 侧直接 diff 会回退 #1561（把 190K 硬编码和 fallback chip 逻辑改回来），只能挑 agy: 'agy' 那一条 label + 新测试。"
+    },
+    {
+      "i": 69,
+      "type": "heading",
+      "tag": "h2",
+      "line": 106,
+      "lineEnd": 106,
+      "parent": null,
+      "level": 2,
+      "text": "🔨 在开发 / 待收拾"
+    },
+    {
+      "i": 70,
+      "type": "table",
+      "tag": "table",
+      "line": 108,
+      "lineEnd": 116,
+      "parent": null,
+      "text": "\n\n\n东西\n状态\n下一步\n\n\n\n\nchore/gemini-deprecation-agy-refresh（happy-wt-gemini-agy）\n✅ 07-24 两 commit 齐、双包测试全绿（app 793 / cli 827）：a8d2ebbf 补完 gemini deprecation（HomeDock 入口、设置页 section、机器页/dev composer 标注、CLI 子命令警告上移）+ 37becc0b AGY section 升级（model slugs 含 gemini-3.6-flash、per-model Effort 接 --effort、runAgy 接 meta.effort、机器页 Agy 行）；实测 agy --mode plan/accept-edits 在 print 模式不 enforce（plan 照写文件）→ Permission 故意保持 2 档\n✅ 07-25 全链路部署完成：merge b1e4b266 →与远端 #4/#5 汇合 push 795c3017 → Pages 部署 success → happy-integration 归位 charlie-main → rebuild（dist 已验证含 gemini-3.6-flash/setEffort/弃用警告）→ daemon 重启（PID 14748）；上游 PR 已拆出：#1575 + #1576（见待 review 节），worktree 留到 PR 合并后清\n\n\nfeat/agy-agentapi-spike（happy-wt-agy-agentapi）\n✅ 调研定案（5b86a479）：agentapi 是 gRPC/mTLS 客户端不是 HTTP 服务；无流式、无权限事件；env 三件套只注入 sidecar 不落盘→外部进程无受支持发现路径；model 还降级三档粗选→结论：缓。stub+17 测试留档\n✅ findings 已评论到 #1430（07-25，引 #1574）；stub 留 fork 不上游；重启条件=agy 出流式/权限事件 RPC\n\n\nfeat/agy-image-input（happy-wt-agy-image）\n✅ 07-24 全链路完结：commit 2066e102 → merge charlie-main → push → rebuild → daemon 重启 → e2e 验证成功（agy 识图 OK）→ 上游 PR #1570 已发（干净分支 feat/agy-image-attachments）\n等 #1570 review；worktree 留到 PR 合并后再清\n\n\ncharlie-main（happy-integration）\n个人集成分支，同时是 Pages 部署源；07-25 已 merge #1568+#1569 内容（92cd79e1）+ settings 自愈补丁 db094d91（防 agentDefaultOverrides 被 stale 客户端全量写抹掉；fork-only，已部署）自用，纯 app 侧改动无需 relink CLI/daemon\n五个 PR 合了之后可以 rebase 掉重复提交（动之前找 Charlie 确认）；自愈补丁对应的上游 issue（settings lost-update）还没开\n\n\ncharlie-main-stale（~/Developer/happy）\n旧 clone，ahead 18 + dirty 3，疑似残留\n删前按 feedback-check-unpushed-commits-before-rm 查未 push 的东西\n\n\nfeat/agy-limit-status-bar（happy-wt-usage-l1）\n已被 feat/agy-usage-quota-chips 取代\n确认无遗漏后清掉 worktree\n\n\nhappy-wt-opus5\n未提交改动已于 07-24 丢弃（是 #1566 的重复劳动）\n可 git worktree remove\n\n\n"
+    },
+    {
+      "i": 71,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 108,
+      "lineEnd": 108,
+      "parent": 70,
+      "text": "\n东西\n状态\n下一步\n"
+    },
+    {
+      "i": 72,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 110,
+      "lineEnd": 110,
+      "parent": 70,
+      "text": "\nchore/gemini-deprecation-agy-refresh（happy-wt-gemini-agy）\n✅ 07-24 两 commit 齐、双包测试全绿（app 793 / cli 827）：a8d2ebbf 补完 gemini deprecation（HomeDock 入口、设置页 section、机器页/dev composer 标注、CLI 子命令警告上移）+ 37becc0b AGY section 升级（model slugs 含 gemini-3.6-flash、per-model Effort 接 --effort、runAgy 接 meta.effort、机器页 Agy 行）；实测 agy --mode plan/accept-edits 在 print 模式不 enforce（plan 照写文件）→ Permission 故意保持 2 档\n✅ 07-25 全链路部署完成：merge b1e4b266 →与远端 #4/#5 汇合 push 795c3017 → Pages 部署 success → happy-integration 归位 charlie-main → rebuild（dist 已验证含 gemini-3.6-flash/setEffort/弃用警告）→ daemon 重启（PID 14748）；上游 PR 已拆出：#1575 + #1576（见待 review 节），worktree 留到 PR 合并后清\n"
+    },
+    {
+      "i": 73,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 111,
+      "lineEnd": 111,
+      "parent": 70,
+      "text": "\nfeat/agy-agentapi-spike（happy-wt-agy-agentapi）\n✅ 调研定案（5b86a479）：agentapi 是 gRPC/mTLS 客户端不是 HTTP 服务；无流式、无权限事件；env 三件套只注入 sidecar 不落盘→外部进程无受支持发现路径；model 还降级三档粗选→结论：缓。stub+17 测试留档\n✅ findings 已评论到 #1430（07-25，引 #1574）；stub 留 fork 不上游；重启条件=agy 出流式/权限事件 RPC\n"
+    },
+    {
+      "i": 74,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 112,
+      "lineEnd": 112,
+      "parent": 70,
+      "text": "\nfeat/agy-image-input（happy-wt-agy-image）\n✅ 07-24 全链路完结：commit 2066e102 → merge charlie-main → push → rebuild → daemon 重启 → e2e 验证成功（agy 识图 OK）→ 上游 PR #1570 已发（干净分支 feat/agy-image-attachments）\n等 #1570 review；worktree 留到 PR 合并后再清\n"
+    },
+    {
+      "i": 75,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 113,
+      "lineEnd": 113,
+      "parent": 70,
+      "text": "\ncharlie-main（happy-integration）\n个人集成分支，同时是 Pages 部署源；07-25 已 merge #1568+#1569 内容（92cd79e1）+ settings 自愈补丁 db094d91（防 agentDefaultOverrides 被 stale 客户端全量写抹掉；fork-only，已部署）自用，纯 app 侧改动无需 relink CLI/daemon\n五个 PR 合了之后可以 rebase 掉重复提交（动之前找 Charlie 确认）；自愈补丁对应的上游 issue（settings lost-update）还没开\n"
+    },
+    {
+      "i": 76,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 114,
+      "lineEnd": 114,
+      "parent": 70,
+      "text": "\ncharlie-main-stale（~/Developer/happy）\n旧 clone，ahead 18 + dirty 3，疑似残留\n删前按 feedback-check-unpushed-commits-before-rm 查未 push 的东西\n"
+    },
+    {
+      "i": 77,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 115,
+      "lineEnd": 115,
+      "parent": 70,
+      "text": "\nfeat/agy-limit-status-bar（happy-wt-usage-l1）\n已被 feat/agy-usage-quota-chips 取代\n确认无遗漏后清掉 worktree\n"
+    },
+    {
+      "i": 78,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": 70,
+      "text": "\nhappy-wt-opus5\n未提交改动已于 07-24 丢弃（是 #1566 的重复劳动）\n可 git worktree remove\n"
+    },
+    {
+      "i": 79,
+      "type": "heading",
+      "tag": "h2",
+      "line": 120,
+      "lineEnd": 120,
+      "parent": null,
+      "level": 2,
+      "text": "💡 Backlog 点子"
+    },
+    {
+      "i": 80,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 122,
+      "lineEnd": 122,
+      "parent": null,
+      "text": "唯一 Backlog SSOT 是 vault 根 📋 Backlog；这里只放 Happy 专属的、还没承诺时间的。有了时间就往上面几节挪。"
+    },
+    {
+      "i": 81,
+      "type": "heading",
+      "tag": "h3",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": null,
+      "level": 3,
+      "text": "📝 待发 issue（草稿好了，等 Charlie 点头）"
+    },
+    {
+      "i": 82,
+      "type": "list_item",
+      "tag": "li",
+      "line": 126,
+      "lineEnd": 127,
+      "parent": null,
+      "text": "happy doctor 诊断提案（happy doctor CLI + app 机器页诊断面板）：草稿全文＝op/outputs/happy-doctor-upstream-issue-draft.md（07-25 起草）。查重✅无同类提案；引用支撑 issue #989/#1464/#1035/#1123/#1318/#820；待定＝是否保留 Phase 2（app 面板），Charlie 二选一还没答。本地 PoC＝~/.local/bin/happy-doctor（私有版，含 fork 专属检查，上游只提通用内核）。发出后编号记到「我提的 issue」表。"
+    },
+    {
+      "i": 83,
+      "type": "heading",
+      "tag": "h3",
+      "line": 128,
+      "lineEnd": 128,
+      "parent": null,
+      "level": 3,
+      "text": "我提的 issue，还开着（可自己接手）"
+    },
+    {
+      "i": 84,
+      "type": "table",
+      "tag": "table",
+      "line": 130,
+      "lineEnd": 136,
+      "parent": null,
+      "text": "\n\n\nIssue\n标题\n备注\n\n\n\n\n#1565\nModel picker keys 原样转发给 claude --model，没人校验是否合法 alias\n#1566 的通用版；#1498 的 fable 是同一失败模式。修法＝加 alias 校验或改成透传全 model ID\n\n\n#1559\nagy provider 丢掉 UI 拖拽的图片/多模态 payload\nagy 本身有本地识图能力，是 Happy 侧没传\n\n\n#1558\nagy 模式不支持 session resume\n对应 agy backend 的 cross-restart resume-id 打通\n\n\n#1540\ngemini 退役三步走提案\n第 1 步 #1541 已 merge；第 2 步（删 spawn 路径）+ 第 3 步（删 backend 代码）还没做\n\n\n#1442\n暴露 Claude plan usage\nPR1（#1556）已 merge。PR2 = on-demand 详情面板（app→CLI RPC 触发 get_usage）还没写\n\n\n"
+    },
+    {
+      "i": 85,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 130,
+      "lineEnd": 130,
+      "parent": 84,
+      "text": "\nIssue\n标题\n备注\n"
+    },
+    {
+      "i": 86,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 132,
+      "lineEnd": 132,
+      "parent": 84,
+      "text": "\n#1565\nModel picker keys 原样转发给 claude --model，没人校验是否合法 alias\n#1566 的通用版；#1498 的 fable 是同一失败模式。修法＝加 alias 校验或改成透传全 model ID\n"
+    },
+    {
+      "i": 87,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 133,
+      "lineEnd": 133,
+      "parent": 84,
+      "text": "\n#1559\nagy provider 丢掉 UI 拖拽的图片/多模态 payload\nagy 本身有本地识图能力，是 Happy 侧没传\n"
+    },
+    {
+      "i": 88,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 134,
+      "lineEnd": 134,
+      "parent": 84,
+      "text": "\n#1558\nagy 模式不支持 session resume\n对应 agy backend 的 cross-restart resume-id 打通\n"
+    },
+    {
+      "i": 89,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 135,
+      "lineEnd": 135,
+      "parent": 84,
+      "text": "\n#1540\ngemini 退役三步走提案\n第 1 步 #1541 已 merge；第 2 步（删 spawn 路径）+ 第 3 步（删 backend 代码）还没做\n"
+    },
+    {
+      "i": 90,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 136,
+      "lineEnd": 136,
+      "parent": 84,
+      "text": "\n#1442\n暴露 Claude plan usage\nPR1（#1556）已 merge。PR2 = on-demand 详情面板（app→CLI RPC 触发 get_usage）还没写\n"
+    },
+    {
+      "i": 91,
+      "type": "heading",
+      "tag": "h3",
+      "line": 138,
+      "lineEnd": 138,
+      "parent": null,
+      "level": 3,
+      "text": "别人的 issue，可以捡（reliability 线，对 NIW 有用）"
+    },
+    {
+      "i": 92,
+      "type": "table",
+      "tag": "table",
+      "line": 140,
+      "lineEnd": 143,
+      "parent": null,
+      "text": "\n\n\nIssue\n标题\n为什么是我\n\n\n\n\n#1229\nDaemon 在 WebSocket 断开后不重连（合盖）\n旗舰级 reliability 修复，无人认领、0 评论，Charlie 自己踩过（\"机器离线但 session 还答\"）\n\n\n#1266\n补齐缺失的 Claude Code CLI 子命令（agents/mcp/plugin/project…）\n体量大但机械，可拆\n\n\n"
+    },
+    {
+      "i": 93,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 140,
+      "lineEnd": 140,
+      "parent": 92,
+      "text": "\nIssue\n标题\n为什么是我\n"
+    },
+    {
+      "i": 94,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 142,
+      "lineEnd": 142,
+      "parent": 92,
+      "text": "\n#1229\nDaemon 在 WebSocket 断开后不重连（合盖）\n旗舰级 reliability 修复，无人认领、0 评论，Charlie 自己踩过（\"机器离线但 session 还答\"）\n"
+    },
+    {
+      "i": 95,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 143,
+      "lineEnd": 143,
+      "parent": 92,
+      "text": "\n#1266\n补齐缺失的 Claude Code CLI 子命令（agents/mcp/plugin/project…）\n体量大但机械，可拆\n"
+    },
+    {
+      "i": 96,
+      "type": "heading",
+      "tag": "h3",
+      "line": 145,
+      "lineEnd": 145,
+      "parent": null,
+      "level": 3,
+      "text": "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉"
+    },
+    {
+      "i": 97,
+      "type": "list_item",
+      "tag": "li",
+      "line": 147,
+      "lineEnd": 147,
+      "parent": null,
+      "text": "真正的 agy 图标 → #1573"
+    },
+    {
+      "i": 98,
+      "type": "list_item",
+      "tag": "li",
+      "line": 148,
+      "lineEnd": 148,
+      "parent": null,
+      "text": "agentapi HTTP 集成 → 调研定案「缓」，findings 已评论 #1430，stub 留 fork"
+    },
+    {
+      "i": 99,
+      "type": "list_item",
+      "tag": "li",
+      "line": 149,
+      "lineEnd": 149,
+      "parent": null,
+      "text": "README 披露 agy --print 放行 → #1572"
+    },
+    {
+      "i": 100,
+      "type": "list_item",
+      "tag": "li",
+      "line": 150,
+      "lineEnd": 151,
+      "parent": null,
+      "text": "（顺带：#1558 resume → #1574，CLI 侧全通）"
+    },
+    {
+      "i": 101,
+      "type": "heading",
+      "tag": "h2",
+      "line": 154,
+      "lineEnd": 154,
+      "parent": null,
+      "level": 2,
+      "text": "✅ 已 merged（10 个）"
+    },
+    {
+      "i": 102,
+      "type": "table",
+      "tag": "table",
+      "line": 156,
+      "lineEnd": 167,
+      "parent": null,
+      "text": "\n\n\nPR\n标题\nmerged\n\n\n\n\n#1566\nfix(app): use full model ID for Opus 5 in the Claude model picker\n2026-07-24 21:19:50Z\n\n\n#1564\nfix(cli): don't let rate_limit_event wipe a window's utilization\n2026-07-24 21:19:53Z\n\n\n#1561\nfix: report the real context window instead of assuming 190K\n2026-07-24 21:22:00Z\n\n\n#1556\nfeat(cli,app): surface Claude plan rate limits in the session status bar\n2026-07-24 08:57:49Z\n\n\n#1553\nfix(cli): keep the session alive when the API rejects a turn\n2026-07-24 07:24:02Z\n\n\n#1541\nchore(app): remove gemini from the new-session agent picker\n2026-07-24 07:23:30Z\n\n\n#1476\nfix(app): stop session list jumping during multi-session streaming\n2026-07-24 07:55:19Z\n\n\n#1470\nfeat(app): add Fable 5 to the Claude model picker\n2026-07-03 00:11:12Z\n\n\n#1440\nfix(app): sort session list by last activity instead of creation time\n2026-07-03 05:29:09Z\n\n\n#1430\nfeat(cli): add agy (Antigravity CLI) as an agent backend\n2026-07-11 05:14:44Z\n\n\n"
+    },
+    {
+      "i": 103,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 156,
+      "lineEnd": 156,
+      "parent": 102,
+      "text": "\nPR\n标题\nmerged\n"
+    },
+    {
+      "i": 104,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 158,
+      "lineEnd": 158,
+      "parent": 102,
+      "text": "\n#1566\nfix(app): use full model ID for Opus 5 in the Claude model picker\n2026-07-24 21:19:50Z\n"
+    },
+    {
+      "i": 105,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 159,
+      "lineEnd": 159,
+      "parent": 102,
+      "text": "\n#1564\nfix(cli): don't let rate_limit_event wipe a window's utilization\n2026-07-24 21:19:53Z\n"
+    },
+    {
+      "i": 106,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 160,
+      "lineEnd": 160,
+      "parent": 102,
+      "text": "\n#1561\nfix: report the real context window instead of assuming 190K\n2026-07-24 21:22:00Z\n"
+    },
+    {
+      "i": 107,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 161,
+      "lineEnd": 161,
+      "parent": 102,
+      "text": "\n#1556\nfeat(cli,app): surface Claude plan rate limits in the session status bar\n2026-07-24 08:57:49Z\n"
+    },
+    {
+      "i": 108,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 162,
+      "lineEnd": 162,
+      "parent": 102,
+      "text": "\n#1553\nfix(cli): keep the session alive when the API rejects a turn\n2026-07-24 07:24:02Z\n"
+    },
+    {
+      "i": 109,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 163,
+      "lineEnd": 163,
+      "parent": 102,
+      "text": "\n#1541\nchore(app): remove gemini from the new-session agent picker\n2026-07-24 07:23:30Z\n"
+    },
+    {
+      "i": 110,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 164,
+      "lineEnd": 164,
+      "parent": 102,
+      "text": "\n#1476\nfix(app): stop session list jumping during multi-session streaming\n2026-07-24 07:55:19Z\n"
+    },
+    {
+      "i": 111,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 165,
+      "lineEnd": 165,
+      "parent": 102,
+      "text": "\n#1470\nfeat(app): add Fable 5 to the Claude model picker\n2026-07-03 00:11:12Z\n"
+    },
+    {
+      "i": 112,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 166,
+      "lineEnd": 166,
+      "parent": 102,
+      "text": "\n#1440\nfix(app): sort session list by last activity instead of creation time\n2026-07-03 05:29:09Z\n"
+    },
+    {
+      "i": 113,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 167,
+      "lineEnd": 167,
+      "parent": 102,
+      "text": "\n#1430\nfeat(cli): add agy (Antigravity CLI) as an agent backend\n2026-07-11 05:14:44Z\n"
+    },
+    {
+      "i": 114,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 169,
+      "lineEnd": 170,
+      "parent": null,
+      "text": "7/24 是大丰收日：7 个 PR 当天合掉（#1541/#1553/#1476 早上，#1556 上午，#1561/#1564/#1566 晚上 21:19–21:22 一口气连点）。\n没有 closed-但未合 的 PR —— 发出去的 10 个全进去了。"
+    },
+    {
+      "i": 115,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 172,
+      "lineEnd": 172,
+      "parent": null,
+      "text": "已关闭的 issue：#1552（被 #1553 修掉）、#1469（→#1470）、#1441（上游自己做了状态栏）、#1429（→#1430）、#1454（daemon start-sync 死锁，已被别人关掉）。"
+    },
+    {
+      "i": 116,
+      "type": "heading",
+      "tag": "h2",
+      "line": 176,
+      "lineEnd": 176,
+      "parent": null,
+      "level": 2,
+      "text": "铁律（别再踩）"
+    },
+    {
+      "i": 117,
+      "type": "list_item",
+      "tag": "li",
+      "line": 178,
+      "lineEnd": 178,
+      "parent": null,
+      "text": "上游 PR 从 origin/main 拉分支，绝不用 charlie-main —— 否则 diff 会夹带个人 fork 的东西、还会回退上游已合的改动。"
+    },
+    {
+      "i": 118,
+      "type": "list_item",
+      "tag": "li",
+      "line": 179,
+      "lineEnd": 179,
+      "parent": null,
+      "text": "PR 必须有端到端视觉证据（截图/录屏/真实日志），单测通过不算数；\"before\" 可以用文字，\"after\" 必须看得见。"
+    },
+    {
+      "i": 119,
+      "type": "list_item",
+      "tag": "li",
+      "line": 180,
+      "lineEnd": 180,
+      "parent": null,
+      "text": "先 resolve Codex auto-review 的评论，再请人 review。"
+    },
+    {
+      "i": 120,
+      "type": "list_item",
+      "tag": "li",
+      "line": 181,
+      "lineEnd": 181,
+      "parent": null,
+      "text": "一个 PR 一件事，不夹带 drive-by 重构。"
+    },
+    {
+      "i": 121,
+      "type": "list_item",
+      "tag": "li",
+      "line": 182,
+      "lineEnd": 182,
+      "parent": null,
+      "text": "动 core（sync engine / RPC wire / 加密 / server）先开 issue 讨论再写代码。"
+    },
+    {
+      "i": 122,
+      "type": "list_item",
+      "tag": "li",
+      "line": 183,
+      "lineEnd": 183,
+      "parent": null,
+      "text": "commit/push/PR 内容发出去之前先给 Charlie 过全文。"
+    },
+    {
+      "i": 123,
+      "type": "list_item",
+      "tag": "li",
+      "line": 184,
+      "lineEnd": 184,
+      "parent": null,
+      "text": "别在 happy-integration 跑 pnpm install（或任何会重建 node_modules 的命令），除非当时没有活跃 session。 它会给所有正在跑的 session 埋雷：Node 的 Module._pathCache 缓存了 SDK native binary 的 resolve 路径，install 重建 node_modules/@anthropic-ai/ 后旧路径失效，existsSync 返回 false，SDK 把它报成 \"Native CLI binary not found\"。不会立刻死，而是潜伏到下次触发 relaunch（切模型最常见）才暴毙，且不自愈——只能重启 session。细节见 fix-happy-pnpm-install-poisons-sessions。"
+    },
+    {
+      "i": 124,
+      "type": "list_item",
+      "tag": "li",
+      "line": 185,
+      "lineEnd": 186,
+      "parent": null,
+      "text": "开新 issue 前先 gh search issues 查重。anthropics/claude-code 有 bot 自动判重 + 3 天自动关，重复 issue 基本等于白写。"
+    },
+    {
+      "i": 125,
+      "type": "heading",
+      "tag": "h2",
+      "line": 187,
+      "lineEnd": 187,
+      "parent": null,
+      "level": 2,
+      "text": "相关"
+    },
+    {
+      "i": 126,
+      "type": "list_item",
+      "tag": "li",
+      "line": 189,
+      "lineEnd": 189,
+      "parent": null,
+      "text": "memory: project-happy-cli-pr、project-happy-selfbuilt-fork、feedback-happy-integration-canonical、project-happy-agy-integration"
+    },
+    {
+      "i": 127,
+      "type": "list_item",
+      "tag": "li",
+      "line": 190,
+      "lineEnd": 190,
+      "parent": null,
+      "text": "vault: Happy 贡献流程 Playbook、Happy 自建版说明书、Happy agy 本地测试 SOP、Happy 改进 — Issue 草稿"
+    },
+    {
+      "i": 128,
+      "type": "list_item",
+      "tag": "li",
+      "line": 191,
+      "lineEnd": 191,
+      "parent": null,
+      "text": "Dashboard 卡片：Happy CLI 贡献线"
+    }
+  ]
+}

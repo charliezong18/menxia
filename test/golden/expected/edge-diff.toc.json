@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-diff.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "diff 块",
+      "slug": "diff-块"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "diff 块",
+      "slug": "diff-块"
+    }
+  ]
+}

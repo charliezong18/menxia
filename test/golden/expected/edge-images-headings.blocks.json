@@ -1,0 +1,194 @@
+{
+  "format": 1,
+  "source": "corpus/edge-images-headings.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "图片与标题"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "text": ""
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "图前文字  图后文字。"
+    },
+    {
+      "i": 3,
+      "type": "heading",
+      "tag": "h2",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "level": 2,
+      "text": " 介绍"
+    },
+    {
+      "i": 4,
+      "type": "heading",
+      "tag": "h2",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "level": 2,
+      "text": ""
+    },
+    {
+      "i": 5,
+      "type": "heading",
+      "tag": "h2",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": null,
+      "level": 2,
+      "text": "🚀 起步"
+    },
+    {
+      "i": 6,
+      "type": "heading",
+      "tag": "h2",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": null,
+      "level": 2,
+      "text": "重名"
+    },
+    {
+      "i": 7,
+      "type": "heading",
+      "tag": "h2",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": null,
+      "level": 2,
+      "text": "重名"
+    },
+    {
+      "i": 8,
+      "type": "heading",
+      "tag": "h2",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": null,
+      "level": 2,
+      "text": "重名-1"
+    },
+    {
+      "i": 9,
+      "type": "heading",
+      "tag": "h2",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": null,
+      "level": 2,
+      "text": "带链接的标题 尾巴"
+    },
+    {
+      "i": 10,
+      "type": "heading",
+      "tag": "h2",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": null,
+      "level": 2,
+      "text": "带 code 的标题"
+    },
+    {
+      "i": 11,
+      "type": "heading",
+      "tag": "h4",
+      "line": 23,
+      "lineEnd": 23,
+      "parent": null,
+      "level": 4,
+      "text": "四级标题不进大纲"
+    },
+    {
+      "i": 12,
+      "type": "heading",
+      "tag": "h5",
+      "line": 25,
+      "lineEnd": 25,
+      "parent": null,
+      "level": 5,
+      "text": "五级"
+    },
+    {
+      "i": 13,
+      "type": "heading",
+      "tag": "h6",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": null,
+      "level": 6,
+      "text": "六级"
+    },
+    {
+      "i": 14,
+      "type": "heading",
+      "tag": "h1",
+      "line": 29,
+      "lineEnd": 30,
+      "parent": null,
+      "level": 1,
+      "text": "Setext 一级"
+    },
+    {
+      "i": 15,
+      "type": "heading",
+      "tag": "h2",
+      "line": 32,
+      "lineEnd": 33,
+      "parent": null,
+      "level": 2,
+      "text": "Setext 二级"
+    },
+    {
+      "i": 16,
+      "type": "heading",
+      "tag": "h3",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": null,
+      "level": 3,
+      "text": "三级：标点〈Highline 日模块〉、「引号」，句号。"
+    },
+    {
+      "i": 17,
+      "type": "heading",
+      "tag": "h1",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": null,
+      "level": 1,
+      "text": ""
+    },
+    {
+      "i": 18,
+      "type": "heading",
+      "tag": "h1",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": null,
+      "level": 1,
+      "text": "前后空格标题"
+    }
+  ]
+}

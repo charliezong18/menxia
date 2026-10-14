@@ -1,0 +1,1918 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhupi-migration-reviews.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 14,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "This is",
+        "quoteRaw": "This is"
+      },
+      "replay": {
+        "block": 1,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 43,
+      "length": 8,
+      "docStart": 57,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 43,
+        "quote": "It recor",
+        "quoteRaw": "It recor"
+      },
+      "replay": {
+        "block": 1,
+        "start": 44,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 168,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 0,
+        "quote": "zhupi an",
+        "quoteRaw": "zhupi an"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 56,
+      "length": 8,
+      "docStart": 224,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 56,
+        "quote": "Phase 1",
+        "quoteRaw": "Phase 1"
+      },
+      "replay": {
+        "block": 3,
+        "start": 56,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 64,
+      "length": 8,
+      "docStart": 232,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 64,
+        "quote": "turned t",
+        "quoteRaw": "turned t"
+      },
+      "replay": {
+        "block": 3,
+        "start": 64,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 118,
+      "length": 8,
+      "docStart": 286,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 118,
+        "quote": "#22), an",
+        "quoteRaw": "#22), an"
+      },
+      "replay": {
+        "block": 3,
+        "start": 118,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 121,
+      "length": 8,
+      "docStart": 289,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 121,
+        "quote": "), and P",
+        "quoteRaw": "), and P"
+      },
+      "replay": {
+        "block": 3,
+        "start": 121,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 128,
+      "length": 8,
+      "docStart": 296,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 128,
+        "quote": "Phase 2",
+        "quoteRaw": "Phase 2"
+      },
+      "replay": {
+        "block": 3,
+        "start": 128,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 136,
+      "length": 8,
+      "docStart": 304,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 136,
+        "quote": "moved th",
+        "quoteRaw": "moved th"
+      },
+      "replay": {
+        "block": 3,
+        "start": 136,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 193,
+      "length": 8,
+      "docStart": 361,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 193,
+        "quote": "#34). Ea",
+        "quoteRaw": "#34).\nEa"
+      },
+      "replay": {
+        "block": 3,
+        "start": 193,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 196,
+      "length": 8,
+      "docStart": 364,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 196,
+        "quote": "). Each",
+        "quoteRaw": ").\nEach"
+      },
+      "replay": {
+        "block": 3,
+        "start": 196,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 301,
+      "length": 8,
+      "docStart": 469,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 301,
+        "quote": "For the",
+        "quoteRaw": "For the"
+      },
+      "replay": {
+        "block": 3,
+        "start": 301,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 518,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 0,
+        "quote": "What is",
+        "quoteRaw": "What is"
+      },
+      "replay": {
+        "block": 4,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 44,
+      "length": 8,
+      "docStart": 562,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 44,
+        "quote": ": Rewrit",
+        "quoteRaw": ": Rewrit"
+      },
+      "replay": {
+        "block": 4,
+        "start": 45,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 854,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "zhupi A→",
+        "quoteRaw": "zhupi A→"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 952,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "Review o",
+        "quoteRaw": "Review o"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 137,
+      "length": 8,
+      "docStart": 1089,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 137,
+        "quote": "The numb",
+        "quoteRaw": "The numb"
+      },
+      "replay": {
+        "block": 7,
+        "start": 137,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 215,
+      "length": 8,
+      "docStart": 1167,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 215,
+        "quote": ", the pr",
+        "quoteRaw": ", the pr"
+      },
+      "replay": {
+        "block": 7,
+        "start": 215,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 349,
+      "length": 8,
+      "docStart": 1301,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 349,
+        "quote": "git show",
+        "quoteRaw": "git show"
+      },
+      "replay": {
+        "block": 7,
+        "start": 349,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 366,
+      "length": 8,
+      "docStart": 1318,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 366,
+        "quote": "to pull",
+        "quoteRaw": "to pull"
+      },
+      "replay": {
+        "block": 7,
+        "start": 366,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1402,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "Cross-va",
+        "quoteRaw": "Cross-va"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 23,
+      "length": 1,
+      "docStart": 1425,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1428,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "None of",
+        "quoteRaw": "None of"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 31,
+      "length": 8,
+      "docStart": 1459,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 31,
+        "quote": "- indepe",
+        "quoteRaw": "- indepe"
+      },
+      "replay": {
+        "block": 9,
+        "start": 31,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1777,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "Double-t",
+        "quoteRaw": "Double-t"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1845,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "Each cau",
+        "quoteRaw": "Each cau"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 50,
+      "length": 8,
+      "docStart": 1895,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 50,
+        "quote": ": Fable",
+        "quoteRaw": ": Fable"
+      },
+      "replay": {
+        "block": 11,
+        "start": 50,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 65,
+      "length": 8,
+      "docStart": 1910,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 65,
+        "quote": "#root he",
+        "quoteRaw": "#root he"
+      },
+      "replay": {
+        "block": 11,
+        "start": 65,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 71,
+      "length": 8,
+      "docStart": 1916,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 71,
+        "quote": "height b",
+        "quoteRaw": "height b"
+      },
+      "replay": {
+        "block": 11,
+        "start": 71,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2218,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "Fable's",
+        "quoteRaw": "Fable's"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2380,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "Actions:",
+        "quoteRaw": "Actions:"
+      },
+      "replay": {
+        "block": 13,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 75,
+      "length": 8,
+      "docStart": 2455,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 75,
+        "quote": "[smoke]",
+        "quoteRaw": "[smoke]"
+      },
+      "replay": {
+        "block": 13,
+        "start": 75,
+        "length": 7
+      }
+    },
+    {
+      "block": 13,
+      "blockStart": 99,
+      "length": 8,
+      "docStart": 2479,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 99,
+        "quote": "assertio",
+        "quoteRaw": "assertio"
+      },
+      "replay": {
+        "block": 13,
+        "start": 99,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2563,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 0,
+        "quote": "I. Fable",
+        "quoteRaw": "I. Fable"
+      },
+      "replay": {
+        "block": 14,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2629,
+      "expect": {
+        "blockLine": 29,
+        "line": 29,
+        "offset": 0,
+        "quote": "Overall",
+        "quoteRaw": "Overall"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2645,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 0,
+        "quote": "19 fixes",
+        "quoteRaw": "19 fixes"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 9,
+      "length": 8,
+      "docStart": 2654,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 9,
+        "quote": "none los",
+        "quoteRaw": "none los"
+      },
+      "replay": {
+        "block": 16,
+        "start": 9,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 19,
+      "length": 8,
+      "docStart": 2664,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 19,
+        "quote": "(2.5 pla",
+        "quoteRaw": "(2.5 pla"
+      },
+      "replay": {
+        "block": 16,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 126,
+      "length": 8,
+      "docStart": 2771,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 126,
+        "quote": "blocking",
+        "quoteRaw": "blocking"
+      },
+      "replay": {
+        "block": 16,
+        "start": 126,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 197,
+      "length": 8,
+      "docStart": 2842,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 197,
+        "quote": "(long do",
+        "quoteRaw": "(long do"
+      },
+      "replay": {
+        "block": 16,
+        "start": 197,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 316,
+      "length": 8,
+      "docStart": 2961,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 316,
+        "quote": "style.cs",
+        "quoteRaw": "style.cs"
+      },
+      "replay": {
+        "block": 16,
+        "start": 316,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 343,
+      "length": 8,
+      "docStart": 2988,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 343,
+        "quote": "(.zhupi-",
+        "quoteRaw": "(.zhupi-"
+      },
+      "replay": {
+        "block": 16,
+        "start": 343,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 344,
+      "length": 8,
+      "docStart": 2989,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 344,
+        "quote": ".zhupi-f",
+        "quoteRaw": ".zhupi-f"
+      },
+      "replay": {
+        "block": 16,
+        "start": 344,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 357,
+      "length": 8,
+      "docStart": 3002,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 357,
+        "quote": "absolute",
+        "quoteRaw": "absolute"
+      },
+      "replay": {
+        "block": 16,
+        "start": 357,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3205,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 0,
+        "quote": "Checklis",
+        "quoteRaw": "Checklis"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3248,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 1,
+        "quote": "# Item J",
+        "quoteRaw": "#\nItem\nJ"
+      },
+      "replay": {
+        "block": 18,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3250,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 3,
+        "quote": "Item Jud",
+        "quoteRaw": "Item\nJud"
+      },
+      "replay": {
+        "block": 18,
+        "start": 5,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 8,
+      "length": 8,
+      "docStart": 3255,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 8,
+        "quote": "Judgment",
+        "quoteRaw": "Judgment"
+      },
+      "replay": {
+        "block": 18,
+        "start": 10,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 3264,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 17,
+        "quote": "Location",
+        "quoteRaw": "Location"
+      },
+      "replay": {
+        "block": 18,
+        "start": 19,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3287,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 1,
+        "quote": "① ⌘Enter",
+        "quoteRaw": "①\n⌘Enter"
+      },
+      "replay": {
+        "block": 20,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3289,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 3,
+        "quote": "⌘Enter b",
+        "quoteRaw": "⌘Enter b"
+      },
+      "replay": {
+        "block": 20,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 25,
+      "length": 8,
+      "docStart": 3311,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 25,
+        "quote": "Survived",
+        "quoteRaw": "Survived"
+      },
+      "replay": {
+        "block": 20,
+        "start": 25,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 34,
+      "length": 8,
+      "docStart": 3320,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 34,
+        "quote": "ui.js gl",
+        "quoteRaw": "ui.js gl"
+      },
+      "replay": {
+        "block": 20,
+        "start": 34,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 47,
+      "length": 8,
+      "docStart": 3333,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 47,
+        "quote": "closest(",
+        "quoteRaw": "closest("
+      },
+      "replay": {
+        "block": 20,
+        "start": 47,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 74,
+      "length": 8,
+      "docStart": 3360,
+      "expect": {
+        "blockLine": 37,
+        "line": 37,
+        "offset": 74,
+        "quote": "exclusio",
+        "quoteRaw": "exclusio"
+      },
+      "replay": {
+        "block": 20,
+        "start": 74,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3433,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 1,
+        "quote": "② commit",
+        "quoteRaw": "②\ncommit"
+      },
+      "replay": {
+        "block": 21,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3435,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 3,
+        "quote": "commit_i",
+        "quoteRaw": "commit_i"
+      },
+      "replay": {
+        "block": 21,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 13,
+      "length": 8,
+      "docStart": 3445,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 13,
+        "quote": "Survived",
+        "quoteRaw": "Survived"
+      },
+      "replay": {
+        "block": 21,
+        "start": 13,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 22,
+      "length": 8,
+      "docStart": 3454,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 22,
+        "quote": "ui.js →",
+        "quoteRaw": "ui.js →"
+      },
+      "replay": {
+        "block": 21,
+        "start": 22,
+        "length": 7
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3486,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 1,
+        "quote": "③ Draft",
+        "quoteRaw": "③\nDraft"
+      },
+      "replay": {
+        "block": 22,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3488,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 3,
+        "quote": "Draft sa",
+        "quoteRaw": "Draft sa"
+      },
+      "replay": {
+        "block": 22,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 37,
+      "length": 8,
+      "docStart": 3522,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 37,
+        "quote": "Survived",
+        "quoteRaw": "Survived"
+      },
+      "replay": {
+        "block": 22,
+        "start": 37,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 46,
+      "length": 8,
+      "docStart": 3531,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 46,
+        "quote": "ref: c.p",
+        "quoteRaw": "ref: c.p"
+      },
+      "replay": {
+        "block": 22,
+        "start": 46,
+        "length": 8
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 64,
+      "length": 8,
+      "docStart": 3549,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 64,
+        "quote": "; stale",
+        "quoteRaw": "; stale"
+      },
+      "replay": {
+        "block": 22,
+        "start": 64,
+        "length": 7
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 66,
+      "length": 8,
+      "docStart": 3551,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 66,
+        "quote": "stale =",
+        "quoteRaw": "stale ="
+      },
+      "replay": {
+        "block": 22,
+        "start": 66,
+        "length": 7
+      }
+    },
+    {
+      "block": 22,
+      "blockStart": 88,
+      "length": 8,
+      "docStart": 3573,
+      "expect": {
+        "blockLine": 39,
+        "line": 39,
+        "offset": 88,
+        "quote": "→ fallba",
+        "quoteRaw": "→ fallba"
+      },
+      "replay": {
+        "block": 22,
+        "start": 88,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3607,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 1,
+        "quote": "④ Comple",
+        "quoteRaw": "④\nComple"
+      },
+      "replay": {
+        "block": 23,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3609,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 3,
+        "quote": "Completi",
+        "quoteRaw": "Completi"
+      },
+      "replay": {
+        "block": 23,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 3644,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 38,
+        "quote": "Survived",
+        "quoteRaw": "Survived"
+      },
+      "replay": {
+        "block": 23,
+        "start": 38,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 47,
+      "length": 8,
+      "docStart": 3653,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 47,
+        "quote": "Snapshot",
+        "quoteRaw": "Snapshot"
+      },
+      "replay": {
+        "block": 23,
+        "start": 47,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3901,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 1,
+        "quote": "⑤ body c",
+        "quoteRaw": "⑤\nbody c"
+      },
+      "replay": {
+        "block": 24,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3903,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 3,
+        "quote": "body con",
+        "quoteRaw": "body con"
+      },
+      "replay": {
+        "block": 24,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 29,
+      "length": 8,
+      "docStart": 3929,
+      "expect": {
+        "blockLine": 41,
+        "line": 41,
+        "offset": 29,
+        "quote": "Survived",
+        "quoteRaw": "Survived"
+      },
+      "replay": {
+        "block": 24,
+        "start": 29,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 38,
+      "length": 2,
+      "docStart": 3938,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 25,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3942,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 1,
+        "quote": "⑥ Forbid",
+        "quoteRaw": "⑥\nForbid"
+      },
+      "replay": {
+        "block": 25,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3944,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 3,
+        "quote": "Forbid s",
+        "quoteRaw": "Forbid s"
+      },
+      "replay": {
+        "block": 25,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 36,
+      "length": 8,
+      "docStart": 3977,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 36,
+        "quote": "Survived",
+        "quoteRaw": "Survived"
+      },
+      "replay": {
+        "block": 25,
+        "start": 36,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "This is an archi",
+      "expect": 3
+    },
+    {
+      "quote": "This is an archi",
+      "expect": 3
+    },
+    {
+      "quote": "zhupi and zhupi-",
+      "expect": 6
+    },
+    {
+      "quote": "What is the purp",
+      "expect": 12
+    },
+    {
+      "quote": "What is the purp",
+      "expect": 12
+    },
+    {
+      "quote": "zhupi A→B Migrat",
+      "expect": 14
+    },
+    {
+      "quote": "Review object: T",
+      "expect": 16
+    },
+    {
+      "quote": "Cross-validation",
+      "expect": 18
+    },
+    {
+      "quote": "None of the 19 f",
+      "expect": 19
+    },
+    {
+      "quote": "Double-track col",
+      "expect": 20
+    },
+    {
+      "quote": "Each caught a bl",
+      "expect": 21
+    },
+    {
+      "quote": "Fable's correcti",
+      "expect": 22
+    },
+    {
+      "quote": "Actions: 9 items",
+      "expect": 23
+    },
+    {
+      "quote": "I. Fable 5 Revie",
+      "expect": 27
+    },
+    {
+      "quote": "Overall Comment",
+      "expect": 29
+    },
+    {
+      "quote": "19 fixes none lo",
+      "expect": 31
+    },
+    {
+      "quote": "Checklist 1: 19 ",
+      "expect": 33
+    },
+    {
+      "quote": "# Item Judgment ",
+      "expect": 35
+    },
+    {
+      "quote": "# Item Judgment ",
+      "expect": 35
+    },
+    {
+      "quote": "① ⌘Enter bubblin",
+      "expect": 37
+    },
+    {
+      "quote": "② commit_id Surv",
+      "expect": 38
+    },
+    {
+      "quote": "③ Draft saves re",
+      "expect": 39
+    },
+    {
+      "quote": "④ Completion cal",
+      "expect": 40
+    },
+    {
+      "quote": "⑤ body constantl",
+      "expect": 41
+    },
+    {
+      "quote": "⑥ Forbid submiss",
+      "expect": 42
+    },
+    {
+      "quote": "⑦ Floating annot",
+      "expect": 43
+    },
+    {
+      "quote": "⑧ Switch tab rac",
+      "expect": 44
+    },
+    {
+      "quote": "⑨ Word collision",
+      "expect": 45
+    },
+    {
+      "quote": "⑩ 钦此 (so ordered",
+      "expect": 46
+    },
+    {
+      "quote": "⑪ ResizeObserver",
+      "expect": 47
+    },
+    {
+      "quote": "⑫ 401/403 shunti",
+      "expect": 48
+    },
+    {
+      "quote": "⑬ Error not into",
+      "expect": 49
+    },
+    {
+      "quote": "⑭ Multiple md do",
+      "expect": 50
+    },
+    {
+      "quote": "⑮ Private repo i",
+      "expect": 51
+    },
+    {
+      "quote": "⑯ listPRFiles pa",
+      "expect": 52
+    },
+    {
+      "quote": "⑰ Key verificati",
+      "expect": 53
+    },
+    {
+      "quote": "⑱ CSP including ",
+      "expect": 54
+    },
+    {
+      "quote": "⑲ Path segment e",
+      "expect": 55
+    },
+    {
+      "quote": "anchor.js extrac",
+      "expect": 19
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      ""
+    ],
+    [
+      6,
+      ""
+    ],
+    [
+      12,
+      ""
+    ],
+    [
+      14,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      16,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      18,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      19,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      20,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      21,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      22,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      23,
+      "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    ],
+    [
+      27,
+      "I. Fable 5 Review (Fidelity Audit + Preact-ification New Defects)"
+    ],
+    [
+      29,
+      "Overall Comment"
+    ],
+    [
+      31,
+      "Overall Comment"
+    ],
+    [
+      33,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      35,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      37,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      38,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      39,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      40,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      41,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      42,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      43,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      44,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      45,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      46,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      47,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      48,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      49,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      50,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      51,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      52,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      53,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      54,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      55,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      57,
+      "Checklist 1: 19 Items Survival Judgment"
+    ],
+    [
+      59,
+      "Checklist 2: Preact-ification New Defects"
+    ],
+    [
+      61,
+      "Checklist 2: Preact-ification New Defects"
+    ],
+    [
+      63,
+      "Checklist 2: Preact-ification New Defects"
+    ],
+    [
+      65,
+      "Checklist 2: Preact-ification New Defects"
+    ],
+    [
+      67,
+      "Checklist 2: Preact-ification New Defects"
+    ],
+    [
+      69,
+      "Checklist 2: Preact-ification New Defects"
+    ],
+    [
+      71,
+      "Checklist 2: Preact-ification New Defects"
+    ],
+    [
+      73,
+      "Investigation Conclusions on Named Suspects (Not Becoming Defects)"
+    ],
+    [
+      75,
+      "Investigation Conclusions on Named Suspects (Not Becoming Defects)"
+    ],
+    [
+      77,
+      "Only Fix Three Things"
+    ],
+    [
+      79,
+      "Only Fix Three Things"
+    ],
+    [
+      80,
+      "Only Fix Three Things"
+    ],
+    [
+      81,
+      "Only Fix Three Things"
+    ],
+    [
+      83,
+      "Only Fix Three Things"
+    ],
+    [
+      87,
+      "II. agy / Gemini 3.1 Pro Review"
+    ],
+    [
+      89,
+      "II. agy / Gemini 3.1 Pro Review"
+    ],
+    [
+      91,
+      "Checklist A: 13 Items Survival Verification"
+    ],
+    [
+      93,
+      "Checklist A: 13 Items Survival Verification"
+    ],
+    [
+      95,
+      "Checklist B: Migration New Defects"
+    ],
+    [
+      97,
+      "Checklist B: Migration New Defects"
+    ],
+    [
+      98,
+      "Checklist B: Migration New Defects"
+    ],
+    [
+      99,
+      "Checklist B: Migration New Defects"
+    ],
+    [
+      100,
+      "Checklist B: Migration New Defects"
+    ],
+    [
+      101,
+      "Checklist B: Migration New Defects"
+    ],
+    [
+      103,
+      "Only Fix Three Things"
+    ],
+    [
+      105,
+      "Only Fix Three Things"
+    ],
+    [
+      109,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      111,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      113,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      114,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      115,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      116,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      117,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      118,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      119,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      120,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      121,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      122,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      123,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      124,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ],
+    [
+      126,
+      "III. Action Log (All implemented on the night of 2026-07-26)"
+    ]
+  ]
+}

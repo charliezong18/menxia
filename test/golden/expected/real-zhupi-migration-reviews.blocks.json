@@ -1,0 +1,756 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhupi-migration-reviews.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "text": "English · 中文"
+    },
+    {
+      "i": 1,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 3,
+      "lineEnd": 10,
+      "parent": null,
+      "text": "\nThis is an archive, not the current state. It records what was understood during the review\nrounds of 2026-07-27 / 07-28, and has not been updated since.\nzhupi and zhupi-mcp went through two phases afterwards: Phase 1 turned the agent side of the desk\ninto an MCP server (#22), and Phase 2 moved the\nfolder format checks out of shell and into TS (#34).\nEach phase ran three adversarial review rounds, and several judgements recorded here were overturned.\nFor the current state, read those two folders.\n"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 4,
+      "parent": 1,
+      "text": "This is an archive, not the current state. It records what was understood during the review\nrounds of 2026-07-27 / 07-28, and has not been updated since."
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 6,
+      "lineEnd": 10,
+      "parent": 1,
+      "text": "zhupi and zhupi-mcp went through two phases afterwards: Phase 1 turned the agent side of the desk\ninto an MCP server (#22), and Phase 2 moved the\nfolder format checks out of shell and into TS (#34).\nEach phase ran three adversarial review rounds, and several judgements recorded here were overturned.\nFor the current state, read those two folders."
+    },
+    {
+      "i": 4,
+      "type": "blockquote",
+      "tag": "blockquote",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": null,
+      "text": "\nWhat is the purpose of reading this memorial: Rewrite fidelity audit. 19 historical fixes verified item by item with zero loss, double-blind each caught a blocking finding missed by the other (long document unscrollable / switching cards during editing loses words) - this round best explains why \"implementer ≠ reviewer\" is valuable.\n"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": 4,
+      "text": "What is the purpose of reading this memorial: Rewrite fidelity audit. 19 historical fixes verified item by item with zero loss, double-blind each caught a blocking finding missed by the other (long document unscrollable / switching cards during editing loses words) - this round best explains why \"implementer ≠ reviewer\" is valuable."
+    },
+    {
+      "i": 6,
+      "type": "heading",
+      "tag": "h1",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": null,
+      "level": 1,
+      "text": "zhupi A→B Migration Dual-track Review Full Text (2026-07-26 · 3rd Round · Rewrite Fidelity Audit)"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 16,
+      "lineEnd": 16,
+      "parent": null,
+      "text": "Review object: The whole rewrite from vanilla JS → Preact (htm/preact standalone build-free form). The particularity of the third round: The number one risk of rewrite-type changes is \"things fixed quietly get lost\", the primary task of both reviewers is to take the 19-item historical fix checklist and verify their survival one by one (Fable uses git show HEAD~3: to pull old code for word-by-word comparison; agy independently verifies 13 items)."
+    },
+    {
+      "i": 8,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 18,
+      "lineEnd": 18,
+      "parent": null,
+      "text": "Cross-validation points:"
+    },
+    {
+      "i": 9,
+      "type": "list_item",
+      "tag": "li",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": null,
+      "text": "None of the 19 fixes were lost - independently confirmed by two tracks (Fable fully checked 19 items + anchor.js extracted fidelity word-by-word level; agy independently confirmed 13 items). 2.5 places \"weakened\" (floating button put-away surface narrowed, 钦此 (so ordered) draft fallback text deleted, ⑥ text endnote) have been restored with fixes."
+    },
+    {
+      "i": 10,
+      "type": "list_item",
+      "tag": "li",
+      "line": 20,
+      "lineEnd": 20,
+      "parent": null,
+      "text": "Double-track collision: demo mode \"Settings·Key\" clears real token."
+    },
+    {
+      "i": 11,
+      "type": "list_item",
+      "tag": "li",
+      "line": 21,
+      "lineEnd": 21,
+      "parent": null,
+      "text": "Each caught a blocking finding missed by the other: Fable caught #root height broken chain (long document unscrollable, headless tested pinned dead, demo short document smoke test couldn't catch it); agy caught switching cards during editing loses words (textarea unmount swallows unsaved annotations). The value of double-blind is most completely reflected in this round."
+    },
+    {
+      "i": 12,
+      "type": "list_item",
+      "tag": "li",
+      "line": 22,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "Fable's correction of my one false claim: style.css is not \"untouched\" (.zhupi-float absolute→fixed one line, change is correct but the statement does not hold)."
+    },
+    {
+      "i": 13,
+      "type": "list_item",
+      "tag": "li",
+      "line": 23,
+      "lineEnd": 24,
+      "parent": null,
+      "text": "Actions: 9 items fixed and deployed that night; demo document lengthened + [smoke] work-scrollable assertion into permanent smoke target (actual test scrollH 1902 > clientH 744 ✅)."
+    },
+    {
+      "i": 14,
+      "type": "heading",
+      "tag": "h1",
+      "line": 27,
+      "lineEnd": 27,
+      "parent": null,
+      "level": 1,
+      "text": "I. Fable 5 Review (Fidelity Audit + Preact-ification New Defects)"
+    },
+    {
+      "i": 15,
+      "type": "heading",
+      "tag": "h2",
+      "line": 29,
+      "lineEnd": 29,
+      "parent": null,
+      "level": 2,
+      "text": "Overall Comment"
+    },
+    {
+      "i": 16,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 31,
+      "lineEnd": 31,
+      "parent": null,
+      "text": "19 fixes none lost (2.5 places weakened), anchor.js extraction fidelity is word-by-word level. But the migration introduced a blocking-level layout defect that demo short documents cannot test out (long documents cannot scroll), plus a family of \"switch memorial window\" degradation. Seam claims have one falsehood: style.css touched one line (.zhupi-float absolute→fixed, the change itself is self-consistent with the new fixed+viewport coordinate scheme, and is correct, but the \"untouched\" statement does not hold); github.js / render.js zero diff is true."
+    },
+    {
+      "i": 17,
+      "type": "heading",
+      "tag": "h2",
+      "line": 33,
+      "lineEnd": 33,
+      "parent": null,
+      "level": 2,
+      "text": "Checklist 1: 19 Items Survival Judgment"
+    },
+    {
+      "i": 18,
+      "type": "table",
+      "tag": "table",
+      "line": 35,
+      "lineEnd": 55,
+      "parent": null,
+      "text": "\n\n\n#\nItem\nJudgment\nLocation and Basis\n\n\n\n\n①\n⌘Enter bubbling guard\nSurvived\nui.js global closest('textarea, input') exclusion + stopPropagation inside card, double insurance both present\n\n\n②\ncommit_id\nSurvived\nui.js → github.js (zero diff)\n\n\n③\nDraft saves ref + stale downgrade\nSurvived\nref: c.pr.head.sha; stale = d.ref !== ref → fallback conversation comment\n\n\n④\nCompletion callback entry snapshot\nSurvived\nSnapshot prNumber/ref; clear corresponding key; only touch memory if world hasn't changed. Note: newly added drafts while submission is in transit will be cleared together - old version has same disease word for word, not introduced by migration\n\n\n⑤\nbody constantly non-empty\nSurvived\n—\n\n\n⑥\nForbid submission during editing\nSurvived\nInside submitAll + global keydown guard dual paths both there; text is missing half a sentence of old version endnote, mechanism complete\n\n\n⑦\nFloating annotation button scroll capture hide\nSurvived (weakened)\ncapture path is there; but old version had another global mousedown to collect button, new version lost it, and mouseup exclusion list expanded to aside/.mainbar → N6\n\n\n⑧\nSwitch tab race condition\nSurvived (true equivalent)\nOld ++generation synchronous check; new = island effect dead flag + cleanup. Double click two tabs old response must be discarded; residual ~1 frame window first injected then immediately overwritten - self-heals harmlessly\n\n\n⑨\nWord collision in-block offset\nSurvived\nanchor.js word for word identical with old version\n\n\n⑩\n钦此 (so ordered) three pieces\nSurvived (one place weakened)\nconfirm reports unpresented count (data source localStorage→memory, equivalent under dual write); merge passes sha; draft=false after markReady. Weakened: draft memorial exclusive fallback text was deleted to generic \"钦此 (so ordered) failed\"\n\n\n⑪\nResizeObserver reflow\nSurvived\n[docTick === 0] boolean dependency behavior see new defect analysis for details (self-healing holds)\n\n\n⑫\n401/403 shunting\nSurvived\nApiError zero diff; tokenDead clears key, rateLimited only prompts\n\n\n⑬\nError not into innerHTML\nSurvived, no bypass\nhtm interpolation goes through TextNode (architecture guaranteed); island error path textContent; only innerHTML is renderMarkdown and html:false\n\n\n⑭\nMultiple md document tabs\nSurvived\n—\n\n\n⑮\nPrivate repo image goes blob\nSurvived\nZero diff + wiring correct\n\n\n⑯\nlistPRFiles pagination\nSurvived\nZero diff\n\n\n⑰\nKey verification layering\nSurvived\nThree layers of probing + exclusive on-the-spot error reporting when lacking Pull requests\n\n\n⑱\nCSP including img https:\nSurvived\nByte for byte identical to old version; markdown-it (classic sync) executes before deferred module, window.markdownit timing correct\n\n\n⑲\nPath segment encoding\nSurvived\nZero diff\n\n\n"
+    },
+    {
+      "i": 19,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 35,
+      "lineEnd": 35,
+      "parent": 18,
+      "text": "\n#\nItem\nJudgment\nLocation and Basis\n"
+    },
+    {
+      "i": 20,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 37,
+      "lineEnd": 37,
+      "parent": 18,
+      "text": "\n①\n⌘Enter bubbling guard\nSurvived\nui.js global closest('textarea, input') exclusion + stopPropagation inside card, double insurance both present\n"
+    },
+    {
+      "i": 21,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 38,
+      "lineEnd": 38,
+      "parent": 18,
+      "text": "\n②\ncommit_id\nSurvived\nui.js → github.js (zero diff)\n"
+    },
+    {
+      "i": 22,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 39,
+      "lineEnd": 39,
+      "parent": 18,
+      "text": "\n③\nDraft saves ref + stale downgrade\nSurvived\nref: c.pr.head.sha; stale = d.ref !== ref → fallback conversation comment\n"
+    },
+    {
+      "i": 23,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 40,
+      "lineEnd": 40,
+      "parent": 18,
+      "text": "\n④\nCompletion callback entry snapshot\nSurvived\nSnapshot prNumber/ref; clear corresponding key; only touch memory if world hasn't changed. Note: newly added drafts while submission is in transit will be cleared together - old version has same disease word for word, not introduced by migration\n"
+    },
+    {
+      "i": 24,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 41,
+      "lineEnd": 41,
+      "parent": 18,
+      "text": "\n⑤\nbody constantly non-empty\nSurvived\n—\n"
+    },
+    {
+      "i": 25,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 42,
+      "lineEnd": 42,
+      "parent": 18,
+      "text": "\n⑥\nForbid submission during editing\nSurvived\nInside submitAll + global keydown guard dual paths both there; text is missing half a sentence of old version endnote, mechanism complete\n"
+    },
+    {
+      "i": 26,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 43,
+      "lineEnd": 43,
+      "parent": 18,
+      "text": "\n⑦\nFloating annotation button scroll capture hide\nSurvived (weakened)\ncapture path is there; but old version had another global mousedown to collect button, new version lost it, and mouseup exclusion list expanded to aside/.mainbar → N6\n"
+    },
+    {
+      "i": 27,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 44,
+      "lineEnd": 44,
+      "parent": 18,
+      "text": "\n⑧\nSwitch tab race condition\nSurvived (true equivalent)\nOld ++generation synchronous check; new = island effect dead flag + cleanup. Double click two tabs old response must be discarded; residual ~1 frame window first injected then immediately overwritten - self-heals harmlessly\n"
+    },
+    {
+      "i": 28,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 45,
+      "lineEnd": 45,
+      "parent": 18,
+      "text": "\n⑨\nWord collision in-block offset\nSurvived\nanchor.js word for word identical with old version\n"
+    },
+    {
+      "i": 29,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 46,
+      "lineEnd": 46,
+      "parent": 18,
+      "text": "\n⑩\n钦此 (so ordered) three pieces\nSurvived (one place weakened)\nconfirm reports unpresented count (data source localStorage→memory, equivalent under dual write); merge passes sha; draft=false after markReady. Weakened: draft memorial exclusive fallback text was deleted to generic \"钦此 (so ordered) failed\"\n"
+    },
+    {
+      "i": 30,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 47,
+      "lineEnd": 47,
+      "parent": 18,
+      "text": "\n⑪\nResizeObserver reflow\nSurvived\n[docTick === 0] boolean dependency behavior see new defect analysis for details (self-healing holds)\n"
+    },
+    {
+      "i": 31,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 48,
+      "lineEnd": 48,
+      "parent": 18,
+      "text": "\n⑫\n401/403 shunting\nSurvived\nApiError zero diff; tokenDead clears key, rateLimited only prompts\n"
+    },
+    {
+      "i": 32,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 49,
+      "lineEnd": 49,
+      "parent": 18,
+      "text": "\n⑬\nError not into innerHTML\nSurvived, no bypass\nhtm interpolation goes through TextNode (architecture guaranteed); island error path textContent; only innerHTML is renderMarkdown and html:false\n"
+    },
+    {
+      "i": 33,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 50,
+      "lineEnd": 50,
+      "parent": 18,
+      "text": "\n⑭\nMultiple md document tabs\nSurvived\n—\n"
+    },
+    {
+      "i": 34,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 51,
+      "lineEnd": 51,
+      "parent": 18,
+      "text": "\n⑮\nPrivate repo image goes blob\nSurvived\nZero diff + wiring correct\n"
+    },
+    {
+      "i": 35,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 52,
+      "lineEnd": 52,
+      "parent": 18,
+      "text": "\n⑯\nlistPRFiles pagination\nSurvived\nZero diff\n"
+    },
+    {
+      "i": 36,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 53,
+      "lineEnd": 53,
+      "parent": 18,
+      "text": "\n⑰\nKey verification layering\nSurvived\nThree layers of probing + exclusive on-the-spot error reporting when lacking Pull requests\n"
+    },
+    {
+      "i": 37,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 54,
+      "lineEnd": 54,
+      "parent": 18,
+      "text": "\n⑱\nCSP including img https:\nSurvived\nByte for byte identical to old version; markdown-it (classic sync) executes before deferred module, window.markdownit timing correct\n"
+    },
+    {
+      "i": 38,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 55,
+      "lineEnd": 55,
+      "parent": 18,
+      "text": "\n⑲\nPath segment encoding\nSurvived\nZero diff\n"
+    },
+    {
+      "i": 39,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 57,
+      "lineEnd": 57,
+      "parent": null,
+      "text": "anchor.js extraction fidelity: closestLine / computeAnchor / rangeForDraft / rangeFromTextOffset / sectionOf / validRightLines (including trailing empty line pop and naked empty string two patches) / loadDrafts / saveDrafts / fmtDraft are word for word identical to old version, only did pure parameterization from \"implicit read A.ctx → explicit parameter\", plus an extra !doc null guard. Corresponds item by item with SPEC §9.1 four items. Fidelity full marks."
+    },
+    {
+      "i": 40,
+      "type": "heading",
+      "tag": "h2",
+      "line": 59,
+      "lineEnd": 59,
+      "parent": null,
+      "level": 2,
+      "text": "Checklist 2: Preact-ification New Defects"
+    },
+    {
+      "i": 41,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 61,
+      "lineEnd": 61,
+      "parent": null,
+      "text": "N1 【Blocking】 #root height chain broken → long document cannot scroll (headless tested pinned dead). index.html newly added unstyled <div id=\"root\"> intermediate layer; #app's percentage height references auto height's #root → resolves to auto → aside/main/.work full chain loses height, .work (only scrolling container) clientHeight==scrollHeight never scrollable, body overflow:hidden clips off-viewport content. Actual test: innerH:469, appH:5018, workScrollable:false —— memorials exceeding one screen can only read the first screen. Demo document is within one screen, smoke test cannot catch it. Concurrently #setup vertical centering fails for same reason. Fix one line: #root { height: 100% }."
+    },
+    {
+      "i": 42,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 63,
+      "lineEnd": 63,
+      "parent": null,
+      "text": "N2 【Must Fix】 Switching PR has no clear screen no loading, old memorial content visible whole time (clear degradation compared to old version). Deterioration surface: highlighting and adding annotations on old content within the window will produce path:null, line number belonging to old document dirty drafts - submitting downgrades to conversation comment catching it without bombing, but the card falls into \"Another N items in other documents\" black hole. Interesting comparison: switching tabs in the same memorial new version actually newly added clear screen + expanding memorial... - loading was moved from switching memorials to switching tabs by migration."
+    },
+    {
+      "i": 43,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 65,
+      "lineEnd": 65,
+      "parent": null,
+      "text": "N3 【Must Fix】 loadPRs lost !state.current guard. While refresh is in transit, user manually clicks a certain memorial → response comes back and bumps off the memorial the user is looking at and jumps back to the first memorial."
+    },
+    {
+      "i": 44,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 67,
+      "lineEnd": 67,
+      "parent": null,
+      "text": "N4 【Must Fix】 demo mode \"Settings · Key\" clears real token. demoApi only takes over data paths, settings button directly connects to real gh. Anyone opening ?demo=1 link and clicking it → real PAT gets deleted."
+    },
+    {
+      "i": 45,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 69,
+      "lineEnd": 69,
+      "parent": null,
+      "text": "N5 【Must Fix】 Ghost \"Submit annotation\" button. Rendering conditions only look at drafts.length and not cur; 钦此 (so ordered) the last memorial carrying unpresented drafts → cur=null but button shows, clicking it silently returns. Same root: successful 钦此 (so ordered) doesn't clear docErr."
+    },
+    {
+      "i": 46,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 71,
+      "lineEnd": 71,
+      "parent": null,
+      "text": "Optional: N6 Floating button residue (clicking conversation comment etc buttons doesn't retract it); N7 List loading period shows \"No memorials to be annotated at this moment\" + boot one frame white screen; N8 Switching memorial window DraftCard uses old DOM to calculate section name for one frame (disappears once N2 is fixed); N9 ZongpiCard button text eats global busy (reverse credit: old version conversation comment failure would lose text, new version uncontrolled no remount conveniently fixed it); N10 demo drafts roll over into real localStorage key 999."
+    },
+    {
+      "i": 47,
+      "type": "heading",
+      "tag": "h2",
+      "line": 73,
+      "lineEnd": 73,
+      "parent": null,
+      "level": 2,
+      "text": "Investigation Conclusions on Named Suspects (Not Becoming Defects)"
+    },
+    {
+      "i": 48,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 75,
+      "lineEnd": 75,
+      "parent": null,
+      "text": "R.current mirror has no expiration window (vendored preact empirically proves enqueueRender goes through microtask, when any network callback lands mirror is definitely latest; double clicking two PRs old response is correctly discarded by number criterion). Island effect dependency [cur?.pr?.number, docPath] relies on openPR first setDocPath(null) transiting in \"refreshing same number PR new head\" scenario - currently correct but is an implicit contract, suggest commenting to pin it. [docTick === 0] self-healing holds, belongs to clever but convoluted. Uncontrolled inputs do not lose words (defaultValue only assigned during diff; DraftCard has no remount path; layoutCards writing style.top has no conflict with vdom). No performance red lines (preact shouldComponentUpdate bailout empirically proved; typing zero rerender). demo patch self-consistent; autoAnnotate indeed takes real event path. Highlight cleanup order correct."
+    },
+    {
+      "i": 49,
+      "type": "heading",
+      "tag": "h2",
+      "line": 77,
+      "lineEnd": 77,
+      "parent": null,
+      "level": 2,
+      "text": "Only Fix Three Things"
+    },
+    {
+      "i": 50,
+      "type": "list_item",
+      "tag": "li",
+      "line": 79,
+      "lineEnd": 79,
+      "parent": null,
+      "text": "N1 (one line, without fixing the product is fundamentally unusable on real long memorials, current smoke will never test it out);"
+    },
+    {
+      "i": 51,
+      "type": "list_item",
+      "tag": "li",
+      "line": 80,
+      "lineEnd": 80,
+      "parent": null,
+      "text": "N4 (one line guard, preventing data loss of \"sharing demo link deletes own real key\");"
+    },
+    {
+      "i": 52,
+      "type": "list_item",
+      "tag": "li",
+      "line": 81,
+      "lineEnd": 82,
+      "parent": null,
+      "text": "N2 bringing along N3 (bringing back the first step of the old version + one line guard, eliminating dirty draft source and jumping memorials)."
+    },
+    {
+      "i": 53,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 83,
+      "lineEnd": 83,
+      "parent": null,
+      "text": "Need to verify 2 items (defaultValue assertion, ⑧ inter-frame window self-healing), both low risk, verification methods are in original text."
+    },
+    {
+      "i": 54,
+      "type": "heading",
+      "tag": "h1",
+      "line": 87,
+      "lineEnd": 87,
+      "parent": null,
+      "level": 1,
+      "text": "II. agy / Gemini 3.1 Pro Review"
+    },
+    {
+      "i": 55,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 89,
+      "lineEnd": 89,
+      "parent": null,
+      "text": "(Opening judgment: Very high quality refactoring, pure logic layer decoupling is beautiful, original guards almost all survived.)"
+    },
+    {
+      "i": 56,
+      "type": "heading",
+      "tag": "h2",
+      "line": 91,
+      "lineEnd": 91,
+      "parent": null,
+      "level": 2,
+      "text": "Checklist A: 13 Items Survival Verification"
+    },
+    {
+      "i": 57,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 93,
+      "lineEnd": 93,
+      "parent": null,
+      "text": "All 13 items survived, gave ui.js / anchor.js / github.js / index.html locations item by item (consistent with Fable's conclusion, independent work corroborating each other). Among them ⑧ switch tab race condition judged as \"equivalent solution\": effect cleanup closure variable dead naturally realized the race condition block of original ++generation."
+    },
+    {
+      "i": 58,
+      "type": "heading",
+      "tag": "h2",
+      "line": 95,
+      "lineEnd": 95,
+      "parent": null,
+      "level": 2,
+      "text": "Checklist B: Migration New Defects"
+    },
+    {
+      "i": 59,
+      "type": "list_item",
+      "tag": "li",
+      "line": 97,
+      "lineEnd": 97,
+      "parent": null,
+      "text": "【Blocking】 DraftCard uncontrolled switching loses words: While user is typing in A annotation box (unsaved annotation) and clicks B card \"Modify\" or highlights a new sentence → A's textarea directly unmounts degrading to div, with no onBlur save mechanism, unsaved typing permanently lost. Note: drafts sorting itself doesn't lose words (filter new array + key guarantees DOM reuse), only switching editing target loses."
+    },
+    {
+      "i": 60,
+      "type": "list_item",
+      "tag": "li",
+      "line": 98,
+      "lineEnd": 98,
+      "parent": null,
+      "text": "【Must Fix】 demo mode clears real token (collided with Fable)."
+    },
+    {
+      "i": 61,
+      "type": "list_item",
+      "tag": "li",
+      "line": 99,
+      "lineEnd": 99,
+      "parent": null,
+      "text": "【Must Fix】 ResizeObserver dependency [docTick === 0] extremely fragile: When switching tabs the boolean doesn't flip, effect doesn't rerun, \"happened to not break\" solely relies on vdom reusing keyed article node - suggest changing to [docPath] to solidly remount."
+    },
+    {
+      "i": 62,
+      "type": "list_item",
+      "tag": "li",
+      "line": 100,
+      "lineEnd": 100,
+      "parent": null,
+      "text": "Setup error branch doesn't lose inputs (judgment no hidden danger: component tree shape unchanged, uncontrolled input is reused)."
+    },
+    {
+      "i": 63,
+      "type": "list_item",
+      "tag": "li",
+      "line": 101,
+      "lineEnd": 102,
+      "parent": null,
+      "text": "Others confirmed no hidden dangers: demo events can penetrate to onMouseUp; no new XSS surfaces."
+    },
+    {
+      "i": 64,
+      "type": "heading",
+      "tag": "h2",
+      "line": 103,
+      "lineEnd": 103,
+      "parent": null,
+      "level": 2,
+      "text": "Only Fix Three Things"
+    },
+    {
+      "i": 65,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 105,
+      "lineEnd": 105,
+      "parent": null,
+      "text": "① Annotation card blur/unmount auto saves (don't swallow long annotations) ② demo mistakenly deletes token ③ ResizeObserver dependency change to be solid."
+    },
+    {
+      "i": 66,
+      "type": "heading",
+      "tag": "h1",
+      "line": 109,
+      "lineEnd": 109,
+      "parent": null,
+      "level": 1,
+      "text": "III. Action Log (All implemented on the night of 2026-07-26)"
+    },
+    {
+      "i": 67,
+      "type": "table",
+      "tag": "table",
+      "line": 111,
+      "lineEnd": 124,
+      "parent": null,
+      "text": "\n\n\nfinding\nSource\nAction\n\n\n\n\n#root height chain broken, long document unscrollable (Blocking)\nFable (actual test)\n✅ html,body,#root uniform height:100%; demo document lengthened + [smoke] work-scrollable assertion into permanent smoke (retest 1902>744 ✅)\n\n\nSwitch card during editing loses words (Blocking)\nagy\n✅ textarea onBlur non-empty auto saves; button inside card onMouseDown preventDefault preserves \"Discard\" explicit semantics\n\n\ndemo clears real token\nFable + agy\n✅ demo mode hides \"Settings·Key\"\n\n\nSwitch memorial no clear screen→dirty draft window\nFable\n✅ openPR immediately clears island+\"Expanding memorial...\"\n\n\nloadPRs bumps the memorial user clicked by hand\nFable\n✅ !R.current.cur guard\n\n\nResizeObserver boolean dependency fragile\nFable (self-healing) + agy (Must Fix)\n✅ Dependency changed to [docPath, docErr] to solidly remount\n\n\nGhost submit button / 钦此 (so ordered) doesn't clear docErr\nFable\n✅ Added cur condition; success path clears docErr\n\n\n钦此 (so ordered) draft fallback text weakened (⑩)\nFable\n✅ Restored original text\n\n\nFloating button clicking buttons doesn't retract (⑦ weakened/N6)\nFable\n✅ aside/.mainbar clicks also retract floating button\n\n\nstyle.css \"untouched\" statement false\nFable\n✅ Record corrected (change itself correct: float absolute→fixed self-consistent with new coordinate scheme)\n\n\nN7/N8/N9/N10 (Optional level)\nFable\n⏸ Recorded not fixing: N8 disappears with N2; N9 net gain positive (conveniently fixed old version conversation comment failure losing words); N7/N10 minute\n\n\n\"Refreshing same number PR\" implicit contract relying on setDocPath(null) transit\nFable\n⏸ Add comment when M3 touches openPR\n\n\n"
+    },
+    {
+      "i": 68,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 111,
+      "lineEnd": 111,
+      "parent": 67,
+      "text": "\nfinding\nSource\nAction\n"
+    },
+    {
+      "i": 69,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 113,
+      "lineEnd": 113,
+      "parent": 67,
+      "text": "\n#root height chain broken, long document unscrollable (Blocking)\nFable (actual test)\n✅ html,body,#root uniform height:100%; demo document lengthened + [smoke] work-scrollable assertion into permanent smoke (retest 1902>744 ✅)\n"
+    },
+    {
+      "i": 70,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 114,
+      "lineEnd": 114,
+      "parent": 67,
+      "text": "\nSwitch card during editing loses words (Blocking)\nagy\n✅ textarea onBlur non-empty auto saves; button inside card onMouseDown preventDefault preserves \"Discard\" explicit semantics\n"
+    },
+    {
+      "i": 71,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 115,
+      "lineEnd": 115,
+      "parent": 67,
+      "text": "\ndemo clears real token\nFable + agy\n✅ demo mode hides \"Settings·Key\"\n"
+    },
+    {
+      "i": 72,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 116,
+      "lineEnd": 116,
+      "parent": 67,
+      "text": "\nSwitch memorial no clear screen→dirty draft window\nFable\n✅ openPR immediately clears island+\"Expanding memorial...\"\n"
+    },
+    {
+      "i": 73,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 117,
+      "lineEnd": 117,
+      "parent": 67,
+      "text": "\nloadPRs bumps the memorial user clicked by hand\nFable\n✅ !R.current.cur guard\n"
+    },
+    {
+      "i": 74,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 118,
+      "lineEnd": 118,
+      "parent": 67,
+      "text": "\nResizeObserver boolean dependency fragile\nFable (self-healing) + agy (Must Fix)\n✅ Dependency changed to [docPath, docErr] to solidly remount\n"
+    },
+    {
+      "i": 75,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 119,
+      "lineEnd": 119,
+      "parent": 67,
+      "text": "\nGhost submit button / 钦此 (so ordered) doesn't clear docErr\nFable\n✅ Added cur condition; success path clears docErr\n"
+    },
+    {
+      "i": 76,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 120,
+      "lineEnd": 120,
+      "parent": 67,
+      "text": "\n钦此 (so ordered) draft fallback text weakened (⑩)\nFable\n✅ Restored original text\n"
+    },
+    {
+      "i": 77,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 121,
+      "lineEnd": 121,
+      "parent": 67,
+      "text": "\nFloating button clicking buttons doesn't retract (⑦ weakened/N6)\nFable\n✅ aside/.mainbar clicks also retract floating button\n"
+    },
+    {
+      "i": 78,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 122,
+      "lineEnd": 122,
+      "parent": 67,
+      "text": "\nstyle.css \"untouched\" statement false\nFable\n✅ Record corrected (change itself correct: float absolute→fixed self-consistent with new coordinate scheme)\n"
+    },
+    {
+      "i": 79,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 123,
+      "lineEnd": 123,
+      "parent": 67,
+      "text": "\nN7/N8/N9/N10 (Optional level)\nFable\n⏸ Recorded not fixing: N8 disappears with N2; N9 net gain positive (conveniently fixed old version conversation comment failure losing words); N7/N10 minute\n"
+    },
+    {
+      "i": 80,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 124,
+      "lineEnd": 124,
+      "parent": 67,
+      "text": "\n\"Refreshing same number PR\" implicit contract relying on setDocPath(null) transit\nFable\n⏸ Add comment when M3 touches openPR\n"
+    },
+    {
+      "i": 81,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 126,
+      "lineEnd": 126,
+      "parent": null,
+      "text": "Three rounds of review cumulative: M1 round 8 items fixed + M2 round 11 items fixed 1 item rejected + Migration round 9 items fixed (including 2 blockings) —— the blocking items of every round are not of the same category (403 mistakenly deletes key → ⌘Enter mistakenly sends → layout chain broken/loses words), the complementarity of the detection surface of double-blind double-track holds across all three rounds."
+    }
+  ]
+}

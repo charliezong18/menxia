@@ -1,0 +1,189 @@
+{
+  "format": 1,
+  "source": "corpus/real-happy-contrib-tracker.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 9,
+      "level": 1,
+      "text": "Happy 贡献 Tracker",
+      "slug": "happy-贡献-tracker"
+    },
+    {
+      "line": 18,
+      "level": 2,
+      "text": "👀 待 review（已发，等上游）",
+      "slug": "-待-review已发等上游"
+    },
+    {
+      "line": 37,
+      "level": 3,
+      "text": "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）",
+      "slug": "-批次总览07-26-更新14-个-open共-2500--207含-review-修订增量"
+    },
+    {
+      "line": 67,
+      "level": 3,
+      "text": "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）",
+      "slug": "-07-25-fable-double-review7-个并行-review-agent-全覆盖-13-pr"
+    },
+    {
+      "line": 87,
+      "level": 2,
+      "text": "📦 待发 PR（代码好了，还没开）",
+      "slug": "-待发-pr代码好了还没开"
+    },
+    {
+      "line": 89,
+      "level": 3,
+      "text": "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）",
+      "slug": "fixdistrust-impossible-context-windowhappy-wt-ctx-guard基座-originmain"
+    },
+    {
+      "line": 106,
+      "level": 2,
+      "text": "🔨 在开发 / 待收拾",
+      "slug": "-在开发--待收拾"
+    },
+    {
+      "line": 120,
+      "level": 2,
+      "text": "💡 Backlog 点子",
+      "slug": "-backlog-点子"
+    },
+    {
+      "line": 124,
+      "level": 3,
+      "text": "📝 待发 issue（草稿好了，等 Charlie 点头）",
+      "slug": "-待发-issue草稿好了等-charlie-点头"
+    },
+    {
+      "line": 128,
+      "level": 3,
+      "text": "我提的 issue，还开着（可自己接手）",
+      "slug": "我提的-issue还开着可自己接手"
+    },
+    {
+      "line": 138,
+      "level": 3,
+      "text": "别人的 issue，可以捡（reliability 线，对 NIW 有用）",
+      "slug": "别人的-issue可以捡reliability-线对-niw-有用"
+    },
+    {
+      "line": 145,
+      "level": 3,
+      "text": "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉",
+      "slug": "agy-backend-的遗留1430-里明确说了没做-07-25-全部清掉"
+    },
+    {
+      "line": 154,
+      "level": 2,
+      "text": "✅ 已 merged（10 个）",
+      "slug": "-已-merged10-个"
+    },
+    {
+      "line": 176,
+      "level": 2,
+      "text": "铁律（别再踩）",
+      "slug": "铁律别再踩"
+    },
+    {
+      "line": 187,
+      "level": 2,
+      "text": "相关",
+      "slug": "相关"
+    }
+  ],
+  "headings": [
+    {
+      "line": 9,
+      "level": 1,
+      "text": "Happy 贡献 Tracker",
+      "slug": "happy-贡献-tracker"
+    },
+    {
+      "line": 18,
+      "level": 2,
+      "text": "👀 待 review（已发，等上游）",
+      "slug": "-待-review已发等上游"
+    },
+    {
+      "line": 37,
+      "level": 3,
+      "text": "📊 批次总览（07-26 更新：14 个 open，共 +2500 / −207，含 review 修订增量）",
+      "slug": "-批次总览07-26-更新14-个-open共-2500--207含-review-修订增量"
+    },
+    {
+      "line": 67,
+      "level": 3,
+      "text": "🔍 07-25 Fable double-review（7 个并行 review agent 全覆盖 13 PR）",
+      "slug": "-07-25-fable-double-review7-个并行-review-agent-全覆盖-13-pr"
+    },
+    {
+      "line": 87,
+      "level": 2,
+      "text": "📦 待发 PR（代码好了，还没开）",
+      "slug": "-待发-pr代码好了还没开"
+    },
+    {
+      "line": 89,
+      "level": 3,
+      "text": "fix/distrust-impossible-context-window（happy-wt-ctx-guard，基座 origin/main）",
+      "slug": "fixdistrust-impossible-context-windowhappy-wt-ctx-guard基座-originmain"
+    },
+    {
+      "line": 106,
+      "level": 2,
+      "text": "🔨 在开发 / 待收拾",
+      "slug": "-在开发--待收拾"
+    },
+    {
+      "line": 120,
+      "level": 2,
+      "text": "💡 Backlog 点子",
+      "slug": "-backlog-点子"
+    },
+    {
+      "line": 124,
+      "level": 3,
+      "text": "📝 待发 issue（草稿好了，等 Charlie 点头）",
+      "slug": "-待发-issue草稿好了等-charlie-点头"
+    },
+    {
+      "line": 128,
+      "level": 3,
+      "text": "我提的 issue，还开着（可自己接手）",
+      "slug": "我提的-issue还开着可自己接手"
+    },
+    {
+      "line": 138,
+      "level": 3,
+      "text": "别人的 issue，可以捡（reliability 线，对 NIW 有用）",
+      "slug": "别人的-issue可以捡reliability-线对-niw-有用"
+    },
+    {
+      "line": 145,
+      "level": 3,
+      "text": "agy backend 的遗留（#1430 里明确说了没做）→ 07-25 全部清掉",
+      "slug": "agy-backend-的遗留1430-里明确说了没做-07-25-全部清掉"
+    },
+    {
+      "line": 154,
+      "level": 2,
+      "text": "✅ 已 merged（10 个）",
+      "slug": "-已-merged10-个"
+    },
+    {
+      "line": 176,
+      "level": 2,
+      "text": "铁律（别再踩）",
+      "slug": "铁律别再踩"
+    },
+    {
+      "line": 187,
+      "level": 2,
+      "text": "相关",
+      "slug": "相关"
+    }
+  ]
+}

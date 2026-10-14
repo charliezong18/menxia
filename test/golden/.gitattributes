@@ -1,0 +1,3 @@
+# golden 语料按字节比对：git 不得改换行（edge-crlf.md 的 CRLF 是测试内容本身）
+corpus/** -text
+expected/** -text

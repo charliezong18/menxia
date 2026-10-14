@@ -1,0 +1,312 @@
+{
+  "format": 1,
+  "source": "corpus/edge-raw-html.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "原始 HTML（",
+        "quoteRaw": "原始 HTML（"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 26,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "<div cla",
+        "quoteRaw": "<div cla"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 64,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "<details",
+        "quoteRaw": "<details"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 96,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 0,
+        "quote": "details",
+        "quoteRaw": "details"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 20,
+      "length": 2,
+      "docStart": 116,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 20,
+        "quote": "粗体",
+        "quoteRaw": "粗体"
+      },
+      "replay": {
+        "block": 3,
+        "start": 20,
+        "length": 2
+      }
+    },
+    {
+      "block": 4,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 119,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 0,
+        "quote": "</detail",
+        "quoteRaw": "</detail"
+      },
+      "replay": {
+        "block": 4,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 130,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 0,
+        "quote": "<!-- 一条",
+        "quoteRaw": "<!-- 一条"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 150,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "行内 <kbd>",
+        "quoteRaw": "行内 <kbd>"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 227,
+      "expect": {
+        "blockLine": 18,
+        "line": 18,
+        "offset": 0,
+        "quote": "<img src",
+        "quoteRaw": "<img src"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 254,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "<script>",
+        "quoteRaw": "<script>"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 280,
+      "expect": {
+        "blockLine": 22,
+        "line": 22,
+        "offset": 0,
+        "quote": "<已转义> 与",
+        "quoteRaw": "<已转义> 与"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "原始 HTML（html:fal",
+      "expect": 1
+    },
+    {
+      "quote": "<div class=\"note",
+      "expect": 3
+    },
+    {
+      "quote": "<details> <summa",
+      "expect": 7
+    },
+    {
+      "quote": "details 里的 markd",
+      "expect": 10
+    },
+    {
+      "quote": "</details>",
+      "expect": 12
+    },
+    {
+      "quote": "<!-- 一条 HTML 注释 ",
+      "expect": 14
+    },
+    {
+      "quote": "行内 <kbd>Cmd</kbd",
+      "expect": 16
+    },
+    {
+      "quote": "<img src=\"x.png\"",
+      "expect": 18
+    },
+    {
+      "quote": "<script>alert(1)",
+      "expect": 20
+    },
+    {
+      "quote": "<已转义> 与 & 与 © 与 ",
+      "expect": 22
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      3,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      7,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      10,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      12,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      14,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      16,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      18,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      20,
+      "原始 HTML（html:false 全部当文字）"
+    ],
+    [
+      22,
+      "原始 HTML（html:false 全部当文字）"
+    ]
+  ]
+}

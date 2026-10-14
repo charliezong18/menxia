@@ -1,0 +1,2426 @@
+{
+  "format": 1,
+  "source": "corpus/real-chinese-official-titles-outline.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 0,
+        "quote": "English",
+        "quoteRaw": "English"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 8,
+      "length": 4,
+      "docStart": 8,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 8,
+        "quote": "· 中文",
+        "quoteRaw": "· 中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 8,
+        "length": 4
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 10,
+      "length": 2,
+      "docStart": 10,
+      "expect": {
+        "blockLine": 1,
+        "line": 1,
+        "offset": 10,
+        "quote": "中文",
+        "quoteRaw": "中文"
+      },
+      "replay": {
+        "block": 0,
+        "start": 10,
+        "length": 2
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 13,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 0,
+        "quote": "Chapter",
+        "quoteRaw": "Chapter"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 31,
+      "expect": {
+        "blockLine": 3,
+        "line": 3,
+        "offset": 18,
+        "quote": "A Histor",
+        "quoteRaw": "A Histor"
+      },
+      "replay": {
+        "block": 1,
+        "start": 18,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 68,
+      "expect": {
+        "blockLine": 5,
+        "line": 5,
+        "offset": 0,
+        "quote": "A ~108,0",
+        "quoteRaw": "A ~108,0"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 241,
+      "expect": {
+        "blockLine": 7,
+        "line": 7,
+        "offset": 0,
+        "quote": "Note: of",
+        "quoteRaw": "Note: of"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 394,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 0,
+        "quote": "↑ The fi",
+        "quoteRaw": "↑ The fi"
+      },
+      "replay": {
+        "block": 5,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 56,
+      "length": 8,
+      "docStart": 450,
+      "expect": {
+        "blockLine": 11,
+        "line": 11,
+        "offset": 56,
+        "quote": "The uppe",
+        "quoteRaw": "The uppe"
+      },
+      "replay": {
+        "block": 5,
+        "start": 56,
+        "length": 8
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 726,
+      "expect": {
+        "blockLine": 15,
+        "line": 15,
+        "offset": 0,
+        "quote": "The Book",
+        "quoteRaw": "The Book"
+      },
+      "replay": {
+        "block": 6,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 746,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 0,
+        "quote": "Changes",
+        "quoteRaw": "Changes"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 59,
+      "length": 8,
+      "docStart": 805,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 59,
+        "quote": "fossils",
+        "quoteRaw": "fossils"
+      },
+      "replay": {
+        "block": 7,
+        "start": 59,
+        "length": 7
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 143,
+      "length": 8,
+      "docStart": 889,
+      "expect": {
+        "blockLine": 17,
+        "line": 17,
+        "offset": 143,
+        "quote": ". Three",
+        "quoteRaw": ". Three"
+      },
+      "replay": {
+        "block": 7,
+        "start": 143,
+        "length": 7
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1000,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 0,
+        "quote": "The inne",
+        "quoteRaw": "The inne"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 40,
+      "length": 8,
+      "docStart": 1040,
+      "expect": {
+        "blockLine": 19,
+        "line": 19,
+        "offset": 40,
+        "quote": "— attend",
+        "quoteRaw": "— attend"
+      },
+      "replay": {
+        "block": 8,
+        "start": 40,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1347,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 0,
+        "quote": "Commissi",
+        "quoteRaw": "Commissi"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 1385,
+      "expect": {
+        "blockLine": 20,
+        "line": 20,
+        "offset": 38,
+        "quote": "— name a",
+        "quoteRaw": "— name a"
+      },
+      "replay": {
+        "block": 9,
+        "start": 38,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1631,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "Division",
+        "quoteRaw": "Division"
+      },
+      "replay": {
+        "block": 10,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 10,
+      "blockStart": 26,
+      "length": 8,
+      "docStart": 1657,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 26,
+        "quote": "— one po",
+        "quoteRaw": "— one po"
+      },
+      "replay": {
+        "block": 10,
+        "start": 26,
+        "length": 8
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 1883,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 0,
+        "quote": "Success",
+        "quoteRaw": "Success"
+      },
+      "replay": {
+        "block": 11,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 11,
+      "blockStart": 17,
+      "length": 8,
+      "docStart": 1900,
+      "expect": {
+        "blockLine": 23,
+        "line": 23,
+        "offset": 17,
+        "quote": ": after",
+        "quoteRaw": ": after"
+      },
+      "replay": {
+        "block": 11,
+        "start": 17,
+        "length": 7
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2042,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 0,
+        "quote": "Explicit",
+        "quoteRaw": "Explicit"
+      },
+      "replay": {
+        "block": 12,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 12,
+      "blockStart": 23,
+      "length": 8,
+      "docStart": 2065,
+      "expect": {
+        "blockLine": 25,
+        "line": 25,
+        "offset": 23,
+        "quote": ": the ad",
+        "quoteRaw": ": the ad"
+      },
+      "replay": {
+        "block": 12,
+        "start": 23,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2244,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 0,
+        "quote": "Revised",
+        "quoteRaw": "Revised"
+      },
+      "replay": {
+        "block": 13,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 18,
+      "length": 8,
+      "docStart": 2262,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 18,
+        "quote": ": Liao,",
+        "quoteRaw": ": Liao,"
+      },
+      "replay": {
+        "block": 13,
+        "start": 19,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 242,
+      "length": 8,
+      "docStart": 2486,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 242,
+        "quote": "theme, n",
+        "quoteRaw": "theme, n"
+      },
+      "replay": {
+        "block": 13,
+        "start": 243,
+        "length": 8
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 247,
+      "length": 8,
+      "docStart": 2491,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 247,
+        "quote": ", not a",
+        "quoteRaw": ", not a"
+      },
+      "replay": {
+        "block": 13,
+        "start": 248,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 255,
+      "length": 8,
+      "docStart": 2499,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 255,
+        "quote": "dynasty",
+        "quoteRaw": "dynasty"
+      },
+      "replay": {
+        "block": 13,
+        "start": 256,
+        "length": 7
+      }
+    },
+    {
+      "block": 14,
+      "blockStart": 263,
+      "length": 8,
+      "docStart": 2507,
+      "expect": {
+        "blockLine": 27,
+        "line": 27,
+        "offset": 263,
+        "quote": "— there",
+        "quoteRaw": "— there"
+      },
+      "replay": {
+        "block": 13,
+        "start": 264,
+        "length": 7
+      }
+    },
+    {
+      "block": 15,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2589,
+      "expect": {
+        "blockLine": 31,
+        "line": 31,
+        "offset": 0,
+        "quote": "Diagram",
+        "quoteRaw": "Diagram"
+      },
+      "replay": {
+        "block": 15,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2604,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 0,
+        "quote": "Wherever",
+        "quoteRaw": "Wherever"
+      },
+      "replay": {
+        "block": 16,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 41,
+      "length": 8,
+      "docStart": 2645,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 41,
+        "quote": "Figures",
+        "quoteRaw": "Figures"
+      },
+      "replay": {
+        "block": 16,
+        "start": 41,
+        "length": 7
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 58,
+      "length": 8,
+      "docStart": 2662,
+      "expect": {
+        "blockLine": 33,
+        "line": 33,
+        "offset": 58,
+        "quote": "dual tra",
+        "quoteRaw": "dual tra"
+      },
+      "replay": {
+        "block": 16,
+        "start": 58,
+        "length": 8
+      }
+    },
+    {
+      "block": 16,
+      "blockStart": 68,
+      "length": 1,
+      "docStart": 2672,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 17,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2675,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 0,
+        "quote": "Source:",
+        "quoteRaw": "Source:"
+      },
+      "replay": {
+        "block": 17,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 2681,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 6,
+        "quote": ": mermai",
+        "quoteRaw": ": mermai"
+      },
+      "replay": {
+        "block": 17,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 27,
+      "length": 8,
+      "docStart": 2702,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 27,
+        "quote": "assets/g",
+        "quoteRaw": "assets/g"
+      },
+      "replay": {
+        "block": 17,
+        "start": 27,
+        "length": 8
+      }
+    },
+    {
+      "block": 17,
+      "blockStart": 52,
+      "length": 8,
+      "docStart": 2727,
+      "expect": {
+        "blockLine": 35,
+        "line": 35,
+        "offset": 52,
+        "quote": ". Greppa",
+        "quoteRaw": ". Greppa"
+      },
+      "replay": {
+        "block": 17,
+        "start": 52,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2807,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 0,
+        "quote": "Output:",
+        "quoteRaw": "Output:"
+      },
+      "replay": {
+        "block": 18,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 6,
+      "length": 8,
+      "docStart": 2813,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 6,
+        "quote": ": render",
+        "quoteRaw": ": render"
+      },
+      "replay": {
+        "block": 18,
+        "start": 6,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 59,
+      "length": 8,
+      "docStart": 2866,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 59,
+        "quote": "assets/g",
+        "quoteRaw": "assets/g"
+      },
+      "replay": {
+        "block": 18,
+        "start": 59,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 74,
+      "length": 8,
+      "docStart": 2881,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 74,
+        "quote": "; the pr",
+        "quoteRaw": "; the pr"
+      },
+      "replay": {
+        "block": 18,
+        "start": 74,
+        "length": 8
+      }
+    },
+    {
+      "block": 18,
+      "blockStart": 109,
+      "length": 5,
+      "docStart": 2916,
+      "expect": {
+        "blockLine": 36,
+        "line": 36,
+        "offset": 109,
+        "quote": "![]()",
+        "quoteRaw": "![]()"
+      },
+      "replay": {
+        "block": 18,
+        "start": 109,
+        "length": 5
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 2923,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 0,
+        "quote": "Because",
+        "quoteRaw": "Because"
+      },
+      "replay": {
+        "block": 19,
+        "start": 0,
+        "length": 7
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 38,
+      "length": 8,
+      "docStart": 2961,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 38,
+        "quote": "every re",
+        "quoteRaw": "every re"
+      },
+      "replay": {
+        "block": 19,
+        "start": 38,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 76,
+      "length": 8,
+      "docStart": 2999,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 76,
+        "quote": ", regard",
+        "quoteRaw": ", regard"
+      },
+      "replay": {
+        "block": 19,
+        "start": 76,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 215,
+      "length": 8,
+      "docStart": 3138,
+      "expect": {
+        "blockLine": 38,
+        "line": 38,
+        "offset": 215,
+        "quote": "npx @mer",
+        "quoteRaw": "npx @mer"
+      },
+      "replay": {
+        "block": 19,
+        "start": 215,
+        "length": 8
+      }
+    },
+    {
+      "block": 19,
+      "blockStart": 274,
+      "length": 1,
+      "docStart": 3197,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 20,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3199,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 0,
+        "quote": "The rule",
+        "quoteRaw": "The rule"
+      },
+      "replay": {
+        "block": 20,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 10,
+      "length": 8,
+      "docStart": 3209,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 10,
+        "quote": "diagram",
+        "quoteRaw": "diagram"
+      },
+      "replay": {
+        "block": 20,
+        "start": 10,
+        "length": 7
+      }
+    },
+    {
+      "block": 20,
+      "blockStart": 54,
+      "length": 8,
+      "docStart": 3253,
+      "expect": {
+        "blockLine": 40,
+        "line": 40,
+        "offset": 54,
+        "quote": "Anything",
+        "quoteRaw": "Anything"
+      },
+      "replay": {
+        "block": 20,
+        "start": 54,
+        "length": 8
+      }
+    },
+    {
+      "block": 21,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 3444,
+      "expect": {
+        "blockLine": 42,
+        "line": 42,
+        "offset": 0,
+        "quote": "Figure l",
+        "quoteRaw": "Figure l"
+      },
+      "replay": {
+        "block": 21,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3470,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 1,
+        "quote": "Ch. Figu",
+        "quoteRaw": "Ch.\nFigu"
+      },
+      "replay": {
+        "block": 22,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 5,
+      "length": 8,
+      "docStart": 3474,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 5,
+        "quote": "Figure T",
+        "quoteRaw": "Figure\nT"
+      },
+      "replay": {
+        "block": 22,
+        "start": 7,
+        "length": 8
+      }
+    },
+    {
+      "block": 23,
+      "blockStart": 12,
+      "length": 5,
+      "docStart": 3481,
+      "expect": {
+        "blockLine": 44,
+        "line": 44,
+        "offset": 12,
+        "quote": "Type",
+        "quoteRaw": "Type"
+      },
+      "replay": {
+        "block": 22,
+        "start": 14,
+        "length": 4
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3490,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 1,
+        "quote": "1 The in",
+        "quoteRaw": "1\nThe in"
+      },
+      "replay": {
+        "block": 24,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3492,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 3,
+        "quote": "The inne",
+        "quoteRaw": "The inne"
+      },
+      "replay": {
+        "block": 24,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 31,
+      "length": 8,
+      "docStart": 3520,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 31,
+        "quote": "— one lo",
+        "quoteRaw": "— one lo"
+      },
+      "replay": {
+        "block": 24,
+        "start": 31,
+        "length": 8
+      }
+    },
+    {
+      "block": 24,
+      "blockStart": 225,
+      "length": 6,
+      "docStart": 3714,
+      "expect": {
+        "blockLine": 46,
+        "line": 46,
+        "offset": 225,
+        "quote": "cycle",
+        "quoteRaw": "cycle"
+      },
+      "replay": {
+        "block": 24,
+        "start": 225,
+        "length": 5
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3722,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 1,
+        "quote": "1 Relati",
+        "quoteRaw": "1\nRelati"
+      },
+      "replay": {
+        "block": 25,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3724,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 3,
+        "quote": "Relation",
+        "quoteRaw": "Relation"
+      },
+      "replay": {
+        "block": 25,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 25,
+      "blockStart": 69,
+      "length": 8,
+      "docStart": 3790,
+      "expect": {
+        "blockLine": 47,
+        "line": 47,
+        "offset": 69,
+        "quote": "relation",
+        "quoteRaw": "relation"
+      },
+      "replay": {
+        "block": 25,
+        "start": 69,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3802,
+      "expect": {
+        "blockLine": 48,
+        "line": 48,
+        "offset": 1,
+        "quote": "2 The Th",
+        "quoteRaw": "2\nThe Th"
+      },
+      "replay": {
+        "block": 26,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3804,
+      "expect": {
+        "blockLine": 48,
+        "line": 48,
+        "offset": 3,
+        "quote": "The Thre",
+        "quoteRaw": "The Thre"
+      },
+      "replay": {
+        "block": 26,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 26,
+      "blockStart": 84,
+      "length": 8,
+      "docStart": 3885,
+      "expect": {
+        "blockLine": 48,
+        "line": 48,
+        "offset": 84,
+        "quote": "evolutio",
+        "quoteRaw": "evolutio"
+      },
+      "replay": {
+        "block": 26,
+        "start": 84,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 3897,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 1,
+        "quote": "3 Docume",
+        "quoteRaw": "3\nDocume"
+      },
+      "replay": {
+        "block": 27,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 3899,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 3,
+        "quote": "Document",
+        "quoteRaw": "Document"
+      },
+      "replay": {
+        "block": 27,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 41,
+      "length": 8,
+      "docStart": 3937,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 41,
+        "quote": "— memori",
+        "quoteRaw": "— memori"
+      },
+      "replay": {
+        "block": 27,
+        "start": 41,
+        "length": 8
+      }
+    },
+    {
+      "block": 27,
+      "blockStart": 137,
+      "length": 5,
+      "docStart": 4033,
+      "expect": {
+        "blockLine": 49,
+        "line": 49,
+        "offset": 137,
+        "quote": "flow",
+        "quoteRaw": "flow"
+      },
+      "replay": {
+        "block": 27,
+        "start": 137,
+        "length": 4
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 4040,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 1,
+        "quote": "4 Three",
+        "quoteRaw": "4\nThree"
+      },
+      "replay": {
+        "block": 28,
+        "start": 1,
+        "length": 7
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 4042,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 3,
+        "quote": "Three De",
+        "quoteRaw": "Three De"
+      },
+      "replay": {
+        "block": 28,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 28,
+      "blockStart": 129,
+      "length": 5,
+      "docStart": 4168,
+      "expect": {
+        "blockLine": 50,
+        "line": 50,
+        "offset": 129,
+        "quote": "flow",
+        "quoteRaw": "flow"
+      },
+      "replay": {
+        "block": 28,
+        "start": 129,
+        "length": 4
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 4175,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 1,
+        "quote": "4 Evolut",
+        "quoteRaw": "4\nEvolut"
+      },
+      "replay": {
+        "block": 29,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 4177,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 3,
+        "quote": "Evolutio",
+        "quoteRaw": "Evolutio"
+      },
+      "replay": {
+        "block": 29,
+        "start": 3,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 57,
+      "length": 8,
+      "docStart": 4231,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 57,
+        "quote": "tong san",
+        "quoteRaw": "tong san"
+      },
+      "replay": {
+        "block": 29,
+        "start": 57,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 69,
+      "length": 8,
+      "docStart": 4243,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 69,
+        "quote": "→ tong p",
+        "quoteRaw": "→ tong p"
+      },
+      "replay": {
+        "block": 29,
+        "start": 69,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 71,
+      "length": 8,
+      "docStart": 4245,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 71,
+        "quote": "tong pin",
+        "quoteRaw": "tong pin"
+      },
+      "replay": {
+        "block": 29,
+        "start": 71,
+        "length": 8
+      }
+    },
+    {
+      "block": 29,
+      "blockStart": 89,
+      "length": 8,
+      "docStart": 4263,
+      "expect": {
+        "blockLine": 51,
+        "line": 51,
+        "offset": 89,
+        "quote": "evolutio",
+        "quoteRaw": "evolutio"
+      },
+      "replay": {
+        "block": 29,
+        "start": 89,
+        "length": 8
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 1,
+      "length": 8,
+      "docStart": 4275,
+      "expect": {
+        "blockLine": 52,
+        "line": 52,
+        "offset": 1,
+        "quote": "5 Song T",
+        "quoteRaw": "5\nSong T"
+      },
+      "replay": {
+        "block": 30,
+        "start": 1,
+        "length": 8
+      }
+    },
+    {
+      "block": 30,
+      "blockStart": 3,
+      "length": 8,
+      "docStart": 4277,
+      "expect": {
+        "blockLine": 52,
+        "line": 52,
+        "offset": 3,
+        "quote": "Song Two",
+        "quoteRaw": "Song Two"
+      },
+      "replay": {
+        "block": 30,
+        "start": 3,
+        "length": 8
+      }
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "English · 中文",
+      "expect": 1
+    },
+    {
+      "quote": "Chapter Outline ",
+      "expect": 3
+    },
+    {
+      "quote": "A ~108,000-chara",
+      "expect": 5
+    },
+    {
+      "quote": "Note: official t",
+      "expect": 7
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "↑ The first figu",
+      "expect": 11
+    },
+    {
+      "quote": "The Book's Argum",
+      "expect": 15
+    },
+    {
+      "quote": "Changes in offic",
+      "expect": 17
+    },
+    {
+      "quote": "The inner court ",
+      "expect": 19
+    },
+    {
+      "quote": "Commissions devo",
+      "expect": 20
+    },
+    {
+      "quote": "Division and mut",
+      "expect": 21
+    },
+    {
+      "quote": "Success criterio",
+      "expect": 23
+    },
+    {
+      "quote": "Explicitly out o",
+      "expect": 25
+    },
+    {
+      "quote": "Revised 2026-07-",
+      "expect": 27
+    },
+    {
+      "quote": "Revised 2026-07-",
+      "expect": 27
+    },
+    {
+      "quote": "Diagram Policy",
+      "expect": 31
+    },
+    {
+      "quote": "Wherever a diagr",
+      "expect": 33
+    },
+    {
+      "quote": "Source: mermaid,",
+      "expect": 35
+    },
+    {
+      "quote": "Output: rendered",
+      "expect": 36
+    },
+    {
+      "quote": "Because the pros",
+      "expect": 38
+    },
+    {
+      "quote": "The rule: diagra",
+      "expect": 40
+    },
+    {
+      "quote": "Figure list by c",
+      "expect": 42
+    },
+    {
+      "quote": "Ch. Figure Type ",
+      "expect": 44
+    },
+    {
+      "quote": "Ch. Figure Type",
+      "expect": 44
+    },
+    {
+      "quote": "1 The inner/oute",
+      "expect": 46
+    },
+    {
+      "quote": "1 Relationship a",
+      "expect": 47
+    },
+    {
+      "quote": "2 The Three Exce",
+      "expect": 48
+    },
+    {
+      "quote": "3 Document flow ",
+      "expect": 49
+    },
+    {
+      "quote": "4 Three Departme",
+      "expect": 50
+    },
+    {
+      "quote": "4 Evolution of t",
+      "expect": 51
+    },
+    {
+      "quote": "5 Song Two Burea",
+      "expect": 52
+    },
+    {
+      "quote": "5 The threefold ",
+      "expect": 53
+    },
+    {
+      "quote": "6 Drafting vs. v",
+      "expect": 54
+    },
+    {
+      "quote": "6 Ming–Qing cent",
+      "expect": 55
+    },
+    {
+      "quote": "7 The Qin comman",
+      "expect": 56
+    },
+    {
+      "quote": "8 The four-round",
+      "expect": 57
+    },
+    {
+      "quote": "9 Provincial hie",
+      "expect": 58
+    },
+    {
+      "quote": "10 Migration of ",
+      "expect": 59
+    },
+    {
+      "quote": "11 One official ",
+      "expect": 60
+    },
+    {
+      "quote": "12 Censors and r",
+      "expect": 61
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      1,
+      ""
+    ],
+    [
+      3,
+      "Chapter Outline — A History of Chinese Official Titles"
+    ],
+    [
+      5,
+      "Chapter Outline — A History of Chinese Official Titles"
+    ],
+    [
+      7,
+      "Chapter Outline — A History of Chinese Official Titles"
+    ],
+    [
+      9,
+      "Chapter Outline — A History of Chinese Official Titles"
+    ],
+    [
+      11,
+      "Chapter Outline — A History of Chinese Official Titles"
+    ],
+    [
+      15,
+      "The Book's Argument"
+    ],
+    [
+      17,
+      "The Book's Argument"
+    ],
+    [
+      19,
+      "The Book's Argument"
+    ],
+    [
+      20,
+      "The Book's Argument"
+    ],
+    [
+      21,
+      "The Book's Argument"
+    ],
+    [
+      23,
+      "The Book's Argument"
+    ],
+    [
+      25,
+      "The Book's Argument"
+    ],
+    [
+      27,
+      "The Book's Argument"
+    ],
+    [
+      31,
+      "Diagram Policy"
+    ],
+    [
+      33,
+      "Diagram Policy"
+    ],
+    [
+      35,
+      "Diagram Policy"
+    ],
+    [
+      36,
+      "Diagram Policy"
+    ],
+    [
+      38,
+      "Diagram Policy"
+    ],
+    [
+      40,
+      "Diagram Policy"
+    ],
+    [
+      42,
+      "Figure list by chapter"
+    ],
+    [
+      44,
+      "Figure list by chapter"
+    ],
+    [
+      46,
+      "Figure list by chapter"
+    ],
+    [
+      47,
+      "Figure list by chapter"
+    ],
+    [
+      48,
+      "Figure list by chapter"
+    ],
+    [
+      49,
+      "Figure list by chapter"
+    ],
+    [
+      50,
+      "Figure list by chapter"
+    ],
+    [
+      51,
+      "Figure list by chapter"
+    ],
+    [
+      52,
+      "Figure list by chapter"
+    ],
+    [
+      53,
+      "Figure list by chapter"
+    ],
+    [
+      54,
+      "Figure list by chapter"
+    ],
+    [
+      55,
+      "Figure list by chapter"
+    ],
+    [
+      56,
+      "Figure list by chapter"
+    ],
+    [
+      57,
+      "Figure list by chapter"
+    ],
+    [
+      58,
+      "Figure list by chapter"
+    ],
+    [
+      59,
+      "Figure list by chapter"
+    ],
+    [
+      60,
+      "Figure list by chapter"
+    ],
+    [
+      61,
+      "Figure list by chapter"
+    ],
+    [
+      62,
+      "Figure list by chapter"
+    ],
+    [
+      63,
+      "Figure list by chapter"
+    ],
+    [
+      64,
+      "Figure list by chapter"
+    ],
+    [
+      65,
+      "Figure list by chapter"
+    ],
+    [
+      66,
+      "Figure list by chapter"
+    ],
+    [
+      67,
+      "Figure list by chapter"
+    ],
+    [
+      68,
+      "Figure list by chapter"
+    ],
+    [
+      70,
+      "Figure list by chapter"
+    ],
+    [
+      74,
+      "Part One — General Principles"
+    ],
+    [
+      76,
+      "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)"
+    ],
+    [
+      78,
+      "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)"
+    ],
+    [
+      79,
+      "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)"
+    ],
+    [
+      80,
+      "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)"
+    ],
+    [
+      81,
+      "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)"
+    ],
+    [
+      83,
+      "Chapter 1. Three Keys to Reading an Official Title (5,000 chars)"
+    ],
+    [
+      87,
+      "Part Two — The Center: A Thousand Deaths of the Chief Councillor"
+    ],
+    [
+      89,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      91,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      92,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      93,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      94,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      95,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      96,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      98,
+      "Chapter 2. From Household Servant to Head of the Bureaucracy (7,000 chars)"
+    ],
+    [
+      100,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      102,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      103,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      104,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      105,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      106,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      107,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      108,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      110,
+      "Chapter 3. The Inner Court's First Victory (7,000 chars)"
+    ],
+    [
+      112,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      114,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      115,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      116,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      117,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      118,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      119,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      121,
+      "Chapter 4. The Three Departments and the Chancellery Hall (7,000 chars)"
+    ],
+    [
+      123,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      125,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      126,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      127,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      128,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      129,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      130,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      131,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      133,
+      "Chapter 5. The Age of Commissions (7,000 chars)"
+    ],
+    [
+      135,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      137,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      138,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      139,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      140,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      141,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      142,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      144,
+      "Chapter 6. After the Chancellorship Was Abolished (7,000 chars)"
+    ],
+    [
+      148,
+      "Part Three — Local Administration"
+    ],
+    [
+      150,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      152,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      153,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      154,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      155,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      156,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      157,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      159,
+      "Chapter 7. Commanderies and Counties versus Enfeoffment (7,000 chars)"
+    ],
+    [
+      161,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      163,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      165,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      166,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      167,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      168,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      169,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      170,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      172,
+      "Chapter 8. How Inspectors Became Administrators (7,000 chars)"
+    ],
+    [
+      174,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      176,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      177,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      178,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      179,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      180,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      181,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      183,
+      "Chapter 9. The Birth of the Province (6,000 chars)"
+    ],
+    [
+      187,
+      "Part Four — Recruitment and Status"
+    ],
+    [
+      189,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      191,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      192,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      193,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      194,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      195,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      196,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      198,
+      "Chapter 10. Hereditary Office · Recommendation · Nine Ranks · Examination (8,000 chars)"
+    ],
+    [
+      200,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      202,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      203,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      204,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      205,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      206,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      207,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      208,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      209,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      210,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      212,
+      "Chapter 11. Rank, Grade, Merit Title, and Nobility (7,000 chars)"
+    ],
+    [
+      216,
+      "Part Five — Specialized Systems"
+    ],
+    [
+      218,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      220,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      221,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      222,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      223,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      224,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      225,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      226,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      228,
+      "Chapter 12. The Censorate (6,000 chars)"
+    ],
+    [
+      230,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      232,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      234,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      235,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      236,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      237,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      239,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      241,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      242,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      243,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      244,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      245,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      246,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      248,
+      "Chapter 13. Finance and the Military (7,000 chars)"
+    ],
+    [
+      250,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      252,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      253,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      254,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      255,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      256,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      257,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      258,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      260,
+      "Chapter 14. The Palace and the Eunuchs (5,000 chars)"
+    ],
+    [
+      262,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      264,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      266,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      267,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      268,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      269,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      270,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      271,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      272,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      273,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      274,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      275,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      276,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      277,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      279,
+      "Chapter 15. Dual Administration: Government Under the Conquest Dynasties (8,000 chars)"
+    ],
+    [
+      283,
+      "Part Six — Conclusion"
+    ],
+    [
+      285,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      287,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      288,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      289,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      290,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      291,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      292,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      293,
+      "Chapter 16. The Late Qing Reforms and the End of the System (7,000 chars)"
+    ],
+    [
+      297,
+      "Appendices"
+    ],
+    [
+      299,
+      "Appendices"
+    ],
+    [
+      300,
+      "Appendices"
+    ],
+    [
+      301,
+      "Appendices"
+    ],
+    [
+      302,
+      "Appendices"
+    ],
+    [
+      303,
+      "Appendices"
+    ]
+  ]
+}

@@ -1,0 +1,213 @@
+{
+  "format": 1,
+  "source": "corpus/real-zhongshumenxia-infra-design.md",
+  "hasOutline": true,
+  "outline": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "System Design 08 · Infra (selection · requirements · scaling)",
+      "slug": "system-design-08--infra-selection--requirements--scaling"
+    },
+    {
+      "line": 12,
+      "level": 2,
+      "text": "I. Requirements (criteria first, choices second)",
+      "slug": "i-requirements-criteria-first-choices-second"
+    },
+    {
+      "line": 14,
+      "level": 3,
+      "text": "Functional",
+      "slug": "functional"
+    },
+    {
+      "line": 23,
+      "level": 3,
+      "text": "Non-functional",
+      "slug": "non-functional"
+    },
+    {
+      "line": 35,
+      "level": 2,
+      "text": "II. Selection (verdict + why the hyperscalers are out)",
+      "slug": "ii-selection-verdict--why-the-hyperscalers-are-out"
+    },
+    {
+      "line": 50,
+      "level": 2,
+      "text": "III. Topology",
+      "slug": "iii-topology"
+    },
+    {
+      "line": 58,
+      "level": 2,
+      "text": "IV. Capacity and scaling",
+      "slug": "iv-capacity-and-scaling"
+    },
+    {
+      "line": 60,
+      "level": 3,
+      "text": "How the 4 GB gets spent (M1–M4 budget)",
+      "slug": "how-the-4-gb-gets-spent-m1m4-budget"
+    },
+    {
+      "line": 72,
+      "level": 3,
+      "text": "Disk (80 GB)",
+      "slug": "disk-80-gb"
+    },
+    {
+      "line": 76,
+      "level": 3,
+      "text": "Traffic (US 1 TB/mo)",
+      "slug": "traffic-us-1-tbmo"
+    },
+    {
+      "line": 80,
+      "level": 3,
+      "text": "Scaling path (by trigger, not by date)",
+      "slug": "scaling-path-by-trigger-not-by-date"
+    },
+    {
+      "line": 92,
+      "level": 2,
+      "text": "V. ⏳ Decision box A · Exposure staging (tailnet-first vs public day-1)",
+      "slug": "v--decision-box-a--exposure-staging-tailnet-first-vs-public-day-1"
+    },
+    {
+      "line": 101,
+      "level": 2,
+      "text": "VI. ⏳ Decision box B · The honest trade on server-disk encryption",
+      "slug": "vi--decision-box-b--the-honest-trade-on-server-disk-encryption"
+    },
+    {
+      "line": 112,
+      "level": 2,
+      "text": "VII. Ops contract (code-to-infra, annotation adopted)",
+      "slug": "vii-ops-contract-code-to-infra-annotation-adopted"
+    },
+    {
+      "line": 123,
+      "level": 2,
+      "text": "VIII. Cost",
+      "slug": "viii-cost"
+    },
+    {
+      "line": 132,
+      "level": 2,
+      "text": "IX. Failure modes",
+      "slug": "ix-failure-modes"
+    },
+    {
+      "line": 142,
+      "level": 2,
+      "text": "X. Open items",
+      "slug": "x-open-items"
+    }
+  ],
+  "headings": [
+    {
+      "line": 3,
+      "level": 1,
+      "text": "System Design 08 · Infra (selection · requirements · scaling)",
+      "slug": "system-design-08--infra-selection--requirements--scaling"
+    },
+    {
+      "line": 12,
+      "level": 2,
+      "text": "I. Requirements (criteria first, choices second)",
+      "slug": "i-requirements-criteria-first-choices-second"
+    },
+    {
+      "line": 14,
+      "level": 3,
+      "text": "Functional",
+      "slug": "functional"
+    },
+    {
+      "line": 23,
+      "level": 3,
+      "text": "Non-functional",
+      "slug": "non-functional"
+    },
+    {
+      "line": 35,
+      "level": 2,
+      "text": "II. Selection (verdict + why the hyperscalers are out)",
+      "slug": "ii-selection-verdict--why-the-hyperscalers-are-out"
+    },
+    {
+      "line": 50,
+      "level": 2,
+      "text": "III. Topology",
+      "slug": "iii-topology"
+    },
+    {
+      "line": 58,
+      "level": 2,
+      "text": "IV. Capacity and scaling",
+      "slug": "iv-capacity-and-scaling"
+    },
+    {
+      "line": 60,
+      "level": 3,
+      "text": "How the 4 GB gets spent (M1–M4 budget)",
+      "slug": "how-the-4-gb-gets-spent-m1m4-budget"
+    },
+    {
+      "line": 72,
+      "level": 3,
+      "text": "Disk (80 GB)",
+      "slug": "disk-80-gb"
+    },
+    {
+      "line": 76,
+      "level": 3,
+      "text": "Traffic (US 1 TB/mo)",
+      "slug": "traffic-us-1-tbmo"
+    },
+    {
+      "line": 80,
+      "level": 3,
+      "text": "Scaling path (by trigger, not by date)",
+      "slug": "scaling-path-by-trigger-not-by-date"
+    },
+    {
+      "line": 92,
+      "level": 2,
+      "text": "V. ⏳ Decision box A · Exposure staging (tailnet-first vs public day-1)",
+      "slug": "v--decision-box-a--exposure-staging-tailnet-first-vs-public-day-1"
+    },
+    {
+      "line": 101,
+      "level": 2,
+      "text": "VI. ⏳ Decision box B · The honest trade on server-disk encryption",
+      "slug": "vi--decision-box-b--the-honest-trade-on-server-disk-encryption"
+    },
+    {
+      "line": 112,
+      "level": 2,
+      "text": "VII. Ops contract (code-to-infra, annotation adopted)",
+      "slug": "vii-ops-contract-code-to-infra-annotation-adopted"
+    },
+    {
+      "line": 123,
+      "level": 2,
+      "text": "VIII. Cost",
+      "slug": "viii-cost"
+    },
+    {
+      "line": 132,
+      "level": 2,
+      "text": "IX. Failure modes",
+      "slug": "ix-failure-modes"
+    },
+    {
+      "line": 142,
+      "level": 2,
+      "text": "X. Open items",
+      "slug": "x-open-items"
+    }
+  ]
+}

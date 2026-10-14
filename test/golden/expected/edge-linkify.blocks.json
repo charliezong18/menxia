@@ -1,0 +1,97 @@
+{
+  "format": 1,
+  "source": "corpus/edge-linkify.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 1,
+      "lineEnd": 1,
+      "parent": null,
+      "level": 1,
+      "text": "linkify 裸网址"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 3,
+      "lineEnd": 3,
+      "parent": null,
+      "text": "裸网址 https://example.com/path?q=1&r=2 后面有字。"
+    },
+    {
+      "i": 2,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 5,
+      "lineEnd": 5,
+      "parent": null,
+      "text": "句末带句号 https://example.com/a. 下一句。"
+    },
+    {
+      "i": 3,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 7,
+      "lineEnd": 7,
+      "parent": null,
+      "text": "中文紧贴：见https://example.com/中文路径。然后"
+    },
+    {
+      "i": 4,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "括号里 (https://example.com/x) 与全角括号（https://example.com/y）。"
+    },
+    {
+      "i": 5,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 11,
+      "lineEnd": 11,
+      "parent": null,
+      "text": "www.example.com 不带协议。"
+    },
+    {
+      "i": 6,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 13,
+      "lineEnd": 13,
+      "parent": null,
+      "text": "邮箱 someone@example.com 。"
+    },
+    {
+      "i": 7,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 15,
+      "lineEnd": 15,
+      "parent": null,
+      "text": "尖括号自动链接 https://example.com/auto 与 mailto:a@example.com。"
+    },
+    {
+      "i": 8,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 17,
+      "lineEnd": 17,
+      "parent": null,
+      "text": "行内代码 https://example.com/no 不链接。"
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 19,
+      "lineEnd": 19,
+      "parent": null,
+      "text": "已经是链接 https://example.com/inner"
+    }
+  ]
+}

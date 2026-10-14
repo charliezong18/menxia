@@ -1,0 +1,342 @@
+{
+  "format": 1,
+  "source": "corpus/edge-crlf.md",
+  "anchors": [
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 0,
+      "expect": {
+        "blockLine": 4,
+        "line": 4,
+        "offset": 0,
+        "quote": "CRLF 换行的",
+        "quoteRaw": "CRLF 换行的"
+      },
+      "replay": {
+        "block": 0,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 1,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 11,
+      "expect": {
+        "blockLine": 6,
+        "line": 6,
+        "offset": 0,
+        "quote": "第一段， 软换行",
+        "quoteRaw": "第一段，\n软换行"
+      },
+      "replay": {
+        "block": 1,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 2,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 24,
+      "expect": {
+        "blockLine": 9,
+        "line": 9,
+        "offset": 0,
+        "quote": "列表一",
+        "quoteRaw": "列表一"
+      },
+      "replay": {
+        "block": 2,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 3,
+      "blockStart": 0,
+      "length": 3,
+      "docStart": 28,
+      "expect": {
+        "blockLine": 10,
+        "line": 10,
+        "offset": 0,
+        "quote": "列表二",
+        "quoteRaw": "列表二"
+      },
+      "replay": {
+        "block": 3,
+        "start": 0,
+        "length": 3
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 1,
+      "length": 4,
+      "docStart": 36,
+      "expect": {
+        "blockLine": 12,
+        "line": 12,
+        "offset": 1,
+        "quote": "a b",
+        "quoteRaw": "a\nb"
+      },
+      "replay": {
+        "block": 4,
+        "start": 3,
+        "length": 3
+      }
+    },
+    {
+      "block": 5,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 38,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 6,
+      "blockStart": 1,
+      "length": 4,
+      "docStart": 44,
+      "expect": {
+        "blockLine": 14,
+        "line": 14,
+        "offset": 1,
+        "quote": "1 2",
+        "quoteRaw": "1\n2"
+      },
+      "replay": {
+        "block": 6,
+        "start": 1,
+        "length": 3
+      }
+    },
+    {
+      "block": 6,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 46,
+      "expect": null,
+      "replay": null
+    },
+    {
+      "block": 7,
+      "blockStart": 0,
+      "length": 5,
+      "docStart": 51,
+      "expect": {
+        "blockLine": 16,
+        "line": 16,
+        "offset": 0,
+        "quote": "-旧 +新",
+        "quoteRaw": "-旧\n+新"
+      },
+      "replay": {
+        "block": 7,
+        "start": 0,
+        "length": 5
+      }
+    },
+    {
+      "block": 7,
+      "blockStart": 3,
+      "length": 2,
+      "docStart": 54,
+      "expect": {
+        "blockLine": 16,
+        "line": 17,
+        "offset": 3,
+        "quote": "+新",
+        "quoteRaw": "+新"
+      },
+      "replay": {
+        "block": 7,
+        "start": 3,
+        "length": 2
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 56,
+      "expect": {
+        "blockLine": 21,
+        "line": 21,
+        "offset": 0,
+        "quote": "制表符缩进＝缩进",
+        "quoteRaw": "制表符缩进＝缩进"
+      },
+      "replay": {
+        "block": 8,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 0,
+      "length": 8,
+      "docStart": 73,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 0,
+        "quote": "段内 制表符与行",
+        "quoteRaw": "段内\t制表符与行"
+      },
+      "replay": {
+        "block": 9,
+        "start": 0,
+        "length": 8
+      }
+    },
+    {
+      "block": 9,
+      "blockStart": 12,
+      "length": 6,
+      "docStart": 85,
+      "expect": {
+        "blockLine": 26,
+        "line": 26,
+        "offset": 12,
+        "quote": "硬换行之后。",
+        "quoteRaw": "硬换行之后。"
+      },
+      "replay": {
+        "block": 9,
+        "start": 12,
+        "length": 6
+      }
+    },
+    {
+      "block": 8,
+      "blockStart": 12,
+      "length": 4,
+      "docStart": 68,
+      "expect": {
+        "blockLine": 21,
+        "line": 22,
+        "offset": 12,
+        "quote": "第二行",
+        "quoteRaw": "第二行"
+      },
+      "replay": {
+        "block": 8,
+        "start": 12,
+        "length": 3
+      }
+    },
+    {
+      "block": 0,
+      "blockStart": 0,
+      "length": 1,
+      "docStart": 0,
+      "expect": null,
+      "replay": null
+    }
+  ],
+  "reanchorByQuote": [
+    {
+      "quote": "CRLF 换行的文档",
+      "expect": 4
+    },
+    {
+      "quote": "第一段， 软换行续行。",
+      "expect": 6
+    },
+    {
+      "quote": "列表一",
+      "expect": null
+    },
+    {
+      "quote": "列表二",
+      "expect": null
+    },
+    {
+      "quote": "a b 1 2",
+      "expect": 12
+    },
+    {
+      "quote": "a b",
+      "expect": null
+    },
+    {
+      "quote": "1 2",
+      "expect": null
+    },
+    {
+      "quote": "-旧 +新",
+      "expect": 16
+    },
+    {
+      "quote": "制表符缩进＝缩进代码块 第二行",
+      "expect": 21
+    },
+    {
+      "quote": "段内 制表符与行尾空格 硬换行之",
+      "expect": 26
+    },
+    {
+      "quote": "",
+      "expect": null
+    },
+    {
+      "quote": "abc",
+      "expect": null
+    },
+    {
+      "quote": "  a  b  ",
+      "expect": null
+    },
+    {
+      "quote": "一定不在正文里的引文 zzz",
+      "expect": null
+    }
+  ],
+  "sectionOf": [
+    [
+      4,
+      "CRLF 换行的文档"
+    ],
+    [
+      6,
+      "CRLF 换行的文档"
+    ],
+    [
+      9,
+      "CRLF 换行的文档"
+    ],
+    [
+      10,
+      "CRLF 换行的文档"
+    ],
+    [
+      12,
+      "CRLF 换行的文档"
+    ],
+    [
+      14,
+      "CRLF 换行的文档"
+    ],
+    [
+      16,
+      "CRLF 换行的文档"
+    ],
+    [
+      21,
+      "CRLF 换行的文档"
+    ],
+    [
+      26,
+      "CRLF 换行的文档"
+    ]
+  ]
+}

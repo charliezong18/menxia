@@ -1,0 +1,21 @@
+{
+  "format": 1,
+  "source": "corpus/edge-raw-html.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "原始 HTML（html:false 全部当文字）",
+      "slug": "原始-htmlhtmlfalse-全部当文字"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "原始 HTML（html:false 全部当文字）",
+      "slug": "原始-htmlhtmlfalse-全部当文字"
+    }
+  ]
+}

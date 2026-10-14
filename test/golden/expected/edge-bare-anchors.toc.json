@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "source": "corpus/edge-bare-anchors.md",
+  "hasOutline": false,
+  "outline": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "裸锚边角",
+      "slug": "裸锚边角"
+    },
+    {
+      "line": 5,
+      "level": 2,
+      "text": "每日",
+      "slug": "每日"
+    }
+  ],
+  "headings": [
+    {
+      "line": 1,
+      "level": 1,
+      "text": "裸锚边角",
+      "slug": "裸锚边角"
+    },
+    {
+      "line": 5,
+      "level": 2,
+      "text": "每日",
+      "slug": "每日"
+    }
+  ]
+}

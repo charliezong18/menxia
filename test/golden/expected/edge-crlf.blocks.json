@@ -1,0 +1,98 @@
+{
+  "format": 1,
+  "source": "corpus/edge-crlf.md",
+  "blocks": [
+    {
+      "i": 0,
+      "type": "heading",
+      "tag": "h1",
+      "line": 4,
+      "lineEnd": 4,
+      "parent": null,
+      "level": 1,
+      "text": "CRLF 换行的文档"
+    },
+    {
+      "i": 1,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 6,
+      "lineEnd": 7,
+      "parent": null,
+      "text": "第一段，\n软换行续行。"
+    },
+    {
+      "i": 2,
+      "type": "list_item",
+      "tag": "li",
+      "line": 9,
+      "lineEnd": 9,
+      "parent": null,
+      "text": "列表一"
+    },
+    {
+      "i": 3,
+      "type": "list_item",
+      "tag": "li",
+      "line": 10,
+      "lineEnd": 11,
+      "parent": null,
+      "text": "列表二"
+    },
+    {
+      "i": 4,
+      "type": "table",
+      "tag": "table",
+      "line": 12,
+      "lineEnd": 14,
+      "parent": null,
+      "text": "\n\n\na\nb\n\n\n\n\n1\n2\n\n\n"
+    },
+    {
+      "i": 5,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 12,
+      "lineEnd": 12,
+      "parent": 4,
+      "text": "\na\nb\n"
+    },
+    {
+      "i": 6,
+      "type": "table_row",
+      "tag": "tr",
+      "line": 14,
+      "lineEnd": 14,
+      "parent": 4,
+      "text": "\n1\n2\n"
+    },
+    {
+      "i": 7,
+      "type": "fence",
+      "tag": "pre",
+      "line": 16,
+      "lineEnd": 19,
+      "parent": null,
+      "info": "diff",
+      "text": "-旧\n+新"
+    },
+    {
+      "i": 8,
+      "type": "code_block",
+      "tag": "pre",
+      "line": 21,
+      "lineEnd": 22,
+      "parent": null,
+      "text": "制表符缩进＝缩进代码块\n第二行\n"
+    },
+    {
+      "i": 9,
+      "type": "paragraph",
+      "tag": "p",
+      "line": 26,
+      "lineEnd": 27,
+      "parent": null,
+      "text": "段内\t制表符与行尾空格\n硬换行之后。"
+    }
+  ]
+}

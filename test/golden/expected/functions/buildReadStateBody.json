@@ -1,0 +1,24 @@
+{
+  "format": 1,
+  "fn": "buildReadStateBody",
+  "cases": [
+    {
+      "input": {
+        "device": "iPhone",
+        "docPath": "docs/a.zh-CN.md",
+        "anchor": "L42",
+        "time": "2026-10-13T12:00:00.000Z"
+      },
+      "output": "<!-- menxia-readstate {\"device\":\"iPhone\",\"docPath\":\"docs/a.zh-CN.md\",\"anchor\":\"L42\",\"time\":\"2026-10-13T12:00:00.000Z\",\"v\":1} -->\n_门下续读位置（自动维护，勿手改）：iPhone · docs/a.zh-CN.md_"
+    },
+    {
+      "input": {
+        "device": "",
+        "docPath": "docs/引号\"与\\.md",
+        "anchor": "L1",
+        "time": "2026-01-01T00:00:00Z"
+      },
+      "output": "<!-- menxia-readstate {\"device\":\"\",\"docPath\":\"docs/引号\\\"与\\\\.md\",\"anchor\":\"L1\",\"time\":\"2026-01-01T00:00:00Z\",\"v\":1} -->\n_门下续读位置（自动维护，勿手改）： · docs/引号\"与\\.md_"
+    }
+  ]
+}
