@@ -34,7 +34,7 @@ PORT="${PORT:-$(( 4188 + RANDOM % 800 ))}"   # 显式 PORT= 优先；缺省随�
 SERVER=""
 trap 'kill $SERVER 2>/dev/null; rm -rf "$LOGDIR" 2>/dev/null' EXIT
 for _ in $(seq 1 20); do
-  python3 -m http.server "$PORT" >/dev/null 2>&1 &
+  python3 -u -m http.server "$PORT" >"$LOGDIR/server.log" 2>&1 &
   SERVER=$!
   sleep 0.5
   kill -0 "$SERVER" 2>/dev/null && break     # 还活着＝端口是我们的（被占的话已 Errno 48 退出）
@@ -43,8 +43,8 @@ done
 sleep 0.5
 
 # Chrome --headless 截图/加载后不会自己退出，用「产物就绪即杀」的模式跑
-run_page() {
-  local url="$1" log="$2" budget="$3" winsize="${4:-1440,1000}"   # 第 4 参可换窗宽，缺省桌面 1440
+run_page_once() {
+  local url="$1" log="$2" budget="$3" winsize="$4"
   local dir; dir="$(mktemp -d)"
   rm -f "$log"
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --enable-logging=stderr --v=0 \
@@ -59,6 +59,28 @@ run_page() {
   sleep 2
   kill $pid 2>/dev/null
   rm -rf "$dir" 2>/dev/null || true
+}
+
+# 「整组空日志」（2026-10-15 查实）：--virtual-time-budget 只在「有网络请求挂着」时停住虚拟时间。
+# index.html 的 ES 模块图是一层层发现的——一个模块到了、渲染进程解析完才去请求下一个，
+# 这个间隙里没有请求挂着，虚拟时间就直接快进到预算用完：Chrome 截一张空白图（app 还没挂载）
+# 就退出，页面脚本一行没跑。机器一忙间隙就长，所以只在全量连跑 / pre-push 时偶发。
+# 实测一次 rail 组：服务端只收到 35 个请求（正常整图是 40 个）、截图全空、零条 [rail] 输出。
+# 判据只认「页面零输出」——跑起来了但断言红、或 app 真的加载即崩，都不会被重跑救回：
+# 前者有输出不进重跑，后者三次都是零输出照样红。重跑一律打 ↻ 行，日志里看得见。
+run_page() {
+  local url="$1" log="$2" budget="$3" winsize="${4:-1440,1000}"   # 第 4 参可换窗宽，缺省桌面 1440
+  local attempt r0 r1
+  for attempt in 1 2 3; do
+    r0=$(grep -c '"GET ' "$LOGDIR/server.log" 2>/dev/null || true)
+    run_page_once "$url" "$log" "$budget" "$winsize"
+    grep -qE '\[(dom|smoke|mobile|rail)\] ' "$log" 2>/dev/null && return 0
+    r1=$(grep -c '"GET ' "$LOGDIR/server.log" 2>/dev/null || true)
+    echo "  ↻ ${url##*/} 页面零输出（第 ${attempt} 次，服务端收到 $((r1 - r0)) 个请求）——疑似虚拟时间在模块加载间隙耗尽"
+  done
+  # 三次都零输出：不再是那个间隙了。$LOGDIR 会被 EXIT trap 删掉，当场把日志尾巴打出来
+  echo "  ⚠ ${url##*/} 三次都零输出，最后一次日志尾 15 行："
+  tail -15 "$log" 2>/dev/null | sed 's/^/    | /'
 }
 
 # 钉死断言名字清单（不只是总数）：删一条加一条互相抵消时总数不变，但名字集会变，diff 里现形。
