@@ -51,14 +51,20 @@ run_page() {
     "${CI_FLAGS[@]+"${CI_FLAGS[@]}"}" \
     --window-size="$winsize" --virtual-time-budget="$budget" \
     --user-data-dir="$dir" --screenshot="$dir/shot.png" "$url" >/dev/null 2>"$log" &
-  local pid=$!
+  local pid=$! waited=0
   for _ in $(seq 1 60); do
     [ -s "$dir/shot.png" ] && break
-    sleep 1
+    sleep 1; waited=$((waited + 1))
   done
   sleep 2
   kill $pid 2>/dev/null
   rm -rf "$dir" 2>/dev/null || true
+  # 「没跑出结果」时日志所在的 $LOGDIR 会被 EXIT trap 删掉，事后无从查起（2026-10-15 本地连跑
+  # 偶发整组空日志：一次 smoke、一次 deep+deep-miss）。没有任何 RESULT 就当场把日志尾巴打出来。
+  if ! grep -q 'RESULT pass=' "$log" 2>/dev/null; then
+    echo "  ⚠ ${url##*/} 没出 RESULT（等截图 ${waited}s），日志尾 15 行（$(wc -c <"$log" 2>/dev/null || echo 0) 字节）："
+    tail -15 "$log" 2>/dev/null | sed 's/^/    | /'
+  fi
 }
 
 # 钉死断言名字清单（不只是总数）：删一条加一条互相抵消时总数不变，但名字集会变，diff 里现形。

@@ -614,7 +614,17 @@ async function runSmoke(docEl) {
       await sleep(25);
     }
   };
+  // 等两帧（兜底 150ms）：scroll 事件是在下一帧才派发的，等它落地再往下走。
+  const settle = () => Promise.race([
+    new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))), sleep(150)]);
   const pick = async (text, note, save) => {
+    // 2026-10-15 加（CI 10/12、10/14 两次红，日志都是「pick 等不到浮批钮：const DEBOUNCE_M」，
+    // 下游 3～6 条断言连坐）：上一轮 pick 打开的编辑器是在 useEffect + setTimeout(0) 里才
+    // focus 的（components/cards.js），Preact 把 useEffect 推到绘制之后；那颗 textarea 在文末，
+    // focus 会把 .work 滚下去，而 scroll 事件又要等下一帧才派发。慢机器上这一串落在本轮
+    // 浮钮出现**之后**，ui.js 的捕获期 onScroll 当场 setFloat(null)，浮钮再也不回来。
+    // 所以开划之前先让上一轮的滚动落地。
+    await settle();
     const r = rangeFor(text);
     // 三处「等不到」以前全是静默 return/跳过，失败现场离报错点隔着好几条断言。
     // 现在各自出一句诊断——**不带 PASS/FAIL 前缀**，所以不进 smoke 的 golden 名单，
@@ -630,12 +640,23 @@ async function runSmoke(docEl) {
     await sleep(120);
     const float = document.querySelector('.zhupi-float')
       || await waitFor(() => document.querySelector('.zhupi-float'));
-    if (!float) { console.log(`[smoke] pick 等不到浮批钮：${text.slice(0, 16)}`); return; }
+    if (!float) {
+      // 现场带上选区 / 焦点 / 滚动位置：下回再红能直接分辨是选区丢了还是浮钮被滚动收了
+      const s = getSelection(), ae = document.activeElement;
+      console.log(`[smoke] pick 等不到浮批钮：${text.slice(0, 16)}`
+        + ` sel=${s.isCollapsed ? 'collapsed' : JSON.stringify(s.toString().slice(0, 16))}`
+        + ` active=${ae?.tagName}.${ae?.className || ''} workTop=${document.querySelector('.work')?.scrollTop}`);
+      return;
+    }
     float.click();
     await sleep(120);
     const ta = document.querySelector('.anno-input')
       || await waitFor(() => document.querySelector('.anno-input'));
     if (!ta) { console.log(`[smoke] pick 等不到编辑器：${text.slice(0, 16)}`); return; }
+    // 等编辑器自己的延迟 focus 落地（见上），它引起的滚动在下一轮 pick 开头的 settle 里消化
+    if (!await waitFor(() => document.activeElement === ta, 1000)) {
+      console.log(`[smoke] pick 编辑器没拿到焦点：${text.slice(0, 16)}`);
+    }
     ta.value = note;
     ta.dispatchEvent(new Event('input', { bubbles: true }));
     if (save) [...document.querySelectorAll('.anno-save')].pop()?.click();
